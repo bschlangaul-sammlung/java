@@ -1,4 +1,4 @@
-package org.bschlangaul.aufgaben.sosy.examen_64116_2014_09;
+package org.bschlangaul.aufgaben.sosy.examen_46116_2014_03;
 
 public class Hanoi {
   int hanoi(int nr, char from, char to) {
