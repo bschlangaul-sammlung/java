@@ -33,7 +33,7 @@ class BinarySearch {
 
     // Die Schleife wird verlassen, wenn keine der beiden Haelften das
     // Element enthaelt.
-    while (start < End) {
+    while(start < End) {
 
       // Teilung des Arrays in zwei Haelften
       // untere Haelfte: [0,mid[
@@ -43,7 +43,7 @@ class BinarySearch {
       if (item > a[mid]) {
         // Ausschluss der oberen Haelfte
         start = mid + 1;
-      } else if (item < a[mid]) {
+      } else if(item < a[mid]) {
         // Ausschluss der unteren Haelfte
         End = mid - 1;
       } else {
