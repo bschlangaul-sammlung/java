@@ -45,7 +45,7 @@ class BinarySearch {
         start = mid + 1;
       } else if(item < a[mid]) {
         // Ausschluss der unteren Haelfte
-        End = mid - 1;
+        End = mid-1;
       } else {
         // Das gesuchte Element wird zurueckgegeben
         return (mid);
