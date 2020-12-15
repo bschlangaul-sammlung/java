@@ -13,7 +13,7 @@ public class GeoSum {
   public static void main(String[] args) {
     GeoSum s = new GeoSum();
     for (int j = 0; j < 10; j++) {
-      System.out.println(s.geoSum(j, 3));
+      System.out.println(s.geoSum(j, 2));
     }
   }
 }
