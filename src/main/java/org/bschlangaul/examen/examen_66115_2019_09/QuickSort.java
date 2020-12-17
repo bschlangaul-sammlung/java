@@ -22,7 +22,10 @@ public class QuickSort {
           i = i + 1;
           j = j - 1;
         }
-      } while (i > j);
+        // Java verfügt über keine do-until Schleife.
+        // Wir verwenden eine do-while-Schelfe mit einem umgedrehten Test
+        // unit i > j -> while (i <= j)
+      } while (i <= j);
       quicksort(A, links, j);
       quicksort(A, i, rechts);
     }
