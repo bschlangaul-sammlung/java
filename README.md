@@ -2,6 +2,15 @@
 
 Beispiel Java-Code für didaktische Zwecke
 
+In diesem Repository sind fast alle Java-Code-Beispiele für die
+[Aufgaben- und Materialsammlung „lehramt-informatik“](https://github.com/hbschlang/lehramt-informatik)
+zusammengefasst.
+
+Die Group-ID des Java-Pakets ist `org.bschlangaul`. Der Java-Code
+befindet sich sich - in viele Unterpakete aufgeteilt - im Verzeichnis
+`src/main/java/org/bschlangaul`. Zu einigen Paketen gibt es Tests. Das
+Verzeichnis für die Tests lautet: `src/test/java/org/bschlangaul`.
+
 # javadoc Dokumentation erzeugen
 
 ```
