@@ -29,13 +29,13 @@ public class Knoten {
   }
 
   /**
-   * Gibt den Name des Knotenobjekts formatiert zurück Der Name wird
-   * auf die angegebene Länge abgeschnitten bzw. mit Blanks aufgefüllt
+   * Gibt den Name des Knotenobjekts formatiert zurück. Der Name wird auf die
+   * angegebene Länge abgeschnitten bzw. mit Blanks aufgefüllt
    *
-   * @param breite Anzahl der Zeichen auf die der Name formatiert wird.
-   *               Maximal 15 Zeichen.
+   * @param breite Anzahl der Zeichen auf die der Name formatiert wird. Maximal 15
+   *               Zeichen.
+   *
    * @return formatierter Name
-   *
    */
   public String gibNameFormatiert(int breite) {
     return Farbe.rot(name) + "               ".substring(0, breite - name.length());

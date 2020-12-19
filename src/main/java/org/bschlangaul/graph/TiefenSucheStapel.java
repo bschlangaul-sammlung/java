@@ -87,36 +87,36 @@ public class TiefenSucheStapel extends AdjazenzMatrix {
     ts.fügeKnotenEin("J");
     ts.fügeKnotenEin("K");
 
-    ts.fügeKanteEin("A", "B", 1);
-    ts.fügeKanteEin("A", "C", 1);
+    ts.fügeKanteEinUngerichtet("A", "B", 1);
+    ts.fügeKanteEinUngerichtet("A", "C", 1);
 
-    ts.fügeKanteEin("B", "A", 1);
-    ts.fügeKanteEin("B", "D", 1);
-    ts.fügeKanteEin("B", "E", 1);
+    ts.fügeKanteEinUngerichtet("B", "A", 1);
+    ts.fügeKanteEinUngerichtet("B", "D", 1);
+    ts.fügeKanteEinUngerichtet("B", "E", 1);
 
-    ts.fügeKanteEin("C", "A", 1);
-    ts.fügeKanteEin("C", "F", 1);
-    ts.fügeKanteEin("C", "G", 1);
+    ts.fügeKanteEinUngerichtet("C", "A", 1);
+    ts.fügeKanteEinUngerichtet("C", "F", 1);
+    ts.fügeKanteEinUngerichtet("C", "G", 1);
 
-    ts.fügeKanteEin("D", "B", 1);
-    ts.fügeKanteEin("D", "H", 1);
+    ts.fügeKanteEinUngerichtet("D", "B", 1);
+    ts.fügeKanteEinUngerichtet("D", "H", 1);
 
-    ts.fügeKanteEin("E", "B", 1);
-    ts.fügeKanteEin("E", "F", 1);
+    ts.fügeKanteEinUngerichtet("E", "B", 1);
+    ts.fügeKanteEinUngerichtet("E", "F", 1);
 
-    ts.fügeKanteEin("F", "C", 1);
-    ts.fügeKanteEin("F", "E", 1);
-    ts.fügeKanteEin("F", "G", 1);
-    ts.fügeKanteEin("F", "J", 1);
+    ts.fügeKanteEinUngerichtet("F", "C", 1);
+    ts.fügeKanteEinUngerichtet("F", "E", 1);
+    ts.fügeKanteEinUngerichtet("F", "G", 1);
+    ts.fügeKanteEinUngerichtet("F", "J", 1);
 
-    ts.fügeKanteEin("G", "C", 1);
-    ts.fügeKanteEin("G", "F", 1);
+    ts.fügeKanteEinUngerichtet("G", "C", 1);
+    ts.fügeKanteEinUngerichtet("G", "F", 1);
 
-    ts.fügeKanteEin("H", "D", 1);
+    ts.fügeKanteEinUngerichtet("H", "D", 1);
 
-    ts.fügeKanteEin("J", "F", 1);
+    ts.fügeKanteEinUngerichtet("J", "F", 1);
 
-    ts.fügeKanteEin("K", "F", 1);
+    ts.fügeKanteEinUngerichtet("K", "F", 1);
 
     ts.gibMatrixAus();
 

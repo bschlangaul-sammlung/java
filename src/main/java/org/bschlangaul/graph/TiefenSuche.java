@@ -21,7 +21,6 @@ public class TiefenSuche extends AdjazenzMatrix {
         besucheKnoten(abzweigung);
       }
     }
-
     System.out.println(knoten[knotenNummer].gibName() + "  fertig");
   }
 
@@ -47,13 +46,13 @@ public class TiefenSuche extends AdjazenzMatrix {
     tiefensuche.fügeKnotenEin("4");
     tiefensuche.fügeKnotenEin("5");
 
-    tiefensuche.fügeKanteEin("0", "1", 1);
-    tiefensuche.fügeKanteEin("0", "3", 1);
-    tiefensuche.fügeKanteEin("0", "4", 1);
-    tiefensuche.fügeKanteEin("2", "3", 1);
-    tiefensuche.fügeKanteEin("2", "4", 1);
-    tiefensuche.fügeKanteEin("2", "5", 1);
-    tiefensuche.fügeKanteEin("3", "4", 1);
+    tiefensuche.fügeKanteEinUngerichtet("0", "1", 1);
+    tiefensuche.fügeKanteEinUngerichtet("0", "3", 1);
+    tiefensuche.fügeKanteEinUngerichtet("0", "4", 1);
+    tiefensuche.fügeKanteEinUngerichtet("2", "3", 1);
+    tiefensuche.fügeKanteEinUngerichtet("2", "4", 1);
+    tiefensuche.fügeKanteEinUngerichtet("2", "5", 1);
+    tiefensuche.fügeKanteEinUngerichtet("3", "4", 1);
 
     tiefensuche.gibMatrixAus();
 

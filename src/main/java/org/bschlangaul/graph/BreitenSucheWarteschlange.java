@@ -16,8 +16,8 @@ public class BreitenSucheWarteschlange extends AdjazenzMatrix {
   private Vector<String> route;
 
   /**
-   * Konstruktor für Objekte der Klasse GRAPH_MATRIX Die maximale Anzahl der
-   * Knoten wird dabei festgelegt
+   * Konstruktor für Objekte der Klasse BreitenSucheWarteschlange. Die maximale
+   * Anzahl der Knoten wird dabei festgelegt.
    *
    * @param maximaleKnoten Anzahl der maximal möglichen Knoten
    *
@@ -79,7 +79,6 @@ public class BreitenSucheWarteschlange extends AdjazenzMatrix {
   public static void main(String[] args) {
     BreitenSucheWarteschlange bs = new BreitenSucheWarteschlange(20);
     bs.fügeKnotenUndKantenEin("a-e a-f a-s b-c b-d b-h c-d c-h c-s d-h e-f f-s g-s h-s");
-
 
     // bs.fügeKnotenEin("A");
     // bs.fügeKnotenEin("B");
