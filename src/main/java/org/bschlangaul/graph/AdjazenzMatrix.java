@@ -17,8 +17,7 @@ public class AdjazenzMatrix {
   protected int anzahlKnoten;
 
   /**
-   * Feld der Knotennamen des Graphen. Der erste Knotenname hat die
-   * Knotennummer 0.
+   * Feld der Knoten des Graphen. Der erste Knoten hat die Knotennummer 0.
    */
   protected Knoten[] knoten;
 
@@ -39,8 +38,8 @@ public class AdjazenzMatrix {
   }
 
   /**
-   * Mit diesem Konstruktur kann eine Adjazenzmatrix durch das
-   * einfache Graphenformat erzeugt werden.
+   * Mit diesem Konstruktur kann eine Adjazenzmatrix durch das einfache
+   * Graphenformat erzeugt werden.
    *
    * @param graphenFormat Ein String im einfachen Graphenformat.
    */
@@ -113,18 +112,100 @@ public class AdjazenzMatrix {
   }
 
   /**
+   * Berechne das kleine Einzel-Kantengewicht aller Kanten.
+   *
+   * Diese Methode ist nützlich für die negativen Zahlen.
+   * Dieser Wert ist z. B. nützlich, wenn die Adjazenz-Matrix in der Konsole
+   * ausgegeben werden soll. Mit Hilfe dieses Wertes kann die Breite der Tabelle
+   * bestimmt werden.
+   *
+   * @return Das Gewicht der Kante mit dem Minimalgewicht.
+   */
+  public int gibMinimalesGewicht() {
+    int min = 0;
+    for (int[] reihe : matrix) {
+      for (int gewicht : reihe) {
+        if (gewicht < min)
+          min = gewicht;
+      }
+    }
+    return min;
+  }
+
+  /**
+   * Berechne das größte Einzel-Kantengewicht aller Kanten.
+   *
+   * Dieser Wert ist z. B. nützlich, wenn die Adjazenz-Matrix in der Konsole
+   * ausgegeben werden soll. Mit Hilfe dieses Wertes kann die Breite der Tabelle
+   * bestimmt werden.
+   *
+   * @return Das Gewicht der Kante mit dem Maximalgewicht.
+   */
+  public int gibMaximalesGewicht() {
+    int max = 0;
+    for (int[] reihe : matrix) {
+      for (int gewicht : reihe) {
+        if (gewicht > max)
+          max = gewicht;
+      }
+    }
+    return max;
+  }
+
+  /**
+   * Berechne die maximale Textbreite der Knotennamen.
+   *
+   * @return Die maximale Textbreite in Anzahl an Zeichen.
+   */
+  public int gibMaximaleKnotennameTextbreite() {
+    int max = -1;
+    for (Knoten k : knoten) {
+      int länge = k.gibName().length();
+      if (länge > max)
+        max = länge;
+    }
+    return max;
+  }
+
+  /**
+   * Ein kombinierter Wert aus der maximalen Textbreite der Knotennamen und des
+   * maximalen Kantengewichts.
+   *
+   * @return Die Anzahl an Zeichen die benötigt werden, damit sowohl alle
+   *         Knotennamen als auch alle Gewichte in einer Spalte mit gewisser
+   *         Breite abgebildet werden können.
+   */
+  public int gibSpaltenBreite() {
+    int minGewicht = String.valueOf(gibMinimalesGewicht()).length();
+    int maxGewicht = String.valueOf(gibMaximalesGewicht()).length();
+    int maxKnoten = gibMaximaleKnotennameTextbreite();
+    return Math.max(Math.max(minGewicht, maxGewicht), maxKnoten);
+  }
+
+  /**
    * Gibt die Bezeichnung eines Knotens mit der internen Knotennummer.
    *
    * @param knotenNummer Die Knotennummer des Knotens im Knotenarray; 0 &#x3C;= x
    *                     &#x3C;= anzahl-1
    *
-   * @return name Name des Knoten
+   * @return Der Name des Knoten.
    */
   public String gibKnotenNamen(int knotenNummer) {
     if ((knotenNummer < anzahlKnoten) && (knotenNummer >= 0))
       return knoten[knotenNummer].gibName();
     else
       return "";
+  }
+
+  /**
+   * Gib alle Knotennamen als Feld zurück.
+   */
+  public String[] gibAlleKnotenNamen() {
+    String[] ausgabe = new String[gibKnotenAnzahl()];
+    for (int i = 0; i < gibKnotenAnzahl(); i++) {
+      ausgabe[i] = knoten[i].gibName();
+    }
+    return ausgabe;
   }
 
   /**

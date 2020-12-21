@@ -48,4 +48,25 @@ public class AdjazenzMatrixTest {
     assertEquals(-1, matrix.gibKanteGewicht("a", "x"));
   }
 
+  @Test
+  public void methodeGibMaximalesGewicht() {
+    AdjazenzMatrix matrix = new AdjazenzMatrix("a > b 99\na - c 3\na-d 1");
+    assertEquals(99, matrix.gibMaximalesGewicht());
+  }
+
+  @Test
+  public void methodeGibMaximaleKnotennameTextbreite() {
+    AdjazenzMatrix matrix = new AdjazenzMatrix("123-1234\n123-12345\n123-123456");
+    assertEquals(6, matrix.gibMaximaleKnotennameTextbreite());
+  }
+
+  @Test
+  public void methodeGibSpaltenBreite() {
+    AdjazenzMatrix matrix = new AdjazenzMatrix("123-1234\n123-12345\n123-123456");
+    assertEquals(6, matrix.gibSpaltenBreite());
+
+    AdjazenzMatrix matrix2 = new AdjazenzMatrix("a-b 123\na-c 12\na-d 1");
+    assertEquals(3, matrix2.gibSpaltenBreite());
+  }
+
 }
