@@ -17,8 +17,8 @@ public class AdjazenzMatrix {
   protected int anzahlKnoten;
 
   /**
-   *
-   * Feld der Knoten des Graphen.
+   * Feld der Knotennamen des Graphen. Der erste Knotenname hat die
+   * Knotennummer 0.
    */
   protected Knoten[] knoten;
 

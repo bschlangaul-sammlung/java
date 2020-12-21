@@ -6,8 +6,8 @@ package org.bschlangaul.graph;
 class DijkstraAdjazenzMatrix extends AdjazenzMatrix {
 
   /**
-   * Mit diesem Konstruktur wird die Adjazenzmatrix durch das
-   * einfache Graphenformat erzeugt.
+   * Mit diesem Konstruktur wird die Adjazenzmatrix durch das einfache
+   * Graphenformat erzeugt.
    *
    * @param graphenFormat Ein String im einfachen Graphenformat.
    */
@@ -15,72 +15,74 @@ class DijkstraAdjazenzMatrix extends AdjazenzMatrix {
     super(graphenFormat);
   }
 
-  private static final int NO_PARENT = -1;
+  private static final int KEINE_VORGÄNGER = -1;
 
-  // Function that implements Dijkstra's single source shortest path
-  // algorithm for a graph represented using adjacency matrix
-  // representation
-  public void sucheKürzestenPfad(String startVertex) {
-    int nVertices = gibKnotenAnzahl();
+  /**
+   * Diese Methode implementiert den Dijkstra-Algorithmus zum Finden des kürzesten
+   * Pfads unter Angabe des Anfangsknoten.
+   *
+   * @param anfangsKnoten Der Name des Anfangsknoten.
+   */
+  public void sucheKürzestenPfad(String anfangsKnoten) {
+    int knotenAnzahl = gibKnotenAnzahl();
 
-    // shortestDistances[i] will hold the
-    // shortest distance from src to i
-    int[] shortestDistances = new int[nVertices];
+    // In diesem Feld werden die kürzesten Entfernungen zu den einzelnen Knoten
+    // gespeichert.
+    int[] kürzesteEntfernungen = new int[knotenAnzahl];
 
-    // added[i] will true if vertex i is included / in shortest path
-    // tree or shortest distance from src to i is finalized
-    boolean[] added = new boolean[nVertices];
+    // besucht[i] wird auf true gesetzt, wenn sich der Knoten i im
+    // Kürzesten-Pfad-Baum befindet oder der kürzeste Pfad vom Anfangskonten zum
+    // Knoten i fertig berechnet ist.
+    boolean[] besucht = new boolean[knotenAnzahl];
 
-    // Initialize all distances as
-    // INFINITE and added[] as false
-    for (int vertexIndex = 0; vertexIndex < nVertices; vertexIndex++) {
-      shortestDistances[vertexIndex] = Integer.MAX_VALUE;
-      added[vertexIndex] = false;
+    // Initialisierung der beiden Felder kürzesteEntfernungen und
+    // besucht.
+    for (int KnotenNr = 0; KnotenNr < knotenAnzahl; KnotenNr++) {
+      kürzesteEntfernungen[KnotenNr] = Integer.MAX_VALUE;
+      besucht[KnotenNr] = false;
     }
 
-    // Distance of source vertex from
-    // itself is always 0
-    shortestDistances[gibKnotenNummer(startVertex)] = 0;
+    // Die Entfernung vom Anfangsknoten zu sich selbst ist immer 0.
+    kürzesteEntfernungen[gibKnotenNummer(anfangsKnoten)] = 0;
 
-    // Parent array to store shortest
-    // path tree
-    int[] parents = new int[nVertices];
+    // Feld mit dem die Vorgänger-Knoten des kürzesten Pfads gespeichert werden.
+    // Ein Vorgänger-Knoten des Pfads gibt ab, über welchen Knoten man auf
+    // kürzesten Weg zum Knoten kommt.
+    int[] vorgänger = new int[knotenAnzahl];
 
-    // The starting vertex does not
-    // have a parent
-    parents[gibKnotenNummer(startVertex)] = NO_PARENT;
+    // Der Anfangsknoten hat keinen Vorgänger.
+    vorgänger[gibKnotenNummer(anfangsKnoten)] = KEINE_VORGÄNGER;
 
-    // Find shortest path for all vertices
-    for (int i = 1; i < nVertices; i++) {
-
+    // Hier startet der eigentliche Algorithmus.
+    for (int i = 1; i < knotenAnzahl; i++) {
       // Pick the minimum distance vertex from the set of vertices not
       // yet processed. nearestVertex is always equal to startNode in
       // first iteration.
-      int nearestVertex = -1;
-      int shortestDistance = Integer.MAX_VALUE;
-      for (int vertexIndex = 0; vertexIndex < nVertices; vertexIndex++) {
-        if (!added[vertexIndex] && shortestDistances[vertexIndex] < shortestDistance) {
-          nearestVertex = vertexIndex;
-          shortestDistance = shortestDistances[vertexIndex];
+      int nächsterKnoten = -1;
+      int entfernung = Integer.MAX_VALUE;
+      for (int knotenNr = 0; knotenNr < knotenAnzahl; knotenNr++) {
+        if (!besucht[knotenNr] && kürzesteEntfernungen[knotenNr] < entfernung) {
+          nächsterKnoten = knotenNr;
+          entfernung = kürzesteEntfernungen[knotenNr];
         }
       }
 
-      // Mark the picked vertex as processed
-      added[nearestVertex] = true;
+      // Markiere den ausgewählten Knoten als besucht.
+      besucht[nächsterKnoten] = true;
 
       // Update dist value of the adjacent vertices of the picked
       // vertex.
-      for (int vertexIndex = 0; vertexIndex < nVertices; vertexIndex++) {
-        int edgeDistance = matrix[nearestVertex][vertexIndex];
+      for (int knotenNr = 0; knotenNr < knotenAnzahl; knotenNr++) {
+        int kantenEntfernung = matrix[nächsterKnoten][knotenNr];
 
-        if (edgeDistance > 0 && ((shortestDistance + edgeDistance) < shortestDistances[vertexIndex])) {
-          parents[vertexIndex] = nearestVertex;
-          shortestDistances[vertexIndex] = shortestDistance + edgeDistance;
+        if (kantenEntfernung > 0 && ((entfernung + kantenEntfernung) < kürzesteEntfernungen[knotenNr])) {
+          vorgänger[knotenNr] = nächsterKnoten;
+          kürzesteEntfernungen[knotenNr] = entfernung + kantenEntfernung;
         }
       }
     }
 
-    printSolution(startVertex, shortestDistances, parents);
+    printSolution(anfangsKnoten, kürzesteEntfernungen, vorgänger);
   }
 
   // A utility function to print the constructed distances array and
@@ -105,16 +107,16 @@ class DijkstraAdjazenzMatrix extends AdjazenzMatrix {
 
     // Base case : Source node has
     // been processed
-    if (currentVertex == NO_PARENT) {
+    if (currentVertex == KEINE_VORGÄNGER) {
       return;
     }
     printPath(parents[currentVertex], parents);
-    System.out.print(currentVertex + " ");
+    System.out.print(gibKnotenNamen(currentVertex) + " ");
   }
 
   // Driver Code
   public static void main(String[] args) {
-    DijkstraAdjazenzMatrix dijkstra = new DijkstraAdjazenzMatrix("a-b \nb - c 7");
+    DijkstraAdjazenzMatrix dijkstra = new DijkstraAdjazenzMatrix("a-b \nb - c 7\n \na-d 2\nb > d 19");
     dijkstra.sucheKürzestenPfad("c");
   }
 }
