@@ -12,22 +12,8 @@ public class BreitenSucheWarteschlange extends AdjazenzMatrix {
   private boolean[] besucht;
 
   // Warteschlage für die Breitensuche
-  private Vector<String> liste;
-  private Vector<String> route;
-
-  /**
-   * Konstruktor für Objekte der Klasse BreitenSucheWarteschlange. Die maximale
-   * Anzahl der Knoten wird dabei festgelegt.
-   *
-   * @param maximaleKnoten Anzahl der maximal möglichen Knoten
-   *
-   */
-  public BreitenSucheWarteschlange(int maximaleKnoten) {
-    super(maximaleKnoten);
-    besucht = new boolean[gibKnotenAnzahl()];
-    liste = new Vector<String>();
-    route = new Vector<String>();
-  }
+  private Vector<String> liste = new Vector<String>();
+  private Vector<String> route = new Vector<String>();
 
   /**
    * Die Adjazenzmatrix kann mit diesem Konstruktur im einfachen Graphenformat
@@ -38,17 +24,14 @@ public class BreitenSucheWarteschlange extends AdjazenzMatrix {
   public BreitenSucheWarteschlange(String einfachesGraphenFormat) {
     super(einfachesGraphenFormat);
     besucht = new boolean[gibKnotenAnzahl()];
-    liste = new Vector<String>();
-    route = new Vector<String>();
   }
-
 
   /**
    * Durchlauf aller Knoten und Ausgabe auf der Konsole
    *
    * @param knotenNummer Nummer des Startknotens
    */
-  public void besucheKnoten(int knotenNummer) {
+  private void besucheKnoten(int knotenNummer) {
     besucht[knotenNummer] = true;
     liste.add(knoten[knotenNummer].gibName());
     // Liste gibMatrixAus
@@ -91,7 +74,8 @@ public class BreitenSucheWarteschlange extends AdjazenzMatrix {
   }
 
   public static void main(String[] args) {
-    BreitenSucheWarteschlange bs = new BreitenSucheWarteschlange("a-e 7\na-f\na-s\nb-c\nb-d\nb-h\nc-d\nc-h\nc-s\nd-h\ne-f\nf-s\ng-s\nh-s");
+    BreitenSucheWarteschlange bs = new BreitenSucheWarteschlange(
+        "a-e 7\na-f\na-s\nb-c\nb-d\nb-h\nc-d\nc-h\nc-s\nd-h\ne-f\nf-s\ng-s\nh-s");
     bs.gibMatrixAus();
     bs.starteBreitenSuche("s");
   }

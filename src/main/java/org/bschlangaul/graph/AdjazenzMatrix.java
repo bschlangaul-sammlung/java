@@ -1,8 +1,5 @@
 package org.bschlangaul.graph;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
 import org.bschlangaul.helfer.Farbe;
 
 /**
@@ -123,7 +120,7 @@ public class AdjazenzMatrix {
    *
    * @return name Name des Knoten
    */
-  public String gibKnotenName(int knotenNummer) {
+  public String gibKnotenNamen(int knotenNummer) {
     if ((knotenNummer < anzahlKnoten) && (knotenNummer >= 0))
       return knoten[knotenNummer].gibName();
     else
