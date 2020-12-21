@@ -8,17 +8,74 @@ import java.util.regex.Pattern;
 /**
  * Ein sehr einfaches Dateiformat um einen Graph zu spezifizieren.
  *
- * - Es werden nur die Kanten angegeben - Knotennamen dürfen keine Leerzeichen
- * haben - Die Richtung wird durch - für ungerichtete Kanten und durch > für
+ * <p>
+ * <ul>
+ * <li>Es werden nur die Kanten angegeben
+ * <li>Knotennamen dürfen keine Leerzeichen haben
+ * <li>Die Richtung wird durch - für ungerichtete Kanten und durch > für
  * gerichtete Kanten angegeben.
+ * </ul>
+ * </p>
  *
+ * <pre>
+ * {@code
+ * v: A 3 5
+ * v: "Ein Knoten" 1 3
+ *
+ * A "Ein Knoten"
+ * B C
+ * A>D:3
+ * }
+ * </pre>
  */
 public class EinfachesGraphenFormat {
+
+  String zeilenTrenner = "[\\r\\n;]+";
 
   Pattern zeilenRegexp = Pattern.compile("(?<von>\\w+)\\s*(?<richtung>[->])\\s*(?<nach>\\w+)(\\s+(?<gewicht>\\d+))?");
 
   HashSet<String> knoten;
   HashSet<Kante> kanten;
+
+  class Knoten implements Comparable<Knoten> {
+    public String name;
+    public double x;
+    public double y;
+
+    /**
+     * Diese Methode wird benötigt, um keine doppelten Knoten in dem HashSet knoten
+     * zu haben.
+     */
+    @Override
+    public int hashCode() {
+      return name.hashCode();
+    }
+
+    /**
+     * Diese Methode wird benötigt, um keine doppelten Knoten in dem HashSet knoten
+     * zu haben.
+     */
+    @Override
+    public boolean equals(Object o) {
+      if (o instanceof Knoten) {
+        Knoten knoten = (Knoten) o;
+        return name.equals(knoten.name);
+      }
+      return false;
+    }
+
+    /**
+     * Diese Methode wird benötigt, um die Knoten sortieren zu können.
+     *
+     * @param knoten Eine andere Knoten, der sortiert werden soll.
+     *
+     * @return 0, -1, 1
+     */
+    @Override
+    public int compareTo(Knoten knoten) {
+      return name.compareTo(knoten.name);
+    }
+  }
 
   /**
    * Diese Klasse dient als eine Art Zwischenspeicher für Kanteninformationen.
@@ -75,7 +132,7 @@ public class EinfachesGraphenFormat {
   }
 
   public EinfachesGraphenFormat(String eingang) {
-    String[] zeilen = eingang.split("[\\r?\\n]+");
+    String[] zeilen = eingang.split(zeilenTrenner);
     knoten = new HashSet<String>();
     kanten = new HashSet<Kante>();
     for (String zeile : zeilen) {

@@ -45,4 +45,18 @@ public class EinfachesGraphenFormatTest {
     assertEquals("a", kanten[2].nach);
   }
 
+  private int gibAnzahlKnoten(String einfachesFormat) {
+    EinfachesGraphenFormat graph = new EinfachesGraphenFormat(einfachesFormat);
+    return graph.gibAnzahlKnoten();
+  }
+
+  @Test
+  public void strichpunktAlsTrenner() {
+    assertEquals(4, gibAnzahlKnoten("a>b\na>c\na>d"));
+    assertEquals(4, gibAnzahlKnoten("a>b\n\na>c\n\na>d"));
+    assertEquals(4, gibAnzahlKnoten("a>b\ra>c\ra>d"));
+    assertEquals(4, gibAnzahlKnoten("a>b;a>c;a>d"));
+    assertEquals(4, gibAnzahlKnoten("a>b;\na>c;\na>d"));
+  }
+
 }
