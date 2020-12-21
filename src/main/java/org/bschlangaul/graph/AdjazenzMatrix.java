@@ -23,16 +23,30 @@ public class AdjazenzMatrix {
   protected int[][] matrix;
 
   /**
-   * Konstruktor für Objekte der Klasse GraphAdjazenzMatrix.
+   * Konstruktor für Objekte der Klasse AdjazenzMatrix.
    *
    * Die maximale Anzahl der Knoten wird dabei festgelegt.
    *
    * @param maximaleKnoten Anzahl der maximal möglichen Knoten
    */
   public AdjazenzMatrix(int maximaleKnoten) {
+    initialisiereMatrix(maximaleKnoten);
+  }
+
+  /**
+   * Konstruktor für Objekte der Klasse AdjazenzMatrix.
+   *
+   * @param graphenFormat Ein String im einfachen Graphenformat.
+   */
+  public AdjazenzMatrix(String graphenFormat) {
+    EinfachesGraphenFormat format = new EinfachesGraphenFormat(graphenFormat);
+    initialisiereMatrix(format.gibAnzahlKnoten());
+  }
+
+  private void initialisiereMatrix (int maximaleAnzahlKnoten) {
     anzahlKnoten = 0;
-    knoten = new Knoten[maximaleKnoten];
-    matrix = new int[maximaleKnoten][maximaleKnoten];
+    knoten = new Knoten[maximaleAnzahlKnoten];
+    matrix = new int[maximaleAnzahlKnoten][maximaleAnzahlKnoten];
   }
 
   /**

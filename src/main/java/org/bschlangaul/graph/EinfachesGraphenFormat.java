@@ -1,5 +1,6 @@
 package org.bschlangaul.graph;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -12,14 +13,17 @@ import java.util.regex.Pattern;
  * gerichtete Kanten angegeben.
  *
  */
-public class EinfachesGraphFormat {
+public class EinfachesGraphenFormat {
 
-  Pattern zeilenRegexp = Pattern.compile("(?<von>\\w+)\\s*(?<richtung>[->])\\s*(?<nach>\\w+)(\\s*(?<gewicht>\\d+))?");
+  Pattern zeilenRegexp = Pattern.compile("(?<von>\\w+)\\s*(?<richtung>[->])\\s*(?<nach>\\w+)(\\s+(?<gewicht>\\d+))?");
 
   HashSet<String> knoten;
   HashSet<Kante> kanten;
 
-  class Kante {
+  /**
+   * Diese Klasse dient als eine Art Zwischenspeicher für Kanteninformationen.
+   */
+  class Kante implements Comparable {
     public String von;
     public String nach;
     public int gewicht;
@@ -30,12 +34,20 @@ public class EinfachesGraphFormat {
       this.gewicht = gewicht;
     }
 
+    /**
+     * Diese Methode wird benötigt, um keine doppelten Kanten in dem HashSet kanten
+     * zu haben.
+     */
     @Override
     public int hashCode() {
       String ausgabe = von + ":" + nach;
       return ausgabe.hashCode();
     }
 
+    /**
+     * Diese Methode wird benötigt, um keine doppelten Kanten in dem HashSet kanten
+     * zu haben.
+     */
     @Override
     public boolean equals(Object o) {
       if (o instanceof Kante) {
@@ -45,23 +57,30 @@ public class EinfachesGraphFormat {
       }
       return false;
     }
+
+    /**
+     * Diese Methode wird benötigt, um die Kanten sortieren zu können.
+     *
+     * @param object Eine andere einfache Kante, die verglichen werden soll.
+     *
+     * @return 0, -1, 1
+     */
+    @Override
+    public int compareTo(Object object) {
+      Kante kante = (Kante) object;
+      int ersterVergleich = von.compareTo(kante.von);
+      if (ersterVergleich != 0)
+        return ersterVergleich;
+      return nach.compareTo(kante.nach);
+    }
   }
 
-  public EinfachesGraphFormat(String eingang) {
+  public EinfachesGraphenFormat(String eingang) {
     String[] zeilen = eingang.split("[\\r?\\n]+");
     knoten = new HashSet<String>();
     kanten = new HashSet<Kante>();
     for (String zeile : zeilen) {
       verarbeiteZeile(zeile);
-    }
-
-    for (Object knotenName : knoten.toArray()) {
-      System.out.println(knotenName);
-    }
-
-    for (Object kante : kanten.toArray()) {
-      Kante k = (Kante) kante;
-      System.out.println(k.von + " " + k.nach + " " + k.gewicht);
     }
   }
 
@@ -90,6 +109,28 @@ public class EinfachesGraphFormat {
     }
   }
 
+  public int gibAnzahlKnoten() {
+    return knoten.size();
+  }
+
+  public int gibAnzahlKanten() {
+    return kanten.size();
+  }
+
+  public String[] gibKnoten() {
+    String[] ausgabe = {};
+    ausgabe = knoten.toArray(ausgabe);
+    Arrays.sort(ausgabe);
+    return ausgabe;
+  }
+
+  public Kante[] gibKanten() {
+    Kante[] ausgabe = {};
+    ausgabe = kanten.toArray(ausgabe);
+    Arrays.sort(ausgabe);
+    return ausgabe;
+  }
+
   private void fügeUngerichteteKanteEin(String von, String nach, int gewicht) {
     kanten.add(new Kante(von, nach, gewicht));
     kanten.add(new Kante(nach, von, gewicht));
@@ -97,9 +138,5 @@ public class EinfachesGraphFormat {
 
   private void fügeGerichteteKanteEin(String von, String nach, int gewicht) {
     kanten.add(new Kante(von, nach, gewicht));
-  }
-
-  public static void main(String[] args) {
-    EinfachesGraphFormat graph = new EinfachesGraphFormat("a - b\na - b\na - b\nb > c\nd>e\n e - f 12");
   }
 }
