@@ -76,47 +76,47 @@ public class TiefenSucheStapel extends AdjazenzMatrix {
   public static void main(String[] args) {
     TiefenSucheStapel ts = new TiefenSucheStapel(20);
 
-    ts.fügeKnotenEin("A");
-    ts.fügeKnotenEin("B");
-    ts.fügeKnotenEin("C");
-    ts.fügeKnotenEin("D");
-    ts.fügeKnotenEin("E");
-    ts.fügeKnotenEin("F");
-    ts.fügeKnotenEin("G");
-    ts.fügeKnotenEin("H");
-    ts.fügeKnotenEin("J");
-    ts.fügeKnotenEin("K");
+    ts.setzeKnoten("A");
+    ts.setzeKnoten("B");
+    ts.setzeKnoten("C");
+    ts.setzeKnoten("D");
+    ts.setzeKnoten("E");
+    ts.setzeKnoten("F");
+    ts.setzeKnoten("G");
+    ts.setzeKnoten("H");
+    ts.setzeKnoten("J");
+    ts.setzeKnoten("K");
 
-    ts.fügeKanteEinUngerichtet("A", "B", 1);
-    ts.fügeKanteEinUngerichtet("A", "C", 1);
+    ts.setzeUngerichteteKante("A", "B", 1);
+    ts.setzeUngerichteteKante("A", "C", 1);
 
-    ts.fügeKanteEinUngerichtet("B", "A", 1);
-    ts.fügeKanteEinUngerichtet("B", "D", 1);
-    ts.fügeKanteEinUngerichtet("B", "E", 1);
+    ts.setzeUngerichteteKante("B", "A", 1);
+    ts.setzeUngerichteteKante("B", "D", 1);
+    ts.setzeUngerichteteKante("B", "E", 1);
 
-    ts.fügeKanteEinUngerichtet("C", "A", 1);
-    ts.fügeKanteEinUngerichtet("C", "F", 1);
-    ts.fügeKanteEinUngerichtet("C", "G", 1);
+    ts.setzeUngerichteteKante("C", "A", 1);
+    ts.setzeUngerichteteKante("C", "F", 1);
+    ts.setzeUngerichteteKante("C", "G", 1);
 
-    ts.fügeKanteEinUngerichtet("D", "B", 1);
-    ts.fügeKanteEinUngerichtet("D", "H", 1);
+    ts.setzeUngerichteteKante("D", "B", 1);
+    ts.setzeUngerichteteKante("D", "H", 1);
 
-    ts.fügeKanteEinUngerichtet("E", "B", 1);
-    ts.fügeKanteEinUngerichtet("E", "F", 1);
+    ts.setzeUngerichteteKante("E", "B", 1);
+    ts.setzeUngerichteteKante("E", "F", 1);
 
-    ts.fügeKanteEinUngerichtet("F", "C", 1);
-    ts.fügeKanteEinUngerichtet("F", "E", 1);
-    ts.fügeKanteEinUngerichtet("F", "G", 1);
-    ts.fügeKanteEinUngerichtet("F", "J", 1);
+    ts.setzeUngerichteteKante("F", "C", 1);
+    ts.setzeUngerichteteKante("F", "E", 1);
+    ts.setzeUngerichteteKante("F", "G", 1);
+    ts.setzeUngerichteteKante("F", "J", 1);
 
-    ts.fügeKanteEinUngerichtet("G", "C", 1);
-    ts.fügeKanteEinUngerichtet("G", "F", 1);
+    ts.setzeUngerichteteKante("G", "C", 1);
+    ts.setzeUngerichteteKante("G", "F", 1);
 
-    ts.fügeKanteEinUngerichtet("H", "D", 1);
+    ts.setzeUngerichteteKante("H", "D", 1);
 
-    ts.fügeKanteEinUngerichtet("J", "F", 1);
+    ts.setzeUngerichteteKante("J", "F", 1);
 
-    ts.fügeKanteEinUngerichtet("K", "F", 1);
+    ts.setzeUngerichteteKante("K", "F", 1);
 
     ts.gibMatrixAus();
 

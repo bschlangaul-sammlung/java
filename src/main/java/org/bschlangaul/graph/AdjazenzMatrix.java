@@ -13,13 +13,21 @@ import org.bschlangaul.helfer.Farbe;
  * nach Schulbuch: Informatik 1 Oberstufe Oldenbourg Verlag
  */
 public class AdjazenzMatrix {
-  // aktuelle Knotenanzahl.
+
+  /**
+   * Die aktuelle maximale Knotenanzahl.
+   */
   protected int anzahlKnoten;
 
-  // Feld der Knoten des Graphen.
+  /**
+   *
+   * Feld der Knoten des Graphen.
+   */
   protected Knoten[] knoten;
 
-  // 2-dim Feld der Adjazenzmatrix.
+  /**
+   * Das zweidimensionale Feld der Adjazenzmatrix.
+   */
   protected int[][] matrix;
 
   /**
@@ -34,16 +42,28 @@ public class AdjazenzMatrix {
   }
 
   /**
-   * Konstruktor für Objekte der Klasse AdjazenzMatrix.
+   * Mit diesem Konstruktur kann eine Adjazenzmatrix durch das
+   * einfache Graphenformat erzeugt werden.
    *
    * @param graphenFormat Ein String im einfachen Graphenformat.
    */
   public AdjazenzMatrix(String graphenFormat) {
     EinfachesGraphenFormat format = new EinfachesGraphenFormat(graphenFormat);
     initialisiereMatrix(format.gibAnzahlKnoten());
+
+    for (String knotenName : format.gibKnoten()) {
+      setzeKnoten(knotenName);
+    }
+
+    for (EinfachesGraphenFormat.Kante kante : format.gibKanten()) {
+      // Das einfache Graphenformat setzt für eine ungerichtete Kante
+      // bereits zwei gerichtete Kanten, deshalb werden hier nur gerichtete Kanten
+      // eingefügt.
+      setzeGerichteteKante(kante.von, kante.nach, kante.gewicht);
+    }
   }
 
-  private void initialisiereMatrix (int maximaleAnzahlKnoten) {
+  private void initialisiereMatrix(int maximaleAnzahlKnoten) {
     anzahlKnoten = 0;
     knoten = new Knoten[maximaleAnzahlKnoten];
     matrix = new int[maximaleAnzahlKnoten][maximaleAnzahlKnoten];
@@ -61,7 +81,7 @@ public class AdjazenzMatrix {
    *
    * @param name Name des neuen Knotens, der dem Graphen hinzugefügt wird.
    */
-  public void fügeKnotenEin(String name) {
+  public void setzeKnoten(String name) {
     if ((anzahlKnoten < knoten.length) && (gibKnotenNummer(name) == -1)) {
       knoten[anzahlKnoten] = new Knoten(name);
       matrix[anzahlKnoten][anzahlKnoten] = 0;
@@ -81,7 +101,8 @@ public class AdjazenzMatrix {
    *
    * @param name Name des Knoten der gesucht wird.
    *
-   * @return Indexnummer des Knotens im Knotenarray; 0 &#x3C;= x &#x3C;= anzahl-1 bzw. -1
+   * @return Indexnummer des Knotens im Knotenarray; 0 &#x3C;= x &#x3C;= anzahl-1
+   *         bzw. -1
    */
   public int gibKnotenNummer(String name) {
     int i, ergebnis;
@@ -97,8 +118,8 @@ public class AdjazenzMatrix {
   /**
    * Gibt die Bezeichnung eines Knotens mit der internen Knotennummer.
    *
-   * @param knotenNummer Die Knotennummer des Knotens im Knotenarray; 0 &#x3C;= x &#x3C;=
-   *                     anzahl-1
+   * @param knotenNummer Die Knotennummer des Knotens im Knotenarray; 0 &#x3C;= x
+   *                     &#x3C;= anzahl-1
    *
    * @return name Name des Knoten
    */
@@ -110,69 +131,56 @@ public class AdjazenzMatrix {
   }
 
   /**
+   * Füge eine Kante ein. Diese Methode ist in der allgemeinsten Form. Es gibt
+   * weitere Methoden, die auf diese Methode aufbauen, die weniger Argumente
+   * benötigen.
+   *
+   * Eine Kante ist durch einen Anfangsknoten und einen Endknoten festgelegt und
+   * hat eine Gewichtung.
+   *
+   * @param von       Name des Anfangsknotens
+   * @param nach      Name des Endknotens
+   * @param gewicht   Gewichtung der Kante als Ganzzahl
+   * @param gerichtet Ob die Kante gerichtet oder ungerichtet ist. Ist die Kante
+   *                  ungerichtet werden zwei Einträge in die Matrix gesetzt.
+   */
+  public void setzeKante(String von, String nach, int gewicht, boolean gerichtet) {
+    int vonNummer, nachNummer;
+    vonNummer = gibKnotenNummer(von);
+    nachNummer = gibKnotenNummer(nach);
+    if ((vonNummer != -1) && (nachNummer != -1) && (vonNummer != nachNummer)) {
+      matrix[vonNummer][nachNummer] = gewicht;
+      if (!gerichtet)
+        matrix[nachNummer][vonNummer] = gewicht;
+    }
+  }
+
+  /**
    * Einfügen einer gerichteten Kante in den Graphen.
    *
    * Eine Kante ist durch einen Anfangsknoten und einen Endknoten festgelegt und
    * hat eine Gewichtung.
    *
-   * @param von        Name des Anfangsknotens
-   * @param nach       Name des Endknotens
-   * @param gewichtung Gewichtung der Kante als Ganzzahl
+   * @param von     Name des Anfangsknotens
+   * @param nach    Name des Endknotens
+   * @param gewicht Gewichtung der Kante als Ganzzahl
    */
-  public void fügeKanteEinGerichtet(String von, String nach, int gewichtung) {
-    int vonNummer, nachNummer;
-    vonNummer = gibKnotenNummer(von);
-    nachNummer = gibKnotenNummer(nach);
-    if ((vonNummer != -1) && (nachNummer != -1) && (vonNummer != nachNummer)) {
-      matrix[vonNummer][nachNummer] = gewichtung;
-    }
+  public void setzeGerichteteKante(String von, String nach, int gewicht) {
+    setzeKante(von, nach, gewicht, true);
   }
 
-
   /**
-   * Einfügen einer Kante in den Graphen.
+   * Einfügen einer ungerichteten Kante in den Graphen.
    *
    * Eine Kante ist durch einen Anfangsknoten und einen Endknoten festgelegt und
    * hat eine Gewichtung.
    *
-   * @param von        Name des Anfangsknotens
-   * @param nach       Name des Endknotens
-   * @param gewichtung Gewichtung der Kante als Ganzzahl
+   * @param von     Name des Anfangsknotens
+   * @param nach    Name des Endknotens
+   * @param gewicht Gewichtung der Kante als Ganzzahl
    */
-  public void fügeKanteEinUngerichtet(String von, String nach, int gewichtung) {
-    int vonNummer, nachNummer;
-    vonNummer = gibKnotenNummer(von);
-    nachNummer = gibKnotenNummer(nach);
-    if ((vonNummer != -1) && (nachNummer != -1) && (vonNummer != nachNummer)) {
-      matrix[vonNummer][nachNummer] = gewichtung;
-      matrix[nachNummer][vonNummer] = gewichtung;
-    }
-  }
-
-  /**
-   * Einfügen von Knoten und Kanten eines ungerichteten, ungewichteten
-   * Graphens. Die Knoten werden alphabetisch sortiert.
-   *
-   * @param kanten Eingabe in der Form “A-B A-C A-D” etc.
-   */
-  public void fügeKnotenUndKantenEin(String kanten) {
-    String[] kantenFeld = kanten.split("[ \t\n\r]+");
-    ArrayList<String> knoten = new ArrayList<String>();
-    ArrayList<String[]> kantenListe = new ArrayList<String[]>();
-
-    for (int i = 0; i < kantenFeld.length; i++) {
-      String kante = kantenFeld[i];
-      int index = kante.indexOf("-");
-      String von = kante.substring(0, index);
-      String nach = kante.substring(index + 1);
-      if (!knoten.contains(von)) knoten.add(von);
-      if (!knoten.contains(nach)) knoten.add(nach);
-      kantenListe.add(new String[]{ von, nach });
-    }
-
-    Collections.sort(knoten);
-    for (String knotenName : knoten) fügeKnotenEin(knotenName);
-    for (String[] k : kantenListe) fügeKanteEinUngerichtet(k[0], k[1], 1);
+  public void setzeUngerichteteKante(String von, String nach, int gewicht) {
+    setzeKante(von, nach, gewicht, false);
   }
 
   /**
@@ -234,47 +242,47 @@ public class AdjazenzMatrix {
   public static void main(String[] args) {
     AdjazenzMatrix matrix = new AdjazenzMatrix(20);
 
-    matrix.fügeKnotenEin("A");
-    matrix.fügeKnotenEin("B");
-    matrix.fügeKnotenEin("C");
-    matrix.fügeKnotenEin("D");
-    matrix.fügeKnotenEin("E");
-    matrix.fügeKnotenEin("F");
-    matrix.fügeKnotenEin("G");
-    matrix.fügeKnotenEin("H");
-    matrix.fügeKnotenEin("J");
-    matrix.fügeKnotenEin("K");
+    matrix.setzeKnoten("A");
+    matrix.setzeKnoten("B");
+    matrix.setzeKnoten("C");
+    matrix.setzeKnoten("D");
+    matrix.setzeKnoten("E");
+    matrix.setzeKnoten("F");
+    matrix.setzeKnoten("G");
+    matrix.setzeKnoten("H");
+    matrix.setzeKnoten("J");
+    matrix.setzeKnoten("K");
 
-    matrix.fügeKanteEinUngerichtet("A", "B", 1);
-    matrix.fügeKanteEinUngerichtet("A", "C", 1);
+    matrix.setzeUngerichteteKante("A", "B", 1);
+    matrix.setzeUngerichteteKante("A", "C", 1);
 
-    matrix.fügeKanteEinUngerichtet("B", "A", 1);
-    matrix.fügeKanteEinUngerichtet("B", "D", 1);
-    matrix.fügeKanteEinUngerichtet("B", "E", 1);
+    matrix.setzeUngerichteteKante("B", "A", 1);
+    matrix.setzeUngerichteteKante("B", "D", 1);
+    matrix.setzeUngerichteteKante("B", "E", 1);
 
-    matrix.fügeKanteEinUngerichtet("C", "A", 1);
-    matrix.fügeKanteEinUngerichtet("C", "F", 1);
-    matrix.fügeKanteEinUngerichtet("C", "G", 1);
+    matrix.setzeUngerichteteKante("C", "A", 1);
+    matrix.setzeUngerichteteKante("C", "F", 1);
+    matrix.setzeUngerichteteKante("C", "G", 1);
 
-    matrix.fügeKanteEinUngerichtet("D", "B", 1);
-    matrix.fügeKanteEinUngerichtet("D", "H", 1);
+    matrix.setzeUngerichteteKante("D", "B", 1);
+    matrix.setzeUngerichteteKante("D", "H", 1);
 
-    matrix.fügeKanteEinUngerichtet("E", "B", 1);
-    matrix.fügeKanteEinUngerichtet("E", "F", 1);
+    matrix.setzeUngerichteteKante("E", "B", 1);
+    matrix.setzeUngerichteteKante("E", "F", 1);
 
-    matrix.fügeKanteEinUngerichtet("F", "C", 1);
-    matrix.fügeKanteEinUngerichtet("F", "E", 1);
-    matrix.fügeKanteEinUngerichtet("F", "G", 1);
-    matrix.fügeKanteEinUngerichtet("F", "J", 1);
+    matrix.setzeUngerichteteKante("F", "C", 1);
+    matrix.setzeUngerichteteKante("F", "E", 1);
+    matrix.setzeUngerichteteKante("F", "G", 1);
+    matrix.setzeUngerichteteKante("F", "J", 1);
 
-    matrix.fügeKanteEinUngerichtet("G", "C", 1);
-    matrix.fügeKanteEinUngerichtet("G", "F", 1);
+    matrix.setzeUngerichteteKante("G", "C", 1);
+    matrix.setzeUngerichteteKante("G", "F", 1);
 
-    matrix.fügeKanteEinUngerichtet("H", "D", 1);
+    matrix.setzeUngerichteteKante("H", "D", 1);
 
-    matrix.fügeKanteEinUngerichtet("J", "F", 1);
+    matrix.setzeUngerichteteKante("J", "F", 1);
 
-    matrix.fügeKanteEinUngerichtet("K", "F", 1);
+    matrix.setzeUngerichteteKante("K", "F", 1);
 
     matrix.gibMatrixAus();
   }

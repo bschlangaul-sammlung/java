@@ -23,7 +23,7 @@ public class EinfachesGraphenFormat {
   /**
    * Diese Klasse dient als eine Art Zwischenspeicher für Kanteninformationen.
    */
-  class Kante implements Comparable {
+  class Kante implements Comparable<Kante> {
     public String von;
     public String nach;
     public int gewicht;
@@ -66,8 +66,7 @@ public class EinfachesGraphenFormat {
      * @return 0, -1, 1
      */
     @Override
-    public int compareTo(Object object) {
-      Kante kante = (Kante) object;
+    public int compareTo(Kante kante) {
       int ersterVergleich = von.compareTo(kante.von);
       if (ersterVergleich != 0)
         return ersterVergleich;
