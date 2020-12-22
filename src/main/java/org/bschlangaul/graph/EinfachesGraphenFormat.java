@@ -80,6 +80,10 @@ public class EinfachesGraphenFormat {
     public int compareTo(Knoten knoten) {
       return name.compareTo(knoten.name);
     }
+
+    public String toString() {
+      return String.format("Knoten (name: %s, x: %s, y: %s)", name, x, y);
+    }
   }
 
   /**
@@ -136,6 +140,10 @@ public class EinfachesGraphenFormat {
         return ersterVergleich;
       return nach.compareTo(kante.nach);
     }
+
+    public String toString () {
+      return String.format("Kante (von: %s, nach: %s, gewicht: %s, gerichtet: %b)", von, nach, gewicht, gerichtet);
+    }
   }
 
   String zeilenTrenner = "[\\r\\n;]+";
@@ -160,10 +168,14 @@ public class EinfachesGraphenFormat {
   HashMap<String, Knoten> knoten;
   HashSet<Kante> kanten;
 
-  public EinfachesGraphenFormat(String eingang) {
-    String[] zeilen = eingang.split(zeilenTrenner);
+  public EinfachesGraphenFormat() {
     knoten = new HashMap<String, Knoten>();
     kanten = new HashSet<Kante>();
+  }
+
+  public EinfachesGraphenFormat(String eingang) {
+    this();
+    String[] zeilen = eingang.split(zeilenTrenner);
     for (String zeile : zeilen) {
       verarbeiteZeile(zeile);
     }
@@ -237,13 +249,13 @@ public class EinfachesGraphenFormat {
     return ausgabe;
   }
 
-  private void fügeKnotenEin(String name) {
+  public void fügeKnotenEin(String name) {
     if (knoten.get(name) == null) {
       knoten.put(name, new Knoten(name));
     }
   }
 
-  private void fügeKnotenEin(String name, String x, String y) {
+  public void fügeKnotenEin(String name, String x, String y) {
     double xDouble = Double.parseDouble(x);
     double yDouble = Double.parseDouble(y);
     if (knoten.get(name) == null) {
@@ -255,12 +267,28 @@ public class EinfachesGraphenFormat {
     }
   }
 
-  private void fügeUngerichteteKanteEin(String von, String nach, double gewicht) {
+  public void fügeUngerichteteKanteEin(String von, String nach, String gewicht) {
+    fügeUngerichteteKanteEin(von, nach, Double.parseDouble(gewicht));
+  }
+
+  public void fügeUngerichteteKanteEin(String von, String nach, double gewicht) {
     kanten.add(new Kante(von, nach, gewicht, false));
   }
 
-  private void fügeGerichteteKanteEin(String von, String nach, double gewicht) {
+  public void fügeGerichteteKanteEin(String von, String nach, double gewicht) {
     kanten.add(new Kante(von, nach, gewicht, true));
+  }
+
+  public void gibAus() {
+    System.out.println(String.format("Anzahl an Knoten: %d", gibAnzahlKnoten()));
+    System.out.println(String.format("Anzahl an Kanten: %d", gibAnzahlKanten()));
+
+    for (Knoten knoten : gibKnoten()) {
+      System.out.println(knoten);
+    }
+    for (Kante kante : gibKanten()) {
+      System.out.println(kante);
+    }
   }
 
 }
