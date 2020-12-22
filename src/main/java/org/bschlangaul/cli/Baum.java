@@ -4,8 +4,7 @@ import picocli.CommandLine.Command;
 import java.util.concurrent.Callable;
 
 @Command(name = "baum", aliases = {
-    "b" }, mixinStandardHelpOptions = true, description = "Führe baumspezifische Aufgaben aus.", subcommands = {
-        GraphTex.class, GraphEinfach.class })
+    "b" }, mixinStandardHelpOptions = true, description = "Führe baumspezifische Aufgaben aus.")
 class Baum implements Callable<Integer> {
 
   @Override

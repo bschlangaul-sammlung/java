@@ -21,12 +21,13 @@ import java.util.regex.Pattern;
  *
  * <pre>
  * {@code
- * V: A 3 5
- * v: Knoten 1 -2.3
+ * A: 3 5
+ * Knoten: 1 -2.3
  *
  * A -- Knoten
  * B -- C
- * A->D:3
+ * A->D: 3
+ * Knoten mit Leerzeichen -> Z: 42
  * }
  * </pre>
  */
@@ -81,7 +82,7 @@ public class EinfachesGraphenFormat {
       return name.compareTo(knoten.name);
     }
 
-    public String gibAlsEinfachesFormat () {
+    public String gibAlsEinfachesFormat() {
       return String.format("v: %s %s %s\n", name, formatiereZahl(x), formatiereZahl(y));
     }
 
@@ -145,16 +146,18 @@ public class EinfachesGraphenFormat {
       return nach.compareTo(kante.nach);
     }
 
-    public String gibAlsEinfachesFormat () {
+    public String gibAlsEinfachesFormat() {
       String ausgabe;
       String gerichtetZeichen = gerichtet ? ">" : "-";
       ausgabe = String.format("%s-%s%s", von, gerichtetZeichen, nach);
-      if (gewicht != 1) ausgabe = String.format("%s: %s", ausgabe, formatiereZahl(gewicht));
+      if (gewicht != 1)
+        ausgabe = String.format("%s: %s", ausgabe, formatiereZahl(gewicht));
       return ausgabe + "\n";
     }
 
-    public String toString () {
-      return String.format("Kante (von: %s, nach: %s, gewicht: %s, gerichtet: %b)", von, nach, formatiereZahl(gewicht), gerichtet);
+    public String toString() {
+      return String.format("Kante (von: %s, nach: %s, gewicht: %s, gerichtet: %b)", von, nach, formatiereZahl(gewicht),
+          gerichtet);
     }
   }
 
@@ -166,14 +169,14 @@ public class EinfachesGraphenFormat {
 
   String name = "[\\wäöüÄÜÖß]+";
 
-  String knotenRegexString = "(v|V):" + "\\s+" + macheRegexGruppe("name", name) + "\\s+" + macheRegexGruppe("x", zahl)
-      + "\\s+" + macheRegexGruppe("y", zahl);
+  String knotenRegexString = macheRegexGruppe("name", name) + umgibMitLeerzeichen(":") + macheRegexGruppe("x", zahl) + "\\s+"
+      + macheRegexGruppe("y", zahl);
 
   Pattern knotenRegex = Pattern.compile(knotenRegexString);
 
-  String kantenRegexString = macheRegexGruppe("von", "\\w+") + leerzeichen + macheRegexGruppe("richtung", "[->]")
-      + leerzeichen + macheRegexGruppe("nach", "\\w+")
-      + String.format("((\\s*:\\s*|\\s+)%s)?", macheRegexGruppe("gewicht", zahl));
+  String kantenRegexString = macheRegexGruppe("von", name) + leerzeichen + macheRegexGruppe("richtung", "-[->]")
+      + leerzeichen + macheRegexGruppe("nach", name)
+      + String.format("(%s%s)?", umgibMitLeerzeichen(":"), macheRegexGruppe("gewicht", zahl));
 
   Pattern kantenRegex = Pattern.compile(kantenRegexString);
 
@@ -197,6 +200,10 @@ public class EinfachesGraphenFormat {
     return String.format("(?<%s>%s)", gruppenName, regex);
   }
 
+  private static String umgibMitLeerzeichen(String regex) {
+    return "\\s*" + regex + "\\s*";
+  }
+
   private static String formatiereZahl(String zahl) {
     return zahl.replaceFirst("\\.0$", "");
   }
@@ -210,9 +217,7 @@ public class EinfachesGraphenFormat {
     Matcher kantenErgebnis = kantenRegex.matcher(zeile);
     Matcher knotenErgebnis = knotenRegex.matcher(zeile);
 
-    if (knotenErgebnis.find()) {
-      fügeKnotenEin(knotenErgebnis.group("name"), knotenErgebnis.group("x"), knotenErgebnis.group("y"));
-    } else if (kantenErgebnis.find()) {
+    if (kantenErgebnis.find()) {
       String von = kantenErgebnis.group("von");
       String nach = kantenErgebnis.group("nach");
 
@@ -226,11 +231,13 @@ public class EinfachesGraphenFormat {
         gewicht = Double.parseDouble(kantenErgebnis.group("gewicht"));
       }
 
-      if (kantenErgebnis.group("richtung").equals("-")) {
+      if (kantenErgebnis.group("richtung").equals("--")) {
         fügeUngerichteteKanteEin(von, nach, gewicht);
       } else {
         fügeGerichteteKanteEin(von, nach, gewicht);
       }
+    } else if (knotenErgebnis.find()) {
+      fügeKnotenEin(knotenErgebnis.group("name"), knotenErgebnis.group("x"), knotenErgebnis.group("y"));
     } else {
       System.out.println(String.format("Fehler: %s", zeile));
     }
