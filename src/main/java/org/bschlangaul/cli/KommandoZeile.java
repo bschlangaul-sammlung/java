@@ -6,33 +6,36 @@ import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
 import java.io.File;
-import java.math.BigInteger;
 import java.nio.file.Files;
-import java.security.MessageDigest;
 import java.util.concurrent.Callable;
 
-@Command(name = "checksum", mixinStandardHelpOptions = true, version = "checksum 4.0", description = "Prints the checksum (MD5 by default) of a file to STDOUT.")
-class KommandoZeile implements Callable<Integer> {
+import org.bschlangaul.graph.TexDateiUntersucher;
 
-  @Parameters(index = "0", description = "The file whose checksum to calculate.")
-  private File file;
+@Command(name = "graph", aliases = { "g" }, description = "Führe graphspezifische Aufgaben aus.")
+class Graph implements Callable<Integer> {
 
-  @Option(names = { "-a", "--algorithm" }, description = "MD5, SHA-1, SHA-256, ...")
-  private String algorithm = "MD5";
+  @Parameters(index = "0", description = "Eine TeX-Datei.")
+  private File datei;
 
   @Override
-  public Integer call() throws Exception { // your business logic goes here...
-    byte[] fileContents = Files.readAllBytes(file.toPath());
-    byte[] digest = MessageDigest.getInstance(algorithm).digest(fileContents);
-    System.out.printf("%0" + (digest.length * 2) + "x%n", new BigInteger(1, digest));
+  public Integer call() throws Exception {
+    String inhalt = Files.readString(datei.toPath());
+    TexDateiUntersucher.untersucheInhalt(inhalt);
+    return 0;
+  }
+}
+
+@Command(name = "didaktik", mixinStandardHelpOptions = true, version = "didaktik 0.1.0", description = "Kommandozeilen-Interface für die Java-Didaktik-Beispiele.")
+class KommandoZeile implements Callable<Integer> {
+
+  @Override
+  public Integer call() throws Exception {
+    System.out.println("Benutze eine Unterkommando!");
     return 0;
   }
 
-  // this example implements Callable, so parsing, error handling and handling
-  // user
-  // requests for usage help or version help can be done with one line of code.
   public static void main(String... args) {
-    int exitCode = new CommandLine(new KommandoZeile()).execute(args);
+    int exitCode = new CommandLine(new KommandoZeile()).addSubcommand("graph", new Graph()).execute(args);
     System.exit(exitCode);
   }
 }
