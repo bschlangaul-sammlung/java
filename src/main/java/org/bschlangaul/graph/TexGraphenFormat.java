@@ -16,7 +16,8 @@ public class TexGraphenFormat {
       verarbeiteKnoten(ergebnis.group("knoten"));
       verarbeiteKanten(ergebnis.group("kanten"));
     }
-    graph.gibAus();
+    graph.gibAusFürKommandozeile();
+    System.out.println(graph);
   }
 
   private String[] trenneZeilen(String texEingabe) {

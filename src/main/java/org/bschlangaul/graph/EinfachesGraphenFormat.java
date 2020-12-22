@@ -24,8 +24,8 @@ import java.util.regex.Pattern;
  * V: A 3 5
  * v: Knoten 1 -2.3
  *
- * A - Knoten
- * B - C
+ * A -- Knoten
+ * B -- C
  * A->D:3
  * }
  * </pre>
@@ -81,8 +81,12 @@ public class EinfachesGraphenFormat {
       return name.compareTo(knoten.name);
     }
 
+    public String gibAlsEinfachesFormat () {
+      return String.format("v: %s %s %s\n", name, formatiereZahl(x), formatiereZahl(y));
+    }
+
     public String toString() {
-      return String.format("Knoten (name: %s, x: %s, y: %s)", name, x, y);
+      return String.format("Knoten (name: %s, x: %s, y: %s)", name, formatiereZahl(x), formatiereZahl(y));
     }
   }
 
@@ -141,8 +145,16 @@ public class EinfachesGraphenFormat {
       return nach.compareTo(kante.nach);
     }
 
+    public String gibAlsEinfachesFormat () {
+      String ausgabe;
+      String gerichtetZeichen = gerichtet ? ">" : "-";
+      ausgabe = String.format("%s-%s%s", von, gerichtetZeichen, nach);
+      if (gewicht != 1) ausgabe = String.format("%s: %s", ausgabe, formatiereZahl(gewicht));
+      return ausgabe + "\n";
+    }
+
     public String toString () {
-      return String.format("Kante (von: %s, nach: %s, gewicht: %s, gerichtet: %b)", von, nach, gewicht, gerichtet);
+      return String.format("Kante (von: %s, nach: %s, gewicht: %s, gerichtet: %b)", von, nach, formatiereZahl(gewicht), gerichtet);
     }
   }
 
@@ -183,6 +195,14 @@ public class EinfachesGraphenFormat {
 
   private static String macheRegexGruppe(String gruppenName, String regex) {
     return String.format("(?<%s>%s)", gruppenName, regex);
+  }
+
+  private static String formatiereZahl(String zahl) {
+    return zahl.replaceFirst("\\.0$", "");
+  }
+
+  private static String formatiereZahl(double zahl) {
+    return formatiereZahl(String.valueOf(zahl));
   }
 
   private void verarbeiteZeile(String zeile) {
@@ -279,7 +299,7 @@ public class EinfachesGraphenFormat {
     kanten.add(new Kante(von, nach, gewicht, true));
   }
 
-  public void gibAus() {
+  public void gibAusFürKommandozeile() {
     System.out.println(String.format("Anzahl an Knoten: %d", gibAnzahlKnoten()));
     System.out.println(String.format("Anzahl an Kanten: %d", gibAnzahlKanten()));
 
@@ -289,6 +309,17 @@ public class EinfachesGraphenFormat {
     for (Kante kante : gibKanten()) {
       System.out.println(kante);
     }
+  }
+
+  public String toString() {
+    String ausgabe = "";
+    for (Knoten knoten : gibKnoten()) {
+      ausgabe += knoten.gibAlsEinfachesFormat();
+    }
+    for (Kante kante : gibKanten()) {
+      ausgabe += kante.gibAlsEinfachesFormat();
+    }
+    return ausgabe;
   }
 
 }
