@@ -30,13 +30,6 @@ import java.util.regex.Pattern;
  */
 public class EinfachesGraphenFormat {
 
-  String zeilenTrenner = "[\\r\\n;]+";
-
-  Pattern zeilenRegexp = Pattern.compile("(?<von>\\w+)\\s*(?<richtung>[->])\\s*(?<nach>\\w+)(\\s+(?<gewicht>\\d+))?");
-
-  HashSet<String> knoten;
-  HashSet<Kante> kanten;
-
   class Knoten implements Comparable<Knoten> {
     public String name;
     public double x;
@@ -83,12 +76,14 @@ public class EinfachesGraphenFormat {
   class Kante implements Comparable<Kante> {
     public String von;
     public String nach;
-    public int gewicht;
+    public double gewicht;
+    public boolean gerichtet;
 
-    public Kante(String von, String nach, int gewicht) {
+    public Kante(String von, String nach, double gewicht, boolean gerichtet) {
       this.von = von;
       this.nach = nach;
       this.gewicht = gewicht;
+      this.gerichtet = gerichtet;
     }
 
     /**
@@ -131,6 +126,19 @@ public class EinfachesGraphenFormat {
     }
   }
 
+  String zeilenTrenner = "[\\r\\n;]+";
+
+  String leerzeichen = "\\s*";
+
+  String zahl = "-?\\d+(\\.\\d+)?";
+
+  String kantenRegexString = macheRegexGruppe("von", "\\w+") + leerzeichen + macheRegexGruppe("richtung", "[->]")
+      + leerzeichen + macheRegexGruppe("nach", "\\w+") + String.format("((\\s*:\\s*|\\s+)%s)?", macheRegexGruppe("gewicht", zahl));
+
+  Pattern zeilenRegex = Pattern.compile(kantenRegexString);
+  HashSet<String> knoten;
+  HashSet<Kante> kanten;
+
   public EinfachesGraphenFormat(String eingang) {
     String[] zeilen = eingang.split(zeilenTrenner);
     knoten = new HashSet<String>();
@@ -140,9 +148,13 @@ public class EinfachesGraphenFormat {
     }
   }
 
+  private static String macheRegexGruppe(String gruppenName, String regex) {
+    return String.format("(?<%s>%s)", gruppenName, regex);
+  }
+
   private void verarbeiteZeile(String zeile) {
     zeile = zeile.trim();
-    Matcher ergebnis = zeilenRegexp.matcher(zeile);
+    Matcher ergebnis = zeilenRegex.matcher(zeile);
     if (ergebnis.find()) {
       String von = ergebnis.group("von");
       String nach = ergebnis.group("nach");
@@ -150,11 +162,11 @@ public class EinfachesGraphenFormat {
       knoten.add(von);
       knoten.add(nach);
 
-      int gewicht;
+      double gewicht;
       if (ergebnis.group("gewicht") == null) {
         gewicht = 1;
       } else {
-        gewicht = Integer.parseInt(ergebnis.group("gewicht"));
+        gewicht = Double.parseDouble(ergebnis.group("gewicht"));
       }
 
       if (ergebnis.group("richtung").equals("-")) {
@@ -187,12 +199,11 @@ public class EinfachesGraphenFormat {
     return ausgabe;
   }
 
-  private void fügeUngerichteteKanteEin(String von, String nach, int gewicht) {
-    kanten.add(new Kante(von, nach, gewicht));
-    kanten.add(new Kante(nach, von, gewicht));
+  private void fügeUngerichteteKanteEin(String von, String nach, double gewicht) {
+    kanten.add(new Kante(von, nach, gewicht, false));
   }
 
-  private void fügeGerichteteKanteEin(String von, String nach, int gewicht) {
-    kanten.add(new Kante(von, nach, gewicht));
+  private void fügeGerichteteKanteEin(String von, String nach, double gewicht) {
+    kanten.add(new Kante(von, nach, gewicht, true));
   }
 }

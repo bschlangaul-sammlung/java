@@ -52,10 +52,11 @@ public class AdjazenzMatrix {
     }
 
     for (EinfachesGraphenFormat.Kante kante : format.gibKanten()) {
-      // Das einfache Graphenformat setzt für eine ungerichtete Kante
-      // bereits zwei gerichtete Kanten, deshalb werden hier nur gerichtete Kanten
-      // eingefügt.
-      setzeGerichteteKante(kante.von, kante.nach, kante.gewicht);
+      if (kante.gerichtet) {
+        setzeGerichteteKante(kante.von, kante.nach, (int) kante.gewicht);
+      } else {
+        setzeUngerichteteKante(kante.von, kante.nach, (int) kante.gewicht);
+      }
     }
   }
 
