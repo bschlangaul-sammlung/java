@@ -30,7 +30,7 @@ public class EinfachesGraphenFormatTest {
   @Test
   public void methodeGibKnoten() {
     EinfachesGraphenFormat graph = new EinfachesGraphenFormat("z-a;b-c;x-y");
-    assertArrayEquals(new String[] { "a", "b", "c", "x", "y", "z" }, graph.gibKnoten());
+    assertArrayEquals(new String[] { "a", "b", "c", "x", "y", "z" }, graph.gibKnotenNamen());
   }
 
   @Test

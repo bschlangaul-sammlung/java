@@ -47,7 +47,7 @@ public class AdjazenzMatrix {
     EinfachesGraphenFormat format = new EinfachesGraphenFormat(graphenFormat);
     initialisiereMatrix(format.gibAnzahlKnoten());
 
-    for (String knotenName : format.gibKnoten()) {
+    for (String knotenName : format.gibKnotenNamen()) {
       setzeKnoten(knotenName);
     }
 

@@ -1,7 +1,9 @@
 package org.bschlangaul.graph;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,6 +36,10 @@ public class EinfachesGraphenFormat {
     public String name;
     public double x;
     public double y;
+
+    public Knoten(String name) {
+      this.name = name;
+    }
 
     /**
      * Diese Methode wird benötigt, um keine doppelten Knoten in dem HashSet knoten
@@ -136,12 +142,12 @@ public class EinfachesGraphenFormat {
       + leerzeichen + macheRegexGruppe("nach", "\\w+") + String.format("((\\s*:\\s*|\\s+)%s)?", macheRegexGruppe("gewicht", zahl));
 
   Pattern zeilenRegex = Pattern.compile(kantenRegexString);
-  HashSet<String> knoten;
+  HashMap<String, Knoten> knoten;
   HashSet<Kante> kanten;
 
   public EinfachesGraphenFormat(String eingang) {
     String[] zeilen = eingang.split(zeilenTrenner);
-    knoten = new HashSet<String>();
+    knoten = new HashMap<String, Knoten>();
     kanten = new HashSet<Kante>();
     for (String zeile : zeilen) {
       verarbeiteZeile(zeile);
@@ -159,8 +165,13 @@ public class EinfachesGraphenFormat {
       String von = ergebnis.group("von");
       String nach = ergebnis.group("nach");
 
-      knoten.add(von);
-      knoten.add(nach);
+      if (knoten.get(von) == null) {
+        knoten.put(von, new Knoten(von));
+      }
+
+      if (knoten.get(nach) == null) {
+        knoten.put(nach, new Knoten(nach));
+      }
 
       double gewicht;
       if (ergebnis.group("gewicht") == null) {
@@ -185,9 +196,14 @@ public class EinfachesGraphenFormat {
     return kanten.size();
   }
 
-  public String[] gibKnoten() {
-    String[] ausgabe = {};
-    ausgabe = knoten.toArray(ausgabe);
+  public String[] gibKnotenNamen() {
+    String[] ausgabe = new String[knoten.size()];
+    int zähler = 0;
+    for (Map.Entry<String, Knoten> entry : knoten.entrySet()) {
+      Knoten k = entry.getValue();
+      ausgabe[zähler] = k.name;
+      zähler++;
+    }
     Arrays.sort(ausgabe);
     return ausgabe;
   }
