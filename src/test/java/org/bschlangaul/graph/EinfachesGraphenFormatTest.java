@@ -95,4 +95,34 @@ public class EinfachesGraphenFormatTest {
     assertEquals(123, k.gewicht, 0);
   }
 
+  private EinfachesGraphenFormat.Knoten gibErstenKnoten(String einfachesFormat) {
+    EinfachesGraphenFormat graph = new EinfachesGraphenFormat(einfachesFormat);
+    EinfachesGraphenFormat.Knoten[] knoten = graph.gibKnoten();
+    return knoten[0];
+  }
+
+  @Test
+  public void knoten() {
+    EinfachesGraphenFormat.Knoten k = gibErstenKnoten("v: a 1 2");
+    assertEquals("a", k.name);
+    assertEquals(1, k.x, 0);
+    assertEquals(2, k.y, 0);
+
+    k = gibErstenKnoten("v: abc -1 2.6");
+    assertEquals("abc", k.name);
+    assertEquals(-1, k.x, 0);
+    assertEquals(2.6, k.y, 0);
+
+    k = gibErstenKnoten("a>b;v: a 0.1 2.6");
+    assertEquals("a", k.name);
+    assertEquals(0.1, k.x, 0);
+    assertEquals(2.6, k.y, 0);
+  }
+
+  @Test
+  public void knotenNamen() {
+    EinfachesGraphenFormat graph = new EinfachesGraphenFormat("v: z 1 2; v: a 2 3; v: b 4 5");
+    assertArrayEquals(new String[] {"a", "b", "z"}, graph.gibKnotenNamen());
+  }
+
 }
