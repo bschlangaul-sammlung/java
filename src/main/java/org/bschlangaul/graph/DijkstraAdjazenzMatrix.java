@@ -116,7 +116,7 @@ class DijkstraAdjazenzMatrix extends AdjazenzMatrix {
 
   // Driver Code
   public static void main(String[] args) {
-    DijkstraAdjazenzMatrix dijkstra = new DijkstraAdjazenzMatrix("a-b \nb - c 7\n \na-d 2\nb > d 19");
+    DijkstraAdjazenzMatrix dijkstra = new DijkstraAdjazenzMatrix("a -- b; b -- c: 7; a -- d: 2; b -> d: 19");
     dijkstra.sucheKürzestenPfad("c");
   }
 }

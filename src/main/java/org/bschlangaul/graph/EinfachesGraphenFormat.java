@@ -7,6 +7,24 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+class Re {
+  public static String zeilenTrenner = "[\\r\\n;]+";
+
+  public static String leerzeichen = "\\s*";
+
+  public static String zahl = "-?\\d+(\\.\\d+)?";
+
+  public static String name = "[\\wäöüÄÜÖß]+";
+
+  public static String gruppe(String gruppenName, String regex) {
+    return String.format("(?<%s>%s)", gruppenName, regex);
+  }
+
+  public static String leerzeichen(String regex) {
+    return "\\s*" + regex + "\\s*";
+  }
+}
+
 /**
  * Ein sehr einfaches Dateiformat um einen Graph zu spezifizieren.
  *
@@ -83,7 +101,7 @@ public class EinfachesGraphenFormat {
     }
 
     public String gibAlsEinfachesFormat() {
-      return String.format("v: %s %s %s\n", name, formatiereZahl(x), formatiereZahl(y));
+      return String.format("%s: %s %s\n", name, formatiereZahl(x), formatiereZahl(y));
     }
 
     public String toString() {
@@ -149,7 +167,7 @@ public class EinfachesGraphenFormat {
     public String gibAlsEinfachesFormat() {
       String ausgabe;
       String gerichtetZeichen = gerichtet ? ">" : "-";
-      ausgabe = String.format("%s-%s%s", von, gerichtetZeichen, nach);
+      ausgabe = String.format("%s -%s %s", von, gerichtetZeichen, nach);
       if (gewicht != 1)
         ausgabe = String.format("%s: %s", ausgabe, formatiereZahl(gewicht));
       return ausgabe + "\n";
@@ -161,22 +179,14 @@ public class EinfachesGraphenFormat {
     }
   }
 
-  String zeilenTrenner = "[\\r\\n;]+";
-
-  String leerzeichen = "\\s*";
-
-  String zahl = "-?\\d+(\\.\\d+)?";
-
-  String name = "[\\wäöüÄÜÖß]+";
-
-  String knotenRegexString = macheRegexGruppe("name", name) + umgibMitLeerzeichen(":") + macheRegexGruppe("x", zahl) + "\\s+"
-      + macheRegexGruppe("y", zahl);
+  String knotenRegexString = Re.gruppe("name", Re.name) + Re.leerzeichen(":") + Re.gruppe("x", Re.zahl) + "\\s+"
+      + Re.gruppe("y", Re.zahl);
 
   Pattern knotenRegex = Pattern.compile(knotenRegexString);
 
-  String kantenRegexString = macheRegexGruppe("von", name) + leerzeichen + macheRegexGruppe("richtung", "-[->]")
-      + leerzeichen + macheRegexGruppe("nach", name)
-      + String.format("(%s%s)?", umgibMitLeerzeichen(":"), macheRegexGruppe("gewicht", zahl));
+  String kantenRegexString = Re.gruppe("von", Re.name) + Re.leerzeichen + Re.gruppe("richtung", "-[->]")
+      + Re.leerzeichen + Re.gruppe("nach", Re.name)
+      + String.format("(%s%s)?", Re.leerzeichen(":"), Re.gruppe("gewicht", Re.zahl));
 
   Pattern kantenRegex = Pattern.compile(kantenRegexString);
 
@@ -190,18 +200,10 @@ public class EinfachesGraphenFormat {
 
   public EinfachesGraphenFormat(String eingang) {
     this();
-    String[] zeilen = eingang.split(zeilenTrenner);
+    String[] zeilen = eingang.split(Re.zeilenTrenner);
     for (String zeile : zeilen) {
       verarbeiteZeile(zeile);
     }
-  }
-
-  private static String macheRegexGruppe(String gruppenName, String regex) {
-    return String.format("(?<%s>%s)", gruppenName, regex);
-  }
-
-  private static String umgibMitLeerzeichen(String regex) {
-    return "\\s*" + regex + "\\s*";
   }
 
   private static String formatiereZahl(String zahl) {
