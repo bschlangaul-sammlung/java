@@ -10,22 +10,25 @@ import org.junit.Test;
 
 public class TexGraphenFormatTest {
 
-  private TexGraphenFormat gibGraphenFormat(String relativerPfad) throws IOException {
-    return new TexGraphenFormat(TestHelfer.leseDatei(relativerPfad));
+  private void gibGraphenFormat(String relativerPfad) throws IOException {
+    TexGraphenFormat tex = new TexGraphenFormat(TestHelfer.leseDatei(relativerPfad + ".test"));
+    String tatsächlich = tex.gibEinfachesGraphenFormat();
+    String erwartet = TestHelfer.leseDatei(relativerPfad + ".ergebnis");
+    assertEquals(erwartet, tatsächlich);
   }
 
   @Test
   public void testDatei1() throws IOException {
-    gibGraphenFormat("tex-graph-1.txt");
+    gibGraphenFormat("tex-graph-1");
   }
 
   @Test
   public void testDatei2() throws IOException {
-    gibGraphenFormat("tex-graph-2.txt");
+    gibGraphenFormat("tex-graph-2");
   }
 
   @Test
   public void testDatei3() throws IOException {
-    gibGraphenFormat("tex-graph-3.txt");
+    gibGraphenFormat("tex-graph-3");
   }
 }

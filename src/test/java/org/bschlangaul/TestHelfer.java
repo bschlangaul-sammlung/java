@@ -11,7 +11,6 @@ public class TestHelfer {
     ClassLoader classLoader = TestHelfer.class.getClassLoader();
     String url = classLoader.getResource(relativerPfad).getPath();
     String inhalt = new String(Files.readAllBytes(Paths.get(url)), StandardCharsets.UTF_8);
-    System.out.println(inhalt);
     return inhalt;
   }
 }
