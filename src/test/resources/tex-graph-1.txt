@@ -1,0 +1,20 @@
+\graph knoten {
+  \knoten{A}(6,6)
+  \knoten{B}(8,4)
+  \knoten{C}(8,2)
+  \knoten{D}(6,0)
+  \knoten{E}(1,0)
+  \knoten{F}(0,4)
+  \knoten{G}(2,6)
+} kanten {
+  \kante(A-B){$300$}
+  \kante(A-F){$1000$}
+  \kante(B-C){$1000$}
+  \kante(B-D){$700$}
+  \kante(B-E){$300$}
+  \kante(B-G){$1000$}
+  \kante(C-F){$200$}
+  \kante(D-F){$400$}
+  \kante(E-F){$300$}
+  \kante(F-G){$300$}
+}

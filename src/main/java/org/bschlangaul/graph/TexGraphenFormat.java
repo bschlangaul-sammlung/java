@@ -26,8 +26,7 @@ public class TexGraphenFormat {
 
   private void verarbeiteKnoten(String texEingabe) {
     for (String zeile : trenneZeilen(texEingabe)) {
-      Pattern pattern = Pattern.compile("\\\\knoten\\{(?<name>\\w*?)\\}\\((?<x>\\d+),(?<y>\\d+)\\)", Pattern.DOTALL);
-      Matcher ergebnis = pattern.matcher(zeile);
+      Matcher ergebnis = finde("\\\\knoten\\{(?<name>\\w*?)\\}\\((?<x>\\d+),(?<y>\\d+)\\)", zeile);
       if (ergebnis.find()) {
         graph.fügeKnotenEin(ergebnis.group("name"), ergebnis.group("x"), ergebnis.group("y"));
       }
@@ -36,13 +35,20 @@ public class TexGraphenFormat {
 
   private void verarbeiteKanten(String texEingabe) {
     for (String zeile : trenneZeilen(texEingabe)) {
-      Pattern pattern = Pattern.compile("\\\\kante\\((?<von>\\w*?)-(?<nach>\\w*?)\\)\\{(?<gewicht>\\d+)\\}",
-          Pattern.DOTALL);
-      Matcher ergebnis = pattern.matcher(zeile);
+      Matcher ergebnis = finde(
+          "\\\\(?<makro>kante|kanteR|kanteO|KANTE)\\((?<von>\\w*?)-(?<nach>\\w*?)\\)\\{$?(?<gewicht>\\d+)$?\\}", zeile);
       if (ergebnis.find()) {
-        graph.fügeUngerichteteKanteEin(ergebnis.group("von"), ergebnis.group("nach"), ergebnis.group("gewicht"));
+        boolean gerichtet = false;
+        if (ergebnis.group("makro") == "kanteR")
+          gerichtet = true;
+        graph.fügeKanteEin(ergebnis.group("von"), ergebnis.group("nach"), ergebnis.group("gewicht"), gerichtet);
       }
     }
+  }
+
+  private Matcher finde(String regex, String suchString) {
+    Pattern pattern = Pattern.compile(regex, Pattern.DOTALL);
+    return pattern.matcher(suchString);
   }
 
 }

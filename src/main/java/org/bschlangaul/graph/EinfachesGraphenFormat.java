@@ -297,15 +297,23 @@ public class EinfachesGraphenFormat {
   }
 
   public void fügeUngerichteteKanteEin(String von, String nach, String gewicht) {
-    fügeUngerichteteKanteEin(von, nach, Double.parseDouble(gewicht));
+    fügeKanteEin(von, nach, gewicht, false);
   }
 
   public void fügeUngerichteteKanteEin(String von, String nach, double gewicht) {
-    kanten.add(new Kante(von, nach, gewicht, false));
+    fügeKanteEin(von, nach, gewicht, false);
   }
 
   public void fügeGerichteteKanteEin(String von, String nach, double gewicht) {
-    kanten.add(new Kante(von, nach, gewicht, true));
+    fügeKanteEin(von, nach, gewicht, true);
+  }
+
+  public void fügeKanteEin(String von, String nach, String gewicht, boolean gerichtet) {
+    fügeKanteEin(von, nach, Double.parseDouble(gewicht), gerichtet);
+  }
+
+  public void fügeKanteEin(String von, String nach, double gewicht, boolean gerichtet) {
+    kanten.add(new Kante(von, nach, gewicht, gerichtet));
   }
 
   public void gibAusFürKommandozeile() {

@@ -1,0 +1,16 @@
+\graph knoten {
+  \knoten1(0,0)
+  \knoten2(2,0)
+  \knoten3(4,1)
+  \knoten4(4,2)
+  \knoten5(3,3)
+  \knoten6(0,3)
+} kanten {
+  \kanteO(1-2)
+  \kanteO(1-6)
+  \kanteO(2-3)
+  \kanteO(2-5)
+  \kanteO(3-4)
+  \kanteO(4-5)
+  \kanteO(5-6)
+}
