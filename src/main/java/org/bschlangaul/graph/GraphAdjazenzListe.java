@@ -6,7 +6,7 @@ import java.util.ArrayList;
 // https://www.softwaretestinghelp.com/java-graph-tutorial/
 
 // Graph class
-class AdjazenzListe extends KnotenSpeicher {
+class GraphAdjazenzListe extends Graph {
 
   static class Kante {
     public int nachNr;
@@ -18,9 +18,9 @@ class AdjazenzListe extends KnotenSpeicher {
     }
   }
 
-  List<List<Kante>> liste = new ArrayList<List<Kante>>();
+  private List<List<Kante>> liste = new ArrayList<List<Kante>>();
 
-  public AdjazenzListe(int knotenAnzahl) {
+  public GraphAdjazenzListe(int knotenAnzahl) {
     for (int i = 0; i < knotenAnzahl; i++) {
       liste.add(i, new ArrayList<Kante>());
     }
@@ -29,25 +29,18 @@ class AdjazenzListe extends KnotenSpeicher {
   public void setzeKante(String von, String nach, int gewicht, boolean gerichtet) {
     int vonNummer = setzeKnoten(von);
     int nachNummer = setzeKnoten(nach);
-    liste.get(vonNummer).add(new Kante(nachNummer, gewicht));
-    if (!gerichtet) {
+    if (gibKanteGewicht(von, nach) == -1)
+      liste.get(vonNummer).add(new Kante(nachNummer, gewicht));
+    if (!gerichtet && gibKanteGewicht(nach, von) == -1)
       liste.get(nachNummer).add(new Kante(vonNummer, gewicht));
-    }
   }
 
-  /**
-   * Gib die Gewichtung einer Kante. Die Kante ist durch einen Anfangsknoten und
-   * einen Endknoten festgelegt. Ist die Kante unbekannt, wird -1 ausgegeben.
-   *
-   * @param von  Name des Anfangsknotens
-   * @param nach Name des Endknotens
-   *
-   * @return Gewichtung der Kante
-   */
   public int gibKanteGewicht(String von, String nach) {
     int vonNummer, nachNummer;
     vonNummer = gibKnotenNummer(von);
     nachNummer = gibKnotenNummer(nach);
+    if (vonNummer == -1 || nachNummer == -1)
+      return -1;
     List<Kante> unterListe = liste.get(vonNummer);
     for (int i = 0; i < unterListe.size(); i++) {
       Kante kante = unterListe.get(i);

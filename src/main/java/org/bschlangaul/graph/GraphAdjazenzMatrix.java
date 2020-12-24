@@ -9,7 +9,7 @@ import org.bschlangaul.helfer.Farbe;
  *
  * nach Schulbuch: Informatik 1 Oberstufe Oldenbourg Verlag
  */
-public class AdjazenzMatrix {
+public class GraphAdjazenzMatrix extends Graph {
 
   /**
    * Die aktuelle maximale Knotenanzahl.
@@ -31,10 +31,10 @@ public class AdjazenzMatrix {
    *
    * Die maximale Anzahl der Knoten wird dabei festgelegt.
    *
-   * @param maximaleKnoten Anzahl der maximal möglichen Knoten
+   * @param maximaleKnotenAnzahl Anzahl der maximal möglichen Knoten
    */
-  public AdjazenzMatrix(int maximaleKnoten) {
-    initialisiereMatrix(maximaleKnoten);
+  public GraphAdjazenzMatrix(int maximaleKnotenAnzahl) {
+    initialisiereMatrix(maximaleKnotenAnzahl);
   }
 
   /**
@@ -43,7 +43,7 @@ public class AdjazenzMatrix {
    *
    * @param graphenFormat Ein String im einfachen Graphenformat.
    */
-  public AdjazenzMatrix(String graphenFormat) {
+  public GraphAdjazenzMatrix(String graphenFormat) {
     EinfachesGraphenFormat format = new EinfachesGraphenFormat(graphenFormat);
     initialisiereMatrix(format.gibAnzahlKnoten());
 
@@ -76,19 +76,23 @@ public class AdjazenzMatrix {
    * zu dieser Position wird eine -1 eingefügt, die in der Methode gibMatrixAus()
    * die Ausgabe einer Leerstelle bewirkt.
    *
-   * @param name Name des neuen Knotens, der dem Graphen hinzugefügt wird.
+   * @param knotenName Name des neuen Knotens, der dem Graphen hinzugefügt wird.
    */
-  public void setzeKnoten(String name) {
-    if ((anzahlKnoten < knoten.length) && (gibKnotenNummer(name) == -1)) {
-      knoten[anzahlKnoten] = new Knoten(name);
-      matrix[anzahlKnoten][anzahlKnoten] = 0;
+  public int setzeKnoten(String knotenName) {
+    super.setzeKnoten(knotenName);
+    if ((anzahlKnoten < knoten.length) && (gibKnotenNummer(knotenName) == -1)) {
+      int knotenNummer = anzahlKnoten;
+      knoten[knotenNummer] = new Knoten(knotenName);
+      matrix[knotenNummer][knotenNummer] = 0;
       for (int i = 0; i < anzahlKnoten; i++) {
         // Symmetrie, da ungerichteter Graph
-        matrix[anzahlKnoten][i] = -1;
-        matrix[i][anzahlKnoten] = -1;
+        matrix[knotenNummer][i] = -1;
+        matrix[i][knotenNummer] = -1;
       }
-      anzahlKnoten = anzahlKnoten + 1;
+      anzahlKnoten = knotenNummer + 1;
+      return knotenNummer;
     }
+    return -1;
   }
 
   /**
@@ -235,34 +239,6 @@ public class AdjazenzMatrix {
   }
 
   /**
-   * Einfügen einer gerichteten Kante in den Graphen.
-   *
-   * Eine Kante ist durch einen Anfangsknoten und einen Endknoten festgelegt und
-   * hat eine Gewichtung.
-   *
-   * @param von     Name des Anfangsknotens
-   * @param nach    Name des Endknotens
-   * @param gewicht Gewichtung der Kante als Ganzzahl
-   */
-  public void setzeGerichteteKante(String von, String nach, int gewicht) {
-    setzeKante(von, nach, gewicht, true);
-  }
-
-  /**
-   * Einfügen einer ungerichteten Kante in den Graphen.
-   *
-   * Eine Kante ist durch einen Anfangsknoten und einen Endknoten festgelegt und
-   * hat eine Gewichtung.
-   *
-   * @param von     Name des Anfangsknotens
-   * @param nach    Name des Endknotens
-   * @param gewicht Gewichtung der Kante als Ganzzahl
-   */
-  public void setzeUngerichteteKante(String von, String nach, int gewicht) {
-    setzeKante(von, nach, gewicht, false);
-  }
-
-  /**
    * Gibt die Adjazenzmatrix des Graphen in der Konsole formatiert aus.
    *
    * Matrixelemente, die mit -1 belegt sind, werden als Leerzeichen ausgegeben.
@@ -290,15 +266,6 @@ public class AdjazenzMatrix {
   }
 
   /**
-   * Gibt die Anzahl der Knoten des Graphen.
-   *
-   * @return Anzahl der Knoten
-   */
-  int gibKnotenAnzahl() {
-    return anzahlKnoten;
-  }
-
-  /**
    * Gib die Gewichtung einer Kante. Die Kante ist durch einen Anfangsknoten und
    * einen Endknoten festgelegt. Ist die Kante unbekannt, wird -1 ausgegeben.
    *
@@ -319,7 +286,7 @@ public class AdjazenzMatrix {
   }
 
   public static void main(String[] args) {
-    AdjazenzMatrix matrix = new AdjazenzMatrix(20);
+    GraphAdjazenzMatrix matrix = new GraphAdjazenzMatrix(20);
 
     matrix.setzeKnoten("A");
     matrix.setzeKnoten("B");

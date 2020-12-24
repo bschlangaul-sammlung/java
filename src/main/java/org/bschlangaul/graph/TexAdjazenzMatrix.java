@@ -25,7 +25,7 @@ package org.bschlangaul.graph;
  * </pre>
  */
 public class TexAdjazenzMatrix {
-  private AdjazenzMatrix matrix;
+  private GraphAdjazenzMatrix matrix;
 
   private int spaltenBreite;
 
@@ -34,7 +34,7 @@ public class TexAdjazenzMatrix {
    */
   private String spaltenFormatierung = "c";
 
-  public TexAdjazenzMatrix(AdjazenzMatrix matrix) {
+  public TexAdjazenzMatrix(GraphAdjazenzMatrix matrix) {
     this.matrix = matrix;
     spaltenBreite = matrix.gibSpaltenBreite();
   }
@@ -144,7 +144,7 @@ public class TexAdjazenzMatrix {
   }
 
   public static void main(String[] args) {
-    TexAdjazenzMatrix tex = new TexAdjazenzMatrix(new AdjazenzMatrix("a-b 1\n a-c 2\na-d 3"));
+    TexAdjazenzMatrix tex = new TexAdjazenzMatrix(new GraphAdjazenzMatrix("a-b 1\n a-c 2\na-d 3"));
     System.out.println(tex.gibTexAusgabe());
   }
 

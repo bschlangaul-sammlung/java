@@ -6,7 +6,7 @@ import java.util.Stack;
 /**
  * nach Schulbuch: Informatik 1 Oberstufe Oldenbourg Verlag
  */
-public class TiefenSucheStapel extends AdjazenzMatrix {
+public class TiefenSucheStapel extends GraphAdjazenzMatrix {
   // Liste der besuchten Knoten
   private boolean[] besucht;
 

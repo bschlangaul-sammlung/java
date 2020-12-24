@@ -3,7 +3,7 @@ package org.bschlangaul.graph;
 /**
  * https://www.geeksforgeeks.org/printing-paths-dijkstras-shortest-path-algorithm/
  */
-class DijkstraAdjazenzMatrix extends AdjazenzMatrix {
+class DijkstraAdjazenzMatrix extends GraphAdjazenzMatrix {
 
   /**
    * Mit diesem Konstruktur wird die Adjazenzmatrix durch das einfache

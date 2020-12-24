@@ -6,7 +6,7 @@ import java.util.Vector;
 /**
  * nach Schulbuch Informatik 1 Oberstufe Oldenbourg Verlag
  */
-public class BreitenSucheWarteschlange extends AdjazenzMatrix {
+public class BreitenSucheWarteschlange extends GraphAdjazenzMatrix {
 
   // Liste der besuchten Knoten
   private boolean[] besucht;

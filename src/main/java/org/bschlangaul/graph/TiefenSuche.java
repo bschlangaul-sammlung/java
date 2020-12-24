@@ -3,7 +3,7 @@ package org.bschlangaul.graph;
 /**
  * nach Schulbuch: Informatik 1 Oberstufe Oldenbourg Verlag
  */
-public class TiefenSuche extends AdjazenzMatrix {
+public class TiefenSuche extends GraphAdjazenzMatrix {
   private boolean[] besucht;
 
   public TiefenSuche(int maximaleKnoten) {
