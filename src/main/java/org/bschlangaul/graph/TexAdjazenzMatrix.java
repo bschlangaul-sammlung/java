@@ -92,7 +92,7 @@ public class TexAdjazenzMatrix {
   private String gibMatrixKörper() {
     String ausgabe = "";
     for (int i = 0; i < matrix.gibKnotenAnzahl(); i++) {
-      String zeile = formatiereZelle(matrix.knoten[i].gibName());
+      String zeile = formatiereZelle(matrix.gibKnotenName(i));
       for (int j = 0; j < matrix.gibKnotenAnzahl(); j++) {
         zeile += formatiereZelle(String.valueOf(matrix.matrix[i][j]));
       }
@@ -115,7 +115,7 @@ public class TexAdjazenzMatrix {
    * </pre>
    */
   private String gibInnereUmgebung(String inhalt) {
-    String spaltenDefintion = spaltenFormatierung.repeat(matrix.anzahlKnoten - 1);
+    String spaltenDefintion = spaltenFormatierung.repeat(matrix.gibKnotenAnzahl() - 1);
     // c(cccccc)
     spaltenDefintion = String.format("%s(%s)", spaltenFormatierung, spaltenDefintion);
     return String.format("\\begin{block}{%s}\n%s\\end{block}", spaltenDefintion, inhalt);
@@ -134,7 +134,7 @@ public class TexAdjazenzMatrix {
    * </pre>
    */
   private String gibÄußereUmgebung(String inhalt) {
-    String spaltenDefintion = spaltenFormatierung.repeat(matrix.anzahlKnoten);
+    String spaltenDefintion = spaltenFormatierung.repeat(matrix.gibKnotenAnzahl());
     return "\\[\n" + "\\begin{blockarray}{" + spaltenDefintion + "}\n" + inhalt + "\n" + "\\end{blockarray}\n"
         + "\\[\n";
   }
@@ -144,7 +144,7 @@ public class TexAdjazenzMatrix {
   }
 
   public static void main(String[] args) {
-    TexAdjazenzMatrix tex = new TexAdjazenzMatrix(new GraphAdjazenzMatrix("a-b 1\n a-c 2\na-d 3"));
+    TexAdjazenzMatrix tex = new TexAdjazenzMatrix(new GraphAdjazenzMatrix("a--b: 1; a--c: 2;a--d: 3"));
     System.out.println(tex.gibTexAusgabe());
   }
 

@@ -33,7 +33,7 @@ public class BreitenSucheWarteschlange extends GraphAdjazenzMatrix {
    */
   private void besucheKnoten(int knotenNummer) {
     besucht[knotenNummer] = true;
-    liste.add(knoten[knotenNummer].gibName());
+    liste.add(gibKnotenName(knotenNummer));
     // Liste gibMatrixAus
     System.out.println(Farbe.grün("Warteschlange: ") + liste.toString());
     while (!liste.isEmpty()) {
@@ -43,10 +43,10 @@ public class BreitenSucheWarteschlange extends GraphAdjazenzMatrix {
       route.add(knotenName);
 
       // alle nicht besuchten Nachbarn von knotenName in die Liste einfügen
-      for (int abzweigung = 0; abzweigung <= anzahlKnoten - 1; abzweigung++) {
+      for (int abzweigung = 0; abzweigung <= gibKnotenAnzahl() - 1; abzweigung++) {
         if (matrix[gibKnotenNummer(knotenName)][abzweigung] > 0 && !besucht[abzweigung]) {
           besucht[abzweigung] = true;
-          liste.add(knoten[abzweigung].gibName());
+          liste.add(gibKnotenName(abzweigung));
         }
       }
       // Liste ausgeben
@@ -66,7 +66,7 @@ public class BreitenSucheWarteschlange extends GraphAdjazenzMatrix {
     startnummer = gibKnotenNummer(startKnoten);
 
     if (startnummer != -1) {
-      for (int i = 0; i <= anzahlKnoten - 1; i++) {
+      for (int i = 0; i <= gibKnotenAnzahl() - 1; i++) {
         besucht[i] = false;
       }
       besucheKnoten(startnummer);

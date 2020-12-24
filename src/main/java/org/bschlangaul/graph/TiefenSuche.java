@@ -14,14 +14,14 @@ public class TiefenSuche extends GraphAdjazenzMatrix {
   public void besucheKnoten(int knotenNummer) {
     besucht[knotenNummer] = true;
 
-    System.out.println(knoten[knotenNummer].gibName() + ";");
+    System.out.println(gibKnotenName(knotenNummer) + ";");
 
-    for (int abzweigung = 0; abzweigung <= anzahlKnoten - 1; abzweigung++) {
+    for (int abzweigung = 0; abzweigung <= gibKnotenAnzahl() - 1; abzweigung++) {
       if (matrix[knotenNummer][abzweigung] > 0 && !besucht[abzweigung]) {
         besucheKnoten(abzweigung);
       }
     }
-    System.out.println(knoten[knotenNummer].gibName() + "  fertig");
+    System.out.println(gibKnotenName(knotenNummer) + "  fertig");
   }
 
   public void führeTiefenSucheAus(String startKnoten) {
@@ -29,7 +29,7 @@ public class TiefenSuche extends GraphAdjazenzMatrix {
     startnummer = gibKnotenNummer(startKnoten);
 
     if (startnummer != -1) {
-      for (int i = 0; i <= anzahlKnoten - 1; i++) {
+      for (int i = 0; i <= gibKnotenAnzahl() - 1; i++) {
         besucht[i] = false;
       }
       besucheKnoten(startnummer);

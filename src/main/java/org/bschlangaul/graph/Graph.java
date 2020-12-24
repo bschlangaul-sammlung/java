@@ -5,11 +5,11 @@ import java.util.HashMap;
 
 public abstract class Graph {
 
-  private ArrayList<Knoten> knotenSpeicher;
+  private ArrayList<Knoten> knotenListe;
   private HashMap<String, Integer> knotenIndex;
 
   public Graph() {
-    knotenSpeicher = new ArrayList<Knoten>();
+    knotenListe = new ArrayList<Knoten>();
     knotenIndex = new HashMap<String, Integer>();
   }
 
@@ -17,8 +17,8 @@ public abstract class Graph {
     int index = gibKnotenNummer(knotenName);
     if (index > -1)
       return index;
-    knotenSpeicher.add(new Knoten(knotenName));
-    index = knotenSpeicher.size() - 1;
+    knotenListe.add(new Knoten(knotenName));
+    index = knotenListe.size() - 1;
     knotenIndex.put(knotenName, index);
     return index;
   }
@@ -26,10 +26,13 @@ public abstract class Graph {
   /**
    * Gib die Index-Nummer des Knoten.
    *
+   * Wenn ein Knoten mit diesem Name nicht bekannt ist, wird -1
+   * zurückgegeben.
+   *
    * @param knotenName Der Name des Knoten.
    *
-   * @return Die Knoten-Index-Nummer beginnend ab 0. Falls kein Knoten mit dem
-   *         Namen existiert, wird -1 ausgegeben.
+   * @return Die Knoten-Index-Nummer beginnend ab 0. Falls kein Knoten
+   *         mit dem Namen existiert, wird -1 ausgegeben.
    */
   public int gibKnotenNummer(String knotenName) {
     if (knotenIndex.get(knotenName) != null) {
@@ -39,12 +42,33 @@ public abstract class Graph {
   }
 
   public String gibKnotenName(int knotenNummer) {
-    Knoten knoten = knotenSpeicher.get(knotenNummer);
+    Knoten knoten = knotenListe.get(knotenNummer);
     return knoten.gibName();
   }
 
+
+  public Knoten gibKnoten(int knotenNummer) {
+    return knotenListe.get(knotenNummer);
+  }
+
+  /**
+   * Gib alle Knotennamen als Feld zurück.
+   */
+  public String[] gibAlleKnotenNamen() {
+    String[] ausgabe = new String[gibKnotenAnzahl()];
+    for (int i = 0; i < gibKnotenAnzahl(); i++) {
+      ausgabe[i] = knotenListe.get(i).gibName();
+    }
+    return ausgabe;
+  }
+
+  /**
+   * Gibt die Anzahl der Knoten des Graphen.
+   *
+   * @return Die Anzahl der Knoten.
+   */
   public int gibKnotenAnzahl() {
-    return knotenSpeicher.size();
+    return knotenListe.size();
   }
 
   public abstract void setzeKante(String von, String nach, int gewicht, boolean gerichtet);
@@ -77,5 +101,19 @@ public abstract class Graph {
     setzeKante(von, nach, gewicht, false);
   }
 
+  /**
+   * Berechne die maximale Textbreite der Knotennamen.
+   *
+   * @return Die maximale Textbreite in Anzahl an Zeichen.
+   */
+  public int gibMaximaleKnotennameTextbreite() {
+    int max = -1;
+    for (int i = 0; i < gibKnotenAnzahl(); i++) {
+      int länge = knotenListe.get(i).gibName().length();
+      if (länge > max)
+        max = länge;
+    }
+    return max;
+  }
 
 }

@@ -11,15 +11,7 @@ import org.bschlangaul.helfer.Farbe;
  */
 public class GraphAdjazenzMatrix extends Graph {
 
-  /**
-   * Die aktuelle maximale Knotenanzahl.
-   */
-  protected int anzahlKnoten;
-
-  /**
-   * Feld der Knoten des Graphen. Der erste Knoten hat die Knotennummer 0.
-   */
-  protected Knoten[] knoten;
+  private int maximaleKnotenAnzahl;
 
   /**
    * Das zweidimensionale Feld der Adjazenzmatrix.
@@ -34,6 +26,7 @@ public class GraphAdjazenzMatrix extends Graph {
    * @param maximaleKnotenAnzahl Anzahl der maximal möglichen Knoten
    */
   public GraphAdjazenzMatrix(int maximaleKnotenAnzahl) {
+    this.maximaleKnotenAnzahl = maximaleKnotenAnzahl;
     initialisiereMatrix(maximaleKnotenAnzahl);
   }
 
@@ -61,8 +54,6 @@ public class GraphAdjazenzMatrix extends Graph {
   }
 
   private void initialisiereMatrix(int maximaleAnzahlKnoten) {
-    anzahlKnoten = 0;
-    knoten = new Knoten[maximaleAnzahlKnoten];
     matrix = new int[maximaleAnzahlKnoten][maximaleAnzahlKnoten];
   }
 
@@ -79,41 +70,19 @@ public class GraphAdjazenzMatrix extends Graph {
    * @param knotenName Name des neuen Knotens, der dem Graphen hinzugefügt wird.
    */
   public int setzeKnoten(String knotenName) {
+    int knotenNummer = gibKnotenNummer(knotenName);
+    if (knotenNummer > -1) return knotenNummer;
     super.setzeKnoten(knotenName);
-    if ((anzahlKnoten < knoten.length) && (gibKnotenNummer(knotenName) == -1)) {
-      int knotenNummer = anzahlKnoten;
-      knoten[knotenNummer] = new Knoten(knotenName);
+    if (gibKnotenAnzahl() < maximaleKnotenAnzahl) {
+      knotenNummer = gibKnotenNummer(knotenName);
       matrix[knotenNummer][knotenNummer] = 0;
-      for (int i = 0; i < anzahlKnoten; i++) {
-        // Symmetrie, da ungerichteter Graph
+      for (int i = 0; i < gibKnotenAnzahl(); i++) {
         matrix[knotenNummer][i] = -1;
         matrix[i][knotenNummer] = -1;
       }
-      anzahlKnoten = knotenNummer + 1;
       return knotenNummer;
     }
     return -1;
-  }
-
-  /**
-   * Gibt die interne Nummer des Knoten.
-   *
-   * Wenn ein Knoten mit diesem Name nicht bekannt ist, wird -1 zurückgegeben.
-   *
-   * @param name Name des Knoten der gesucht wird.
-   *
-   * @return Indexnummer des Knotens im Knotenarray; 0 &#x3C;= x &#x3C;= anzahl-1
-   *         bzw. -1
-   */
-  public int gibKnotenNummer(String name) {
-    int i, ergebnis;
-
-    ergebnis = -1;
-    for (i = 0; (i < anzahlKnoten) && (ergebnis == -1); i++)
-      if (knoten[i].gibName().equals(name))
-        ergebnis = i;
-
-    return ergebnis;
   }
 
   /**
@@ -157,20 +126,6 @@ public class GraphAdjazenzMatrix extends Graph {
     return max;
   }
 
-  /**
-   * Berechne die maximale Textbreite der Knotennamen.
-   *
-   * @return Die maximale Textbreite in Anzahl an Zeichen.
-   */
-  public int gibMaximaleKnotennameTextbreite() {
-    int max = -1;
-    for (Knoten k : knoten) {
-      int länge = k.gibName().length();
-      if (länge > max)
-        max = länge;
-    }
-    return max;
-  }
 
   /**
    * Ein kombinierter Wert aus der maximalen Textbreite der Knotennamen und des
@@ -185,32 +140,6 @@ public class GraphAdjazenzMatrix extends Graph {
     int maxGewicht = String.valueOf(gibMaximalesGewicht()).length();
     int maxKnoten = gibMaximaleKnotennameTextbreite();
     return Math.max(Math.max(minGewicht, maxGewicht), maxKnoten);
-  }
-
-  /**
-   * Gibt die Bezeichnung eines Knotens mit der internen Knotennummer.
-   *
-   * @param knotenNummer Die Knotennummer des Knotens im Knotenarray; 0 &#x3C;= x
-   *                     &#x3C;= anzahl-1
-   *
-   * @return Der Name des Knoten.
-   */
-  public String gibKnotenNamen(int knotenNummer) {
-    if ((knotenNummer < anzahlKnoten) && (knotenNummer >= 0))
-      return knoten[knotenNummer].gibName();
-    else
-      return "";
-  }
-
-  /**
-   * Gib alle Knotennamen als Feld zurück.
-   */
-  public String[] gibAlleKnotenNamen() {
-    String[] ausgabe = new String[gibKnotenAnzahl()];
-    for (int i = 0; i < gibKnotenAnzahl(); i++) {
-      ausgabe[i] = knoten[i].gibName();
-    }
-    return ausgabe;
   }
 
   /**
@@ -248,13 +177,13 @@ public class GraphAdjazenzMatrix extends Graph {
     int breite = 4;
     // Kopfzeile
     System.out.print("    ");
-    for (int i = 0; i < anzahlKnoten; i++)
-      System.out.print(knoten[i].gibNameFormatiert(breite));
+    for (int i = 0; i < gibKnotenAnzahl(); i++)
+      System.out.print(gibKnoten(i).gibNameFormatiert(breite));
     System.out.println();
 
-    for (int i = 0; i < anzahlKnoten; i++) {
-      System.out.print(knoten[i].gibNameFormatiert(breite));
-      for (int j = 0; j < anzahlKnoten; j++)
+    for (int i = 0; i < gibKnotenAnzahl(); i++) {
+      System.out.print(gibKnoten(i).gibNameFormatiert(breite));
+      for (int j = 0; j < gibKnotenAnzahl(); j++)
         if (matrix[i][j] == 0) {
           System.out.print(Farbe.gelb("0") + "   ");
         } else if (matrix[i][j] != -1)

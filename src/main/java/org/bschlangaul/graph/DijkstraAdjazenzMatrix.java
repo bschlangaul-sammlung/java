@@ -94,7 +94,7 @@ class DijkstraAdjazenzMatrix extends GraphAdjazenzMatrix {
     for (int vertexIndex = 0; vertexIndex < nVertices; vertexIndex++) {
       if (vertexIndex != gibKnotenNummer(startVertex)) {
         System.out.print("\n" + startVertex + " -> ");
-        System.out.print(gibKnotenNamen(vertexIndex) + " \t\t ");
+        System.out.print(gibKnotenName(vertexIndex) + " \t\t ");
         System.out.print(distances[vertexIndex] + "\t\t");
         printPath(vertexIndex, parents);
       }
@@ -111,7 +111,7 @@ class DijkstraAdjazenzMatrix extends GraphAdjazenzMatrix {
       return;
     }
     printPath(parents[currentVertex], parents);
-    System.out.print(gibKnotenNamen(currentVertex) + " ");
+    System.out.print(gibKnotenName(currentVertex) + " ");
   }
 
   // Driver Code

@@ -33,7 +33,7 @@ public class TiefenSucheStapel extends GraphAdjazenzMatrix {
    */
   public void besucheKnoten(int knotenNummer) {
     besucht[knotenNummer] = true;
-    stapel.push(knoten[knotenNummer].gibName());
+    stapel.push(gibKnotenName(knotenNummer));
     // Stapel ausgeben
     System.out.println(Farbe.grün("Stapel: ") + stapel.toString());
     while (!stapel.isEmpty()) {
@@ -43,10 +43,10 @@ public class TiefenSucheStapel extends GraphAdjazenzMatrix {
       route.push(knotenName);
 
       // alle nicht besuchten Nachbarn von w in den Stapel einfügen
-      for (int abzweigung = 0; abzweigung <= anzahlKnoten - 1; abzweigung++) {
+      for (int abzweigung = 0; abzweigung <= gibKnotenAnzahl() - 1; abzweigung++) {
         if (matrix[gibKnotenNummer(knotenName)][abzweigung] > 0 && !besucht[abzweigung]) {
           besucht[abzweigung] = true;
-          stapel.push(knoten[abzweigung].gibName());
+          stapel.push(gibKnotenName(knotenNummer));
         }
       }
       // Stapel ausgeben
@@ -66,7 +66,7 @@ public class TiefenSucheStapel extends GraphAdjazenzMatrix {
     startnummer = gibKnotenNummer(startKnoten);
 
     if (startnummer != -1) {
-      for (int i = 0; i <= anzahlKnoten - 1; i++) {
+      for (int i = 0; i <= gibKnotenAnzahl() - 1; i++) {
         besucht[i] = false;
       }
       besucheKnoten(startnummer);
