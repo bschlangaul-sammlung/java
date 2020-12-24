@@ -27,7 +27,7 @@ public class GraphAdjazenzMatrix extends Graph {
    */
   public GraphAdjazenzMatrix(int maximaleKnotenAnzahl) {
     this.maximaleKnotenAnzahl = maximaleKnotenAnzahl;
-    initialisiereMatrix(maximaleKnotenAnzahl);
+    initialisiere(maximaleKnotenAnzahl);
   }
 
   /**
@@ -37,23 +37,11 @@ public class GraphAdjazenzMatrix extends Graph {
    * @param graphenFormat Ein String im einfachen Graphenformat.
    */
   public GraphAdjazenzMatrix(String graphenFormat) {
-    EinfachesGraphenFormat format = new EinfachesGraphenFormat(graphenFormat);
-    initialisiereMatrix(format.gibAnzahlKnoten());
-
-    for (String knotenName : format.gibKnotenNamen()) {
-      setzeKnoten(knotenName);
-    }
-
-    for (EinfachesGraphenFormat.Kante kante : format.gibKanten()) {
-      if (kante.gerichtet) {
-        setzeGerichteteKante(kante.von, kante.nach, (int) kante.gewicht);
-      } else {
-        setzeUngerichteteKante(kante.von, kante.nach, (int) kante.gewicht);
-      }
-    }
+    super(graphenFormat);
   }
 
-  private void initialisiereMatrix(int maximaleAnzahlKnoten) {
+  @Override
+  protected void initialisiere(int maximaleAnzahlKnoten) {
     matrix = new int[maximaleAnzahlKnoten][maximaleAnzahlKnoten];
   }
 

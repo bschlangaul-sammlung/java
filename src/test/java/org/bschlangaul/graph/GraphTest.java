@@ -7,9 +7,7 @@ import org.junit.Test;
 class GraphHülle extends Graph {
 
   public void setzeKante(String von, String nach, int gewicht, boolean gerichtet) {
-
   }
-
 }
 
 public class GraphTest {

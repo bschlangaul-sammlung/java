@@ -13,6 +13,29 @@ public abstract class Graph {
     knotenIndex = new HashMap<String, Integer>();
   }
 
+  /**
+   * Mit diesem Konstruktur kann eine Adjazenzmatrix durch das einfache
+   * Graphenformat erzeugt werden.
+   *
+   * @param graphenFormat Ein String im einfachen Graphenformat.
+   */
+  public Graph(String graphenFormat) {
+    this();
+    EinfachesGraphenFormat format = new EinfachesGraphenFormat(graphenFormat);
+    initialisiere(format.gibAnzahlKnoten());
+
+    for (String knotenName : format.gibKnotenNamen()) {
+      setzeKnoten(knotenName);
+    }
+
+    for (EinfachesGraphenFormat.Kante kante : format.gibKanten()) {
+      setzeKante(kante.von, kante.nach, (int) kante.gewicht, kante.gerichtet);
+    }
+  }
+
+  protected void initialisiere(int maximalieKnotenAnzahl) {
+  }
+
   public int setzeKnoten(String knotenName) {
     int index = gibKnotenNummer(knotenName);
     if (index > -1)
@@ -26,13 +49,12 @@ public abstract class Graph {
   /**
    * Gib die Index-Nummer des Knoten.
    *
-   * Wenn ein Knoten mit diesem Name nicht bekannt ist, wird -1
-   * zurückgegeben.
+   * Wenn ein Knoten mit diesem Name nicht bekannt ist, wird -1 zurückgegeben.
    *
    * @param knotenName Der Name des Knoten.
    *
-   * @return Die Knoten-Index-Nummer beginnend ab 0. Falls kein Knoten
-   *         mit dem Namen existiert, wird -1 ausgegeben.
+   * @return Die Knoten-Index-Nummer beginnend ab 0. Falls kein Knoten mit dem
+   *         Namen existiert, wird -1 ausgegeben.
    */
   public int gibKnotenNummer(String knotenName) {
     if (knotenIndex.get(knotenName) != null) {
@@ -45,7 +67,6 @@ public abstract class Graph {
     Knoten knoten = knotenListe.get(knotenNummer);
     return knoten.gibName();
   }
-
 
   public Knoten gibKnoten(int knotenNummer) {
     return knotenListe.get(knotenNummer);
