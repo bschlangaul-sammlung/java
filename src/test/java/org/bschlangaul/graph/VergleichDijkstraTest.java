@@ -20,6 +20,11 @@ class VergleichDijkstra {
     assertEquals(erwartet, liste.gibEntfernung(knotenName));
     assertEquals(erwartet, matrix.gibEntfernung(knotenName));
   }
+
+  public void vergleicheVorgänger(String knotenName, String erwartet) {
+    assertEquals(erwartet, liste.gibVorgänger(knotenName));
+    assertEquals(erwartet, matrix.gibVorgänger(knotenName));
+  }
 }
 
 public class VergleichDijkstraTest {
@@ -28,8 +33,13 @@ public class VergleichDijkstraTest {
   public void dreiKnoten() {
     VergleichDijkstra v = new VergleichDijkstra("a--b: 2; a--c: 3", "a");
     v.vergleicheEntfernung("a", 0);
+    v.vergleicheVorgänger("a", "a");
+
     v.vergleicheEntfernung("b", 2);
+    v.vergleicheVorgänger("b", "a");
+
     v.vergleicheEntfernung("c", 3);
+    v.vergleicheVorgänger("c", "a");
   }
 
   @Test
@@ -37,10 +47,19 @@ public class VergleichDijkstraTest {
     VergleichDijkstra v = new VergleichDijkstra("A->B:100; A->D:50; B->C:100; B->E:250; C->E:50; D->B:100; D->E:250;",
         "A");
     v.vergleicheEntfernung("A", 0);
+    v.vergleicheVorgänger("A", "A");
+
     v.vergleicheEntfernung("B", 100);
+    v.vergleicheVorgänger("B", "A");
+
     v.vergleicheEntfernung("C", 200);
+    v.vergleicheVorgänger("C", "B");
+
     v.vergleicheEntfernung("D", 50);
+    v.vergleicheVorgänger("D", "A");
+
     v.vergleicheEntfernung("E", 250);
+    v.vergleicheVorgänger("E", "C");
   }
 
   @Test

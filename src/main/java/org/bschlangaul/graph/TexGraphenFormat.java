@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 public class TexGraphenFormat {
 
-  public final static String globalerRegex = "\\\\graph knoten \\{(?<knoten>.*?)\n\\} kanten \\{(?<kanten>.*)\n\\}";
+  public final static String globalerRegex = "\\\\graph knoten \\{(?<knoten>.*?)\n\\} kanten \\{(?<kanten>.*?)\n\\}";
 
   EinfachesGraphenFormat graph;
 

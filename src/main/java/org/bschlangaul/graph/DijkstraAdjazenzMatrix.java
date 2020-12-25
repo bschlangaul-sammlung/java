@@ -12,9 +12,9 @@ class DijkstraAdjazenzMatrix extends GraphAdjazenzMatrix {
   int[] kürzesteEntfernungen;
 
   /**
-   * Feld mit dem die Vorgänger-Knoten des kürzesten Pfads gespeichert werden. Ein
-   * Vorgänger-Knoten des Pfads gibt ab, über welchen Knoten man auf kürzesten Weg
-   * zum Knoten kommt.
+   * Feld, mit dem die Vorgänger-Knoten des kürzesten Pfads gespeichert werden.
+   * Ein Vorgänger-Knoten des Pfads gibt ab, über welchen Knoten man auf kürzesten
+   * Weg zum Knoten kommt.
    */
   int[] vorgänger;
 
@@ -48,9 +48,9 @@ class DijkstraAdjazenzMatrix extends GraphAdjazenzMatrix {
 
     // Initialisierung der beiden Felder kürzesteEntfernungen und
     // besucht.
-    for (int knotenNr = 0; knotenNr < knotenAnzahl; knotenNr++) {
-      kürzesteEntfernungen[knotenNr] = Integer.MAX_VALUE;
-      besucht[knotenNr] = false;
+    for (int i = 0; i < knotenAnzahl; i++) {
+      kürzesteEntfernungen[i] = Integer.MAX_VALUE;
+      besucht[i] = false;
     }
 
     // Die Entfernung vom Anfangsknoten zu sich selbst ist immer 0.
@@ -69,26 +69,26 @@ class DijkstraAdjazenzMatrix extends GraphAdjazenzMatrix {
       // Pick the minimum distance vertex from the set of vertices not
       // yet processed. nearestVertex is always equal to startNode in
       // first iteration.
-      int nächsterKnoten = -1;
+      int nähesterKnoten = -1;
       int entfernung = Integer.MAX_VALUE;
-      for (int knotenNr = 0; knotenNr < knotenAnzahl; knotenNr++) {
-        if (!besucht[knotenNr] && kürzesteEntfernungen[knotenNr] < entfernung) {
-          nächsterKnoten = knotenNr;
-          entfernung = kürzesteEntfernungen[knotenNr];
+      for (int j = 0; j < knotenAnzahl; j++) {
+        if (!besucht[j] && kürzesteEntfernungen[j] < entfernung) {
+          nähesterKnoten = j;
+          entfernung = kürzesteEntfernungen[j];
         }
       }
 
       // Markiere den ausgewählten Knoten als besucht.
-      besucht[nächsterKnoten] = true;
+      besucht[nähesterKnoten] = true;
 
       // Update dist value of the adjacent vertices of the picked
       // vertex.
-      for (int knotenNr = 0; knotenNr < knotenAnzahl; knotenNr++) {
-        int kantenEntfernung = matrix[nächsterKnoten][knotenNr];
+      for (int j = 0; j < knotenAnzahl; j++) {
+        int kantenEntfernung = matrix[nähesterKnoten][j];
 
-        if (kantenEntfernung > 0 && ((entfernung + kantenEntfernung) < kürzesteEntfernungen[knotenNr])) {
-          vorgänger[knotenNr] = nächsterKnoten;
-          kürzesteEntfernungen[knotenNr] = entfernung + kantenEntfernung;
+        if (kantenEntfernung > 0 && ((entfernung + kantenEntfernung) < kürzesteEntfernungen[j])) {
+          vorgänger[j] = nähesterKnoten;
+          kürzesteEntfernungen[j] = entfernung + kantenEntfernung;
         }
       }
     }

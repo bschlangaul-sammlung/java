@@ -40,11 +40,6 @@ public class GraphAdjazenzMatrix extends Graph {
   @Override
   protected void initialisiere(int maximaleAnzahlKnoten) {
     matrix = new int[maximaleAnzahlKnoten][maximaleAnzahlKnoten];
-    for (int i = 0; i < maximaleAnzahlKnoten; i++) {
-      for (int j = 0; j < maximaleAnzahlKnoten; j++) {
-        matrix[i][j] = -1;
-      }
-    }
   }
 
   /**
