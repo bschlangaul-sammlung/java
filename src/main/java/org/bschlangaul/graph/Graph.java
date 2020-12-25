@@ -13,15 +13,8 @@ public abstract class Graph {
     knotenIndex = new HashMap<String, Integer>();
   }
 
-  /**
-   * Mit diesem Konstruktur kann eine Adjazenzmatrix durch das einfache
-   * Graphenformat erzeugt werden.
-   *
-   * @param graphenFormat Ein String im einfachen Graphenformat.
-   */
-  public Graph(String graphenFormat) {
+  public Graph(EinfachesGraphenFormat format) {
     this();
-    EinfachesGraphenFormat format = new EinfachesGraphenFormat(graphenFormat);
     initialisiere(format.gibAnzahlKnoten());
 
     for (String knotenName : format.gibKnotenNamen()) {
@@ -31,6 +24,16 @@ public abstract class Graph {
     for (EinfachesGraphenFormat.Kante kante : format.gibKanten()) {
       setzeKante(kante.von, kante.nach, (int) kante.gewicht, kante.gerichtet);
     }
+  }
+
+  /**
+   * Mit diesem Konstruktur kann eine Adjazenzmatrix durch das einfache
+   * Graphenformat erzeugt werden.
+   *
+   * @param graphenFormat Ein String im einfachen Graphenformat.
+   */
+  public Graph(String graphenFormat) {
+    this(new EinfachesGraphenFormat(graphenFormat));
   }
 
   protected void initialisiere(int maximalieKnotenAnzahl) {

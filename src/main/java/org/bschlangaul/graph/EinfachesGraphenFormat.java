@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.bschlangaul.helfer.Tex;
+
 class Re {
   public static String zeilenTrenner = "[\\r\\n;]+";
 
@@ -206,11 +208,11 @@ public class EinfachesGraphenFormat {
     }
   }
 
-  private static String formatiereZahl(String zahl) {
+  public static String formatiereZahl(String zahl) {
     return zahl.replaceFirst("\\.0$", "");
   }
 
-  private static String formatiereZahl(double zahl) {
+  public static String formatiereZahl(double zahl) {
     return formatiereZahl(String.valueOf(zahl));
   }
 
@@ -339,4 +341,7 @@ public class EinfachesGraphenFormat {
     return ausgabe;
   }
 
+  public String gibAlsTexUmgebung() {
+    return Tex.umgebung(TexDateiUntersucher.umgebungsName, toString());
+  }
 }
