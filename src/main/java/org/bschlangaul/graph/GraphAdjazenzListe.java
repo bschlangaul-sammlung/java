@@ -2,13 +2,14 @@ package org.bschlangaul.graph;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 // https://www.softwaretestinghelp.com/java-graph-tutorial/
 
 // Graph class
 class GraphAdjazenzListe extends Graph {
 
-  static class Kante {
+  static class Kante implements Comparator<Kante> {
     public int nachNr;
     public int gewicht;
 
@@ -16,9 +17,18 @@ class GraphAdjazenzListe extends Graph {
       this.nachNr = nachNr;
       this.gewicht = gewicht;
     }
+
+    @Override
+    public int compare(Kante knoten1, Kante knoten2) {
+      if (knoten1.gewicht < knoten2.gewicht)
+        return -1;
+      if (knoten1.gewicht > knoten2.gewicht)
+        return 1;
+      return 0;
+    }
   }
 
-  private List<List<Kante>> liste;
+  protected List<List<Kante>> liste;
 
   /**
    * Konstruktor für Objekte der Klasse GraphAdjazenzListe.
