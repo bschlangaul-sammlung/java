@@ -6,6 +6,19 @@ package org.bschlangaul.graph;
 class DijkstraAdjazenzMatrix extends GraphAdjazenzMatrix {
 
   /**
+   * In diesem Feld werden die kürzesten Entfernungen zu den einzelnen Knoten
+   * gespeichert.
+   */
+  int[] kürzesteEntfernungen;
+
+  /**
+   * Feld mit dem die Vorgänger-Knoten des kürzesten Pfads gespeichert werden. Ein
+   * Vorgänger-Knoten des Pfads gibt ab, über welchen Knoten man auf kürzesten Weg
+   * zum Knoten kommt.
+   */
+  int[] vorgänger;
+
+  /**
    * Mit diesem Konstruktur wird die Adjazenzmatrix durch das einfache
    * Graphenformat erzeugt.
    *
@@ -13,6 +26,7 @@ class DijkstraAdjazenzMatrix extends GraphAdjazenzMatrix {
    */
   public DijkstraAdjazenzMatrix(String graphenFormat) {
     super(graphenFormat);
+    kürzesteEntfernungen = new int[gibKnotenAnzahl()];
   }
 
   private static final int KEINE_VORGÄNGER = -1;
@@ -23,12 +37,9 @@ class DijkstraAdjazenzMatrix extends GraphAdjazenzMatrix {
    *
    * @param anfangsKnoten Der Name des Anfangsknoten.
    */
-  public void sucheKürzestenPfad(String anfangsKnoten) {
+  public int[] sucheKürzestenPfad(String anfangsKnoten) {
     int knotenAnzahl = gibKnotenAnzahl();
-
-    // In diesem Feld werden die kürzesten Entfernungen zu den einzelnen Knoten
-    // gespeichert.
-    int[] kürzesteEntfernungen = new int[knotenAnzahl];
+    kürzesteEntfernungen = new int[knotenAnzahl];
 
     // besucht[i] wird auf true gesetzt, wenn sich der Knoten i im
     // Kürzesten-Pfad-Baum befindet oder der kürzeste Pfad vom Anfangskonten zum
@@ -37,9 +48,9 @@ class DijkstraAdjazenzMatrix extends GraphAdjazenzMatrix {
 
     // Initialisierung der beiden Felder kürzesteEntfernungen und
     // besucht.
-    for (int KnotenNr = 0; KnotenNr < knotenAnzahl; KnotenNr++) {
-      kürzesteEntfernungen[KnotenNr] = Integer.MAX_VALUE;
-      besucht[KnotenNr] = false;
+    for (int knotenNr = 0; knotenNr < knotenAnzahl; knotenNr++) {
+      kürzesteEntfernungen[knotenNr] = Integer.MAX_VALUE;
+      besucht[knotenNr] = false;
     }
 
     // Die Entfernung vom Anfangsknoten zu sich selbst ist immer 0.
@@ -48,7 +59,7 @@ class DijkstraAdjazenzMatrix extends GraphAdjazenzMatrix {
     // Feld mit dem die Vorgänger-Knoten des kürzesten Pfads gespeichert werden.
     // Ein Vorgänger-Knoten des Pfads gibt ab, über welchen Knoten man auf
     // kürzesten Weg zum Knoten kommt.
-    int[] vorgänger = new int[knotenAnzahl];
+    vorgänger = new int[knotenAnzahl];
 
     // Der Anfangsknoten hat keinen Vorgänger.
     vorgänger[gibKnotenNummer(anfangsKnoten)] = KEINE_VORGÄNGER;
@@ -83,6 +94,22 @@ class DijkstraAdjazenzMatrix extends GraphAdjazenzMatrix {
     }
 
     printSolution(anfangsKnoten, kürzesteEntfernungen, vorgänger);
+    return kürzesteEntfernungen;
+  }
+
+  public String gibVorgänger(String knotenName) {
+    int knotenNummer = vorgänger[gibKnotenNummer(knotenName)];
+    if (knotenNummer == -1)
+      return knotenName;
+    return gibKnotenName(knotenNummer);
+  }
+
+  public int gibEntfernung(String knotenName) {
+    return kürzesteEntfernungen[gibKnotenNummer(knotenName)];
+  }
+
+  public static int[] sucheKürzestenPfad(String einfachesGraphenFormat, String anfangsKnoten) {
+    return new DijkstraAdjazenzMatrix(einfachesGraphenFormat).sucheKürzestenPfad(anfangsKnoten);
   }
 
   // A utility function to print the constructed distances array and

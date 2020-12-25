@@ -11,8 +11,6 @@ import org.bschlangaul.helfer.Farbe;
  */
 public class GraphAdjazenzMatrix extends Graph {
 
-  private int maximaleKnotenAnzahl;
-
   /**
    * Das zweidimensionale Feld der Adjazenzmatrix.
    */
@@ -26,7 +24,6 @@ public class GraphAdjazenzMatrix extends Graph {
    * @param maximaleKnotenAnzahl Anzahl der maximal möglichen Knoten
    */
   public GraphAdjazenzMatrix(int maximaleKnotenAnzahl) {
-    this.maximaleKnotenAnzahl = maximaleKnotenAnzahl;
     initialisiere(maximaleKnotenAnzahl);
   }
 
@@ -43,6 +40,11 @@ public class GraphAdjazenzMatrix extends Graph {
   @Override
   protected void initialisiere(int maximaleAnzahlKnoten) {
     matrix = new int[maximaleAnzahlKnoten][maximaleAnzahlKnoten];
+    for (int i = 0; i < maximaleAnzahlKnoten; i++) {
+      for (int j = 0; j < maximaleAnzahlKnoten; j++) {
+        matrix[i][j] = -1;
+      }
+    }
   }
 
   /**
@@ -60,17 +62,9 @@ public class GraphAdjazenzMatrix extends Graph {
   public int setzeKnoten(String knotenName) {
     int knotenNummer = gibKnotenNummer(knotenName);
     if (knotenNummer > -1) return knotenNummer;
-    super.setzeKnoten(knotenName);
-    if (gibKnotenAnzahl() < maximaleKnotenAnzahl) {
-      knotenNummer = gibKnotenNummer(knotenName);
-      matrix[knotenNummer][knotenNummer] = 0;
-      for (int i = 0; i < gibKnotenAnzahl(); i++) {
-        matrix[knotenNummer][i] = -1;
-        matrix[i][knotenNummer] = -1;
-      }
-      return knotenNummer;
-    }
-    return -1;
+    knotenNummer = super.setzeKnoten(knotenName);
+    matrix[knotenNummer][knotenNummer] = 0;
+    return knotenNummer;
   }
 
   /**

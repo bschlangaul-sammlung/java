@@ -75,7 +75,7 @@ public class BreitenSucheWarteschlange extends GraphAdjazenzMatrix {
 
   public static void main(String[] args) {
     BreitenSucheWarteschlange bs = new BreitenSucheWarteschlange(
-        "a-e 7\na-f\na-s\nb-c\nb-d\nb-h\nc-d\nc-h\nc-s\nd-h\ne-f\nf-s\ng-s\nh-s");
+        "a--e; a--f; a--s; b--c; b--d; b--h; c--d; c--h; c--s; d--h; e--f; f--s; g--s; h--s");
     bs.gibMatrixAus();
     bs.starteBreitenSuche("s");
   }
