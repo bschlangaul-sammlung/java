@@ -5,19 +5,19 @@ import java.util.regex.Pattern;
 
 public class TexGraphenFormat {
 
+  public final static String globalerRegex = "\\\\graph knoten \\{(?<knoten>.*?)\n\\} kanten \\{(?<kanten>.*)\n\\}";
+
   EinfachesGraphenFormat graph;
 
   public TexGraphenFormat(String texEingabe) {
     graph = new EinfachesGraphenFormat();
-    Pattern pattern = Pattern.compile("\\\\graph knoten \\{(?<knoten>.*?)\n\\} kanten \\{(?<kanten>.*)\n\\}",
+    Pattern pattern = Pattern.compile(globalerRegex,
         Pattern.DOTALL);
     Matcher ergebnis = pattern.matcher(texEingabe);
     while (ergebnis.find()) {
       verarbeiteKnoten(ergebnis.group("knoten"));
       verarbeiteKanten(ergebnis.group("kanten"));
     }
-    graph.gibAusFürKommandozeile();
-    System.out.println(graph);
   }
 
   private String[] trenneZeilen(String texEingabe) {

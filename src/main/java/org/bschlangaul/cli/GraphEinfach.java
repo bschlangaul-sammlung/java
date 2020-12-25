@@ -19,7 +19,7 @@ class GraphEinfach implements Callable<Integer> {
   @Override
   public Integer call() throws Exception {
     String inhalt = Files.readString(datei.toPath());
-    TexDateiUntersucher.untersucheInhalt(inhalt);
+    //TexDateiUntersucher.sucheNachEinfachem(inhalt);
     return 0;
   }
 }

@@ -1,5 +1,8 @@
 package org.bschlangaul.cli;
 
+import org.bschlangaul.helfer.Tex;
+import org.bschlangaul.graph.TexDateiUntersucher;
+
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 
@@ -9,7 +12,7 @@ import java.nio.file.Files;
 import org.bschlangaul.graph.TexGraphenFormat;
 
 @Command(name = "tex-graphen-format", aliases = {
-    "t" }, description = "Lese TeX-Datei ein, die Graphen im TeX-Graphenformat enthält.")
+    "t" }, description = "Lese TeX-Datei ein, die Graphen im TeX-Graphenformat (\\graph knoten {} kanten {}) enthält und wandle ihn in das einfache Graphenformat um.")
 class GraphTex implements Callable<Integer> {
 
   @Parameters(index = "0", description = "Eine TeX-Datei.")
@@ -18,7 +21,9 @@ class GraphTex implements Callable<Integer> {
   @Override
   public Integer call() throws Exception {
     String inhalt = Files.readString(datei.toPath());
-    new TexGraphenFormat(inhalt);
+    TexGraphenFormat t = new TexGraphenFormat(inhalt);
+    String einfachesGraphenFormat = t.gibEinfachesGraphenFormat();
+    System.out.println(Tex.umgebung(TexDateiUntersucher.umgebungsName, einfachesGraphenFormat));
     return 0;
   }
 }
