@@ -8,6 +8,14 @@ class GraphHülle extends Graph {
 
   public void setzeKante(String von, String nach, int gewicht, boolean gerichtet) {
   }
+
+  public int gibMaximalesGewicht() {
+    return 0;
+  }
+
+  public int gibMinimalesGewicht() {
+    return 0;
+  }
 }
 
 public class GraphTest {

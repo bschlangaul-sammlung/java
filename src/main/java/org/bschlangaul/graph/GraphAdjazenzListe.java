@@ -18,10 +18,33 @@ class GraphAdjazenzListe extends Graph {
     }
   }
 
-  private List<List<Kante>> liste = new ArrayList<List<Kante>>();
+  private List<List<Kante>> liste;
 
-  public GraphAdjazenzListe(int knotenAnzahl) {
-    for (int i = 0; i < knotenAnzahl; i++) {
+  /**
+   * Konstruktor für Objekte der Klasse GraphAdjazenzListe.
+   *
+   * Die maximale Anzahl der Knoten wird dabei festgelegt.
+   *
+   * @param maximaleKnotenAnzahl Anzahl der maximal möglichen Knoten
+   */
+  public GraphAdjazenzListe(int maximaleKnotenAnzahl) {
+    initialisiere(maximaleKnotenAnzahl);
+  }
+
+  /**
+   * Mit diesem Konstruktur kann eine Adjazenzliste durch das einfache
+   * Graphenformat erzeugt werden.
+   *
+   * @param graphenFormat Ein String im einfachen Graphenformat.
+   */
+  public GraphAdjazenzListe(String graphenFormat) {
+    super(graphenFormat);
+  }
+
+  @Override
+  protected void initialisiere(int maximaleAnzahlKnoten) {
+    liste = new ArrayList<List<Kante>>();
+    for (int i = 0; i < maximaleAnzahlKnoten; i++) {
       liste.add(i, new ArrayList<Kante>());
     }
   }
@@ -48,6 +71,46 @@ class GraphAdjazenzListe extends Graph {
         return kante.gewicht;
     }
     return -1;
+  }
+
+  /**
+   * Berechne das kleinste Einzel-Kantengewicht aller Kanten.
+   *
+   * Diese Methode ist nützlich für die negativen Zahlen. Dieser Wert ist z. B.
+   * nützlich, wenn die Adjazenz-Matrix in der Konsole ausgegeben werden soll. Mit
+   * Hilfe dieses Wertes kann die Breite der Tabelle bestimmt werden.
+   *
+   * @return Das Gewicht der Kante mit dem Minimalgewicht.
+   */
+  public int gibMinimalesGewicht() {
+    int min = 0;
+    for (List<Kante> unterListe : liste) {
+      for (Kante kante : unterListe) {
+        if (kante.gewicht < min)
+          min = kante.gewicht;
+      }
+    }
+    return min;
+  }
+
+  /**
+   * Berechne das größte Einzel-Kantengewicht aller Kanten.
+   *
+   * Dieser Wert ist z. B. nützlich, wenn die Adjazenz-Matrix in der Konsole
+   * ausgegeben werden soll. Mit Hilfe dieses Wertes kann die Breite der Tabelle
+   * bestimmt werden.
+   *
+   * @return Das Gewicht der Kante mit dem Maximalgewicht.
+   */
+  public int gibMaximalesGewicht() {
+    int max = 0;
+    for (List<Kante> unterListe : liste) {
+      for (Kante kante : unterListe) {
+        if (kante.gewicht > max)
+          max = kante.gewicht;
+      }
+    }
+    return max;
   }
 
 }

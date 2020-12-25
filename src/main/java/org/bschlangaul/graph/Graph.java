@@ -137,4 +137,40 @@ public abstract class Graph {
     return max;
   }
 
+  /**
+   * Berechne das kleinste Einzel-Kantengewicht aller Kanten.
+   *
+   * Diese Methode ist nützlich für die negativen Zahlen. Dieser Wert ist z. B.
+   * nützlich, wenn die Adjazenz-Matrix in der Konsole ausgegeben werden soll. Mit
+   * Hilfe dieses Wertes kann die Breite der Tabelle bestimmt werden.
+   *
+   * @return Das Gewicht der Kante mit dem Minimalgewicht.
+   */
+  public abstract int gibMinimalesGewicht();
+
+  /**
+   * Berechne das größte Einzel-Kantengewicht aller Kanten.
+   *
+   * Dieser Wert ist z. B. nützlich, wenn die Adjazenz-Matrix in der Konsole
+   * ausgegeben werden soll. Mit Hilfe dieses Wertes kann die Breite der Tabelle
+   * bestimmt werden.
+   *
+   * @return Das Gewicht der Kante mit dem Maximalgewicht.
+   */
+  public abstract int gibMaximalesGewicht();
+
+  /**
+   * Ein kombinierter Wert aus der maximalen Textbreite der Knotennamen und des
+   * minimalen bzw. maximalen Kantengewichts.
+   *
+   * @return Die Anzahl an Zeichen die benötigt werden, damit sowohl alle
+   *         Knotennamen als auch alle Gewichte in einer Spalte mit gewisser
+   *         Breite abgebildet werden können.
+   */
+  public int gibSpaltenBreite() {
+    int minGewicht = String.valueOf(gibMinimalesGewicht()).length();
+    int maxGewicht = String.valueOf(gibMaximalesGewicht()).length();
+    int maxKnoten = gibMaximaleKnotennameTextbreite();
+    return Math.max(Math.max(minGewicht, maxGewicht), maxKnoten);
+  }
 }
