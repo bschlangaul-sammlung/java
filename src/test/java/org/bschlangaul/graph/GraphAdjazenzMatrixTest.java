@@ -35,7 +35,7 @@ public class GraphAdjazenzMatrixTest {
     matrix.setzeGerichteteKante("A", "B", 13);
 
     assertEquals(13, matrix.gibKanteGewicht("A", "B"));
-    assertEquals(-1, matrix.gibKanteGewicht("B", "A"));
+    assertEquals(0, matrix.gibKanteGewicht("B", "A"));
   }
 
   @Test

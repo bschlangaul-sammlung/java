@@ -3,7 +3,11 @@ package org.bschlangaul.graph;
 /**
  * https://www.geeksforgeeks.org/printing-paths-dijkstras-shortest-path-algorithm/
  */
-class DijkstraAdjazenzMatrix extends GraphAdjazenzMatrix {
+class Dijkstra {
+
+  String graphenFormat;
+
+  Graph graph;
 
   /**
    * In diesem Feld werden die kürzesten Entfernungen zu den einzelnen Knoten
@@ -24,9 +28,9 @@ class DijkstraAdjazenzMatrix extends GraphAdjazenzMatrix {
    *
    * @param graphenFormat Ein String im einfachen Graphenformat.
    */
-  public DijkstraAdjazenzMatrix(String graphenFormat) {
-    super(graphenFormat);
-    kürzesteEntfernungen = new int[gibKnotenAnzahl()];
+  public Dijkstra(String graphenFormat) {
+    this.graphenFormat = graphenFormat;
+    graph = new GraphAdjazenzMatrix(graphenFormat);
   }
 
   private static final int KEINE_VORGÄNGER = -1;
@@ -37,8 +41,12 @@ class DijkstraAdjazenzMatrix extends GraphAdjazenzMatrix {
    *
    * @param anfangsKnoten Der Name des Anfangsknoten.
    */
-  public int[] sucheKürzestenPfad(String anfangsKnoten) {
-    int knotenAnzahl = gibKnotenAnzahl();
+  public int[] sucheKürzestenPfadMatrix(String anfangsKnoten) {
+    GraphAdjazenzMatrix matrix = new GraphAdjazenzMatrix(graphenFormat);
+    graph = matrix;
+    kürzesteEntfernungen = new int[matrix.gibKnotenAnzahl()];
+
+    int knotenAnzahl = matrix.gibKnotenAnzahl();
     kürzesteEntfernungen = new int[knotenAnzahl];
 
     // besucht[i] wird auf true gesetzt, wenn sich der Knoten i im
@@ -54,7 +62,7 @@ class DijkstraAdjazenzMatrix extends GraphAdjazenzMatrix {
     }
 
     // Die Entfernung vom Anfangsknoten zu sich selbst ist immer 0.
-    kürzesteEntfernungen[gibKnotenNummer(anfangsKnoten)] = 0;
+    kürzesteEntfernungen[matrix.gibKnotenNummer(anfangsKnoten)] = 0;
 
     // Feld mit dem die Vorgänger-Knoten des kürzesten Pfads gespeichert werden.
     // Ein Vorgänger-Knoten des Pfads gibt ab, über welchen Knoten man auf
@@ -62,7 +70,7 @@ class DijkstraAdjazenzMatrix extends GraphAdjazenzMatrix {
     vorgänger = new int[knotenAnzahl];
 
     // Der Anfangsknoten hat keinen Vorgänger.
-    vorgänger[gibKnotenNummer(anfangsKnoten)] = KEINE_VORGÄNGER;
+    vorgänger[matrix.gibKnotenNummer(anfangsKnoten)] = KEINE_VORGÄNGER;
 
     // Hier startet der eigentliche Algorithmus.
     for (int i = 1; i < knotenAnzahl; i++) {
@@ -84,7 +92,7 @@ class DijkstraAdjazenzMatrix extends GraphAdjazenzMatrix {
       // Update dist value of the adjacent vertices of the picked
       // vertex.
       for (int j = 0; j < knotenAnzahl; j++) {
-        int kantenEntfernung = matrix[nähesterKnoten][j];
+        int kantenEntfernung = matrix.matrix[nähesterKnoten][j];
 
         if (kantenEntfernung > 0 && ((entfernung + kantenEntfernung) < kürzesteEntfernungen[j])) {
           vorgänger[j] = nähesterKnoten;
@@ -98,14 +106,14 @@ class DijkstraAdjazenzMatrix extends GraphAdjazenzMatrix {
   }
 
   public String gibVorgänger(String knotenName) {
-    int knotenNummer = vorgänger[gibKnotenNummer(knotenName)];
+    int knotenNummer = vorgänger[graph.gibKnotenNummer(knotenName)];
     if (knotenNummer == -1)
       return knotenName;
-    return gibKnotenName(knotenNummer);
+    return graph.gibKnotenName(knotenNummer);
   }
 
   public int gibEntfernung(String knotenName) {
-    return kürzesteEntfernungen[gibKnotenNummer(knotenName)];
+    return kürzesteEntfernungen[graph.gibKnotenNummer(knotenName)];
   }
 
   public static int[] sucheKürzestenPfad(String einfachesGraphenFormat, String anfangsKnoten) {
@@ -119,9 +127,9 @@ class DijkstraAdjazenzMatrix extends GraphAdjazenzMatrix {
     System.out.print("Vertex\t Distance\tPath");
 
     for (int vertexIndex = 0; vertexIndex < nVertices; vertexIndex++) {
-      if (vertexIndex != gibKnotenNummer(startVertex)) {
+      if (vertexIndex != graph.gibKnotenNummer(startVertex)) {
         System.out.print("\n" + startVertex + " -> ");
-        System.out.print(gibKnotenName(vertexIndex) + " \t\t ");
+        System.out.print(graph.gibKnotenName(vertexIndex) + " \t\t ");
         System.out.print(distances[vertexIndex] + "\t\t");
         printPath(vertexIndex, parents);
       }
@@ -138,7 +146,7 @@ class DijkstraAdjazenzMatrix extends GraphAdjazenzMatrix {
       return;
     }
     printPath(parents[currentVertex], parents);
-    System.out.print(gibKnotenName(currentVertex) + " ");
+    System.out.print(graph.gibKnotenName(currentVertex) + " ");
   }
 
   // Driver Code
@@ -146,9 +154,9 @@ class DijkstraAdjazenzMatrix extends GraphAdjazenzMatrix {
     // DijkstraAdjazenzMatrix dijkstra = new DijkstraAdjazenzMatrix("a -- b; b -- c: 7; a -- d: 2; b -> d: 19");
     // dijkstra.sucheKürzestenPfad("c");
 
-    DijkstraAdjazenzMatrix d = new DijkstraAdjazenzMatrix(
+    Dijkstra d = new Dijkstra(
       "a->b: 1; a->e: 7; b->c: 3; c->d: 8; c->e: 3; e->f: 1; c->f: 6; f->c: 1; f->d: 3");
 
-  d.sucheKürzestenPfad("a");
+  d.sucheKürzestenPfadMatrix("a");
   }
 }

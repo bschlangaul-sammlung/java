@@ -50,11 +50,6 @@ public class DijkstraAdjazenzListe extends GraphAdjazenzListe {
 
   private Set<Integer> besucht;
 
-  /**
-   * Warteschlange
-   */
-  private PriorityQueue<Entfernung> warteschlange;
-
   private static final int KEINE_VORGÄNGER = -1;
 
   /**
@@ -68,7 +63,6 @@ public class DijkstraAdjazenzListe extends GraphAdjazenzListe {
     kürzesteEntfernungen = new int[gibKnotenAnzahl()];
     vorgänger = new int[gibKnotenAnzahl()];
     besucht = new HashSet<Integer>();
-    warteschlange = new PriorityQueue<Entfernung>(gibKnotenAnzahl(), new Entfernung(0, 0));
   }
 
   /**
@@ -78,6 +72,7 @@ public class DijkstraAdjazenzListe extends GraphAdjazenzListe {
    * @param startKnotenName Der Name des Startknoten
    */
   public void sucheKürzestenPfad(String startKnotenName) {
+    PriorityQueue<Entfernung> warteschlange = new PriorityQueue<Entfernung>(gibKnotenAnzahl(), new Entfernung(0, 0));
 
     int startKnotenNr = gibKnotenNummer(startKnotenName);
 
@@ -102,36 +97,27 @@ public class DijkstraAdjazenzListe extends GraphAdjazenzListe {
       // finalized
       besucht.add(knotenNummer);
 
-      findeNachbarn(knotenNummer);
-    }
-  }
+      int kantenEntfernung = -1;
+      int neueEntfernung = -1;
 
-  /**
-   * Finde Nachbarn.
-   *
-   * @param knotenNummer Die Nummer des Knoten.
-   */
-  private void findeNachbarn(int knotenNummer) {
-    int kantenEntfernung = -1;
-    int neueEntfernung = -1;
+      // All the neighbors of v
+      for (int i = 0; i < liste.get(knotenNummer).size(); i++) {
+        Kante kante = liste.get(knotenNummer).get(i);
 
-    // All the neighbors of v
-    for (int i = 0; i < liste.get(knotenNummer).size(); i++) {
-      Kante kante = liste.get(knotenNummer).get(i);
+        // If current node hasn't already been processed
+        if (!besucht.contains(kante.nachNr)) {
+          kantenEntfernung = kante.gewicht;
+          neueEntfernung = kürzesteEntfernungen[knotenNummer] + kantenEntfernung;
 
-      // If current node hasn't already been processed
-      if (!besucht.contains(kante.nachNr)) {
-        kantenEntfernung = kante.gewicht;
-        neueEntfernung = kürzesteEntfernungen[knotenNummer] + kantenEntfernung;
+          // If new distance is cheaper in cost
+          if (neueEntfernung < kürzesteEntfernungen[kante.nachNr]) {
+            kürzesteEntfernungen[kante.nachNr] = neueEntfernung;
+            vorgänger[kante.nachNr] = knotenNummer;
+          }
 
-        // If new distance is cheaper in cost
-        if (neueEntfernung < kürzesteEntfernungen[kante.nachNr]) {
-          kürzesteEntfernungen[kante.nachNr] = neueEntfernung;
-          vorgänger[kante.nachNr] = knotenNummer;
+          // Add the current node to the queue
+          warteschlange.add(new Entfernung(kante.nachNr, kürzesteEntfernungen[kante.nachNr]));
         }
-
-        // Add the current node to the queue
-        warteschlange.add(new Entfernung(kante.nachNr, kürzesteEntfernungen[kante.nachNr]));
       }
     }
   }
@@ -148,10 +134,16 @@ public class DijkstraAdjazenzListe extends GraphAdjazenzListe {
   }
 
   public static void main(String[] args) {
-    DijkstraAdjazenzListe d = new DijkstraAdjazenzListe(
-        "a->b: 1; a->e: 7; b->c: 3; c->d: 8; c->e: 3; e->f: 1; c->f: 6; f->c: 1; f->d: 3");
+    // DijkstraAdjazenzListe d = new DijkstraAdjazenzListe(
+    // "a->b: 1; a->e: 7; b->c: 3; c->d: 8; c->e: 3; e->f: 1; c->f: 6; f->c: 1;
+    // f->d: 3");
 
-    d.sucheKürzestenPfad("a");
+    // d.sucheKürzestenPfad("d");
+
+    DijkstraAdjazenzListe d = new DijkstraAdjazenzListe(
+        "A: 1 4; B: 3 5; C: 3 3; D: 0 2; E: 5 5; F: 5 1; G: 3 0; H: 6 3; I: 8 4; A -- B: 2; A -- C: 5; A -- D: 2; B -- C: 3; B -- E; C -- D: 3; C -- E; C -- F; C -- H; D -- G: 2; E -- I: 7; F -- G: 2; F -- H: 3; H -- I;");
+
+    d.sucheKürzestenPfad("A");
   }
 
 }
