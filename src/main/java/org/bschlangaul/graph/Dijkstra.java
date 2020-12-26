@@ -98,7 +98,6 @@ public class Dijkstra {
           entfernung = kürzesteEntfernungen[j];
         }
       }
-      System.out.println(matrix.gibKnotenName(ausgewählterKnoten));
 
       // Markiere den ausgewählten Knoten als besucht.
       besucht[ausgewählterKnoten] = true;

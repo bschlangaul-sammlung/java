@@ -242,8 +242,10 @@ public class EinfachesGraphenFormat {
       }
     } else if (knotenErgebnis.find()) {
       fügeKnotenEin(knotenErgebnis.group("name"), knotenErgebnis.group("x"), knotenErgebnis.group("y"));
+    } else if (zeile.matches("\\s*")) {
+      // Mache nix.
     } else {
-      System.out.println(String.format("Fehler: %s", zeile));
+      System.out.println(String.format("Einfaches-Graphen-Format-Fehler (Zeile nicht erkannt): „%s“", zeile));
     }
   }
 
