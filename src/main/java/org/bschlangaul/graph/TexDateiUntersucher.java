@@ -68,5 +68,9 @@ public class TexDateiUntersucher {
     gibÜberschriftAus("Adjazenz-Matrix");
     GraphAdjazenzMatrix matrix = new GraphAdjazenzMatrix(graph.toString());
     System.out.println(new TexAdjazenzMatrix(matrix).gibTexAusgabe());
+
+    gibÜberschriftAus("Adjazenz-Liste");
+    GraphAdjazenzListe liste = new GraphAdjazenzListe(graph.toString());
+    System.out.println(new TexAdjazenzListe(liste).gibTexAusgabe());
   }
 }

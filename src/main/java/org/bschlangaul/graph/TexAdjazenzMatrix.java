@@ -136,7 +136,7 @@ public class TexAdjazenzMatrix {
   private String gibÄußereUmgebung(String inhalt) {
     String spaltenDefintion = spaltenFormatierung.repeat(matrix.gibKnotenAnzahl());
     return "\\[\n" + "\\begin{blockarray}{" + spaltenDefintion + "}\n" + inhalt + "\n" + "\\end{blockarray}\n"
-        + "\\[\n";
+        + "\\]\n";
   }
 
   public String gibTexAusgabe() {

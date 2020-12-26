@@ -114,4 +114,15 @@ class GraphAdjazenzListe extends Graph {
     return max;
   }
 
+  public int gibMaximaleUnterListenTiefe() {
+    int max = 0;
+    for (List<Kante> unterListe : liste) {
+      if (unterListe.size() > max) {
+        max = unterListe.size();
+      }
+
+    }
+    return max;
+  }
+
 }
