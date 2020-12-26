@@ -87,37 +87,36 @@ public class Dijkstra {
 
     // Hier startet der eigentliche Algorithmus.
     for (int i = 1; i < knotenAnzahl; i++) {
-      // Pick the minimum distance vertex from the set of vertices not
-      // yet processed. nearestVertex is always equal to startNode in
-      // first iteration.
-      int nähesterKnoten = -1;
+      // Es wird der Knoten mit der kürzesten Entfernung zum Startknoten
+      // aus den noch nicht besuchten Knoten auswählt. Beim ersten
+      // Durchlauf ist dieser Knoten identisch mit dem Startknoten.
+      int ausgewählterKnoten = -1;
       int entfernung = Integer.MAX_VALUE;
       for (int j = 0; j < knotenAnzahl; j++) {
         if (!besucht[j] && kürzesteEntfernungen[j] < entfernung) {
-          nähesterKnoten = j;
+          ausgewählterKnoten = j;
           entfernung = kürzesteEntfernungen[j];
         }
       }
-      System.out.println(matrix.gibKnotenName(nähesterKnoten));
+      System.out.println(matrix.gibKnotenName(ausgewählterKnoten));
 
       // Markiere den ausgewählten Knoten als besucht.
-      besucht[nähesterKnoten] = true;
+      besucht[ausgewählterKnoten] = true;
 
-      bearbeitungsReihenfolge.add(nähesterKnoten);
+      bearbeitungsReihenfolge.add(ausgewählterKnoten);
 
-      // Update dist value of the adjacent vertices of the picked
-      // vertex.
+      // Hier werden die kürzesten Entfernung der benachbarten Knoten des ausgewählten
+      // Knoten aktualisiert.
       for (int j = 0; j < knotenAnzahl; j++) {
-        int kantenEntfernung = matrix.matrix[nähesterKnoten][j];
-
+        int kantenEntfernung = matrix.matrix[ausgewählterKnoten][j];
         if (kantenEntfernung > 0 && ((entfernung + kantenEntfernung) < kürzesteEntfernungen[j])) {
-          vorgänger[j] = nähesterKnoten;
+          vorgänger[j] = ausgewählterKnoten;
           kürzesteEntfernungen[j] = entfernung + kantenEntfernung;
         }
       }
     }
 
-    // Sammle rekursive alle Pfade (A -> B -> E)
+    // Sammle rekursiv alle Pfade (A -> B -> E)
     for (int i = 0; i < knotenAnzahl; i++) {
       if (i != startKnotenNr) {
         sammlePfade(i, i, vorgänger);
@@ -138,7 +137,7 @@ public class Dijkstra {
   }
 
   public static int[] sucheKürzestenPfad(String einfachesGraphenFormat, String anfangsKnoten) {
-    return new DijkstraAdjazenzMatrix(einfachesGraphenFormat).sucheKürzestenPfad(anfangsKnoten);
+    return new Dijkstra(einfachesGraphenFormat).sucheKürzestenPfadMatrix(anfangsKnoten);
   }
 
   public void gibErgebnisTabelle() {

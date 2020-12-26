@@ -1,33 +1,33 @@
 package org.bschlangaul.graph;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
 class VergleichDijkstra {
 
-  public DijkstraAdjazenzListe liste;
-  public DijkstraAdjazenzMatrix matrix;
+  public Dijkstra djikstra;
 
   public VergleichDijkstra(String einfachesGraphenFormat, String startKnotenName) {
-    liste = new DijkstraAdjazenzListe(einfachesGraphenFormat);
-    liste.sucheKürzestenPfad(startKnotenName);
-    matrix = new DijkstraAdjazenzMatrix(einfachesGraphenFormat);
-    matrix.sucheKürzestenPfad(startKnotenName);
+    djikstra = new Dijkstra(einfachesGraphenFormat);
+    djikstra.sucheKürzestenPfadMatrix(startKnotenName);
   }
 
   public void vergleicheEntfernung(String knotenName, int erwartet) {
-    assertEquals(erwartet, liste.gibEntfernung(knotenName));
-    assertEquals(erwartet, matrix.gibEntfernung(knotenName));
+    assertEquals(erwartet, djikstra.gibEntfernung(knotenName));
   }
 
   public void vergleicheVorgänger(String knotenName, String erwartet) {
-    assertEquals(erwartet, liste.gibVorgänger(knotenName));
-    assertEquals(erwartet, matrix.gibVorgänger(knotenName));
+    assertEquals(erwartet, djikstra.gibVorgänger(knotenName));
   }
 }
 
-public class VergleichDijkstraTest {
+public class DijkstraTest {
+
+  public void einfachStatisch() {
+    assertArrayEquals(new int[] { 0, 2, 3 }, Dijkstra.sucheKürzestenPfad("a--b: 2; a--c: 3", "a"));
+  }
 
   @Test
   public void dreiKnoten() {
