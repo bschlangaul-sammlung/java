@@ -92,6 +92,7 @@ public class DijkstraAdjazenzListe extends GraphAdjazenzListe {
       // remove the minimum distance node
       // from the priority queue
       int knotenNummer = warteschlange.remove().nachNr;
+      System.out.println(knotenNummer);
 
       // adding the node whose distance is
       // finalized
