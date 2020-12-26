@@ -3,28 +3,23 @@ package org.bschlangaul.muster.backtracking;
 public class TicTacToe {
 
   static boolean zeileGewonnen(final char[][] feld, final int z, final char spieler) {
-    // TODO implementieren
     return true;
   }
 
   static boolean spalteGewonnen(final char[][] feld, final int z, final char spieler) {
-    // TODO implementieren
     return true;
 
   }
 
   static boolean diagonaleGewonnen(final char[][] feld, final char spieler) {
-    // TODO implementieren
     return true;
   }
 
   public static boolean freiesFeld(final char[][] feld) {
-    // TODO implementieren
     return true;
   }
 
   public static char wechsel(final char spieler) {
-    // TODO implementieren
     return 'x';
   }
 

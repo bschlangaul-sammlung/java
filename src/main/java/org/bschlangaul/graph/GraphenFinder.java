@@ -1,5 +1,8 @@
 package org.bschlangaul.graph;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -7,28 +10,53 @@ import java.util.regex.Pattern;
 import org.bschlangaul.helfer.Farbe;
 
 /**
- * Suche in einer TeX-Datei nach Graph-Spezifikation (entweder im einfachen
- * Graphenformat oder im TeX-Graphenformat.)
+ * Suche in einer Text oder TeX-Datei nach Graph-Spezifikation (entweder im
+ * einfachen Graphenformat oder im TeX-Graphenformat.)
  */
-public class TexDateiUntersucher {
+public class GraphenFinder {
 
-  String inhalt;
+  private EinfachesGraphenFormat[] graphen;
 
-  String[] einfachesGraphenFormat;
+  public GraphenFinder(File texDatei) {
+    String[] einfachesGraphenFormat;
 
-  String[] texGraphenFormat;
+    String[] texGraphenFormat;
 
-  public TexDateiUntersucher(String inhalt) {
-    einfachesGraphenFormat = sucheNachEinfachem(inhalt);
-    texGraphenFormat = sucheNachTex(inhalt);
+    String inhalt;
+    try {
+      inhalt = Files.readString(texDatei.toPath());
+      einfachesGraphenFormat = sucheNachEinfachem(inhalt);
+      texGraphenFormat = sucheNachTex(inhalt);
 
-    for (String format : einfachesGraphenFormat) {
-      führeGraphenFormatAus(new EinfachesGraphenFormat(format));
+      graphen = new EinfachesGraphenFormat[einfachesGraphenFormat.length + texGraphenFormat.length];
+
+      int i = 0;
+
+      for (String format : einfachesGraphenFormat) {
+        graphen[i] = new EinfachesGraphenFormat(format);
+        i++;
+      }
+
+      for (String format : texGraphenFormat) {
+        graphen[i] = new EinfachesGraphenFormat(new TexGraphenFormat(format).gibEinfachesGraphenFormat());
+        i++;
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
     }
+  }
 
-    for (String format : texGraphenFormat) {
-      führeGraphenFormatAus(new EinfachesGraphenFormat(new TexGraphenFormat(format).gibEinfachesGraphenFormat()));
-    }
+  /**
+   * Gib die erste gefundene Graphdefinition aus.
+   *
+   * @return Die erste gefundene Graphendefintion im einfachen Graphenformat.
+   */
+  public EinfachesGraphenFormat gibEinfachesGraphenFormat() {
+    return graphen[0];
+  }
+
+  public String gibEinfachesGraphenFormatText() {
+    return gibEinfachesGraphenFormat().toString();
   }
 
   private void gibÜberschriftAus(String überschrift) {
@@ -58,7 +86,13 @@ public class TexDateiUntersucher {
     return ausgabe.toArray(new String[0]);
   }
 
-  private void führeGraphenFormatAus(EinfachesGraphenFormat graph) {
+  public void gibTexAus() {
+    for (int i = 0; i < graphen.length; i++) {
+      gibPerGraphTexAus(graphen[i]);
+    }
+  }
+
+  private void gibPerGraphTexAus(EinfachesGraphenFormat graph) {
     gibÜberschriftAus("Einfaches Graphen-Format zum Einbetten");
     System.out.println(graph.gibAlsTexUmgebung());
 

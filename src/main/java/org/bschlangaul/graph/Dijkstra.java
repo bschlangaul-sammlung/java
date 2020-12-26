@@ -7,7 +7,7 @@ import com.jakewharton.fliptables.FlipTable;
 /**
  * https://www.geeksforgeeks.org/printing-paths-dijkstras-shortest-path-algorithm/
  */
-class Dijkstra {
+public class Dijkstra {
 
   String graphenFormat;
 

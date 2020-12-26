@@ -342,6 +342,6 @@ public class EinfachesGraphenFormat {
   }
 
   public String gibAlsTexUmgebung() {
-    return Tex.umgebung(TexDateiUntersucher.umgebungsName, toString());
+    return Tex.umgebung(GraphenFinder.umgebungsName, toString());
   }
 }

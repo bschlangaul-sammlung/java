@@ -22,7 +22,7 @@ public class TexTikz {
     for (EinfachesGraphenFormat.Kante kante : this.graph.gibKanten()) {
       ausgabe += formatiereKante(kante);
     }
-    return Tex.umgebung("tikzpicture", ausgabe);
+    return Tex.umgebung("tikzpicture", ausgabe, "li graph");
   }
 
   private String formatiereZahl(double zahl) {
@@ -50,7 +50,7 @@ public class TexTikz {
   // }
 
   private String formatiereKnoten(EinfachesGraphenFormat.Knoten knoten) {
-    return String.format("\\node[li graph knoten] (%s) at (%s,%s) {%s};\n", knoten.name, formatiereZahl(knoten.x), formatiereZahl(knoten.y), knoten.name);
+    return String.format("\\node (%s) at (%s,%s) {%s};\n", knoten.name, formatiereZahl(knoten.x), formatiereZahl(knoten.y), knoten.name);
   }
 
   private String formatiereKante(EinfachesGraphenFormat.Kante kante) {

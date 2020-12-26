@@ -7,8 +7,15 @@ public class Tex {
   }
 
   public static String umgebung(String name, String inhalt) {
-    inhalt = inhalt.replaceFirst("\\s+$", "");
-    return String.format("%s\n%s\n%s", makro("begin", name), inhalt, makro("end", name));
+    return String.format("%s\n%s\n%s", makro("begin", name), reinigeInhalt(inhalt), makro("end", name));
+  }
+
+  private static String reinigeInhalt(String inhalt) {
+    return inhalt.replaceFirst("\\s+$", "");
+  }
+
+  public static String umgebung(String name, String inhalt, String option) {
+    return String.format("%s[%s]\n%s\n%s", makro("begin", name), option, reinigeInhalt(inhalt), makro("end", name));
   }
 
 }

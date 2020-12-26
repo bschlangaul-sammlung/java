@@ -15,10 +15,9 @@ public class TexAdjazenzListe {
         "l".repeat(graph.gibMaximaleUnterListenTiefe() + 1), inhalt);
   }
 
-
   private String formatiereZeile(int vonKnotenNr, List<GraphAdjazenzListe.Kante> unterListe) {
     String trenner = " & $\\rightarrow$ ";
-    String ausgabe = graph.gibKnotenName(vonKnotenNr) + trenner ;
+    String ausgabe = graph.gibKnotenName(vonKnotenNr) + trenner;
     for (int i = 0; i < unterListe.size(); i++) {
       ausgabe += graph.gibKnotenName(unterListe.get(i).nachNr) + trenner;
     }
@@ -33,7 +32,6 @@ public class TexAdjazenzListe {
     }
     return formatiereTabelle(inhalt);
   }
-
 
   public static void main(String[] args) {
     TexAdjazenzListe tex = new TexAdjazenzListe(new GraphAdjazenzListe("a--b: 1; a--c: 2;a--d: 3"));
