@@ -3,7 +3,6 @@ package org.bschlangaul.antlr.graph.model;
 public class GraphKnoten{
 
   public String name;
-
   public String x;
   public String y;
 

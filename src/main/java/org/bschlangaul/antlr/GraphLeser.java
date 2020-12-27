@@ -8,6 +8,7 @@ import org.bschlangaul.graph.EinfachesGraphenFormat;
 
 import org.bschlangaul.antlr.graph.GraphListener;
 import org.bschlangaul.antlr.graph.model.GraphKante;
+import org.bschlangaul.antlr.graph.model.GraphKnoten;
 
 public class GraphLeser {
   public static EinfachesGraphenFormat lese(String inhalt) throws Exception {
@@ -16,9 +17,12 @@ public class GraphLeser {
     GraphParser graphParser = new GraphParser(tokens);
     ParseTreeWalker walker = new ParseTreeWalker();
     GraphListener graph = new GraphListener();
-    walker.walk(graph, graphParser.alleKanten());
+    walker.walk(graph, graphParser.graph());
 
     EinfachesGraphenFormat einfaches = new EinfachesGraphenFormat();
+    for (GraphKnoten knoten : graph.gibKnoten()) {
+      einfaches.fügeKnotenEin(knoten.name, knoten.x, knoten.y);
+    }
     for (GraphKante kante : graph.gibKanten()) {
       einfaches.fügeUngerichteteKanteEin(kante.von, kante.nach, "1");
     }

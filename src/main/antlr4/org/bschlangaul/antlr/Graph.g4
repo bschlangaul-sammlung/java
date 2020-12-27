@@ -1,22 +1,28 @@
 grammar Graph;
 
-graph: alleKnoten? alleKanten?;
+graph: zeile+ EOF;
 
-alleKanten : kante+;
-kante : von ' -- ' nach CRLF;
+zeile: (knoten | kante) ZEILEN_ENDE;
+
+kante : von  ' -- '  nach;
 von : KNOTENNAME;
 nach : KNOTENNAME;
 
-alleKnoten : knoten+;
-knoten : name ' ' x ' ' y CRLF;
+knoten : name ': ' x ' ' y;
 name : KNOTENNAME;
-x : NUMERISCH;
-y : NUMERISCH;
+x : INTEGER;
+y : INTEGER;
 
-fragment LETTER : [A-Za-z];
+fragment BUCHSTABE : [A-Za-z];
 fragment ZAHL : [0-9];
+fragment OPTIONALES_LEERZEICHEN: LEERZEICHEN+;
 
-NUMERISCH : ZAHL+;
+INTEGER : ZAHL+;
+FLOAT : INTEGER | DECIMAL;
 
-KNOTENNAME : LETTER+;
-CRLF : '\r'? '\n' | '\r';
+
+DECIMAL: INTEGER '.' INTEGER;
+
+KNOTENNAME : BUCHSTABE+;
+ZEILEN_ENDE : '\r'? '\n' | '\r' | ';';
+LEERZEICHEN: [ \t]+;
