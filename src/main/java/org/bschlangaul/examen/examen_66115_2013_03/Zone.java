@@ -34,7 +34,7 @@ class Zone {
   }
 
   /**
-   * Gib in der Streutabelle die IP-Adresse zurrück. Wird eine nicht vorhandene
+   * Gib in der Streutabelle die IP-Adresse zurück. Wird eine nicht vorhandene
    * Adresse abgerufen, wird eine Fehlermeldung zurückgegeben.
    *
    * @param url
