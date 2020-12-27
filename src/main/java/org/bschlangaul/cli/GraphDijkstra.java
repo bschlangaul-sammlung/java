@@ -26,7 +26,7 @@ class GraphDijkstra implements Callable<Integer> {
     Dijkstra d = new Dijkstra(einfachesGraphenFormat);
     d.sucheKürzestenPfadMatrix(startKnoten);
     d.reporter.gibErgebnisTabelle();
-
+    d.reporter.gibZwischenschrittTabelleTex();
     return 0;
   }
 }
