@@ -16,7 +16,7 @@ public class GraphLeser {
     GraphParser graphParser = new GraphParser(tokens);
     ParseTreeWalker walker = new ParseTreeWalker();
     GraphListener graph = new GraphListener();
-    walker.walk(graph, graphParser.kanten());
+    walker.walk(graph, graphParser.alleKanten());
 
     EinfachesGraphenFormat einfaches = new EinfachesGraphenFormat();
     for (GraphKante kante : graph.gibKanten()) {
