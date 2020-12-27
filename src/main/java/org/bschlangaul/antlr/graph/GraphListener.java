@@ -19,6 +19,10 @@ public class GraphListener extends GraphBaseListener {
     kanten.add(new GraphKante(ctx.von().getText(), ctx.nach().getText()));
   }
 
+  public void enterKnoten(GraphParser.KnotenContext ctx) {
+    knoten.add(new GraphKnoten(ctx.name().getText(), ctx.x().getText(), ctx.y().getText()));
+  }
+
 
   public GraphKante[] gibKanten() {
     return kanten.toArray(new GraphKante[0]);
