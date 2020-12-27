@@ -6,23 +6,23 @@ import java.util.List;
 import org.bschlangaul.antlr.GraphBaseListener;
 import org.bschlangaul.antlr.GraphParser;
 
-import org.bschlangaul.antlr.graph.model.Kante;
+import org.bschlangaul.antlr.graph.model.GraphKante;
 
 public class GraphListener extends GraphBaseListener {
 
-  private List<Kante> kanten = new ArrayList<>();
+  private List<GraphKante> kanten = new ArrayList<>();
 
   @Override
   public void enterKante(GraphParser.KanteContext ctx) {
-    kanten.add(new Kante(ctx.von().getText(), ctx.nach().getText()));
+    kanten.add(new GraphKante(ctx.von().getText(), ctx.nach().getText()));
   }
 
   @Override
   public void exitKante(GraphParser.KanteContext ctx) {
   }
 
-  public Kante gibErsteKante() {
-    return kanten.get(0);
+  public GraphKante[] gibKanten() {
+    return kanten.toArray(new GraphKante[0]);
   }
 
 }
