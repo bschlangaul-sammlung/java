@@ -53,7 +53,7 @@ class Re {
  */
 public class EinfachesGraphenFormat {
 
-  class Knoten implements Comparable<Knoten> {
+  public class Knoten implements Comparable<Knoten> {
     public String name;
     public double x;
     public double y;
@@ -114,7 +114,7 @@ public class EinfachesGraphenFormat {
   /**
    * Diese Klasse dient als eine Art Zwischenspeicher für Kanteninformationen.
    */
-  class Kante implements Comparable<Kante> {
+  public class Kante implements Comparable<Kante> {
     public String von;
     public String nach;
     public double gewicht;
