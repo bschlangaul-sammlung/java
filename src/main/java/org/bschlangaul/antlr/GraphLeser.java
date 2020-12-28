@@ -24,7 +24,7 @@ public class GraphLeser {
       einfaches.fügeKnotenEin(knoten.name, knoten.x, knoten.y);
     }
     for (GraphKante kante : graph.gibKanten()) {
-      einfaches.fügeUngerichteteKanteEin(kante.von, kante.nach, "1");
+      einfaches.fügeKanteEin(kante.von, kante.nach, kante.gewicht, kante.gerichtet);
     }
     return einfaches;
   }

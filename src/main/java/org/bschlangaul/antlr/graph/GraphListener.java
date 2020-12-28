@@ -17,7 +17,8 @@ public class GraphListener extends GraphBaseListener {
   @Override
   public void enterKante(GraphParser.KanteContext ctx) {
     boolean gerichtet = ctx.gerichtet() != null ? true : false;
-    kanten.add(new GraphKante(ctx.von().getText(), ctx.nach().getText(), gerichtet));
+    double gewicht = ctx.gewicht() != null ? Double.parseDouble(ctx.gewicht().getText()) : 1;
+    kanten.add(new GraphKante(ctx.von().getText(), ctx.nach().getText(), gewicht, gerichtet));
   }
 
   @Override

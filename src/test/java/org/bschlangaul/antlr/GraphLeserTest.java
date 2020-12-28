@@ -11,12 +11,12 @@ public class GraphLeserTest {
     return GraphLeser.lese(graphenFormat);
   }
 
-  private EinfachesGraphenFormat.Knoten gibErstenKnoten (String graphenFormat) throws Exception {
+  private EinfachesGraphenFormat.Knoten gibErstenKnoten(String graphenFormat) throws Exception {
     EinfachesGraphenFormat einfach = lese(graphenFormat);
     return einfach.gibKnoten()[0];
   }
 
-  private EinfachesGraphenFormat.Kante gibErsteKante (String graphenFormat) throws Exception {
+  private EinfachesGraphenFormat.Kante gibErsteKante(String graphenFormat) throws Exception {
     EinfachesGraphenFormat einfach = lese(graphenFormat);
     return einfach.gibKanten()[0];
   }
@@ -38,10 +38,12 @@ public class GraphLeserTest {
     assertEquals(y, knoten.y, 0);
   }
 
-  private void vergleicheErsteKante(String von, String nach, boolean gerichtet, String graphenFormat) throws Exception {
+  private void vergleicheErsteKante(String von, String nach, double gewicht, boolean gerichtet, String graphenFormat)
+      throws Exception {
     EinfachesGraphenFormat.Kante kante = gibErsteKante(graphenFormat);
     assertEquals(von, kante.von);
     assertEquals(nach, kante.nach);
+    assertEquals(gewicht, kante.gewicht, 0);
     assertEquals(gerichtet, kante.gerichtet);
   }
 
@@ -49,16 +51,18 @@ public class GraphLeserTest {
   public void ungerichteteKanten() throws Exception {
     vergleicheAnzahlKanten(2, "a -- b\r\nc -- d\r\n");
     vergleicheAnzahlKanten(2, "a -- b;c -- d;");
-    // vergleicheAnzahlKanten(2, "a--b;c--d;");
+    vergleicheAnzahlKanten(2, "a--b;c--d;");
   }
 
   @Test
   public void kanten() throws Exception {
-    vergleicheErsteKante("a", "b", false, "a -- b;");
-    vergleicheErsteKante("a", "b", false, "a--b;");
-    //vergleicheErsteKante("a", "b", false, "a  --   b;");
-    //vergleicheErsteKante("a", "b", true, "a -> b;");
-
+    vergleicheErsteKante("a", "b", 1, true, "a -> b;");
+    vergleicheErsteKante("a", "b", 1, false, "a--b;");
+    // vergleicheErsteKante("a", "b", false, "a -- b;");
+    vergleicheErsteKante("a", "b", 1, true, "a -> b;");
+    vergleicheErsteKante("a", "b", 3.5, true, "a -> b: 3.5;");
+    vergleicheErsteKante("a", "b", -2.567, false, "a -- b: -2.567;");
+    vergleicheErsteKante("a", "b", -123, true, "a->b:-123;");
   }
 
   @Test
@@ -73,6 +77,5 @@ public class GraphLeserTest {
   @Test
   public void kantenUndKnoten() throws Exception {
     vergleicheAnzahlKnoten(2, "a: 1 1;b: 2 2;a -- b;c -- d;");
-
   }
 }

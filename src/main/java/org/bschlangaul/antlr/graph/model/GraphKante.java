@@ -8,9 +8,12 @@ public class GraphKante {
 
   public boolean gerichtet;
 
-  public GraphKante(String von, String nach, boolean gerichtet) {
+  public double gewicht;
+
+  public GraphKante(String von, String nach, double gewicht, boolean gerichtet) {
     this.von = von;
     this.nach = nach;
+    this.gewicht = gewicht;
     this.gerichtet = gerichtet;
   }
 }
