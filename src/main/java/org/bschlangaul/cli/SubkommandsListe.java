@@ -40,7 +40,7 @@ class SubkommandosListe implements IHelpSectionRenderer {
       return "";
     }
 
-    TextTable textTable = TextTable.forColumns(help.ansi(), new Column(15, 2, Overflow.SPAN),
+    TextTable textTable = TextTable.forColumns(help.colorScheme(), new Column(15, 2, Overflow.SPAN),
         new Column(spec.usageMessage().width() - 15, 2, Overflow.WRAP));
 
     for (CommandLine subcommand : new LinkedHashSet<>(spec.subcommands().values())) {

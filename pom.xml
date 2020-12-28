@@ -13,8 +13,8 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!-- javadoc: release version 13 not supported -->
-    <maven.compiler.target>1.7</maven.compiler.target>
-    <maven.compiler.source>1.7</maven.compiler.source>
+    <maven.compiler.target>14</maven.compiler.target>
+    <maven.compiler.source>14</maven.compiler.source>
     <antlr.version>4.7.1</antlr.version>
     <mojo.version>3.0.0</mojo.version>
   </properties>
