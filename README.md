@@ -75,3 +75,21 @@ public class WortPaar extends WörterbuchEintrag {
   }
 }
 ```
+
+## Eigene DSLs (Domain-specific languages)
+
+Die Projektspezifischen Mini-Sprachen werden mit ANTLR geparst. Die
+Grammatik-Definitionen befinden sich im Verzeichnis
+`src/main/antlr4/org/bschlangaul/antlr`
+
+### GraphenFormat
+
+```
+A: 3 5
+Knoten: 1 -2.3
+
+A -- Knoten
+B -- C
+A->D: 3
+Knoten mit Leerzeichen -> Z: 42
+```
