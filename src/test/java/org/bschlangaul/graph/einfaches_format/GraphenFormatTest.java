@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-public class GraphLeserTest {
+public class GraphenFormatTest {
 
   private GraphenFormat lese(String graphenFormat) {
     return GraphenFormat.lese(graphenFormat);
