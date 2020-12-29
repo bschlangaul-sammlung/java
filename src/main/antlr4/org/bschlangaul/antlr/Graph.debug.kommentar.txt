@@ -1,0 +1,5 @@
+% Kommentar
+a -> b
+c->d;%Inline-Kommentar;e->f;
+  % Eingerückter Kommenar
+  g -- h
