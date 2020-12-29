@@ -5,12 +5,29 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
+import org.antlr.v4.runtime.BaseErrorListener;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.RecognitionException;
+import org.antlr.v4.runtime.Recognizer;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 import org.bschlangaul.antlr.GraphLexer;
 import org.bschlangaul.antlr.GraphParser;
+
+class FehlerLauscher extends BaseErrorListener {
+  @Override
+  public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine,
+      String msg, RecognitionException e) {
+
+    String sourceName = recognizer.getInputStream().getSourceName();
+    if (!sourceName.isEmpty()) {
+      sourceName = String.format("%s:%d:%d: ", sourceName, line, charPositionInLine);
+    }
+    System.err.println(sourceName + "line " + line + ":" + charPositionInLine + " " + msg);
+  }
+
+}
 
 /**
  * Ein sehr einfaches Dateiformat um einen Graph zu spezifizieren.
@@ -50,6 +67,9 @@ public class Graph {
     GraphLexer serverGraphLexer = new GraphLexer(CharStreams.fromString(inhalt));
     CommonTokenStream tokens = new CommonTokenStream(serverGraphLexer);
     GraphParser graphParser = new GraphParser(tokens);
+
+    graphParser.removeErrorListeners();
+    graphParser.addErrorListener(new FehlerLauscher());
     ParseTreeWalker walker = new ParseTreeWalker();
     AntlrListener antlrListener = new AntlrListener();
     walker.walk(antlrListener, graphParser.graph());

@@ -94,7 +94,7 @@ public class GraphLeserTest {
 
   @Test
   public void kantenUndKnoten() {
-    vergleicheAnzahlKnoten(2, "a: 1 1;b: 2 2;a -- b;c -- d;");
+    vergleicheAnzahlKnoten(4, "a: 1 1;b: 2 2;a -- b;c -- d;");
   }
 
   @Test
