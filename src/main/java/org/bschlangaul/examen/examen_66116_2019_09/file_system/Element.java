@@ -16,4 +16,8 @@ public abstract class Element {
   }
 
   public abstract void delete();
+
+  public abstract boolean isDirectory();
+
+  public abstract void addChild(Element child);
 }

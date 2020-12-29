@@ -1,5 +1,6 @@
 package org.bschlangaul.examen.examen_66116_2019_09.file_system;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Directory extends Element {
@@ -7,6 +8,9 @@ public class Directory extends Element {
 
   public Directory(String name, Element parent) {
     super(name, parent);
+    children = new ArrayList<Element>();
+    if (parent != null)
+      parent.addChild(this);
   }
 
   public void delete() {
@@ -15,5 +19,13 @@ public class Directory extends Element {
       Element child = children.get(i);
       child.delete();
     }
+  }
+
+  public void addChild(Element child) {
+    children.add(child);
+  }
+
+  public boolean isDirectory() {
+    return true;
   }
 }
