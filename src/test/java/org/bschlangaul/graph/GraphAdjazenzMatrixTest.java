@@ -50,22 +50,22 @@ public class GraphAdjazenzMatrixTest {
 
   @Test
   public void methodeGibMaximalesGewicht() {
-    GraphAdjazenzMatrix matrix = new GraphAdjazenzMatrix("a -> b: 99;a -> c 3;a--d: 1");
+    GraphAdjazenzMatrix matrix = new GraphAdjazenzMatrix("a -> b: 99;a -> c: 3;a--d: 1");
     assertEquals(99, matrix.gibMaximalesGewicht());
   }
 
   @Test
   public void methodeGibMaximaleKnotennameTextbreite() {
-    GraphAdjazenzMatrix matrix = new GraphAdjazenzMatrix("123--1234;123--12345;123--123456");
+    GraphAdjazenzMatrix matrix = new GraphAdjazenzMatrix("abc--abcd;abc--abcde;abc--abcdef;");
     assertEquals(6, matrix.gibMaximaleKnotennameTextbreite());
   }
 
   @Test
   public void methodeGibSpaltenBreite() {
-    GraphAdjazenzMatrix matrix = new GraphAdjazenzMatrix("123--1234;123--12345;123--123456");
+    GraphAdjazenzMatrix matrix = new GraphAdjazenzMatrix("abc--abcd;abc--abcde;abc--abcdef;");
     assertEquals(6, matrix.gibSpaltenBreite());
 
-    GraphAdjazenzMatrix matrix2 = new GraphAdjazenzMatrix("a--b:123; a--c:12; a--d:1");
+    GraphAdjazenzMatrix matrix2 = new GraphAdjazenzMatrix("a--b:123; a--c:12; a--d:1; ");
     assertEquals(3, matrix2.gibSpaltenBreite());
   }
 

@@ -14,6 +14,8 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 import org.bschlangaul.antlr.GraphLexer;
 import org.bschlangaul.antlr.GraphParser;
+import org.bschlangaul.graph.GraphenFinder;
+import org.bschlangaul.helfer.Tex;
 
 class FehlerLauscher extends BaseErrorListener {
   @Override
@@ -53,17 +55,17 @@ class FehlerLauscher extends BaseErrorListener {
  * }
  * </pre>
  */
-public class Graph {
+public class GraphenFormat {
 
-  HashMap<String, Knoten> knoten;
-  HashSet<Kante> kanten;
+  HashMap<String, GraphenFormatKnoten> knoten;
+  HashSet<GraphenFormatKante> kanten;
 
-  public Graph() {
-    knoten = new HashMap<String, Knoten>();
-    kanten = new HashSet<Kante>();
+  public GraphenFormat() {
+    knoten = new HashMap<String, GraphenFormatKnoten>();
+    kanten = new HashSet<GraphenFormatKante>();
   }
 
-  public static Graph lese(String inhalt) {
+  public static GraphenFormat lese(String inhalt) {
     GraphLexer serverGraphLexer = new GraphLexer(CharStreams.fromString(inhalt));
     CommonTokenStream tokens = new CommonTokenStream(serverGraphLexer);
     GraphParser graphParser = new GraphParser(tokens);
@@ -86,7 +88,7 @@ public class Graph {
 
   public void fügeKnotenEin(String name) {
     if (knoten.get(name) == null) {
-      knoten.put(name, new Knoten(name));
+      knoten.put(name, new GraphenFormatKnoten(name));
     }
   }
 
@@ -94,9 +96,9 @@ public class Graph {
     double xDouble = Double.parseDouble(x);
     double yDouble = Double.parseDouble(y);
     if (knoten.get(name) == null) {
-      knoten.put(name, new Knoten(name, xDouble, yDouble));
+      knoten.put(name, new GraphenFormatKnoten(name, xDouble, yDouble));
     } else {
-      Knoten k = knoten.get(name);
+      GraphenFormatKnoten k = knoten.get(name);
       k.x = xDouble;
       k.y = yDouble;
     }
@@ -121,7 +123,7 @@ public class Graph {
   public void fügeKanteEin(String von, String nach, double gewicht, boolean gerichtet) {
     fügeKnotenEin(von);
     fügeKnotenEin(nach);
-    kanten.add(new Kante(von, nach, gewicht, gerichtet));
+    kanten.add(new GraphenFormatKante(von, nach, gewicht, gerichtet));
   }
 
   public int gibAnzahlKnoten() {
@@ -132,8 +134,8 @@ public class Graph {
     return kanten.size();
   }
 
-  public Knoten[] gibKnoten() {
-    Knoten[] ausgabe = knoten.values().toArray(new Knoten[0]);
+  public GraphenFormatKnoten[] gibKnoten() {
+    GraphenFormatKnoten[] ausgabe = knoten.values().toArray(new GraphenFormatKnoten[0]);
     Arrays.sort(ausgabe);
     return ausgabe;
   }
@@ -141,8 +143,8 @@ public class Graph {
   public String[] gibKnotenNamen() {
     String[] ausgabe = new String[knoten.size()];
     int zähler = 0;
-    for (Map.Entry<String, Knoten> entry : knoten.entrySet()) {
-      Knoten k = entry.getValue();
+    for (Map.Entry<String, GraphenFormatKnoten> entry : knoten.entrySet()) {
+      GraphenFormatKnoten k = entry.getValue();
       ausgabe[zähler] = k.name;
       zähler++;
     }
@@ -150,8 +152,8 @@ public class Graph {
     return ausgabe;
   }
 
-  public Kante[] gibKanten() {
-    Kante[] ausgabe = {};
+  public GraphenFormatKante[] gibKanten() {
+    GraphenFormatKante[] ausgabe = {};
     ausgabe = kanten.toArray(ausgabe);
     Arrays.sort(ausgabe);
     return ausgabe;
@@ -161,23 +163,27 @@ public class Graph {
     System.out.println(String.format("Anzahl an Knoten: %d", gibAnzahlKnoten()));
     System.out.println(String.format("Anzahl an Kanten: %d", gibAnzahlKanten()));
 
-    for (Knoten knoten : gibKnoten()) {
+    for (GraphenFormatKnoten knoten : gibKnoten()) {
       System.out.println(knoten);
     }
-    for (Kante kante : gibKanten()) {
+    for (GraphenFormatKante kante : gibKanten()) {
       System.out.println(kante);
     }
   }
 
   public String toString() {
     String ausgabe = "";
-    for (Knoten knoten : gibKnoten()) {
+    for (GraphenFormatKnoten knoten : gibKnoten()) {
       ausgabe += knoten.gibAlsEinfachesFormat();
     }
-    for (Kante kante : gibKanten()) {
+    for (GraphenFormatKante kante : gibKanten()) {
       ausgabe += kante.gibAlsEinfachesFormat();
     }
     return ausgabe;
+  }
+
+  public String gibAlsTexUmgebung() {
+    return Tex.umgebung(GraphenFinder.umgebungsName, toString());
   }
 
 }

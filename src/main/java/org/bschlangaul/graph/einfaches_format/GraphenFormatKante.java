@@ -3,13 +3,13 @@ package org.bschlangaul.graph.einfaches_format;
 /**
  * Diese Klasse dient als eine Art Zwischenspeicher für Kanteninformationen.
  */
-public class Kante implements Comparable<Kante> {
+public class GraphenFormatKante implements Comparable<GraphenFormatKante> {
   public String von;
   public String nach;
   public double gewicht;
   public boolean gerichtet;
 
-  public Kante(String von, String nach, double gewicht, boolean gerichtet) {
+  public GraphenFormatKante(String von, String nach, double gewicht, boolean gerichtet) {
     this.von = von;
     this.nach = nach;
     this.gewicht = gewicht;
@@ -32,8 +32,8 @@ public class Kante implements Comparable<Kante> {
    */
   @Override
   public boolean equals(Object o) {
-    if (o instanceof Kante) {
-      Kante kante = (Kante) o;
+    if (o instanceof GraphenFormatKante) {
+      GraphenFormatKante kante = (GraphenFormatKante) o;
       if (von.equals(kante.von) && nach.equals(kante.nach))
         return true;
     }
@@ -48,7 +48,7 @@ public class Kante implements Comparable<Kante> {
    * @return 0, -1, 1
    */
   @Override
-  public int compareTo(Kante kante) {
+  public int compareTo(GraphenFormatKante kante) {
     int ersterVergleich = von.compareTo(kante.von);
     if (ersterVergleich != 0)
       return ersterVergleich;
@@ -60,12 +60,12 @@ public class Kante implements Comparable<Kante> {
     String gerichtetZeichen = gerichtet ? ">" : "-";
     ausgabe = String.format("%s -%s %s", von, gerichtetZeichen, nach);
     if (gewicht != 1)
-      ausgabe = String.format("%s: %s", ausgabe, Graph.formatiereZahl(gewicht));
+      ausgabe = String.format("%s: %s", ausgabe, GraphenFormat.formatiereZahl(gewicht));
     return ausgabe + "\n";
   }
 
   public String toString() {
-    return String.format("Kante (von: %s, nach: %s, gewicht: %s, gerichtet: %b)", von, nach, Graph.formatiereZahl(gewicht),
+    return String.format("Kante (von: %s, nach: %s, gewicht: %s, gerichtet: %b)", von, nach, GraphenFormat.formatiereZahl(gewicht),
         gerichtet);
   }
 }

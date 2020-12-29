@@ -7,39 +7,39 @@ import org.junit.Test;
 
 public class GraphLeserTest {
 
-  private Graph lese(String graphenFormat) {
-    return Graph.lese(graphenFormat);
+  private GraphenFormat lese(String graphenFormat) {
+    return GraphenFormat.lese(graphenFormat);
   }
 
-  private Knoten gibErstenKnoten(String graphenFormat) {
-    Graph einfach = lese(graphenFormat);
+  private GraphenFormatKnoten gibErstenKnoten(String graphenFormat) {
+    GraphenFormat einfach = lese(graphenFormat);
     return einfach.gibKnoten()[0];
   }
 
-  private Kante gibErsteKante(String graphenFormat) {
-    Graph einfach = lese(graphenFormat);
+  private GraphenFormatKante gibErsteKante(String graphenFormat) {
+    GraphenFormat einfach = lese(graphenFormat);
     return einfach.gibKanten()[0];
   }
 
   private void vergleicheAnzahlKanten(int erwartet, String graphenFormat) {
-    Graph einfach = lese(graphenFormat);
+    GraphenFormat einfach = lese(graphenFormat);
     assertEquals(erwartet, einfach.gibAnzahlKanten());
   }
 
   private void vergleicheAnzahlKnoten(int erwartet, String graphenFormat) {
-    Graph einfach = lese(graphenFormat);
+    GraphenFormat einfach = lese(graphenFormat);
     assertEquals(erwartet, einfach.gibAnzahlKnoten());
   }
 
   private void vergleicheErstenKnoten(String name, double x, double y, String graphenFormat) {
-    Knoten knoten = gibErstenKnoten(graphenFormat);
+    GraphenFormatKnoten knoten = gibErstenKnoten(graphenFormat);
     assertEquals(name, knoten.name);
     assertEquals(x, knoten.x, 0);
     assertEquals(y, knoten.y, 0);
   }
 
   private void vergleicheErsteKante(String von, String nach, double gewicht, boolean gerichtet, String graphenFormat) {
-    Kante kante = gibErsteKante(graphenFormat);
+    GraphenFormatKante kante = gibErsteKante(graphenFormat);
     assertEquals(von, kante.von);
     assertEquals(nach, kante.nach);
     assertEquals(gewicht, kante.gewicht, 0);
@@ -76,7 +76,7 @@ public class GraphLeserTest {
 
   @Test
   public void knotenAmObjekt() {
-    Knoten k = gibErstenKnoten("a: 1 2;");
+    GraphenFormatKnoten k = gibErstenKnoten("a: 1 2;");
     assertEquals("a", k.name);
     assertEquals(1, k.x, 0);
     assertEquals(2, k.y, 0);
@@ -99,35 +99,35 @@ public class GraphLeserTest {
 
   @Test
   public void gerichtet() {
-    Graph graph = Graph.lese("a->b;");
+    GraphenFormat graph = GraphenFormat.lese("a->b;");
     assertEquals(2, graph.gibAnzahlKnoten());
     assertEquals(1, graph.gibAnzahlKanten());
   }
 
   @Test
   public void ungerichtet() {
-    Graph graph = Graph.lese("a--b;");
+    GraphenFormat graph = GraphenFormat.lese("a--b;");
     assertEquals(2, graph.gibAnzahlKnoten());
     assertEquals(1, graph.gibAnzahlKanten());
   }
 
   @Test
   public void doppelteKanten() {
-    Graph graph = Graph.lese("a--b;a--b;a--b;");
+    GraphenFormat graph = GraphenFormat.lese("a--b;a--b;a--b;");
     assertEquals(2, graph.gibAnzahlKnoten());
     assertEquals(1, graph.gibAnzahlKanten());
   }
 
   @Test
   public void methodeGibKnoten() {
-    Graph graph = Graph.lese("z--a;b--c;x--y;");
+    GraphenFormat graph = GraphenFormat.lese("z--a;b--c;x--y;");
     assertArrayEquals(new String[] { "a", "b", "c", "x", "y", "z" }, graph.gibKnotenNamen());
   }
 
   @Test
   public void methodeGibKanten() {
-    Graph graph = Graph.lese("z->a;a->c;a->b");
-    Kante[] kanten = graph.gibKanten();
+    GraphenFormat graph = GraphenFormat.lese("z->a;a->c;a->b");
+    GraphenFormatKante[] kanten = graph.gibKanten();
     assertEquals("a", kanten[0].von);
     assertEquals("b", kanten[0].nach);
     assertEquals("a", kanten[1].von);
@@ -137,7 +137,7 @@ public class GraphLeserTest {
   }
 
   private int gibAnzahlKnoten(String einfachesFormat) {
-    Graph graph = Graph.lese(einfachesFormat);
+    GraphenFormat graph = GraphenFormat.lese(einfachesFormat);
     return graph.gibAnzahlKnoten();
   }
 
@@ -152,7 +152,7 @@ public class GraphLeserTest {
 
   @Test
   public void kante() {
-    Kante k = gibErsteKante("a--b;");
+    GraphenFormatKante k = gibErsteKante("a--b;");
     assertEquals("a", k.von);
     assertEquals("b", k.nach);
     assertEquals(1, k.gewicht, 0);
@@ -184,7 +184,7 @@ public class GraphLeserTest {
 
   @Test
   public void knotenNamen() {
-    Graph graph = Graph.lese("z: 1 2; a: 2 3; b: 4 5;");
+    GraphenFormat graph = GraphenFormat.lese("z: 1 2; a: 2 3; b: 4 5;");
     assertArrayEquals(new String[] { "a", "b", "z" }, graph.gibKnotenNamen());
   }
 

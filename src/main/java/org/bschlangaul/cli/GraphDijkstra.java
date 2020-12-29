@@ -21,7 +21,7 @@ class GraphDijkstra implements Callable<Integer> {
 
   @Override
   public Integer call() throws Exception {
-    String einfachesGraphenFormat = new GraphenFinder(datei).gibEinfachesGraphenFormatText();
+    String einfachesGraphenFormat = new GraphenFinder(datei).gibGraphenFormatText();
 
     Dijkstra d = new Dijkstra(einfachesGraphenFormat);
     d.sucheKürzestenPfadMatrix(startKnoten);

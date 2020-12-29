@@ -3,6 +3,9 @@ package org.bschlangaul.graph;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.bschlangaul.graph.einfaches_format.GraphenFormat;
+import org.bschlangaul.graph.einfaches_format.GraphenFormatKante;
+
 public abstract class Graph {
 
   private ArrayList<Knoten> knotenListe;
@@ -13,7 +16,7 @@ public abstract class Graph {
     knotenIndex = new HashMap<String, Integer>();
   }
 
-  public Graph(EinfachesGraphenFormat format) {
+  public Graph(GraphenFormat format) {
     this();
     initialisiere(format.gibAnzahlKnoten());
 
@@ -21,7 +24,7 @@ public abstract class Graph {
       setzeKnoten(knotenName);
     }
 
-    for (EinfachesGraphenFormat.Kante kante : format.gibKanten()) {
+    for (GraphenFormatKante kante : format.gibKanten()) {
       setzeKante(kante.von, kante.nach, (int) kante.gewicht, kante.gerichtet);
     }
   }
@@ -33,7 +36,7 @@ public abstract class Graph {
    * @param graphenFormat Ein String im einfachen Graphenformat.
    */
   public Graph(String graphenFormat) {
-    this(new EinfachesGraphenFormat(graphenFormat));
+    this(GraphenFormat.lese(graphenFormat));
   }
 
   protected void initialisiere(int maximalieKnotenAnzahl) {

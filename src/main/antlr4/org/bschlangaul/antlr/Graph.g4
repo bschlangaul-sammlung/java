@@ -1,6 +1,6 @@
 grammar Graph;
 
-graph: zeile+ EOF;
+graph: zeile+ (knoten | kante)? EOF;
 
 zeile: (knoten | kante) ZEILEN_ENDE;
 
@@ -27,5 +27,5 @@ DEZIMALZAHL: '-'? GANZZAHL '.' GANZZAHL;
 GANZZAHL: '-'? ZAHL+;
 
 KNOTENNAME: BUCHSTABE+;
-ZEILEN_ENDE: ('\r'? '\n' | '\r' | ';')+;
+ZEILEN_ENDE: ('\r'? '\n' | '\r' | ';')+ ' '*;
 LEERZEICHEN: [ \t]+ -> skip;

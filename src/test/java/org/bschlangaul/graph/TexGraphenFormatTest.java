@@ -12,7 +12,7 @@ public class TexGraphenFormatTest {
 
   private void gibGraphenFormat(String relativerPfad) throws IOException {
     TexGraphenFormat tex = new TexGraphenFormat(TestHelfer.leseDatei(relativerPfad + ".test"));
-    String tatsächlich = tex.gibEinfachesGraphenFormat();
+    String tatsächlich = tex.gibGraphenFormat();
     String erwartet = TestHelfer.leseDatei(relativerPfad + ".ergebnis");
     assertEquals(erwartet, tatsächlich);
   }

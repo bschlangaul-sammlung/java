@@ -9,13 +9,15 @@ import java.util.regex.Pattern;
 
 import org.bschlangaul.helfer.Farbe;
 
+import org.bschlangaul.graph.einfaches_format.GraphenFormat;
+
 /**
  * Suche in einer Text oder TeX-Datei nach Graph-Spezifikation (entweder im
  * einfachen Graphenformat oder im TeX-Graphenformat.)
  */
 public class GraphenFinder {
 
-  private EinfachesGraphenFormat[] graphen;
+  private GraphenFormat[] graphen;
 
   public GraphenFinder(File texDatei) {
     String[] einfachesGraphenFormat;
@@ -28,17 +30,17 @@ public class GraphenFinder {
       einfachesGraphenFormat = sucheNachEinfachem(inhalt);
       texGraphenFormat = sucheNachTex(inhalt);
 
-      graphen = new EinfachesGraphenFormat[einfachesGraphenFormat.length + texGraphenFormat.length];
+      graphen = new GraphenFormat[einfachesGraphenFormat.length + texGraphenFormat.length];
 
       int i = 0;
 
       for (String format : einfachesGraphenFormat) {
-        graphen[i] = new EinfachesGraphenFormat(format);
+        graphen[i] = GraphenFormat.lese(format);
         i++;
       }
 
       for (String format : texGraphenFormat) {
-        graphen[i] = new EinfachesGraphenFormat(new TexGraphenFormat(format).gibEinfachesGraphenFormat());
+        graphen[i] = GraphenFormat.lese(new TexGraphenFormat(format).gibGraphenFormat());
         i++;
       }
     } catch (IOException e) {
@@ -51,12 +53,12 @@ public class GraphenFinder {
    *
    * @return Die erste gefundene Graphendefintion im einfachen Graphenformat.
    */
-  public EinfachesGraphenFormat gibEinfachesGraphenFormat() {
+  public GraphenFormat gibGraphenFormat() {
     return graphen[0];
   }
 
-  public String gibEinfachesGraphenFormatText() {
-    return gibEinfachesGraphenFormat().toString();
+  public String gibGraphenFormatText() {
+    return gibGraphenFormat().toString();
   }
 
   private void gibÜberschriftAus(String überschrift) {
@@ -92,7 +94,7 @@ public class GraphenFinder {
     }
   }
 
-  private void gibPerGraphTexAus(EinfachesGraphenFormat graph) {
+  private void gibPerGraphTexAus(GraphenFormat graph) {
     gibÜberschriftAus("Einfaches Graphen-Format zum Einbetten");
     System.out.println(graph.gibAlsTexUmgebung());
 

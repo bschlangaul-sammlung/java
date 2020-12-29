@@ -1,32 +1,35 @@
 package org.bschlangaul.graph;
 
+import org.bschlangaul.graph.einfaches_format.GraphenFormat;
+import org.bschlangaul.graph.einfaches_format.GraphenFormatKante;
+import org.bschlangaul.graph.einfaches_format.GraphenFormatKnoten;
 import org.bschlangaul.helfer.Tex;
 
 public class TexTikz {
 
-  private EinfachesGraphenFormat graph;
+  private GraphenFormat graph;
 
-  public TexTikz(EinfachesGraphenFormat graph) {
+  public TexTikz(GraphenFormat graph) {
     this.graph = graph;
   }
 
   public String gibTikzUmgebung() {
     String ausgabe = "";
 
-    for (EinfachesGraphenFormat.Knoten knoten : this.graph.gibKnoten()) {
+    for (GraphenFormatKnoten knoten : this.graph.gibKnoten()) {
       ausgabe += formatiereKnoten(knoten);
     }
 
     ausgabe += '\n';
 
-    for (EinfachesGraphenFormat.Kante kante : this.graph.gibKanten()) {
+    for (GraphenFormatKante kante : this.graph.gibKanten()) {
       ausgabe += formatiereKante(kante);
     }
     return Tex.umgebung("tikzpicture", ausgabe, "li graph");
   }
 
   private String formatiereZahl(double zahl) {
-    return EinfachesGraphenFormat.formatiereZahl(zahl);
+    return GraphenFormat.formatiereZahl(zahl);
   }
 
   // \def\knoten#1(#2,#3){
@@ -49,11 +52,12 @@ public class TexTikz {
   // \path[ultra thick] (#1) edge node {#3} (#2);
   // }
 
-  private String formatiereKnoten(EinfachesGraphenFormat.Knoten knoten) {
-    return String.format("\\node (%s) at (%s,%s) {%s};\n", knoten.name, formatiereZahl(knoten.x), formatiereZahl(knoten.y), knoten.name);
+  private String formatiereKnoten(GraphenFormatKnoten knoten) {
+    return String.format("\\node (%s) at (%s,%s) {%s};\n", knoten.name, formatiereZahl(knoten.x),
+        formatiereZahl(knoten.y), knoten.name);
   }
 
-  private String formatiereKante(EinfachesGraphenFormat.Kante kante) {
+  private String formatiereKante(GraphenFormatKante kante) {
     String gerichtet = kante.gerichtet ? ",->" : "";
     String gewicht = kante.gewicht != 1 ? String.format(" node {%s}", formatiereZahl(kante.gewicht)) : "";
     return String.format("\\path[li graph kante%s] (%s) edge%s (%s);\n", gerichtet, kante.von, gewicht, kante.nach);

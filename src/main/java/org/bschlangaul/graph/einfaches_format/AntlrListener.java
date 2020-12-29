@@ -5,7 +5,7 @@ import org.bschlangaul.antlr.GraphParser;
 
 class AntlrListener extends GraphBaseListener {
 
-  private Graph graph = new Graph();
+  private GraphenFormat graph = new GraphenFormat();
 
   @Override
   public void enterKante(GraphParser.KanteContext ctx) {
@@ -19,7 +19,7 @@ class AntlrListener extends GraphBaseListener {
     graph.fügeKnotenEin(ctx.name().getText(), ctx.x().getText(), ctx.y().getText());
   }
 
-  public Graph gibGraph() {
+  public GraphenFormat gibGraph() {
     return graph;
   }
 

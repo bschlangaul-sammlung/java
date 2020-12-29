@@ -3,14 +3,16 @@ package org.bschlangaul.graph;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.bschlangaul.graph.einfaches_format.GraphenFormat;
+
 public class TexGraphenFormat {
 
   public final static String globalerRegex = "\\\\graph knoten \\{(?<knoten>.*?)\n\\} kanten \\{(?<kanten>.*?)\n\\}";
 
-  EinfachesGraphenFormat graph;
+  GraphenFormat graph;
 
   public TexGraphenFormat(String texEingabe) {
-    graph = new EinfachesGraphenFormat();
+    graph = new GraphenFormat();
     Pattern pattern = Pattern.compile(globalerRegex,
         Pattern.DOTALL);
     Matcher ergebnis = pattern.matcher(texEingabe);
@@ -26,7 +28,7 @@ public class TexGraphenFormat {
 
   private void verarbeiteKnoten(String texEingabe) {
     for (String zeile : trenneZeilen(texEingabe)) {
-      Matcher ergebnis = finde("\\\\knoten\\{?(?<name>\\w*?)\\}?\\((?<x>\\d+),(?<y>\\d+)\\)", zeile);
+      Matcher ergebnis = finde("\\\\knoten\\{?(?<name>\\w*?)\\}?\\((?<x>\\d+(.\\d+)?),(?<y>\\d+(.\\d+)?)\\)", zeile);
       if (ergebnis.find()) {
         graph.fügeKnotenEin(ergebnis.group("name"), ergebnis.group("x"), ergebnis.group("y"));
       }
@@ -80,7 +82,7 @@ public class TexGraphenFormat {
     return ergebnis;
   }
 
-  public String gibEinfachesGraphenFormat() {
+  public String gibGraphenFormat() {
     return graph.toString();
   }
 
