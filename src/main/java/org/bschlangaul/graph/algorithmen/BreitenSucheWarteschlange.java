@@ -1,5 +1,6 @@
-package org.bschlangaul.graph;
+package org.bschlangaul.graph.algorithmen;
 
+import org.bschlangaul.graph.GraphAdjazenzMatrix;
 import org.bschlangaul.helfer.Farbe;
 import java.util.Vector;
 

@@ -1,9 +1,9 @@
-package org.bschlangaul.graph;
+package org.bschlangaul.graph.algorithmen;
 
 /**
  * https://algorithms.tutorialhorizon.com/prims-minimum-spanning-tree-mst-using-adjacency-matrix/
  */
-public class PrimAlgorithmAdjacencyMatrix {
+public class MinimalerSpannbaumPrim {
 
   static class Graph {
     int vertices;

@@ -8,7 +8,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.bschlangaul.helfer.Farbe;
-
 import org.bschlangaul.graph.einfaches_format.GraphenFormat;
 
 /**

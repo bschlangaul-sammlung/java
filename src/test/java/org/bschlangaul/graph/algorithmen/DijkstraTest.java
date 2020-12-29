@@ -1,4 +1,4 @@
-package org.bschlangaul.graph;
+package org.bschlangaul.graph.algorithmen;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -7,10 +7,10 @@ import org.junit.Test;
 
 class VergleichDijkstra {
 
-  public Dijkstra djikstra;
+  public KuerzesterPfadDijkstra djikstra;
 
   public VergleichDijkstra(String einfachesGraphenFormat, String startKnotenName) {
-    djikstra = new Dijkstra(einfachesGraphenFormat);
+    djikstra = new KuerzesterPfadDijkstra(einfachesGraphenFormat);
     djikstra.sucheKürzestenPfadMatrix(startKnotenName);
   }
 
@@ -26,7 +26,7 @@ class VergleichDijkstra {
 public class DijkstraTest {
 
   public void einfachStatisch() {
-    assertArrayEquals(new int[] { 0, 2, 3 }, Dijkstra.sucheKürzestenPfad("a--b: 2; a--c: 3", "a"));
+    assertArrayEquals(new int[] { 0, 2, 3 }, KuerzesterPfadDijkstra.sucheKürzestenPfad("a--b: 2; a--c: 3", "a"));
   }
 
   @Test

@@ -1,16 +1,18 @@
-package org.bschlangaul.graph;
+package org.bschlangaul.graph.algorithmen;
 
 import java.util.ArrayList;
 import java.util.List;
 import com.jakewharton.fliptables.FlipTable;
 
+import org.bschlangaul.graph.Graph;
+import org.bschlangaul.graph.GraphAdjazenzMatrix;
 import org.bschlangaul.helfer.Farbe;
 import org.bschlangaul.helfer.Tex;
 
 /**
  * https://www.geeksforgeeks.org/printing-paths-dijkstras-shortest-path-algorithm/
  */
-public class Dijkstra {
+public class KuerzesterPfadDijkstra {
 
   class Bearbeitungsschritt {
     int nr;
@@ -132,7 +134,7 @@ public class Dijkstra {
     }
 
     private void sammlePfade(int nachKnotenNr, int aktuelleKnotenNr, int[] vorgänger) {
-      if (aktuelleKnotenNr == Dijkstra.KEINE_VORGÄNGER) {
+      if (aktuelleKnotenNr == KuerzesterPfadDijkstra.KEINE_VORGÄNGER) {
         return;
       }
       pfade.get(nachKnotenNr).add(aktuelleKnotenNr);
@@ -193,7 +195,7 @@ public class Dijkstra {
    *
    * @param graphenFormat Ein String im einfachen Graphenformat.
    */
-  public Dijkstra(String graphenFormat) {
+  public KuerzesterPfadDijkstra(String graphenFormat) {
     this.graphenFormat = graphenFormat;
     graph = new GraphAdjazenzMatrix(graphenFormat);
     reporter = new Reporter();
@@ -286,7 +288,7 @@ public class Dijkstra {
   }
 
   public static int[] sucheKürzestenPfad(String einfachesGraphenFormat, String anfangsKnoten) {
-    return new Dijkstra(einfachesGraphenFormat).sucheKürzestenPfadMatrix(anfangsKnoten);
+    return new KuerzesterPfadDijkstra(einfachesGraphenFormat).sucheKürzestenPfadMatrix(anfangsKnoten);
   }
 
   public static void main(String[] args) {
@@ -297,7 +299,7 @@ public class Dijkstra {
     // Dijkstra d = new Dijkstra(
     // "a->b: 1; a->e: 7; b->c: 3; c->d: 8; c->e: 3; e->f: 1; c->f: 6; f->c: 1;
     // f->d: 3");
-    Dijkstra d = new Dijkstra(
+    KuerzesterPfadDijkstra d = new KuerzesterPfadDijkstra(
         "A: 1 4; B: 3 5; C: 3 3; D: 0 2; E: 5 5; F: 5 1; G: 3 0; H: 6 3; I: 8 4; A -- B: 2; A -- C: 5; A -- D: 2; B -- C: 3; B -- E; C -- D: 3; C -- E; C -- F; C -- H; D -- G: 2; E -- I: 7; F -- G: 2; F -- H: 3; H -- I;");
 
     d.sucheKürzestenPfadMatrix("A");

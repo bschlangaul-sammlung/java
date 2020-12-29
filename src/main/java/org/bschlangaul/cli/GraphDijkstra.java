@@ -7,7 +7,7 @@ import java.io.File;
 import java.util.concurrent.Callable;
 
 import org.bschlangaul.graph.GraphenFinder;
-import org.bschlangaul.graph.Dijkstra;
+import org.bschlangaul.graph.algorithmen.KuerzesterPfadDijkstra;
 
 @Command(name = "dijkstra", aliases = {
     "d" }, description = "Den Dijkstra-Algorithmus ausführen.")
@@ -23,7 +23,7 @@ class GraphDijkstra implements Callable<Integer> {
   public Integer call() throws Exception {
     String einfachesGraphenFormat = new GraphenFinder(datei).gibGraphenFormatText();
 
-    Dijkstra d = new Dijkstra(einfachesGraphenFormat);
+    KuerzesterPfadDijkstra d = new KuerzesterPfadDijkstra(einfachesGraphenFormat);
     d.sucheKürzestenPfadMatrix(startKnoten);
     d.reporter.gibErgebnisTabelle();
     d.reporter.gibZwischenschrittTabelleTex();

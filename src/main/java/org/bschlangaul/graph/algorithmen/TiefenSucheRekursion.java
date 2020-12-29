@@ -1,12 +1,14 @@
-package org.bschlangaul.graph;
+package org.bschlangaul.graph.algorithmen;
+
+import org.bschlangaul.graph.GraphAdjazenzMatrix;
 
 /**
  * nach Schulbuch: Informatik 1 Oberstufe Oldenbourg Verlag
  */
-public class TiefenSuche extends GraphAdjazenzMatrix {
+public class TiefenSucheRekursion extends GraphAdjazenzMatrix {
   private boolean[] besucht;
 
-  public TiefenSuche(int maximaleKnoten) {
+  public TiefenSucheRekursion(int maximaleKnoten) {
     super(maximaleKnoten);
     besucht = new boolean[maximaleKnoten];
   }
@@ -37,7 +39,7 @@ public class TiefenSuche extends GraphAdjazenzMatrix {
   }
 
   public static void main(String[] args) {
-    TiefenSuche tiefensuche = new TiefenSuche(6);
+    TiefenSucheRekursion tiefensuche = new TiefenSucheRekursion(6);
 
     tiefensuche.setzeKnoten("0");
     tiefensuche.setzeKnoten("1");

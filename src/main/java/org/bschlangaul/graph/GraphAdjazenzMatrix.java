@@ -14,7 +14,7 @@ public class GraphAdjazenzMatrix extends Graph {
   /**
    * Das zweidimensionale Feld der Adjazenzmatrix.
    */
-  protected int[][] matrix;
+  public int[][] matrix;
 
   /**
    * Konstruktor für Objekte der Klasse AdjazenzMatrix.
