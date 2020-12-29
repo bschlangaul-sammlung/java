@@ -6,7 +6,7 @@ zeile: (knoten | kante) ZEILEN_ENDE;
 
 kante:
 	von ' '* (gerichtet | ungerichtet) ' '* nach (
-		':' ' '* gewicht
+		' '* ':' ' '* gewicht
 	)?;
 gerichtet: '->';
 ungerichtet: '--';
@@ -27,5 +27,5 @@ DEZIMALZAHL: '-'? GANZZAHL '.' GANZZAHL;
 GANZZAHL: '-'? ZAHL+;
 
 KNOTENNAME: BUCHSTABE+;
-ZEILEN_ENDE: '\r'? '\n' | '\r' | ';';
+ZEILEN_ENDE: ('\r'? '\n' | '\r' | ';')+;
 LEERZEICHEN: [ \t]+ -> skip;

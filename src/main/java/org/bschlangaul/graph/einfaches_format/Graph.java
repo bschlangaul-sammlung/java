@@ -46,7 +46,7 @@ public class Graph {
     kanten = new HashSet<Kante>();
   }
 
-  public static Graph lese(String inhalt) throws Exception {
+  public static Graph lese(String inhalt) {
     GraphLexer serverGraphLexer = new GraphLexer(CharStreams.fromString(inhalt));
     CommonTokenStream tokens = new CommonTokenStream(serverGraphLexer);
     GraphParser graphParser = new GraphParser(tokens);
@@ -99,6 +99,8 @@ public class Graph {
   }
 
   public void fügeKanteEin(String von, String nach, double gewicht, boolean gerichtet) {
+    fügeKnotenEin(von);
+    fügeKnotenEin(nach);
     kanten.add(new Kante(von, nach, gewicht, gerichtet));
   }
 
