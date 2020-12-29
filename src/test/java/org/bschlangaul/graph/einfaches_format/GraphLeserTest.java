@@ -1,38 +1,37 @@
-package org.bschlangaul.antlr;
+package org.bschlangaul.graph.einfaches_format;
 
 import static org.junit.Assert.assertEquals;
 
-import org.bschlangaul.graph.EinfachesGraphenFormat;
 import org.junit.Test;
 
 public class GraphLeserTest {
 
-  private EinfachesGraphenFormat lese(String graphenFormat) throws Exception {
-    return GraphLeser.lese(graphenFormat);
+  private Graph lese(String graphenFormat) throws Exception {
+    return Graph.lese(graphenFormat);
   }
 
-  private EinfachesGraphenFormat.Knoten gibErstenKnoten(String graphenFormat) throws Exception {
-    EinfachesGraphenFormat einfach = lese(graphenFormat);
+  private Knoten gibErstenKnoten(String graphenFormat) throws Exception {
+    Graph einfach = lese(graphenFormat);
     return einfach.gibKnoten()[0];
   }
 
-  private EinfachesGraphenFormat.Kante gibErsteKante(String graphenFormat) throws Exception {
-    EinfachesGraphenFormat einfach = lese(graphenFormat);
+  private Kante gibErsteKante(String graphenFormat) throws Exception {
+    Graph einfach = lese(graphenFormat);
     return einfach.gibKanten()[0];
   }
 
   private void vergleicheAnzahlKanten(int erwartet, String graphenFormat) throws Exception {
-    EinfachesGraphenFormat einfach = lese(graphenFormat);
+    Graph einfach = lese(graphenFormat);
     assertEquals(erwartet, einfach.gibAnzahlKanten());
   }
 
   private void vergleicheAnzahlKnoten(int erwartet, String graphenFormat) throws Exception {
-    EinfachesGraphenFormat einfach = lese(graphenFormat);
+    Graph einfach = lese(graphenFormat);
     assertEquals(erwartet, einfach.gibAnzahlKnoten());
   }
 
   private void vergleicheErstenKnoten(String name, double x, double y, String graphenFormat) throws Exception {
-    EinfachesGraphenFormat.Knoten knoten = gibErstenKnoten(graphenFormat);
+    Knoten knoten = gibErstenKnoten(graphenFormat);
     assertEquals(name, knoten.name);
     assertEquals(x, knoten.x, 0);
     assertEquals(y, knoten.y, 0);
@@ -40,7 +39,7 @@ public class GraphLeserTest {
 
   private void vergleicheErsteKante(String von, String nach, double gewicht, boolean gerichtet, String graphenFormat)
       throws Exception {
-    EinfachesGraphenFormat.Kante kante = gibErsteKante(graphenFormat);
+    Kante kante = gibErsteKante(graphenFormat);
     assertEquals(von, kante.von);
     assertEquals(nach, kante.nach);
     assertEquals(gewicht, kante.gewicht, 0);

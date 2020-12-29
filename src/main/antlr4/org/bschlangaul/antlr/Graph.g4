@@ -28,3 +28,4 @@ GANZZAHL: '-'? ZAHL+;
 
 KNOTENNAME: BUCHSTABE+;
 ZEILEN_ENDE: '\r'? '\n' | '\r' | ';';
+LEERZEICHEN: [ \t]+ -> skip;
