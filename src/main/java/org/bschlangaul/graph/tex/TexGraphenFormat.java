@@ -1,4 +1,4 @@
-package org.bschlangaul.graph;
+package org.bschlangaul.graph.tex;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

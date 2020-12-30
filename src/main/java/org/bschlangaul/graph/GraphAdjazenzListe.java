@@ -6,9 +6,9 @@ import java.util.ArrayList;
 // https://www.softwaretestinghelp.com/java-graph-tutorial/
 
 // Graph class
-class GraphAdjazenzListe extends Graph {
+public class GraphAdjazenzListe extends Graph {
 
-  static class Kante {
+  public static class Kante {
     public int nachNr;
     public int gewicht;
 
@@ -19,7 +19,7 @@ class GraphAdjazenzListe extends Graph {
 
   }
 
-  protected List<List<Kante>> liste;
+  public List<List<Kante>> liste;
 
   /**
    * Konstruktor für Objekte der Klasse GraphAdjazenzListe.

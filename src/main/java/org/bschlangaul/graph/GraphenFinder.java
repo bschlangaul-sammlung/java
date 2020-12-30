@@ -9,6 +9,10 @@ import java.util.regex.Pattern;
 
 import org.bschlangaul.helfer.Farbe;
 import org.bschlangaul.graph.einfaches_format.GraphenFormat;
+import org.bschlangaul.graph.tex.TexAdjazenzListe;
+import org.bschlangaul.graph.tex.TexAdjazenzMatrix;
+import org.bschlangaul.graph.tex.TexGraphenFormat;
+import org.bschlangaul.graph.tex.TexTikz;
 
 /**
  * Suche in einer Text oder TeX-Datei nach Graph-Spezifikation (entweder im

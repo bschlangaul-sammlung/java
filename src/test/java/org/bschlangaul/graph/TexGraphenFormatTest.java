@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.io.IOException;
 
 import org.bschlangaul.TestHelfer;
-
+import org.bschlangaul.graph.tex.TexGraphenFormat;
 import org.junit.Test;
 
 public class TexGraphenFormatTest {

@@ -1,4 +1,6 @@
-package org.bschlangaul.graph;
+package org.bschlangaul.graph.tex;
+
+import org.bschlangaul.graph.GraphAdjazenzMatrix;
 
 /**
  * Eine Adjazenzmatrix in TeX setzen.

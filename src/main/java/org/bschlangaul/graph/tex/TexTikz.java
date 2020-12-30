@@ -1,4 +1,4 @@
-package org.bschlangaul.graph;
+package org.bschlangaul.graph.tex;
 
 import org.bschlangaul.graph.einfaches_format.GraphenFormat;
 import org.bschlangaul.graph.einfaches_format.GraphenFormatKante;

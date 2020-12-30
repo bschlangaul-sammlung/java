@@ -1,7 +1,9 @@
-package org.bschlangaul.graph;
+package org.bschlangaul.graph.tex;
 
 import java.util.List;
 import java.util.regex.Pattern;
+
+import org.bschlangaul.graph.GraphAdjazenzListe;
 
 public class TexAdjazenzListe {
   private GraphAdjazenzListe graph;
