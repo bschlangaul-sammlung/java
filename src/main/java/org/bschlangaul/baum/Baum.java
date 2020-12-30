@@ -115,16 +115,16 @@ public abstract class Baum {
   /**
    * Füge mehrere Schlüssele auf einmal ein.
    *
-   * @param Schlüssel Mehrere Schlüssel.
+   * @param schlüssel Mehrere Schlüssel.
    *
    * @return Wahr, wenn das Einfügen erfolgreich war, d. h. alle Schlüssel
    *         eingefügt werden konnten. Konnte ein Schlüssel nicht eingefügt
    *         werden, wird falsch zurück gegeben.
    */
-  public boolean fügeEin(Comparable... Schlüssel) {
+  public boolean fügeEin(Comparable... schlüssel) {
     boolean ergebnis = true;
     boolean tmp;
-    for (Comparable s : Schlüssel) {
+    for (Comparable s : schlüssel) {
       tmp = fügeEin(s);
       if (!tmp) {
         ergebnis = false;
