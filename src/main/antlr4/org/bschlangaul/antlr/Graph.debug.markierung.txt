@@ -1,0 +1,10 @@
+a*
+b   *
+'lol lol'*
+"troll troll"*
+"ohne Markierung"
+
+a b*
+c d *
+e -- f*: 1
+h->h *: 1

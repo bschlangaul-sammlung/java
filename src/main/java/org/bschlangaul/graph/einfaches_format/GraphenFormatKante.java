@@ -9,11 +9,26 @@ public class GraphenFormatKante implements Comparable<GraphenFormatKante> {
   public double gewicht;
   public boolean gerichtet;
 
+  /**
+   * Möglicherweise ist dieses Attribut nützlich um in TikZ-Grafen einzelne Kanten
+   * zu markieren, z. B. durch dickeren Linien, um Spannbäume etc. zu
+   * kennzeichnen.
+   */
+  public boolean markiert;
+
   public GraphenFormatKante(String von, String nach, double gewicht, boolean gerichtet) {
     this.von = von;
     this.nach = nach;
     this.gewicht = gewicht;
     this.gerichtet = gerichtet;
+  }
+
+  public GraphenFormatKante(String von, String nach, double gewicht, boolean gerichtet, boolean markiert) {
+    this.von = von;
+    this.nach = nach;
+    this.gewicht = gewicht;
+    this.gerichtet = gerichtet;
+    this.markiert = markiert;
   }
 
   /**
@@ -65,7 +80,7 @@ public class GraphenFormatKante implements Comparable<GraphenFormatKante> {
   }
 
   public String toString() {
-    return String.format("Kante (von: %s, nach: %s, gewicht: %s, gerichtet: %b)", von, nach, GraphenFormat.formatiereZahl(gewicht),
-        gerichtet);
+    return String.format("Kante (von: %s, nach: %s, gewicht: %s, gerichtet: %b)", von, nach,
+        GraphenFormat.formatiereZahl(gewicht), gerichtet);
   }
 }

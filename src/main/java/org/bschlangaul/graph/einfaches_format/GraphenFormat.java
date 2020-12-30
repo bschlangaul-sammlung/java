@@ -92,15 +92,21 @@ public class GraphenFormat {
     }
   }
 
+  public void fügeKnotenEin(String name, double x, double y) {
+    fügeKnotenEin(name, x, y, false);
+  }
+
   public void fügeKnotenEin(String name, String x, String y) {
-    double xDouble = Double.parseDouble(x);
-    double yDouble = Double.parseDouble(y);
+    fügeKnotenEin(name, Double.parseDouble(x), Double.parseDouble(y));
+  }
+
+  public void fügeKnotenEin(String name, double x, double y, boolean markiert) {
     if (knoten.get(name) == null) {
-      knoten.put(name, new GraphenFormatKnoten(name, xDouble, yDouble));
+      knoten.put(name, new GraphenFormatKnoten(name, x, y, markiert));
     } else {
       GraphenFormatKnoten k = knoten.get(name);
-      k.x = xDouble;
-      k.y = yDouble;
+      k.x = x;
+      k.y = y;
     }
   }
 
@@ -138,6 +144,10 @@ public class GraphenFormat {
     GraphenFormatKnoten[] ausgabe = knoten.values().toArray(new GraphenFormatKnoten[0]);
     Arrays.sort(ausgabe);
     return ausgabe;
+  }
+
+  public GraphenFormatKnoten gibKnoten(String knotenName) {
+    return knoten.get(knotenName);
   }
 
   public String[] gibKnotenNamen() {

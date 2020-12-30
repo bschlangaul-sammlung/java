@@ -3,6 +3,7 @@ package org.bschlangaul.graph.einfaches_format;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
+import org.bschlangaul.TestHelfer;
 import org.junit.Test;
 
 public class GraphenFormatTest {
@@ -126,7 +127,7 @@ public class GraphenFormatTest {
 
   @Test
   public void methodeGibKanten() {
-    GraphenFormat graph = GraphenFormat.lese("z->a;a->c;a->b");
+    GraphenFormat graph = GraphenFormat.lese("z->a;a->c;a->b;");
     GraphenFormatKante[] kanten = graph.gibKanten();
     assertEquals("a", kanten[0].von);
     assertEquals("b", kanten[0].nach);
@@ -180,12 +181,29 @@ public class GraphenFormatTest {
     assertEquals(123, k.gewicht, 0);
   }
 
-
-
   @Test
   public void knotenNamen() {
     GraphenFormat graph = GraphenFormat.lese("z: 1 2; a: 2 3; b: 4 5;");
     assertArrayEquals(new String[] { "a", "b", "z" }, graph.gibKnotenNamen());
+  }
+
+  @Test
+  public void markierung() {
+    GraphenFormat graph = GraphenFormat.lese(TestHelfer.leseDatei("graph/markierung.txt"));
+    assertEquals(true, graph.gibKnoten("a").markiert);
+    assertEquals(true, graph.gibKnoten("b").markiert);
+    assertEquals(true, graph.gibKnoten("lol lol").markiert);
+    assertEquals(false, graph.gibKnoten("ohne Markierung").markiert);
+    assertEquals(false, graph.gibKnoten("e").markiert);
+  }
+
+  @Test
+  public void text() {
+    GraphenFormat graph = GraphenFormat.lese(TestHelfer.leseDatei("graph/text.txt"));
+    String[] knotenNamen = graph.gibKnotenNamen();
+    assertEquals("Hallo \"Hermine\"!", knotenNamen[0]);
+    assertEquals("Hallo 'Otto'!", knotenNamen[1]);
+
   }
 
 }

@@ -11,12 +11,27 @@ class AntlrListener extends GraphBaseListener {
   public void enterKante(GraphParser.KanteContext ctx) {
     boolean gerichtet = ctx.gerichtet() != null ? true : false;
     double gewicht = ctx.gewicht() != null ? Double.parseDouble(ctx.gewicht().getText()) : 1;
-    graph.fügeKanteEin(ctx.von().getText(), ctx.nach().getText(), gewicht, gerichtet);
+    graph.fügeKanteEin(formatiereKnotenName(ctx.von().getText()), formatiereKnotenName(ctx.nach().getText()), gewicht,
+        gerichtet);
   }
 
   @Override
   public void enterKnoten(GraphParser.KnotenContext ctx) {
-    graph.fügeKnotenEin(ctx.name().getText(), ctx.x().getText(), ctx.y().getText());
+    String name = formatiereKnotenName(ctx.name().getText());
+    double x = 0d;
+    double y = 0d;
+    boolean markiert = false;
+    if (ctx.x() != null && ctx.y() != null) {
+      x = Double.parseDouble(ctx.x().getText());
+      y = Double.parseDouble(ctx.y().getText());
+    }
+    if (ctx.markiert() != null)
+      markiert = true;
+    graph.fügeKnotenEin(name, x, y, markiert);
+  }
+
+  private String formatiereKnotenName(String eingabe) {
+    return eingabe.replaceAll("(^['\"]|['\"]$)", "").replace("\\\"", "\"").replace("\\\'", "\'");
   }
 
   public GraphenFormat gibGraph() {

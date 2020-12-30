@@ -1,0 +1,4 @@
+'Hallo \'Otto\'!' "Hallo \"Hermine\"!"
+'Hansa R->stock'
+a
+abc

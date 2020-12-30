@@ -1,34 +1,35 @@
 grammar Graph;
 
-graph: zeile+ (knoten | kante)? EOF;
+graph: zeile+ EOF;
 
 zeile: (knoten | kante) TRENNER;
 
-kante:
-	von ' '* (gerichtet | ungerichtet) ' '* nach (
-		' '* ':' ' '* gewicht
-	)?;
-gerichtet: '->';
-ungerichtet: '--';
-von: KNOTENNAME;
-nach: KNOTENNAME;
-gewicht: GLEITZAHL;
-
-knoten: name ' '* (':' ' '* x ' '+ y)?;
-name: KNOTENNAME;
+knoten: name markiert? (':' x y)?;
+name: knoten_name;
 x: GLEITZAHL;
 y: GLEITZAHL;
 
-fragment BUCHSTABE: [A-Za-z\p{Block=Latin_1_Supplement}];
+kante: von (gerichtet | ungerichtet)? nach markiert? (':' gewicht)?;
+von: knoten_name;
+nach: knoten_name;
+gerichtet: '->';
+ungerichtet: '--';
+gewicht: GLEITZAHL;
+
+knoten_name: (GLEITZAHL | UNZITIERTER_TEXT | ZITIERTER_TEXT_DOPPELT | ZITIERTER_TEXT_EINFACH );
+markiert: '*';
+
 fragment ZAHL: [0-9];
+fragment DEZIMALZAHL: '-'? GANZZAHL '.' GANZZAHL;
+fragment GANZZAHL: '-'? ZAHL+;
 
-KOMMENTAR: [ \t]* '%' ~[\r\n;]* TRENNER -> skip;
-
-KNOTENNAME: BUCHSTABE (BUCHSTABE | ZAHL | '_')*;
+TRENNER: [;\n\r]+;
 
 GLEITZAHL: DEZIMALZAHL | GANZZAHL;
-DEZIMALZAHL: '-'? GANZZAHL '.' GANZZAHL;
-GANZZAHL: '-'? ZAHL+;
+ZITIERTER_TEXT_DOPPELT: '"' ('\\"' | ~[\n])*? '"';
+ZITIERTER_TEXT_EINFACH: '\'' ('\\\'' | ~[\n])*? '\'';
+UNZITIERTER_TEXT: (~(' ' | '\n' | '\r' | '\t' | ';' | ':' | '-' | '>' | '*'))+;
 
-TRENNER: ('\r'? '\n' | '\r' | ';')+ ' '*;
 LEERZEICHEN: [ \t]+ -> skip;
+ZEILEN_ENDE: '\n' -> skip;
+KOMMENTAR: [ \t]* '%' ~[\r\n;]* TRENNER -> skip;

@@ -4,6 +4,12 @@ public class GraphenFormatKnoten implements Comparable<GraphenFormatKnoten> {
   public String name;
   public double x;
   public double y;
+  /**
+   * Möglicherweise ist dieses Attribut nützlich um in TikZ-Grafen einzelne Knoten
+   * zu markieren, z. B. durch dickeren Linien, um Besuchsreihenfolgen etc. zu
+   * kennzeichnen.
+   */
+  public boolean markiert;
 
   public GraphenFormatKnoten(String name) {
     this.name = name;
@@ -13,6 +19,13 @@ public class GraphenFormatKnoten implements Comparable<GraphenFormatKnoten> {
     this.name = name;
     this.x = x;
     this.y = y;
+  }
+
+  public GraphenFormatKnoten(String name, double x, double y, boolean markiert) {
+    this.name = name;
+    this.x = x;
+    this.y = y;
+    this.markiert = markiert;
   }
 
   /**
@@ -54,6 +67,7 @@ public class GraphenFormatKnoten implements Comparable<GraphenFormatKnoten> {
   }
 
   public String toString() {
-    return String.format("Knoten (name: %s, x: %s, y: %s)", name, GraphenFormat.formatiereZahl(x), GraphenFormat.formatiereZahl(y));
+    return String.format("Knoten (name: %s, x: %s, y: %s)", name, GraphenFormat.formatiereZahl(x),
+        GraphenFormat.formatiereZahl(y));
   }
 }
