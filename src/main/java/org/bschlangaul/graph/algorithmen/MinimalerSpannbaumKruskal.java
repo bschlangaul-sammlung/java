@@ -31,7 +31,7 @@ class MinimalerSpannbaumKruskal extends GraphAdjazenzMatrix {
   }
 
   // Finds MST using Kruskal's algorithm
-  public void führeAus() {
+  public int führeAus() {
     int mincost = 0; // Cost of min MST.
 
     // Initialize sets of disjoint sets.
@@ -57,6 +57,7 @@ class MinimalerSpannbaumKruskal extends GraphAdjazenzMatrix {
       mincost += min;
     }
     System.out.printf("\n Minimum cost= %d \n", mincost);
+    return mincost;
   }
 
   // Driver code

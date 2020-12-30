@@ -1,0 +1,19 @@
+% Aus AUD Foliensatz 6 Seite 30-33
+A: 0 5
+B: 2 4
+C: 5 5
+D: 0 2
+E: 4 2
+F: 2 1
+G: 5 0
+A -- B: 7
+A -- D: 5
+B -- C: 8
+B -- D: 9
+B -- E: 7
+C -- E: 5
+D -- E: 15
+D -- F: 6
+E -- F: 8
+E -- G: 9
+F -- G: 11

@@ -64,11 +64,11 @@ public class GraphenFinder {
     System.out.println(String.format("\n%s\n", Farbe.rot(überschrift)));
   }
 
-  public static String umgebungsName = "liEinfachesGraphenFormat";
+  public static String umgebungsName = "liGraphenFormat";
 
   private String[] sucheNachEinfachem(String inhalt) {
     Pattern pattern = Pattern.compile(
-        "\\\\begin\\{liEinfachesGraphenFormat\\}(?<format>.*?)\\\\end\\{liEinfachesGraphenFormat\\}", Pattern.DOTALL);
+        "\\\\begin\\{" + umgebungsName + "\\}(?<format>.*?)\\\\end\\{" + umgebungsName + "\\}", Pattern.DOTALL);
     Matcher ergebnis = pattern.matcher(inhalt);
     ArrayList<String> ausgabe = new ArrayList<String>();
     while (ergebnis.find()) {
