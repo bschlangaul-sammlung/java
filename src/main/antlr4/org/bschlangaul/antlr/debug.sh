@@ -39,6 +39,7 @@ fi
 
 # grun
 java -Xmx500M -cp "$JAR:$CLASSPATH" org.antlr.v4.gui.TestRig \
-  "$GRAMMAR_NAME" "$START_RULE_NAME" "$DEBUG_FILE" -gui
+  "$GRAMMAR_NAME" "$START_RULE_NAME" "$DEBUG_FILE" \
+  -gui
 
 _clean_up
