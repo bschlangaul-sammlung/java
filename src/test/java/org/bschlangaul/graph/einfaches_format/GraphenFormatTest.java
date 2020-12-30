@@ -195,6 +195,9 @@ public class GraphenFormatTest {
     assertEquals(true, graph.gibKnoten("lol lol").markiert);
     assertEquals(false, graph.gibKnoten("ohne Markierung").markiert);
     assertEquals(false, graph.gibKnoten("e").markiert);
+
+    assertEquals(true, graph.gibKante("a", "b").markiert);
+    assertEquals(false, graph.gibKante("ohne Markierung", "x").markiert);
   }
 
   @Test
@@ -203,7 +206,9 @@ public class GraphenFormatTest {
     String[] knotenNamen = graph.gibKnotenNamen();
     assertEquals("Hallo \"Hermine\"!", knotenNamen[0]);
     assertEquals("Hallo 'Otto'!", knotenNamen[1]);
-
+    assertEquals("Hansa R->stock", knotenNamen[2]);
+    assertEquals("a", knotenNamen[3]);
+    assertEquals("abc", knotenNamen[4]);
   }
 
 }

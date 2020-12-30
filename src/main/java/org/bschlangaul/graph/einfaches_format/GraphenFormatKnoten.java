@@ -63,7 +63,8 @@ public class GraphenFormatKnoten implements Comparable<GraphenFormatKnoten> {
   }
 
   public String gibAlsEinfachesFormat() {
-    return String.format("%s: %s %s\n", name, GraphenFormat.formatiereZahl(x), GraphenFormat.formatiereZahl(y));
+    String sternchen = markiert ? "*" : "";
+    return String.format("%s%s: %s %s\n", name, sternchen, GraphenFormat.formatiereZahl(x), GraphenFormat.formatiereZahl(y));
   }
 
   public String toString() {

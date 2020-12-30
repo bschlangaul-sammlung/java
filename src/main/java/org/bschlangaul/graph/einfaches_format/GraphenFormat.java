@@ -127,9 +127,14 @@ public class GraphenFormat {
   }
 
   public void fügeKanteEin(String von, String nach, double gewicht, boolean gerichtet) {
+    fügeKanteEin(von, nach, gewicht, gerichtet, false);
+  }
+
+
+  public void fügeKanteEin(String von, String nach, double gewicht, boolean gerichtet, boolean markiert) {
     fügeKnotenEin(von);
     fügeKnotenEin(nach);
-    kanten.add(new GraphenFormatKante(von, nach, gewicht, gerichtet));
+    kanten.add(new GraphenFormatKante(von, nach, gewicht, gerichtet, markiert));
   }
 
   public int gibAnzahlKnoten() {
@@ -166,6 +171,15 @@ public class GraphenFormat {
     GraphenFormatKante[] ausgabe = {};
     ausgabe = kanten.toArray(ausgabe);
     Arrays.sort(ausgabe);
+    return ausgabe;
+  }
+
+  public GraphenFormatKante gibKante(String von, String nach) {
+    GraphenFormatKante ausgabe = null;
+    for (GraphenFormatKante kante : kanten) {
+      if (kante.von.equals(von) && kante.nach.equals(nach))
+        ausgabe = kante;
+    }
     return ausgabe;
   }
 

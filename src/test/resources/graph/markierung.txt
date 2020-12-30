@@ -8,3 +8,4 @@ a b*
 c d *
 e -- f*: 1
 h->h *: 1
+"ohne Markierung" x

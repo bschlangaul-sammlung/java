@@ -8,7 +8,7 @@ import java.util.ArrayList;
 // Graph class
 class GraphAdjazenzListe extends Graph {
 
-  static class Kante{
+  static class Kante {
     public int nachNr;
     public int gewicht;
 

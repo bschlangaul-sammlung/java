@@ -73,7 +73,9 @@ public class GraphenFormatKante implements Comparable<GraphenFormatKante> {
   public String gibAlsEinfachesFormat() {
     String ausgabe;
     String gerichtetZeichen = gerichtet ? ">" : "-";
-    ausgabe = String.format("%s -%s %s", von, gerichtetZeichen, nach);
+    String sternchen = markiert ? "*" : "";
+
+    ausgabe = String.format("%s -%s %s%s", von, gerichtetZeichen, nach, sternchen);
     if (gewicht != 1)
       ausgabe = String.format("%s: %s", ausgabe, GraphenFormat.formatiereZahl(gewicht));
     return ausgabe + "\n";

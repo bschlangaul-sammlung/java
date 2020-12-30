@@ -11,8 +11,9 @@ class AntlrListener extends GraphBaseListener {
   public void enterKante(GraphParser.KanteContext ctx) {
     boolean gerichtet = ctx.gerichtet() != null ? true : false;
     double gewicht = ctx.gewicht() != null ? Double.parseDouble(ctx.gewicht().getText()) : 1;
+    boolean markiert = ctx.markiert() != null ? true : false;
     graph.fügeKanteEin(formatiereKnotenName(ctx.von().getText()), formatiereKnotenName(ctx.nach().getText()), gewicht,
-        gerichtet);
+        gerichtet, markiert);
   }
 
   @Override
