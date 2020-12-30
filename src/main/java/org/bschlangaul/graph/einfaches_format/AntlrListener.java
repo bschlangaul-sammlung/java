@@ -4,8 +4,14 @@ import org.bschlangaul.antlr.GraphBaseListener;
 import org.bschlangaul.antlr.GraphParser;
 
 class AntlrListener extends GraphBaseListener {
-
   private GraphenFormat graph = new GraphenFormat();
+
+  public AntlrListener() {
+  }
+
+  public AntlrListener(GraphenFormat graph) {
+    this.graph = graph;
+  }
 
   @Override
   public void enterKante(GraphParser.KanteContext ctx) {

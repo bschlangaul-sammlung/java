@@ -211,4 +211,16 @@ public class GraphenFormatTest {
     assertEquals("abc", knotenNamen[4]);
   }
 
+  @Test
+  public void stringKonstruktor() {
+    GraphenFormat graph = new GraphenFormat(TestHelfer.leseDatei("graph/aud-fs-6.txt"));
+    assertEquals(7, graph.gibAnzahlKnoten());
+  }
+
+  @Test
+  public void variableArgumentenlisteKonstruktor() {
+    GraphenFormat graph = new GraphenFormat("a", "b", "c");
+    assertEquals(3, graph.gibAnzahlKnoten());
+  }
+
 }

@@ -65,6 +65,29 @@ public class GraphenFormat {
     kanten = new HashSet<GraphenFormatKante>();
   }
 
+  public GraphenFormat(String inhalt) {
+    this();
+    leseTextFormat(inhalt);
+  }
+
+  public GraphenFormat(String... formatSegmente) {
+    this();
+    String separator = ";\n";
+    leseTextFormat(String.join(separator, formatSegmente) + separator);
+  }
+
+  private void leseTextFormat(String inhalt) {
+    GraphLexer serverGraphLexer = new GraphLexer(CharStreams.fromString(inhalt));
+    CommonTokenStream tokens = new CommonTokenStream(serverGraphLexer);
+    GraphParser graphParser = new GraphParser(tokens);
+
+    graphParser.removeErrorListeners();
+    graphParser.addErrorListener(new FehlerLauscher());
+    ParseTreeWalker walker = new ParseTreeWalker();
+    AntlrListener antlrListener = new AntlrListener(this);
+    walker.walk(antlrListener, graphParser.graph());
+  }
+
   public static GraphenFormat lese(String inhalt) {
     GraphLexer serverGraphLexer = new GraphLexer(CharStreams.fromString(inhalt));
     CommonTokenStream tokens = new CommonTokenStream(serverGraphLexer);
@@ -129,7 +152,6 @@ public class GraphenFormat {
   public void fügeKanteEin(String von, String nach, double gewicht, boolean gerichtet) {
     fügeKanteEin(von, nach, gewicht, gerichtet, false);
   }
-
 
   public void fügeKanteEin(String von, String nach, double gewicht, boolean gerichtet, boolean markiert) {
     fügeKnotenEin(von);
