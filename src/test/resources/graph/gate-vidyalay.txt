@@ -1,0 +1,9 @@
+% https://www.gatevidyalay.com/kruskals-algorithm-kruskals-algorithm-example/
+v1 -- v2: 28
+v1 -- v6: 10
+v2 -- v3: 16
+v2 -- v7: 14
+v3 -- v4: 12
+v4 -- v5: 22
+v5 -- v6: 25
+v5 -- v7: 24

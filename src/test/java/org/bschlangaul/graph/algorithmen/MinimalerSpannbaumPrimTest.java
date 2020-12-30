@@ -5,11 +5,11 @@ import static org.junit.Assert.assertEquals;
 import org.bschlangaul.TestHelfer;
 import org.junit.Test;
 
-public class MinimalerSpannbaumKruskalTest {
+public class MinimalerSpannbaumPrimTest {
 
   private void vergleiche(int erwartet, String dateiName) {
-    MinimalerSpannbaumKruskal k = new MinimalerSpannbaumKruskal(TestHelfer.leseDatei("graph/" + dateiName));
-    assertEquals(erwartet, k.führeAus());
+    MinimalerSpannbaumPrim p = new MinimalerSpannbaumPrim(TestHelfer.leseDatei("graph/" + dateiName));
+    assertEquals(erwartet, p.führeAus());
   }
 
   @Test
@@ -26,6 +26,5 @@ public class MinimalerSpannbaumKruskalTest {
   public void slideshareAdilAslam() {
     vergleiche(37, "slideshare-adil-aslam.txt");
   }
-
 
 }

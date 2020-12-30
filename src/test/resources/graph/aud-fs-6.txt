@@ -1,4 +1,6 @@
 % Aus AUD Foliensatz 6 Seite 30-33
+% Nach https://de.wikipedia.org/wiki/Algorithmus_von_Kruskal
+% https://de.wikipedia.org/wiki/Algorithmus_von_Prim
 A: 0 5
 B: 2 4
 C: 5 5
