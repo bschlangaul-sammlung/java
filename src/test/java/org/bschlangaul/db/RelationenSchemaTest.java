@@ -20,4 +20,50 @@ public class RelationenSchemaTest {
     assertEquals("Relation1", schema.gibRelationenNamen()[0]);
   }
 
+  @Test
+  public void mehrere() {
+    RelationenSchema schema = lade("mehrere.txt");
+    assertEquals("Relation1", schema.gibRelationenNamen()[0]);
+    assertEquals("Relation2", schema.gibRelationenNamen()[1]);
+    assertEquals("Relation3", schema.gibRelationenNamen()[2]);
+    assertEquals("Relation4", schema.gibRelationenNamen()[3]);
+
+    Attribut a = schema.gibAttribut("Relation1", "attribut1");
+    assertEquals("attribut1", a.name);
+    assertEquals(true, a.istPrimaer);
+
+    a = schema.gibAttribut("Relation1", "attribut2");
+    assertEquals("attribut2", a.name);
+    assertEquals(false, a.istPrimaer);
+
+    a = schema.gibAttribut("Relation2", "Mit_Umlauten_äöüSÖÄÖÜß");
+    assertEquals("Mit_Umlauten_äöüSÖÄÖÜß", a.name);
+    assertEquals(true, a.istPrimaer);
+
+    a = schema.gibAttribut("Relation2", "1234");
+    assertEquals("1234", a.name);
+    assertEquals(false, a.istPrimaer);
+  }
+
+  @Test
+  public void fremd() {
+    RelationenSchema schema = lade("fremd.txt");
+    Attribut attribut = schema.gibAttribut("Relation2", "id");
+    assertEquals("id", attribut.name);
+    assertEquals("Relation1", attribut.fremdRelationenName);
+  }
+
+  @Test
+  public void triathlon() {
+    RelationenSchema schema = lade("triathlon.txt");
+    assertEquals("integer", schema.gibAttribut("Athlet", "ID").rateSqlTypeVonName());
+    assertEquals("  ID integer PRIMARY KEY", schema.gibAttribut("Athlet", "ID").baueSqlCreate());
+
+    assertEquals("varchar(20)", schema.gibAttribut("Athlet", "Vorname").rateSqlTypeVonName());
+    assertEquals("varchar(20)", schema.gibAttribut("Wettbewerb", "Name").rateSqlTypeVonName());
+    assertEquals("integer", schema.gibAttribut("Wettbewerb", "Schwimmzeit").rateSqlTypeVonName());
+    assertEquals("integer", schema.gibAttribut("Wettbewerb", "Jahr").rateSqlTypeVonName());
+
+  }
+
 }

@@ -3,9 +3,10 @@ einstiegsPunkt: relation+ EOF;
 relation: relationenName '(' attribute ')';
 attribute: attribut (trenner attribut)*;
 relationenName: NAME;
-attribut: fremdSchluessel | attributName;
+attribut: fremdSchluessel | (attributName istPrimaer?);
 fremdSchluessel: attributName '[' relationenName ']';
 attributName: NAME;
+istPrimaer: '*';
 
 trenner: KOMMA;
 name: NAME;

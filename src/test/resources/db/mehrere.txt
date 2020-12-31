@@ -1,0 +1,11 @@
+Relation1(attribut1 *, attribut2)
+
+Relation2(Mit_Umlauten_äöüSÖÄÖÜß*,1234)
+
+Relation3(
+  a*,
+  b
+)
+Relation4 (einAttribut*)
+
+Relation5(id[Relation2])

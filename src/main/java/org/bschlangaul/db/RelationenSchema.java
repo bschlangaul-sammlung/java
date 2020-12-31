@@ -1,9 +1,8 @@
 package org.bschlangaul.db;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
+import java.util.regex.Pattern;
 
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -18,7 +17,7 @@ class AntlrListener extends RelationenSchemaBaseListener {
 
   private Relation aktuelleRelation;
 
-  public AntlrListener(RelationenSchema relationenSchema ) {
+  public AntlrListener(RelationenSchema relationenSchema) {
     this.relationenSchema = relationenSchema;
   }
 
@@ -29,7 +28,17 @@ class AntlrListener extends RelationenSchemaBaseListener {
   }
 
   public void enterAttribut(RelationenSchemaParser.AttributContext ctx) {
-    aktuelleRelation.setzeAttribut(ctx.getText());
+    Attribut attribut = new Attribut("");
+
+    if (ctx.fremdSchluessel() != null) {
+      attribut.name = ctx.fremdSchluessel().attributName().getText();
+      attribut.fremdRelationenName = ctx.fremdSchluessel().relationenName().getText();
+    } else {
+      attribut.name = ctx.attributName().getText();
+    }
+
+    attribut.istPrimaer = ctx.istPrimaer() != null ? true : false;
+    aktuelleRelation.setzeAttribut(attribut);
   }
 
   public void exitRelation(RelationenSchemaParser.RelationContext ctx) {
@@ -38,17 +47,59 @@ class AntlrListener extends RelationenSchemaBaseListener {
 
 }
 
+class Attribut {
+  String name;
+  String fremdRelationenName;
+  String fremdRelationenAttribut;
+  boolean istPrimaer;
+
+  public Attribut(String name) {
+    this.name = name;
+  }
+
+  private boolean nameEnthält(String... suchTexte) {
+    for (String suchText : suchTexte) {
+      if (name.toLowerCase().indexOf(suchText.toLowerCase()) > -1)
+        return true;
+    }
+    return false;
+  }
+
+  public String rateSqlTypeVonName() {
+    if (nameEnthält("name"))
+      return "varchar(20)";
+    if (istPrimaer)
+      return "integer";
+    if (nameEnthält("zeit", "time", "jahr", "year", "id"))
+      return "integer";
+    if (nameEnthält("datum", "date"))
+      return "date";
+    return "varchar(50)";
+  }
+
+  public String baueSqlCreate() {
+    String ausgabe = "  " + name;
+    ausgabe += " " + rateSqlTypeVonName();
+    if (istPrimaer) ausgabe += " PRIMARY KEY";
+    return ausgabe;
+  }
+}
+
 class Relation {
-  List<String> attribute;
+  HashMap<String, Attribut> attribute;
   String name;
 
   public Relation(String name) {
     this.name = name;
-    attribute = new ArrayList<String>();
+    attribute = new HashMap<String, Attribut>();
   }
 
-  public void setzeAttribut(String name) {
-    attribute.add(name);
+  public void setzeAttribut(String attributName) {
+    attribute.put(attributName, new Attribut(attributName));
+  }
+
+  public void setzeAttribut(Attribut attribut) {
+    attribute.put(attribut.name, attribut);
   }
 }
 
@@ -67,6 +118,10 @@ public class RelationenSchema {
 
   public void setzeRelation(Relation relation) {
     relationen.put(relation.name, relation);
+  }
+
+  public Attribut gibAttribut(String relationenName, String attributName) {
+    return relationen.get(relationenName).attribute.get(attributName);
   }
 
   private void leseTextFormat(String inhalt) {

@@ -1,0 +1,3 @@
+Athlet (ID*, Vorname, Nachname)
+Ergebnis (Athlet [Athlet], Wettbewerb [Wettbewerb], Laufzeit)
+Wettbewerb (Name*, Schwimmzeit, Radzeit, Jahr)

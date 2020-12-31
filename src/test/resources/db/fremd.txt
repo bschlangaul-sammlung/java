@@ -1,0 +1,3 @@
+Relation1(attribut1, attribute2)
+
+Relation2(id[Relation1], name)
