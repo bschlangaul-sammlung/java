@@ -1,8 +1,7 @@
 package org.bschlangaul.db;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.regex.Pattern;
+import java.util.LinkedHashMap;
 
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -13,22 +12,25 @@ import org.bschlangaul.antlr.RelationenSchemaParser;
 
 class AntlrListener extends RelationenSchemaBaseListener {
 
-  private RelationenSchema relationenSchema = new RelationenSchema();
+  private RelationenSchema schema = new RelationenSchema();
 
   private Relation aktuelleRelation;
 
-  public AntlrListener(RelationenSchema relationenSchema) {
-    this.relationenSchema = relationenSchema;
+  public AntlrListener(RelationenSchema schema) {
+    this.schema = schema;
   }
 
   @Override
   public void enterRelation(RelationenSchemaParser.RelationContext ctx) {
     String relationsName = ctx.relationenName().getText();
     aktuelleRelation = new Relation(relationsName);
+    aktuelleRelation.schema = schema;
   }
 
   public void enterAttribut(RelationenSchemaParser.AttributContext ctx) {
     Attribut attribut = new Attribut("");
+    attribut.schema = schema;
+    attribut.relation = aktuelleRelation;
 
     if (ctx.fremdSchluessel() != null) {
       attribut.name = ctx.fremdSchluessel().attributName().getText();
@@ -42,7 +44,7 @@ class AntlrListener extends RelationenSchemaBaseListener {
   }
 
   public void exitRelation(RelationenSchemaParser.RelationContext ctx) {
-    relationenSchema.setzeRelation(aktuelleRelation);
+    schema.setzeRelation(aktuelleRelation);
   }
 
 }
@@ -52,6 +54,8 @@ class Attribut {
   String fremdRelationenName;
   String fremdRelationenAttribut;
   boolean istPrimaer;
+  RelationenSchema schema;
+  Relation relation;
 
   public Attribut(String name) {
     this.name = name;
@@ -80,18 +84,20 @@ class Attribut {
   public String baueSqlCreate() {
     String ausgabe = "  " + name;
     ausgabe += " " + rateSqlTypeVonName();
-    if (istPrimaer) ausgabe += " PRIMARY KEY";
+    if (istPrimaer)
+      ausgabe += " PRIMARY KEY";
     return ausgabe;
   }
 }
 
 class Relation {
-  HashMap<String, Attribut> attribute;
+  LinkedHashMap<String, Attribut> attribute;
   String name;
+  RelationenSchema schema;
 
   public Relation(String name) {
     this.name = name;
-    attribute = new HashMap<String, Attribut>();
+    attribute = new LinkedHashMap<String, Attribut>();
   }
 
   public void setzeAttribut(String attributName) {
@@ -101,18 +107,29 @@ class Relation {
   public void setzeAttribut(Attribut attribut) {
     attribute.put(attribut.name, attribut);
   }
+
+  public String baueSqlCreate() {
+    String[] attributeSql = new String[attribute.size()];
+    int i = 0;
+    for (Attribut attribut : attribute.values()) {
+      attributeSql[i] = attribut.baueSqlCreate();
+      i++;
+    }
+    String ausgabe = String.format("CREATE TABLE %s (\n%s\n);\n", name, String.join(",\n", attributeSql));
+    return ausgabe;
+  }
 }
 
 public class RelationenSchema {
 
-  HashMap<String, Relation> relationen;
+  LinkedHashMap<String, Relation> relationen;
 
   public RelationenSchema() {
-    relationen = new HashMap<String, Relation>();
+    relationen = new LinkedHashMap<String, Relation>();
   }
 
   public RelationenSchema(String format) {
-    relationen = new HashMap<String, Relation>();
+    relationen = new LinkedHashMap<String, Relation>();
     leseTextFormat(format);
   }
 
@@ -122,6 +139,10 @@ public class RelationenSchema {
 
   public Attribut gibAttribut(String relationenName, String attributName) {
     return relationen.get(relationenName).attribute.get(attributName);
+  }
+
+  public Relation gibRelation(String relationenName) {
+    return relationen.get(relationenName);
   }
 
   private void leseTextFormat(String inhalt) {
@@ -138,6 +159,14 @@ public class RelationenSchema {
     String[] namen = relationen.keySet().toArray(new String[0]);
     Arrays.sort(namen);
     return namen;
+  }
+
+  public String baueSqlCreate() {
+    String ausgabe = "";
+    for (Relation relation : relationen.values()) {
+      ausgabe += relation.baueSqlCreate() + "\n";
+    }
+    return ausgabe;
   }
 
 }

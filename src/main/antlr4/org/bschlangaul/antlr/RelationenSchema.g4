@@ -3,7 +3,7 @@ einstiegsPunkt: relation+ EOF;
 relation: relationenName '(' attribute ')';
 attribute: attribut (trenner attribut)*;
 relationenName: NAME;
-attribut: fremdSchluessel | (attributName istPrimaer?);
+attribut: (fremdSchluessel | attributName) istPrimaer?;
 fremdSchluessel: attributName '[' relationenName ']';
 attributName: NAME;
 istPrimaer: '*';

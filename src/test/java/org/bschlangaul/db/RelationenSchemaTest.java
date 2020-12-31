@@ -64,6 +64,7 @@ public class RelationenSchemaTest {
     assertEquals("integer", schema.gibAttribut("Wettbewerb", "Schwimmzeit").rateSqlTypeVonName());
     assertEquals("integer", schema.gibAttribut("Wettbewerb", "Jahr").rateSqlTypeVonName());
 
+    System.out.println(schema.baueSqlCreate());
   }
 
 }
