@@ -1,11 +1,11 @@
 grammar RelationenSchema;
-einstiegs_punkt: relation+ EOF;
-relation: relations_name '(' attribute ')';
+einstiegsPunkt: relation+ EOF;
+relation: relationenName '(' attribute ')';
 attribute: attribut (trenner attribut)*;
-relations_name: NAME;
-attribut: fremd_schluessel | attribut_name;
-fremd_schluessel: attribut_name '[' relations_name ']';
-attribut_name: NAME;
+relationenName: NAME;
+attribut: fremdSchluessel | attributName;
+fremdSchluessel: attributName '[' relationenName ']';
+attributName: NAME;
 
 trenner: KOMMA;
 name: NAME;

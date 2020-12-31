@@ -1,0 +1,1 @@
+Relation1(attribut1, attribute2)
