@@ -36,7 +36,7 @@ public abstract class Graph {
    * @param graphenFormat Ein String im einfachen Graphenformat.
    */
   public Graph(String graphenFormat) {
-    this(GraphenFormat.lese(graphenFormat));
+    this(new GraphenFormat(graphenFormat));
   }
 
   protected void initialisiere(int maximalieKnotenAnzahl) {

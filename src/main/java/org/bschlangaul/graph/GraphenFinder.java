@@ -38,12 +38,12 @@ public class GraphenFinder {
       int i = 0;
 
       for (String format : einfachesGraphenFormat) {
-        graphen[i] = GraphenFormat.lese(format);
+        graphen[i] = new GraphenFormat(format);
         i++;
       }
 
       for (String format : texGraphenFormat) {
-        graphen[i] = GraphenFormat.lese(new TexGraphenFormat(format).gibGraphenFormat());
+        graphen[i] = new GraphenFormat(new TexGraphenFormat(format).gibGraphenFormat());
         i++;
       }
     } catch (IOException e) {

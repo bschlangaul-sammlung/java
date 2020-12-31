@@ -9,7 +9,7 @@ import org.junit.Test;
 public class GraphenFormatTest {
 
   private GraphenFormat lese(String graphenFormat) {
-    return GraphenFormat.lese(graphenFormat);
+    return new GraphenFormat(graphenFormat);
   }
 
   private GraphenFormatKnoten gibErstenKnoten(String graphenFormat) {
@@ -100,34 +100,34 @@ public class GraphenFormatTest {
 
   @Test
   public void gerichtet() {
-    GraphenFormat graph = GraphenFormat.lese("a->b;");
+    GraphenFormat graph = new GraphenFormat("a->b;");
     assertEquals(2, graph.gibAnzahlKnoten());
     assertEquals(1, graph.gibAnzahlKanten());
   }
 
   @Test
   public void ungerichtet() {
-    GraphenFormat graph = GraphenFormat.lese("a--b;");
+    GraphenFormat graph = new GraphenFormat("a--b;");
     assertEquals(2, graph.gibAnzahlKnoten());
     assertEquals(1, graph.gibAnzahlKanten());
   }
 
   @Test
   public void doppelteKanten() {
-    GraphenFormat graph = GraphenFormat.lese("a--b;a--b;a--b;");
+    GraphenFormat graph = new GraphenFormat("a--b;a--b;a--b;");
     assertEquals(2, graph.gibAnzahlKnoten());
     assertEquals(1, graph.gibAnzahlKanten());
   }
 
   @Test
   public void methodeGibKnoten() {
-    GraphenFormat graph = GraphenFormat.lese("z--a;b--c;x--y;");
+    GraphenFormat graph = new GraphenFormat("z--a;b--c;x--y;");
     assertArrayEquals(new String[] { "a", "b", "c", "x", "y", "z" }, graph.gibKnotenNamen());
   }
 
   @Test
   public void methodeGibKanten() {
-    GraphenFormat graph = GraphenFormat.lese("z->a;a->c;a->b;");
+    GraphenFormat graph = new GraphenFormat("z->a;a->c;a->b;");
     GraphenFormatKante[] kanten = graph.gibKanten();
     assertEquals("a", kanten[0].von);
     assertEquals("b", kanten[0].nach);
@@ -138,7 +138,7 @@ public class GraphenFormatTest {
   }
 
   private int gibAnzahlKnoten(String einfachesFormat) {
-    GraphenFormat graph = GraphenFormat.lese(einfachesFormat);
+    GraphenFormat graph = new GraphenFormat(einfachesFormat);
     return graph.gibAnzahlKnoten();
   }
 
@@ -183,13 +183,13 @@ public class GraphenFormatTest {
 
   @Test
   public void knotenNamen() {
-    GraphenFormat graph = GraphenFormat.lese("z: 1 2; a: 2 3; b: 4 5;");
+    GraphenFormat graph = new GraphenFormat("z: 1 2; a: 2 3; b: 4 5;");
     assertArrayEquals(new String[] { "a", "b", "z" }, graph.gibKnotenNamen());
   }
 
   @Test
   public void markierung() {
-    GraphenFormat graph = GraphenFormat.lese(TestHelfer.leseDatei("graph/markierung.txt"));
+    GraphenFormat graph = new GraphenFormat(TestHelfer.leseDatei("graph/markierung.txt"));
     assertEquals(true, graph.gibKnoten("a").markiert);
     assertEquals(true, graph.gibKnoten("b").markiert);
     assertEquals(true, graph.gibKnoten("lol lol").markiert);
@@ -202,7 +202,7 @@ public class GraphenFormatTest {
 
   @Test
   public void text() {
-    GraphenFormat graph = GraphenFormat.lese(TestHelfer.leseDatei("graph/text.txt"));
+    GraphenFormat graph = new GraphenFormat(TestHelfer.leseDatei("graph/text.txt"));
     String[] knotenNamen = graph.gibKnotenNamen();
     assertEquals("Hallo \"Hermine\"!", knotenNamen[0]);
     assertEquals("Hallo 'Otto'!", knotenNamen[1]);

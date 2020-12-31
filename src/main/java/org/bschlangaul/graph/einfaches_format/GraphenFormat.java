@@ -12,8 +12,10 @@ import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.Recognizer;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
-import org.bschlangaul.antlr.GraphLexer;
+import org.bschlangaul.antlr.GraphBaseListener;
 import org.bschlangaul.antlr.GraphParser;
+
+import org.bschlangaul.antlr.GraphLexer;
 import org.bschlangaul.graph.GraphenFinder;
 import org.bschlangaul.helfer.Tex;
 
@@ -27,6 +29,47 @@ class FehlerLauscher extends BaseErrorListener {
       sourceName = String.format("%s:%d:%d: ", sourceName, line, charPositionInLine);
     }
     System.err.println(sourceName + "line " + line + ":" + charPositionInLine + " " + msg);
+  }
+
+}
+
+class AntlrListener extends GraphBaseListener {
+  private GraphenFormat graph = new GraphenFormat();
+
+  public AntlrListener(GraphenFormat graph) {
+    this.graph = graph;
+  }
+
+  @Override
+  public void enterKante(GraphParser.KanteContext ctx) {
+    boolean gerichtet = ctx.gerichtet() != null ? true : false;
+    double gewicht = ctx.gewicht() != null ? Double.parseDouble(ctx.gewicht().getText()) : 1;
+    boolean markiert = ctx.markiert() != null ? true : false;
+    graph.fügeKanteEin(formatiereKnotenName(ctx.von().getText()), formatiereKnotenName(ctx.nach().getText()), gewicht,
+        gerichtet, markiert);
+  }
+
+  @Override
+  public void enterKnoten(GraphParser.KnotenContext ctx) {
+    String name = formatiereKnotenName(ctx.name().getText());
+    double x = 0d;
+    double y = 0d;
+    boolean markiert = false;
+    if (ctx.x() != null && ctx.y() != null) {
+      x = Double.parseDouble(ctx.x().getText());
+      y = Double.parseDouble(ctx.y().getText());
+    }
+    if (ctx.markiert() != null)
+      markiert = true;
+    graph.fügeKnotenEin(name, x, y, markiert);
+  }
+
+  private String formatiereKnotenName(String eingabe) {
+    return eingabe.replaceAll("(^['\"]|['\"]$)", "").replace("\\\"", "\"").replace("\\\'", "\'");
+  }
+
+  public GraphenFormat gibGraph() {
+    return graph;
   }
 
 }
@@ -86,19 +129,6 @@ public class GraphenFormat {
     ParseTreeWalker walker = new ParseTreeWalker();
     AntlrListener antlrListener = new AntlrListener(this);
     walker.walk(antlrListener, graphParser.graph());
-  }
-
-  public static GraphenFormat lese(String inhalt) {
-    GraphLexer serverGraphLexer = new GraphLexer(CharStreams.fromString(inhalt));
-    CommonTokenStream tokens = new CommonTokenStream(serverGraphLexer);
-    GraphParser graphParser = new GraphParser(tokens);
-
-    graphParser.removeErrorListeners();
-    graphParser.addErrorListener(new FehlerLauscher());
-    ParseTreeWalker walker = new ParseTreeWalker();
-    AntlrListener antlrListener = new AntlrListener();
-    walker.walk(antlrListener, graphParser.graph());
-    return antlrListener.gibGraph();
   }
 
   public static String formatiereZahl(String zahl) {
