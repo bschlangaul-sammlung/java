@@ -1,11 +1,11 @@
-Relation1(attribut1, attribute2)
+Relation1(Primär_Schlüssel*, attribute2)
 
-Relation2(Mit_Umlauten_äöüSÖÄÖÜß,1234)
+Relation2(Mit_Umlauten_äöüSÖÄÖÜß  {NOT NULL} *, 1234 )
 
 Relation3(
   a,
   b
 )
-Relation4 (einAttribut)
+Relation4 (einAttribut { zusätzlicher SQL Ausdruck })
 
 Relation5(id[Relation2])

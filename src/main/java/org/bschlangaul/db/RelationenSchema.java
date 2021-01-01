@@ -18,6 +18,8 @@ class AntlrListener extends RelationenSchemaBaseListener {
 
   private Relation aktuelleRelation;
 
+  private Attribut aktuellesAttribut;
+
   public AntlrListener(RelationenSchema schema) {
     this.schema = schema;
   }
@@ -31,6 +33,7 @@ class AntlrListener extends RelationenSchemaBaseListener {
 
   public void enterAttribut(RelationenSchemaParser.AttributContext ctx) {
     Attribut attribut = new Attribut("");
+    aktuellesAttribut = attribut;
     attribut.schema = schema;
     attribut.relation = aktuelleRelation;
 
@@ -41,10 +44,6 @@ class AntlrListener extends RelationenSchemaBaseListener {
       attribut.name = ctx.attributName().getText();
     }
 
-    attribut.zusätzlicherSqlAusdruck = ctx.zusätzlicherSqlAusruck() != null
-        ? entferneKlammer(ctx.zusätzlicherSqlAusruck().getText())
-        : null;
-
     attribut.istPrimaer = ctx.istPrimaer() != null ? true : false;
     aktuelleRelation.setzeAttribut(attribut);
   }
@@ -53,8 +52,14 @@ class AntlrListener extends RelationenSchemaBaseListener {
     schema.setzeRelation(aktuelleRelation);
   }
 
-  private String entferneKlammer(String text) {
-    return text.substring(1, text.length() - 1);
+  public void enterZusätzlicherSqlAusdruck(RelationenSchemaParser.ZusätzlicherSqlAusdruckContext ctx) {
+    String ausgabe = "";
+    for (int i = 0; i < ctx.name().size(); i++) {
+      ausgabe += ctx.name().get(i).getText();
+      if (i < ctx.name().size() - 1)
+        ausgabe += " ";
+    }
+    aktuellesAttribut.zusätzlicherSqlAusdruck = ausgabe;
   }
 
 }

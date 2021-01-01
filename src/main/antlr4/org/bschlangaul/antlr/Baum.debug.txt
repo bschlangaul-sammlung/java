@@ -1,0 +1,10 @@
+baum binär (
+  setze: 1 2 3;
+)
+
+
+baum avl (
+  setze: 1 2 3 4 56 7 4;
+  drucke;
+  lösche: 1 2 3;
+)
