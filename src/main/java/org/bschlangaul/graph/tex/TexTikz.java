@@ -25,7 +25,7 @@ public class TexTikz {
     for (GraphenFormatKante kante : this.graph.gibKanten()) {
       ausgabe += formatiereKante(kante);
     }
-    return Tex.umgebung("tikzpicture", ausgabe, "li graph");
+    return Tex.umgebungOption("tikzpicture", ausgabe, "li graph");
   }
 
   private String formatiereZahl(double zahl) {

@@ -6,16 +6,24 @@ public class Tex {
     return String.format("\\%s{%s}", name, inhalt);
   }
 
-  public static String umgebung(String name, String inhalt) {
-    return String.format("%s\n%s\n%s", makro("begin", name), reinigeInhalt(inhalt), makro("end", name));
-  }
-
   private static String reinigeInhalt(String inhalt) {
     return inhalt.replaceFirst("\\s+$", "");
   }
 
-  public static String umgebung(String name, String inhalt, String option) {
-    return String.format("%s[%s]\n%s\n%s", makro("begin", name), option, reinigeInhalt(inhalt), makro("end", name));
+  private static String umgebungGrundgerüst(String name, String inhalt, String nachBeginn) {
+    return String.format("%s%s\n%s\n%s", makro("begin", name), nachBeginn, reinigeInhalt(inhalt), makro("end", name));
+  }
+
+  public static String umgebung(String name, String inhalt) {
+    return umgebungGrundgerüst(name, inhalt, "");
+  }
+
+  public static String umgebungOption(String name, String inhalt, String option) {
+    return umgebungGrundgerüst(name, inhalt, String.format("[%s]", option));
+  }
+
+  public static String umgebungArgument(String name, String inhalt, String argument) {
+    return umgebungGrundgerüst(name, inhalt, String.format("{%s}", argument));
   }
 
   public static String tabellenZeile(String[] zeile, int maxTextBreite) {

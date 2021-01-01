@@ -68,6 +68,12 @@ public class SubKommandoProjektSprachenFinder implements Callable<Integer> {
 
           Helfer.gibÜberschriftAus("SQL-INSERT-Befehl");
           System.out.println(schema.baueSqlInsert());
+
+          Helfer.gibÜberschriftAus("Übungsdatenbank");
+          System.out.println(schema.baueÜbungsdatenbank());
+
+          Helfer.gibÜberschriftAus("TeX");
+          System.out.println(schema.baueTeX());
           break;
 
         default:

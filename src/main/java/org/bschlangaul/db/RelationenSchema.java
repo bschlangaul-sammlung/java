@@ -2,6 +2,7 @@ package org.bschlangaul.db;
 
 import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -9,6 +10,7 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.bschlangaul.antlr.RelationenSchemaBaseListener;
 import org.bschlangaul.antlr.RelationenSchemaLexer;
 import org.bschlangaul.antlr.RelationenSchemaParser;
+import org.bschlangaul.helfer.Tex;
 
 class AntlrListener extends RelationenSchemaBaseListener {
 
@@ -95,6 +97,16 @@ class Attribut {
 
     return ausgabe;
   }
+
+  public String baueTeX() {
+    if (fremdRelationenName != null)
+      return Tex.makro("liFremd", String.format("%s[%s]", name, fremdRelationenName));
+
+    if (istPrimaer)
+      return Tex.makro("liPrimaer", name);
+
+    return name;
+  }
 }
 
 class Relation {
@@ -133,15 +145,15 @@ class Relation {
   }
 
   public String baueSqlCreate() {
-    String[] attributeSql = new String[attribute.size()];
-    int i = 0;
-    for (Attribut attribut : attribute.values()) {
-      attributeSql[i] = attribut.baueSqlCreate();
-      i++;
-    }
+    String[] attributeSql = RelationenSchema.sammleTextVonMethode(attribute, "baueSqlCreate");
     String ausgabe = String.format("CREATE TABLE %s (\n%s%s\n);\n", name, String.join(",\n", attributeSql),
         baueMehrteiligenPrimärSchlüssel());
     return ausgabe;
+  }
+
+  public String baueTeX() {
+    return String.format("\\liRelation{%s}{%s}", name,
+        String.join(", ", RelationenSchema.sammleTextVonMethode(attribute, "baueTeX")));
   }
 
   public String baueSqlInsert() {
@@ -183,6 +195,35 @@ public class RelationenSchema {
     leseTextFormat(format);
   }
 
+  @SuppressWarnings("rawtypes")
+  public static String[] sammleTextVonMethode(Map map, String methode) {
+    return sammleText(map, methode, true);
+  }
+
+  @SuppressWarnings("rawtypes")
+  public static String[] sammleTextVonAttribut(Map map, String attribut) {
+    return sammleText(map, attribut, false);
+  }
+
+  @SuppressWarnings("rawtypes")
+  public static String[] sammleText(Map map, String name, boolean vonMethode) {
+    String[] ausgabe = new String[map.size()];
+    int i = 0;
+    for (Object objekt : map.values()) {
+      try {
+        if (vonMethode) {
+          ausgabe[i] = (String) objekt.getClass().getDeclaredMethod(name).invoke(objekt);
+        } else {
+          ausgabe[i] = (String) objekt.getClass().getDeclaredField(name).get(objekt);
+        }
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+      i++;
+    }
+    return ausgabe;
+  }
+
   public void setzeRelation(Relation relation) {
     relationen.put(relation.name, relation);
   }
@@ -211,20 +252,25 @@ public class RelationenSchema {
     return namen;
   }
 
+  private String vereinigeRelationenMethodenAusgaben(String methode) {
+    return String.join("\n", RelationenSchema.sammleTextVonMethode(relationen, methode));
+  }
+
   public String baueSqlCreate() {
-    String ausgabe = "";
-    for (Relation relation : relationen.values()) {
-      ausgabe += relation.baueSqlCreate() + "\n";
-    }
-    return ausgabe;
+    return vereinigeRelationenMethodenAusgaben("baueSqlCreate");
   }
 
   public String baueSqlInsert() {
-    String ausgabe = "";
-    for (Relation relation : relationen.values()) {
-      ausgabe += relation.baueSqlInsert() + "\n";
-    }
-    return ausgabe;
+    return vereinigeRelationenMethodenAusgaben("baueSqlInsert");
+  }
+
+  public String baueÜbungsdatenbank() {
+    return "% Übungsdatenbank: \n" + Tex.umgebungArgument("minted", vereinigeRelationenMethodenAusgaben("baueSqlCreate")
+        + "\n" + vereinigeRelationenMethodenAusgaben("baueSqlInsert"), "sql");
+  }
+
+  public String baueTeX() {
+    return Tex.umgebung("liRmodell", vereinigeRelationenMethodenAusgaben("baueTeX"));
   }
 
 }
