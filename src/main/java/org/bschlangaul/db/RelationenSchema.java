@@ -277,8 +277,12 @@ public class RelationenSchema {
   }
 
   public String baueÜbungsdatenbank() {
-    return "% Übungsdatenbank: \n" + Tex.umgebungArgument("minted", vereinigeRelationenMethodenAusgaben("baueSqlCreate")
-        + "\n" + vereinigeRelationenMethodenAusgaben("baueSqlInsert"), "sql");
+    return "% Datenbankname: db\n"
+        + Tex.umgebungArgument("minted",
+            vereinigeRelationenMethodenAusgaben("baueSqlCreate") + "\n"
+                + vereinigeRelationenMethodenAusgaben("baueSqlInsert"),
+            "sql")
+        + "\n" + Tex.makro("index", "SQL mit Übungsdatenbank");
   }
 
   public String baueTeX() {
