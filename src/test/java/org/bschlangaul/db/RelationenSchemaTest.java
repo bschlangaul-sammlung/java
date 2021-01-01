@@ -54,10 +54,9 @@ public class RelationenSchemaTest {
   }
 
   @Test
-  public void triathlon() {
+  public void rateSqlTypeVonName() {
     RelationenSchema schema = lade("triathlon.txt");
     assertEquals("integer", schema.gibAttribut("Athlet", "ID").rateSqlTypeVonName());
-    assertEquals("  ID integer PRIMARY KEY", schema.gibAttribut("Athlet", "ID").baueSqlCreate());
 
     assertEquals("varchar(20)", schema.gibAttribut("Athlet", "Vorname").rateSqlTypeVonName());
     assertEquals("varchar(20)", schema.gibAttribut("Wettbewerb", "Name").rateSqlTypeVonName());
@@ -65,6 +64,22 @@ public class RelationenSchemaTest {
     assertEquals("integer", schema.gibAttribut("Wettbewerb", "Jahr").rateSqlTypeVonName());
 
     System.out.println(schema.baueSqlCreate());
+    System.out.println(schema.baueSqlInsert());
+
+  }
+
+  @Test
+  public void primärSchlüssel() {
+    RelationenSchema schema = lade("triathlon.txt");
+
+    Relation ergebnis = schema.gibRelation("Ergebnis");
+    Relation athlet = schema.gibRelation("Athlet");
+    assertEquals(2, ergebnis.gibAnzahlPrimärSchlüssel());
+    assertEquals(1, athlet.gibAnzahlPrimärSchlüssel());
+
+    assertEquals("  ID integer PRIMARY KEY", athlet.gibAttribut("ID").baueSqlCreate());
+    assertEquals("  Athlet integer REFERENCES Athlet(ID)", ergebnis.gibAttribut("Athlet").baueSqlCreate());
+
   }
 
 }

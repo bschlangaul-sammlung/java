@@ -84,8 +84,15 @@ class Attribut {
   public String baueSqlCreate() {
     String ausgabe = "  " + name;
     ausgabe += " " + rateSqlTypeVonName();
-    if (istPrimaer)
+    if (istPrimaer && relation.gibAnzahlPrimärSchlüssel() == 1)
       ausgabe += " PRIMARY KEY";
+
+    if (fremdRelationenName != null) {
+      Attribut[] primärSchlüssel = schema.gibRelation(fremdRelationenName).gibPrimärSchlüssel();
+      String primär = primärSchlüssel[0].name;
+      ausgabe += " REFERENCES " + fremdRelationenName + "(" + primär + ")";
+    }
+
     return ausgabe;
   }
 }
@@ -100,12 +107,29 @@ class Relation {
     attribute = new LinkedHashMap<String, Attribut>();
   }
 
+  public Attribut gibAttribut(String name) {
+    return attribute.get(name);
+  }
+
   public void setzeAttribut(String attributName) {
     attribute.put(attributName, new Attribut(attributName));
   }
 
   public void setzeAttribut(Attribut attribut) {
     attribute.put(attribut.name, attribut);
+  }
+
+  private String baueMehrteiligenPrimärSchlüssel() {
+    String ausgabe = "";
+    if (gibAnzahlPrimärSchlüssel() < 2)
+      return ausgabe;
+    Attribut[] primärSchlüssel = gibPrimärSchlüssel();
+    for (int i = 0; i < primärSchlüssel.length; i++) {
+      ausgabe += primärSchlüssel[i].name;
+      if (i < primärSchlüssel.length - 1)
+        ausgabe += ", ";
+    }
+    return String.format(",\n  PRIMARY KEY (%s)", ausgabe);
   }
 
   public String baueSqlCreate() {
@@ -115,8 +139,34 @@ class Relation {
       attributeSql[i] = attribut.baueSqlCreate();
       i++;
     }
-    String ausgabe = String.format("CREATE TABLE %s (\n%s\n);\n", name, String.join(",\n", attributeSql));
+    String ausgabe = String.format("CREATE TABLE %s (\n%s%s\n);\n", name, String.join(",\n", attributeSql),
+        baueMehrteiligenPrimärSchlüssel());
     return ausgabe;
+  }
+
+  public String baueSqlInsert() {
+    return String.format("INSERT INTO %s VALUES\n  ();\n", name);
+  }
+
+  public int gibAnzahlPrimärSchlüssel() {
+    int anzahl = 0;
+    for (Attribut attribut : attribute.values()) {
+      if (attribut.istPrimaer)
+        anzahl++;
+    }
+    return anzahl;
+  }
+
+  public Attribut[] gibPrimärSchlüssel() {
+    Attribut[] primärSchlüssel = new Attribut[gibAnzahlPrimärSchlüssel()];
+    int i = 0;
+    for (Attribut attribut : attribute.values()) {
+      if (attribut.istPrimaer) {
+        primärSchlüssel[i] = attribut;
+        i++;
+      }
+    }
+    return primärSchlüssel;
   }
 }
 
@@ -165,6 +215,14 @@ public class RelationenSchema {
     String ausgabe = "";
     for (Relation relation : relationen.values()) {
       ausgabe += relation.baueSqlCreate() + "\n";
+    }
+    return ausgabe;
+  }
+
+  public String baueSqlInsert() {
+    String ausgabe = "";
+    for (Relation relation : relationen.values()) {
+      ausgabe += relation.baueSqlInsert() + "\n";
     }
     return ausgabe;
   }
