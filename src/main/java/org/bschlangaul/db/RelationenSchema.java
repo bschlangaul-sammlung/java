@@ -41,6 +41,10 @@ class AntlrListener extends RelationenSchemaBaseListener {
       attribut.name = ctx.attributName().getText();
     }
 
+    attribut.zusätzlicherSqlAusdruck = ctx.zusätzlicherSqlAusruck() != null
+        ? entferneKlammer(ctx.zusätzlicherSqlAusruck().getText())
+        : null;
+
     attribut.istPrimaer = ctx.istPrimaer() != null ? true : false;
     aktuelleRelation.setzeAttribut(attribut);
   }
@@ -49,12 +53,17 @@ class AntlrListener extends RelationenSchemaBaseListener {
     schema.setzeRelation(aktuelleRelation);
   }
 
+  private String entferneKlammer(String text) {
+    return text.substring(1, text.length() - 1);
+  }
+
 }
 
 class Attribut {
   String name;
   String fremdRelationenName;
   String fremdRelationenAttribut;
+  String zusätzlicherSqlAusdruck;
   boolean istPrimaer;
   RelationenSchema schema;
   Relation relation;
@@ -73,13 +82,13 @@ class Attribut {
 
   public String rateSqlTypeVonName() {
     if (nameEnthält("name"))
-      return "varchar(20)";
+      return "VARCHAR(20)";
     if (istPrimaer)
-      return "integer";
+      return "INTEGER";
     if (nameEnthält("zeit", "time", "jahr", "year", "id"))
-      return "integer";
+      return "INTEGER";
     if (nameEnthält("datum", "date"))
-      return "date";
+      return "DATE";
     return "varchar(50)";
   }
 
@@ -94,6 +103,9 @@ class Attribut {
       String primär = primärSchlüssel[0].name;
       ausgabe += " REFERENCES " + fremdRelationenName + "(" + primär + ")";
     }
+
+    if (zusätzlicherSqlAusdruck != null)
+      ausgabe += " " + zusätzlicherSqlAusdruck;
 
     return ausgabe;
   }

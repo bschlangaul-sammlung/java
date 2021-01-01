@@ -56,12 +56,12 @@ public class RelationenSchemaTest {
   @Test
   public void rateSqlTypeVonName() {
     RelationenSchema schema = lade("triathlon.txt");
-    assertEquals("integer", schema.gibAttribut("Athlet", "ID").rateSqlTypeVonName());
+    assertEquals("INTEGER", schema.gibAttribut("Athlet", "ID").rateSqlTypeVonName());
 
-    assertEquals("varchar(20)", schema.gibAttribut("Athlet", "Vorname").rateSqlTypeVonName());
-    assertEquals("varchar(20)", schema.gibAttribut("Wettbewerb", "Name").rateSqlTypeVonName());
-    assertEquals("integer", schema.gibAttribut("Wettbewerb", "Schwimmzeit").rateSqlTypeVonName());
-    assertEquals("integer", schema.gibAttribut("Wettbewerb", "Jahr").rateSqlTypeVonName());
+    assertEquals("VARCHAR(20)", schema.gibAttribut("Athlet", "Vorname").rateSqlTypeVonName());
+    assertEquals("VARCHAR(20)", schema.gibAttribut("Wettbewerb", "Name").rateSqlTypeVonName());
+    assertEquals("INTEGER", schema.gibAttribut("Ergebnis", "Schwimmzeit").rateSqlTypeVonName());
+    assertEquals("INTEGER", schema.gibAttribut("Wettbewerb", "Jahr").rateSqlTypeVonName());
   }
 
   @Test
@@ -73,8 +73,8 @@ public class RelationenSchemaTest {
     assertEquals(2, ergebnis.gibAnzahlPrimärSchlüssel());
     assertEquals(1, athlet.gibAnzahlPrimärSchlüssel());
 
-    assertEquals("  ID integer PRIMARY KEY", athlet.gibAttribut("ID").baueSqlCreate());
-    assertEquals("  Athlet integer REFERENCES Athlet(ID)", ergebnis.gibAttribut("Athlet").baueSqlCreate());
+    assertEquals("  ID INTEGER PRIMARY KEY", athlet.gibAttribut("ID").baueSqlCreate());
+    assertEquals("  Athlet INTEGER REFERENCES Athlet(ID)", ergebnis.gibAttribut("Athlet").baueSqlCreate());
   }
 
   @Test
@@ -93,6 +93,13 @@ public class RelationenSchemaTest {
   public void baueTeX() {
     RelationenSchema schema = lade("triathlon.txt");
     System.out.println(schema.baueTeX());
+  }
+
+  @Test
+  public void zusätzlicherSqlAusdruck() {
+    RelationenSchema schema = lade("triathlon.txt");
+    Attribut schwimmzeit = schema.gibAttribut("Ergebnis", "Schwimmzeit");
+    assertEquals("NOT NULL", schwimmzeit.zusätzlicherSqlAusdruck);
   }
 
 }

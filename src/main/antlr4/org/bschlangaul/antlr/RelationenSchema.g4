@@ -3,10 +3,14 @@ einstiegsPunkt: relation+ EOF;
 relation: relationenName '(' attribute ')';
 attribute: attribut (trenner attribut)*;
 relationenName: NAME;
-attribut: (fremdSchluessel | attributName) istPrimaer?;
+attribut: (fremdSchluessel | attributName) (
+		zusätzlicherSqlAusruck
+		| istPrimaer
+	)?;
 fremdSchluessel: attributName '[' relationenName ']';
 attributName: NAME;
 istPrimaer: '*';
+zusätzlicherSqlAusruck: '{' NAME+ '}';
 
 trenner: KOMMA;
 name: NAME;
