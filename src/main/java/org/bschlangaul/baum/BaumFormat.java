@@ -9,18 +9,19 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.bschlangaul.antlr.BaumBaseListener;
 import org.bschlangaul.antlr.BaumLexer;
 import org.bschlangaul.antlr.BaumParser;
+import org.bschlangaul.baum.tex.TexTikzBaumErzeuger;
 
 class AntlrListener extends BaumBaseListener {
 
   BaumFormat baumFormat;
 
-  List<BaumArt> bäume = new ArrayList<BaumArt>();
+  List<BaumFormat.BaumArt> bäume = new ArrayList<BaumFormat.BaumArt>();
 
-  BaumArt baum;
+  BaumFormat.BaumArt baum;
 
-  List<BaumAktion> aktionen = new ArrayList<BaumAktion>();
+  List<BaumFormat.BaumAktion> aktionen = new ArrayList<BaumFormat.BaumAktion>();
 
-  BaumAktion aktion;
+  BaumFormat.BaumAktion aktion;
 
   public AntlrListener(BaumFormat baumFormat) {
     this.baumFormat = baumFormat;
@@ -28,20 +29,20 @@ class AntlrListener extends BaumBaseListener {
 
   @Override
   public void enterBaum(BaumParser.BaumContext ctx) {
-    baum = new BaumArt();
+    baum = new BaumFormat.BaumArt();
     baum.art = ctx.baumArt().getText();
   }
 
   @Override
   public void exitBaum(BaumParser.BaumContext ctx) {
-    baum.aktionen = aktionen.toArray(new BaumAktion[0]);
-    aktionen = new ArrayList<BaumAktion>();
+    baum.aktionen = aktionen.toArray(new BaumFormat.BaumAktion[0]);
+    aktionen = new ArrayList<BaumFormat.BaumAktion>();
     bäume.add(baum);
   }
 
   @Override
   public void enterAktion(BaumParser.AktionContext ctx) {
-    aktion = new BaumAktion();
+    aktion = new BaumFormat.BaumAktion();
     aktion.befehl = ctx.befehl().getText();
     aktion.werte = new int[ctx.wert().size()];
     for (int i = 0; i < ctx.wert().size(); i++) {
@@ -56,24 +57,24 @@ class AntlrListener extends BaumBaseListener {
 
   @Override
   public void exitEinstiegsPunkt(BaumParser.EinstiegsPunktContext ctx) {
-    baumFormat.bäume = bäume.toArray(new BaumArt[0]);
+    baumFormat.bäume = bäume.toArray(new BaumFormat.BaumArt[0]);
   }
 
 }
 
-class BaumAktion {
-  String befehl;
-  int[] werte;
-}
-
-class BaumArt {
-  String art;
-  BaumAktion[] aktionen;
-}
-
 public class BaumFormat {
 
-  BaumArt[] bäume;
+  public static class BaumAktion {
+    public String befehl;
+    public int[] werte;
+  }
+
+  public static class BaumArt {
+    public String art;
+    public BaumAktion[] aktionen;
+  }
+
+  public BaumArt[] bäume;
 
   public BaumFormat(String format) {
     leseTextFormat(format);
@@ -89,4 +90,43 @@ public class BaumFormat {
     walker.walk(antlrListener, parser.einstiegsPunkt());
   }
 
+  public static void gibAusFürProjektSprachen(String formatText) {
+    BaumFormat baumFormat = new BaumFormat(formatText);
+    for (BaumFormat.BaumArt baumArt : baumFormat.bäume) {
+      System.out.println(baumArt.art);
+      Baum baum;
+      if (baumArt.art.equals("avl")) {
+        baum = new AVLBaum();
+      } else {
+        baum = new BinaerBaum();
+      }
+
+      for (BaumFormat.BaumAktion aktion : baumArt.aktionen) {
+        switch (aktion.befehl) {
+          case "setze":
+            for (int wert : aktion.werte) {
+              baum.fügeEin(wert);
+            }
+            break;
+
+          case "drucke":
+            System.out.println(TexTikzBaumErzeuger.generiere(baum));
+            break;
+
+          case "lösche":
+            if (baum instanceof AVLBaum) {
+              for (int wert : aktion.werte) {
+                AVLBaum avl = (AVLBaum) baum;
+                avl.entferne(wert);
+              }
+            }
+            break;
+
+          default:
+            break;
+        }
+
+      }
+    }
+  }
 }

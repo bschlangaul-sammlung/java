@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 
+import org.bschlangaul.baum.BaumFormat;
 import org.bschlangaul.db.RelationenSchema;
 
 class ProjektSprache {
@@ -61,19 +62,12 @@ public class SubKommandoProjektSprachenFinder implements Callable<Integer> {
     for (ProjektSprache sprache : sucheNachSprachen(datei)) {
       switch (sprache.name) {
         case "RelationenSchema":
-          RelationenSchema schema = new RelationenSchema(sprache.inhalt);
+          RelationenSchema.gibAusFürProjektSprachen(sprache.inhalt);
+          break;
 
-          Helfer.gibÜberschriftAus("SQL-CREATE-Befehl");
-          System.out.println(schema.baueSqlCreate());
+        case "Baum":
+          BaumFormat.gibAusFürProjektSprachen(sprache.inhalt);
 
-          Helfer.gibÜberschriftAus("SQL-INSERT-Befehl");
-          System.out.println(schema.baueSqlInsert());
-
-          Helfer.gibÜberschriftAus("Übungsdatenbank");
-          System.out.println(schema.baueÜbungsdatenbank());
-
-          Helfer.gibÜberschriftAus("TeX");
-          System.out.println(schema.baueTeX());
           break;
 
         default:

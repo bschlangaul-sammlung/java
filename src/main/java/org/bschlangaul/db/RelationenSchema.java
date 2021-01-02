@@ -10,6 +10,7 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.bschlangaul.antlr.RelationenSchemaBaseListener;
 import org.bschlangaul.antlr.RelationenSchemaLexer;
 import org.bschlangaul.antlr.RelationenSchemaParser;
+import org.bschlangaul.cli.Helfer;
 import org.bschlangaul.helfer.Tex;
 
 class AntlrListener extends RelationenSchemaBaseListener {
@@ -294,6 +295,22 @@ public class RelationenSchema {
 
   public String baueTeX() {
     return Tex.umgebung("liRmodell", vereinigeRelationenMethodenAusgaben("baueTeX"));
+  }
+
+  public static void gibAusFürProjektSprachen(String formatText) {
+    RelationenSchema schema = new RelationenSchema(formatText);
+
+    Helfer.gibÜberschriftAus("SQL-CREATE-Befehl");
+    System.out.println(schema.baueSqlCreate());
+
+    Helfer.gibÜberschriftAus("SQL-INSERT-Befehl");
+    System.out.println(schema.baueSqlInsert());
+
+    Helfer.gibÜberschriftAus("Übungsdatenbank");
+    System.out.println(schema.baueÜbungsdatenbank());
+
+    Helfer.gibÜberschriftAus("TeX");
+    System.out.println(schema.baueTeX());
   }
 
 }

@@ -19,12 +19,12 @@ public class BaumFormatTest {
   public void einfach() {
     BaumFormat format = lade("einfach.txt");
 
-    BaumArt binär = format.bäume[0];
+    BaumFormat.BaumArt binär = format.bäume[0];
     assertEquals("binär", binär.art);
     assertEquals("setze", binär.aktionen[0].befehl);
     assertArrayEquals(new int[] { 1, 2, 3 }, binär.aktionen[0].werte);
 
-    BaumArt avl = format.bäume[1];
+    BaumFormat.BaumArt avl = format.bäume[1];
     assertEquals("avl", avl.art);
 
     assertEquals("setze", avl.aktionen[0].befehl);

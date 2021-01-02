@@ -1,4 +1,4 @@
-package org.bschlangaul.helfer;
+package org.bschlangaul.baum.tex;
 
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
  * bzw. tikz-qtree.
  */
 @SuppressWarnings("rawtypes")
-public class BaumTikzKonvertierer {
+public class TexBaumDateiSchreiber {
 
   ArrayList<String> aktionen;
 
@@ -31,7 +31,7 @@ public class BaumTikzKonvertierer {
 
   Writer ziel;
 
-  public BaumTikzKonvertierer(String baumArt) {
+  public TexBaumDateiSchreiber(String baumArt) {
     aktionen = new ArrayList<String>();
     this.baumArt = baumArt;
     if (baumArt == "avl") {
@@ -42,16 +42,17 @@ public class BaumTikzKonvertierer {
     öffneTeXDokument();
   }
 
-  public BaumTikzKonvertierer() {
+  public TexBaumDateiSchreiber() {
     this("binaer");
   }
 
   private void öffneTeXDokument() {
     DateTimeFormatter datum = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
     try {
-      ziel = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(System.getProperty("user.home")
-          + "/git-repositories/github/hbschlang/lehramt-informatik/tmp-binaerer-baum__"
-          + datum.format(LocalDateTime.now()) + ".tex"), "UTF-8"));
+      ziel = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
+          System.getProperty("user.home") + "/git-repositories/github/hbschlang/lehramt-informatik/tmp-binaerer-baum__"
+              + datum.format(LocalDateTime.now()) + ".tex"),
+          "UTF-8"));
       ziel.write("\\documentclass{lehramt-informatik}\n" + "\\InformatikPakete{baum}\n\n" + "\\begin{document}\n");
 
       if (baumArt == "avl") {
@@ -175,7 +176,7 @@ public class BaumTikzKonvertierer {
     // baum.generiereTikz();
     // baum.schließeTeXDokument();
 
-    BaumTikzKonvertierer baum = new BaumTikzKonvertierer();
+    TexBaumDateiSchreiber baum = new TexBaumDateiSchreiber();
     baum.fügeEin(7, 3, 6, 9, 2, 8, 5, 1);
     baum.generiereTikz();
     baum.generiereTraversierung();
