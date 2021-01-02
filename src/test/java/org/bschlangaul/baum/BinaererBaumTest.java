@@ -47,7 +47,7 @@ public class BinaererBaumTest {
   public void testeMethodeFügeEinString() {
     BinaerBaum baum = new BinaerBaum();
     baum.fügeEin("a", "b", "c");
-    Knoten kopf = baum.gibKopf();
+    BaumKnoten kopf = baum.gibKopf();
     assertEquals("a", kopf.schlüssel);
     assertEquals("b", kopf.rechts.schlüssel);
     assertEquals("c", kopf.rechts.rechts.schlüssel);
@@ -57,7 +57,7 @@ public class BinaererBaumTest {
   public void testeMethodeFügeEinInt() {
     BinaerBaum baum = new BinaerBaum();
     baum.fügeEin(1, 2, 3);
-    Knoten kopf = baum.gibKopf();
+    BaumKnoten kopf = baum.gibKopf();
     assertEquals(1, kopf.schlüssel);
     assertEquals(2, kopf.rechts.schlüssel);
     assertEquals(3, kopf.rechts.rechts.schlüssel);
@@ -77,7 +77,7 @@ public class BinaererBaumTest {
     BinaerBaum baum = new BinaerBaum();
     baum.fügeEin(1, 2, 3);
     baum.entferne(1);
-    Knoten kopf = baum.gibKopf();
+    BaumKnoten kopf = baum.gibKopf();
     assertEquals(2, kopf.schlüssel);
     assertEquals(3, kopf.rechts.schlüssel);
   }
@@ -87,7 +87,7 @@ public class BinaererBaumTest {
     BinaerBaum baum = new BinaerBaum();
     baum.fügeEin(1, 2, 3);
     baum.entferne(3);
-    Knoten kopf = baum.gibKopf();
+    BaumKnoten kopf = baum.gibKopf();
     assertEquals(1, kopf.schlüssel);
     assertEquals(2, kopf.rechts.schlüssel);
   }
@@ -97,7 +97,7 @@ public class BinaererBaumTest {
     BinaerBaum baum = new BinaerBaum();
     baum.fügeEin(1, 2, 3);
     baum.entferne(2);
-    Knoten kopf = baum.gibKopf();
+    BaumKnoten kopf = baum.gibKopf();
     assertEquals(1, kopf.schlüssel);
     assertEquals(3, kopf.rechts.schlüssel);
   }

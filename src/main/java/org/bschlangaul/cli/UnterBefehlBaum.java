@@ -3,7 +3,6 @@ package org.bschlangaul.cli;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
-import tech.vanyo.tree_printer.TreePrinter;
 
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -12,7 +11,10 @@ import org.bschlangaul.baum.AVLBaum;
 import org.bschlangaul.baum.Baum;
 
 import org.bschlangaul.baum.BinaerBaum;
-import org.bschlangaul.baum.Knoten;
+import org.bschlangaul.baum.visualisierung.BaumReporter;
+import org.bschlangaul.baum.visualisierung.StummerBaumReporter;
+import org.bschlangaul.baum.visualisierung.TerminalBaumReporter;
+import org.bschlangaul.baum.visualisierung.TexBaumReporter;
 
 @Command(name = "baum", aliases = {
     "b" }, mixinStandardHelpOptions = true, description = "Führe baumspezifische Aufgaben aus.")
@@ -35,20 +37,24 @@ class UnterBefehlBaum implements Callable<Integer> {
       baum = new BinaerBaum();
     }
 
+    if (KommandoZeile.redselig)
+      baum.reporter = new TerminalBaumReporter();
+
+    BaumReporter reporter;
+
+    if (KommandoZeile.ausgabe == Ausgabe.konsole)
+      reporter = new TerminalBaumReporter();
+    else
+      reporter = new TexBaumReporter();
+
+    if (KommandoZeile.redselig)
+      baum.reporter = reporter;
+    else
+      baum.reporter = new StummerBaumReporter();
+
     for (int i = 0; i < werte.size(); i++) {
       baum.fügeEin(werte.get(i));
     }
-    Knoten wurzel = baum.gibKopf();
-
-    TreePrinter<Knoten> printer = new TreePrinter<>(knoten -> ("" + knoten.gibSchlüssel()), knoten -> knoten.gibLinks(),
-        knoten -> knoten.gibRechts());
-
-    printer.setHspace(2);
-    printer.setSquareBranches(false);
-    System.out.println();
-
-    printer.printTree(wurzel);
-    System.out.println();
 
     return 0;
   }

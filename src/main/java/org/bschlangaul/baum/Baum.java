@@ -2,12 +2,16 @@ package org.bschlangaul.baum;
 
 import java.util.ArrayList;
 
+import org.bschlangaul.baum.visualisierung.BaumReporter;
+import org.bschlangaul.baum.visualisierung.StummerBaumReporter;
 import org.bschlangaul.liste.saake.FeldWarteschlange;
 import org.bschlangaul.liste.saake.Warteschlange;
 import org.bschlangaul.liste.saake.WarteschlangeFehler;
 
 @SuppressWarnings("rawtypes")
 public abstract class Baum {
+
+  public BaumReporter reporter = new StummerBaumReporter();
 
   public static final String[] traversierungsNamen = { "INORDER", "PREORDER", "POSTORDER", "LEVELORDER" };
 
@@ -23,12 +27,12 @@ public abstract class Baum {
    * Der erste Knoten wird auf den rechten Arm gelegt. Der Kopf-Knoten selbst hat
    * keinen Wert.
    */
-  Knoten kopf;
+  BaumKnoten kopf;
 
   /**
    * Saake Seite 356
    */
-  private void besucheInorder(Knoten knoten, ArrayList<Comparable> schlüssel) {
+  private void besucheInorder(BaumKnoten knoten, ArrayList<Comparable> schlüssel) {
     if (knoten != null) {
       besucheInorder(knoten.gibLinks(), schlüssel);
       schlüssel.add((Comparable) knoten.gibSchlüssel());
@@ -39,7 +43,7 @@ public abstract class Baum {
   /**
    * Saake Seite 356
    */
-  private void besuchePreorder(Knoten knoten, ArrayList<Comparable> schlüssel) {
+  private void besuchePreorder(BaumKnoten knoten, ArrayList<Comparable> schlüssel) {
     if (knoten != null) {
       schlüssel.add((Comparable) knoten.gibSchlüssel());
       besuchePreorder(knoten.gibLinks(), schlüssel);
@@ -50,7 +54,7 @@ public abstract class Baum {
   /**
    * Saake Seite 356
    */
-  private void besuchePostorder(Knoten knoten, ArrayList<Comparable> schlüssel) {
+  private void besuchePostorder(BaumKnoten knoten, ArrayList<Comparable> schlüssel) {
     if (knoten != null) {
       besuchePostorder(knoten.gibLinks(), schlüssel);
       besuchePostorder(knoten.gibRechts(), schlüssel);
@@ -66,7 +70,7 @@ public abstract class Baum {
    */
   private void printLevelorder(Warteschlange q, ArrayList<Comparable> schlüssel) throws WarteschlangeFehler {
     while (!q.isEmpty()) {
-      Knoten knoten = (Knoten) q.leave();
+      BaumKnoten knoten = (BaumKnoten) q.leave();
       if (knoten.gibLinks() != null)
         q.enter(knoten.gibLinks());
       if (knoten.gibRechts() != null)
@@ -106,7 +110,7 @@ public abstract class Baum {
     return schlüssel;
   }
 
-  abstract public Knoten gibKopf();
+  abstract public BaumKnoten gibKopf();
 
   abstract public boolean fügeEin(Comparable wert);
 

@@ -10,11 +10,11 @@ public class BinaerBaum extends Baum {
    * Saake Seite 349
    */
   public BinaerBaum() {
-    kopf = new Knoten(null);
+    kopf = new BaumKnoten(null);
     kopf.setzeRechts(null);
   }
 
-  public Knoten gibKopf() {
+  public BaumKnoten gibKopf() {
     return kopf.gibRechts();
   }
 
@@ -26,8 +26,8 @@ public class BinaerBaum extends Baum {
    * @return Wahr, wenn das Einfügen erfolgreich war.
    */
   public boolean fügeEin(Comparable schlüssel) {
-    Knoten eltern = kopf;
-    Knoten kind = gibKopf();
+    BaumKnoten eltern = kopf;
+    BaumKnoten kind = gibKopf();
     while (kind != null) {
       eltern = kind;
       int vergleich = kind.vergleiche(schlüssel);
@@ -36,7 +36,7 @@ public class BinaerBaum extends Baum {
       else
         kind = (vergleich > 0 ? kind.gibLinks() : kind.gibRechts());
     }
-    Knoten knoten = new Knoten(schlüssel);
+    BaumKnoten knoten = new BaumKnoten(schlüssel);
     if (eltern.vergleiche(schlüssel) > 0)
       eltern.setzeLinks(knoten);
     else
@@ -52,8 +52,8 @@ public class BinaerBaum extends Baum {
    * @param schlüssel
    * @return
    */
-  protected Knoten findeKnoten(Comparable schlüssel) {
-    Knoten knoten = gibKopf();
+  protected BaumKnoten findeKnoten(Comparable schlüssel) {
+    BaumKnoten knoten = gibKopf();
     while (knoten != null) {
       int cmp = knoten.vergleiche(schlüssel);
       if (cmp == 0)
@@ -81,10 +81,10 @@ public class BinaerBaum extends Baum {
    * @param schlüssel Der Schlüssel, der gelöscht werden soll.
    */
   public boolean entferne(Comparable schlüssel) {
-    Knoten eltern = kopf;
-    Knoten knoten = gibKopf();
-    Knoten kind = null;
-    Knoten tmp = null;
+    BaumKnoten eltern = kopf;
+    BaumKnoten knoten = gibKopf();
+    BaumKnoten kind = null;
+    BaumKnoten tmp = null;
 
     // zu löschenden Knoten suchen
     while (knoten != null) {

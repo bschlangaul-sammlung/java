@@ -1,7 +1,5 @@
 package org.bschlangaul.baum;
 
-import org.bschlangaul.baum.tex.TexBaumTikz;
-
 /**
  * https://www.baeldung.com/java-avl-trees
  * https://github.com/eugenp/tutorials/blob/master/data-structures/src/main/java/com/baeldung/avltree/AVLTree.java
@@ -9,11 +7,9 @@ import org.bschlangaul.baum.tex.TexBaumTikz;
 @SuppressWarnings({ "rawtypes" })
 public class AVLBaum extends Baum {
 
-  public boolean gibTexBaumAus;
+  private AVLBaumKnoten kopf;
 
-  private AVLKnoten kopf;
-
-  private int gibHöhe(AVLKnoten knoten) {
+  private int gibHöhe(AVLBaumKnoten knoten) {
     return knoten == null ? -1 : knoten.höhe;
   }
 
@@ -21,16 +17,16 @@ public class AVLBaum extends Baum {
     return kopf == null ? -1 : kopf.höhe;
   }
 
-  public AVLKnoten gibKopf() {
+  public AVLBaumKnoten gibKopf() {
     return kopf;
   }
 
-  public int gibBalance(AVLKnoten knoten) {
+  public int gibBalance(AVLBaumKnoten knoten) {
     return (knoten == null) ? 0 : gibHöhe(knoten.rechts) - gibHöhe(knoten.links);
   }
 
-  public AVLKnoten finde(Comparable schlüssel) {
-    AVLKnoten aktuellerKnoten = kopf;
+  public AVLBaumKnoten finde(Comparable schlüssel) {
+    AVLBaumKnoten aktuellerKnoten = kopf;
     while (aktuellerKnoten != null) {
       if (aktuellerKnoten.schlüssel == schlüssel) {
         break;
@@ -40,70 +36,37 @@ public class AVLBaum extends Baum {
     return aktuellerKnoten;
   }
 
-  /**
-   * Wir bestimmen die zukünfite Rotationsaktion.
-   *
-   * @param knoten Der aktuelle Knoten
-   *
-   * @return Nur wenn eine Aktion notwendig ist, wir eine String ausgegeben, sonst
-   *         null.
-   */
-  private String gibRotationsAktionsTitel(AVLKnoten knoten) {
-    aktualisiereHöhe(knoten);
-    int balance = gibBalance(knoten);
-    String aktion = null;
-    if (balance > 1) {
-      if (gibHöhe(knoten.rechts.rechts) > gibHöhe(knoten.rechts.links)) {
-        aktion = "Linksrotation";
-      } else {
-        aktion = "Rechts-Linksrotation";
-      }
-    } else if (balance < -1) {
-      if (gibHöhe(knoten.links.links) > gibHöhe(knoten.links.rechts)) {
-        aktion = "Rechtsrotation";
-      } else {
-        aktion = "Links-Rechtsrotation";
-      }
-    }
-    return aktion;
-  }
-
-  private AVLKnoten rebalanciere(AVLKnoten knoten) {
-    String titel = gibRotationsAktionsTitel(knoten);
-    if (titel != null)
-      gibTexAus("Vor der " + titel);
+  private AVLBaumKnoten rebalanciere(AVLBaumKnoten knoten) {
 
     aktualisiereHöhe(knoten);
     int balance = gibBalance(knoten);
     if (balance > 1) {
       if (gibHöhe(knoten.rechts.rechts) > gibHöhe(knoten.rechts.links)) {
+        reporter.visualisiereBaum(this, "Linksrotation");
         knoten = rotiereLinks(knoten);
       } else {
+        reporter.visualisiereBaum(this, "Rechtsrotation");
         knoten.rechts = rotiereRechts(knoten.rechts);
+        reporter.visualisiereBaum(this, "Linksrotation");
         knoten = rotiereLinks(knoten);
       }
     } else if (balance < -1) {
       if (gibHöhe(knoten.links.links) > gibHöhe(knoten.links.rechts)) {
+        reporter.visualisiereBaum(this, "Rechtsrotation");
         knoten = rotiereRechts(knoten);
       } else {
+        reporter.visualisiereBaum(this, "Linksrotation");
         knoten.links = rotiereLinks(knoten.links);
+        reporter.visualisiereBaum(this, "Rechtsrotation");
         knoten = rotiereRechts(knoten);
       }
     }
     return knoten;
   }
 
-  private void gibTexAus(String überschrift) {
-    TexBaumTikz.gibAus(this, überschrift);
-  }
-
-  private void gibTexAus(Knoten knoten, String überschrift) {
-    TexBaumTikz.gibAus(this, knoten, überschrift);
-  }
-
-  private AVLKnoten rotiereRechts(AVLKnoten y) {
-    AVLKnoten x = y.links;
-    AVLKnoten z = x.rechts;
+  private AVLBaumKnoten rotiereRechts(AVLBaumKnoten y) {
+    AVLBaumKnoten x = y.links;
+    AVLBaumKnoten z = x.rechts;
     x.rechts = y;
     y.links = z;
     aktualisiereHöhe(y);
@@ -111,9 +74,9 @@ public class AVLBaum extends Baum {
     return x;
   }
 
-  private AVLKnoten rotiereLinks(AVLKnoten y) {
-    AVLKnoten x = y.rechts;
-    AVLKnoten z = x.links;
+  private AVLBaumKnoten rotiereLinks(AVLBaumKnoten y) {
+    AVLBaumKnoten x = y.rechts;
+    AVLBaumKnoten z = x.links;
     x.links = y;
     y.rechts = z;
     aktualisiereHöhe(y);
@@ -121,13 +84,13 @@ public class AVLBaum extends Baum {
     return x;
   }
 
-  private void aktualisiereHöhe(AVLKnoten knoten) {
+  private void aktualisiereHöhe(AVLBaumKnoten knoten) {
     knoten.höhe = 1 + Math.max(gibHöhe(knoten.links), gibHöhe(knoten.rechts));
   }
 
-  private AVLKnoten fügeEin(AVLKnoten knoten, Comparable schlüssel) {
+  private AVLBaumKnoten fügeEin(AVLBaumKnoten knoten, Comparable schlüssel) {
     if (knoten == null) {
-      return new AVLKnoten(schlüssel);
+      return new AVLBaumKnoten(schlüssel);
     } else if (knoten.vergleiche(schlüssel) > 0) {
       knoten.links = fügeEin(knoten.links, schlüssel);
     } else if (knoten.vergleiche(schlüssel) < 0) {
@@ -139,8 +102,10 @@ public class AVLBaum extends Baum {
   }
 
   public boolean fügeEin(Comparable schlüssel) {
+    reporter.visualisiereÜberschrift("Einfügen von „" + schlüssel + "“");
+    ;
     kopf = fügeEin(kopf, schlüssel);
-    gibTexAus("nach Einfügen von „" + schlüssel + "“");
+    reporter.visualisiereBaum(this);
     return true;
   }
 
@@ -151,8 +116,8 @@ public class AVLBaum extends Baum {
    *                 der rechtesten Knoten des linkesten Knoten des (Teil-)Baums.
    * @return
    */
-  private AVLKnoten gibÄußerstesKind(AVLKnoten knoten, String richtung) {
-    AVLKnoten aktuellerKnoten = knoten;
+  private AVLBaumKnoten gibÄußerstesKind(AVLBaumKnoten knoten, String richtung) {
+    AVLBaumKnoten aktuellerKnoten = knoten;
     if (richtung.equals("links")) {
       while (aktuellerKnoten.links != null) {
         aktuellerKnoten = aktuellerKnoten.links;
@@ -173,7 +138,7 @@ public class AVLBaum extends Baum {
    *                  „rechts“: den linkesten Knoten des rechten Kindbaums.
    * @return
    */
-  private AVLKnoten entferne(AVLKnoten knoten, Comparable schlüssel, String neuerKopf) {
+  private AVLBaumKnoten entferne(AVLBaumKnoten knoten, Comparable schlüssel, String neuerKopf) {
     if (knoten == null) {
       return knoten;
     } else if (knoten.vergleiche(schlüssel) > 0) {
@@ -184,11 +149,11 @@ public class AVLBaum extends Baum {
       if (knoten.links == null || knoten.rechts == null) {
         knoten = (knoten.links == null) ? knoten.rechts : knoten.links;
       } else if (neuerKopf.equals("rechts")) {
-        AVLKnoten ganzLinkesKind = gibÄußerstesKind(knoten.rechts, "links");
+        AVLBaumKnoten ganzLinkesKind = gibÄußerstesKind(knoten.rechts, "links");
         knoten.schlüssel = ganzLinkesKind.schlüssel;
         knoten.rechts = entferne(knoten.rechts, (Comparable) knoten.schlüssel, "rechts");
       } else {
-        AVLKnoten ganzRechtesKind = gibÄußerstesKind(knoten.links, "rechts");
+        AVLBaumKnoten ganzRechtesKind = gibÄußerstesKind(knoten.links, "rechts");
         knoten.schlüssel = ganzRechtesKind.schlüssel;
         knoten.links = entferne(knoten.links, (Comparable) knoten.schlüssel, "links");
       }

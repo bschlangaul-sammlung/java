@@ -4,12 +4,12 @@ package org.bschlangaul.baum;
  * Saake Seite 349
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
-public class Knoten {
-  public Knoten links = null;
-  public Knoten rechts = null;
+public class BaumKnoten {
+  public BaumKnoten links = null;
+  public BaumKnoten rechts = null;
   public Object schlüssel;
 
-  public Knoten(Object schlüssel) {
+  public BaumKnoten(Object schlüssel) {
     this.schlüssel = schlüssel;
   }
 
@@ -17,19 +17,19 @@ public class Knoten {
     return schlüssel;
   }
 
-  public Knoten gibLinks() {
+  public BaumKnoten gibLinks() {
     return links;
   }
 
-  public Knoten gibRechts() {
+  public BaumKnoten gibRechts() {
     return rechts;
   }
 
-  public void setzeLinks(Knoten knoten) {
+  public void setzeLinks(BaumKnoten knoten) {
     links = knoten;
   }
 
-  public void setzeRechts(Knoten knoten) {
+  public void setzeRechts(BaumKnoten knoten) {
     rechts = knoten;
   }
 

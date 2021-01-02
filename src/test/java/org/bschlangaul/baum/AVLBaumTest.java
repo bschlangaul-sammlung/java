@@ -19,7 +19,7 @@ public class AVLBaumTest {
     baum.fügeEin(4);
     baum.fügeEin(5);
 
-    AVLKnoten kopf = baum.gibKopf();
+    AVLBaumKnoten kopf = baum.gibKopf();
 
     assertEquals(2, kopf.schlüssel);
     assertEquals(1, kopf.links.schlüssel);
@@ -38,7 +38,7 @@ public class AVLBaumTest {
     baum.fügeEin(41);
     baum.fügeEin(6);
 
-    AVLKnoten kopf = baum.gibKopf();
+    AVLBaumKnoten kopf = baum.gibKopf();
 
     assertEquals(19, kopf.schlüssel);
     assertEquals(1, kopf.links.schlüssel);
@@ -53,7 +53,7 @@ public class AVLBaumTest {
 
     baum.fügeEin("a", "b", "c", "d", "e", "f");
 
-    AVLKnoten kopf = baum.gibKopf();
+    AVLBaumKnoten kopf = baum.gibKopf();
 
     assertEquals("d", kopf.schlüssel);
     assertEquals("b", kopf.links.schlüssel);
@@ -74,7 +74,7 @@ public class AVLBaumTest {
     baum.fügeEin(6);
 
     baum.entferne(21);
-    AVLKnoten root = baum.gibKopf();
+    AVLBaumKnoten root = baum.gibKopf();
 
     assertEquals(19, root.schlüssel);
     assertEquals(1, root.links.schlüssel);
@@ -93,7 +93,7 @@ public class AVLBaumTest {
     baum.fügeEin(6);
 
     baum.entferne(19);
-    AVLKnoten kopf = baum.gibKopf();
+    AVLBaumKnoten kopf = baum.gibKopf();
     // https://visualgo.net/en/bst
     assertEquals(21, kopf.schlüssel);
     assertEquals(1, kopf.links.schlüssel);
@@ -112,7 +112,7 @@ public class AVLBaumTest {
     baum.fügeEin(6);
 
     baum.entferne(19, "rechts");
-    AVLKnoten kopf = baum.gibKopf();
+    AVLBaumKnoten kopf = baum.gibKopf();
     // https://visualgo.net/en/bst
     assertEquals(21, kopf.schlüssel);
     assertEquals(1, kopf.links.schlüssel);
@@ -131,7 +131,7 @@ public class AVLBaumTest {
     baum.fügeEin(6);
 
     baum.entferne(19, "links");
-    AVLKnoten kopf = baum.gibKopf();
+    AVLBaumKnoten kopf = baum.gibKopf();
     // https://www.cs.usfca.edu/~galles/visualization/AVLbaum.html
     assertEquals(6, kopf.schlüssel);
     assertEquals(1, kopf.links.schlüssel);
