@@ -7,7 +7,7 @@ import org.bschlangaul.baum.Baum;
 public class TexBaumTikz {
 
   private static String generiereTikzRekursiv(Knoten knoten, int einrückung) {
-    if (knoten != null && knoten.gibSchlüssel() != null) {
+    if (knoten != null) {
       String leerzeichen = " ".repeat(einrückung);
       String links = generiereTikzRekursiv(knoten.gibLinks(), einrückung + 2);
       String rechts = generiereTikzRekursiv(knoten.gibRechts(), einrückung + 2);
@@ -29,12 +29,9 @@ public class TexBaumTikz {
     return "";
   }
 
-  private static String umrahmeMitTikzUmgebung(String tikzMarkup) {
-    return Tex.umgebungOption("tikzpicture", String.format("\\Tree\n%s", tikzMarkup), "binaerer baum");
-  }
-
   public static String generiere(Baum baum) {
-    return umrahmeMitTikzUmgebung(generiereTikzRekursiv(baum.gibKopf(), 0));
+    String tikzMarkup = generiereTikzRekursiv(baum.gibKopf(), 0);
+    return Tex.umgebungOption("tikzpicture", String.format("\\Tree\n%s", tikzMarkup), "binaerer baum");
   }
 
 }

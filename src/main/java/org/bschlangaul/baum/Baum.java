@@ -25,13 +25,11 @@ public abstract class Baum {
    */
   Knoten kopf;
 
-  Knoten nullKnoten;
-
   /**
    * Saake Seite 356
    */
   private void besucheInorder(Knoten knoten, ArrayList<Comparable> schlüssel) {
-    if (knoten != nullKnoten) {
+    if (knoten != null) {
       besucheInorder(knoten.gibLinks(), schlüssel);
       schlüssel.add((Comparable) knoten.gibSchlüssel());
       besucheInorder(knoten.gibRechts(), schlüssel);
@@ -42,7 +40,7 @@ public abstract class Baum {
    * Saake Seite 356
    */
   private void besuchePreorder(Knoten knoten, ArrayList<Comparable> schlüssel) {
-    if (knoten != nullKnoten) {
+    if (knoten != null) {
       schlüssel.add((Comparable) knoten.gibSchlüssel());
       besuchePreorder(knoten.gibLinks(), schlüssel);
       besuchePreorder(knoten.gibRechts(), schlüssel);
@@ -53,7 +51,7 @@ public abstract class Baum {
    * Saake Seite 356
    */
   private void besuchePostorder(Knoten knoten, ArrayList<Comparable> schlüssel) {
-    if (knoten != nullKnoten) {
+    if (knoten != null) {
       besuchePostorder(knoten.gibLinks(), schlüssel);
       besuchePostorder(knoten.gibRechts(), schlüssel);
       schlüssel.add((Comparable) knoten.gibSchlüssel());
@@ -69,9 +67,9 @@ public abstract class Baum {
   private void printLevelorder(Warteschlange q, ArrayList<Comparable> schlüssel) throws WarteschlangeFehler {
     while (!q.isEmpty()) {
       Knoten knoten = (Knoten) q.leave();
-      if (knoten.gibLinks() != nullKnoten)
+      if (knoten.gibLinks() != null)
         q.enter(knoten.gibLinks());
-      if (knoten.gibRechts() != nullKnoten)
+      if (knoten.gibRechts() != null)
         q.enter(knoten.gibRechts());
       schlüssel.add((Comparable) knoten.gibSchlüssel());
     }

@@ -15,7 +15,6 @@ public class BinaererBaumTest {
   public void testeKonstruktor() {
     BinaerBaum baum = new BinaerBaum();
     assertEquals(null, baum.kopf.gibSchlüssel());
-    assertEquals(null, baum.nullKnoten.gibSchlüssel());
   }
 
   @Test

@@ -11,10 +11,7 @@ public class BinaerBaum extends Baum {
    */
   public BinaerBaum() {
     kopf = new Knoten(null);
-    nullKnoten = new Knoten(null);
-    kopf.setzeRechts(nullKnoten);
-    nullKnoten.setzeLinks(nullKnoten);
-    nullKnoten.setzeRechts(nullKnoten);
+    kopf.setzeRechts(null);
   }
 
   public Knoten gibKopf() {
@@ -31,7 +28,7 @@ public class BinaerBaum extends Baum {
   public boolean fügeEin(Comparable schlüssel) {
     Knoten eltern = kopf;
     Knoten kind = gibKopf();
-    while (kind != nullKnoten) {
+    while (kind != null) {
       eltern = kind;
       int vergleich = kind.vergleiche(schlüssel);
       if (vergleich == 0)
@@ -44,8 +41,8 @@ public class BinaerBaum extends Baum {
       eltern.setzeLinks(knoten);
     else
       eltern.setzeRechts(knoten);
-    knoten.setzeLinks(nullKnoten);
-    knoten.setzeRechts(nullKnoten);
+    knoten.setzeLinks(null);
+    knoten.setzeRechts(null);
     return true;
   }
 
@@ -57,7 +54,7 @@ public class BinaerBaum extends Baum {
    */
   protected Knoten findeKnoten(Comparable schlüssel) {
     Knoten knoten = gibKopf();
-    while (knoten != nullKnoten) {
+    while (knoten != null) {
       int cmp = knoten.vergleiche(schlüssel);
       if (cmp == 0)
         return knoten;
@@ -90,7 +87,7 @@ public class BinaerBaum extends Baum {
     Knoten tmp = null;
 
     // zu löschenden Knoten suchen
-    while (knoten != nullKnoten) {
+    while (knoten != null) {
       int vergleich = knoten.vergleiche(schlüssel);
       if (vergleich == 0)
         break;
@@ -99,22 +96,22 @@ public class BinaerBaum extends Baum {
         knoten = (vergleich > 0 ? knoten.gibLinks() : knoten.gibRechts());
       }
     }
-    if (knoten == nullKnoten)
+    if (knoten == null)
       // Kein Knoten gefunden
       return false;
     // Fall 1
-    if (knoten.gibLinks() == nullKnoten && knoten.gibRechts() == nullKnoten)
-      kind = nullKnoten;
+    if (knoten.gibLinks() == null && knoten.gibRechts() == null)
+      kind = null;
     // Fall 2
-    else if (knoten.gibLinks() == nullKnoten)
+    else if (knoten.gibLinks() == null)
       kind = knoten.gibRechts();
-    else if (knoten.gibRechts() == nullKnoten)
+    else if (knoten.gibRechts() == null)
       kind = knoten.gibLinks();
     else { // Fall 3
       // minimales Element suchen
       kind = knoten.gibRechts();
       tmp = knoten;
-      while (kind.gibLinks() != nullKnoten) {
+      while (kind.gibLinks() != null) {
         tmp = kind;
         kind = kind.gibLinks();
       }

@@ -1,0 +1,16 @@
+\begin{tikzpicture}[binaerer baum]
+\Tree
+[.1
+  \edge[blank]; \node[blank]{};
+  [.2
+    \edge[blank]; \node[blank]{};
+    [.3
+      \edge[blank]; \node[blank]{};
+      [.4
+        \edge[blank]; \node[blank]{};
+        [.5 ]
+      ]
+    ]
+  ]
+]
+\end{tikzpicture}

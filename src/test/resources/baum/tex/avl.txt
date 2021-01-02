@@ -1,0 +1,10 @@
+\begin{tikzpicture}[binaerer baum]
+\Tree
+[.2
+  [.1 ]
+  [.4
+    [.3 ]
+    [.5 ]
+  ]
+]
+\end{tikzpicture}

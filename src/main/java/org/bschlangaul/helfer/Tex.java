@@ -7,6 +7,7 @@ public class Tex {
   }
 
   private static String reinigeInhalt(String inhalt) {
+    inhalt = inhalt.replaceAll("[ \t]*\n", "\n");
     return inhalt.replaceFirst("\\s+$", "");
   }
 
