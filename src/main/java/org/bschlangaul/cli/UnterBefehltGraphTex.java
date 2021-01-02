@@ -10,7 +10,7 @@ import java.io.File;
 
 @Command(name = "tex", aliases = {
     "t" }, description = "Lese Text-Datei ein und versuche einen Graph zu erkennen, formatiere den Graphen dann für TeX.")
-class GraphTex implements Callable<Integer> {
+class UnterBefehltGraphTex implements Callable<Integer> {
 
   @Parameters(index = "0", description = "Eine TeX-Datei.")
   private File datei;

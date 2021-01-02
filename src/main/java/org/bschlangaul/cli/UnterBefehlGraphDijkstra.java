@@ -11,7 +11,7 @@ import org.bschlangaul.graph.algorithmen.KuerzesterPfadDijkstra;
 
 @Command(name = "dijkstra", aliases = {
     "d" }, description = "Den Dijkstra-Algorithmus ausführen.")
-class GraphDijkstra implements Callable<Integer> {
+class UnterBefehlGraphDijkstra implements Callable<Integer> {
 
   @Parameters(index = "0", description = "Eine TeX-Datei.")
   private File datei;

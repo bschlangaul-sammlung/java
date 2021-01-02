@@ -27,7 +27,7 @@ class ProjektSprache {
 
 @Command(name = "projekt-sprachen", aliases = {
     "s" }, description = "Nach Projektsprachen in einer TeX-Datei suchen und diese dann ausführen.")
-public class SubKommandoProjektSprachenFinder implements Callable<Integer> {
+public class UnterBefehlProjektSprachenFinder implements Callable<Integer> {
 
   String umgebungsName = "liProjektSprache";
 

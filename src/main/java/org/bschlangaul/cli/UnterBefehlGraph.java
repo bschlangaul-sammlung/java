@@ -5,8 +5,8 @@ import java.util.concurrent.Callable;
 
 @Command(name = "graph", aliases = {
     "g" }, mixinStandardHelpOptions = true, description = "Führe graphspezifische Aufgaben aus.", subcommands = {
-        GraphTex.class, GraphDijkstra.class })
-class Graph implements Callable<Integer> {
+        UnterBefehltGraphTex.class, UnterBefehlGraphDijkstra.class })
+class UnterBefehlGraph implements Callable<Integer> {
 
   @Override
   public Integer call() {
