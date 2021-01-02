@@ -46,7 +46,7 @@ class AntlrListener extends RelationenSchemaBaseListener {
       attribut.name = ctx.attributName().getText();
     }
 
-    attribut.istPrimaer = ctx.istPrimaer() != null ? true : false;
+    attribut.istPrimaer = ctx.istPrimaer().size() > 0 ? true : false;
     aktuelleRelation.setzeAttribut(attribut);
   }
 

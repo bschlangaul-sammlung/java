@@ -4,7 +4,7 @@ import org.bschlangaul.baum.Knoten;
 import org.bschlangaul.helfer.Tex;
 import org.bschlangaul.baum.Baum;
 
-public class TexTikzBaumErzeuger {
+public class TexBaumTikz {
 
   private static String generiereTikzRekursiv(Knoten knoten, int einrückung) {
     if (knoten != null && knoten.gibSchlüssel() != null) {

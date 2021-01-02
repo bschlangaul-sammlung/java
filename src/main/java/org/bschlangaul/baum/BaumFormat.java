@@ -9,7 +9,7 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.bschlangaul.antlr.BaumBaseListener;
 import org.bschlangaul.antlr.BaumLexer;
 import org.bschlangaul.antlr.BaumParser;
-import org.bschlangaul.baum.tex.TexTikzBaumErzeuger;
+import org.bschlangaul.baum.tex.TexBaumTikz;
 
 class AntlrListener extends BaumBaseListener {
 
@@ -110,7 +110,7 @@ public class BaumFormat {
             break;
 
           case "drucke":
-            System.out.println(TexTikzBaumErzeuger.generiere(baum));
+            System.out.println(TexBaumTikz.generiere(baum));
             break;
 
           case "lösche":
