@@ -31,6 +31,7 @@ class AntlrListener extends RelationenSchemaBaseListener {
     aktuelleRelation.schema = schema;
   }
 
+  @Override
   public void enterAttribut(RelationenSchemaParser.AttributContext ctx) {
     Attribut attribut = new Attribut("");
     aktuellesAttribut = attribut;
@@ -48,6 +49,7 @@ class AntlrListener extends RelationenSchemaBaseListener {
     aktuelleRelation.setzeAttribut(attribut);
   }
 
+  @Override
   public void exitRelation(RelationenSchemaParser.RelationContext ctx) {
     schema.setzeRelation(aktuelleRelation);
   }

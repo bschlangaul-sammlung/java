@@ -1,9 +1,9 @@
 grammar Baum;
-wald: baum+ EOF;
-baum: 'baum' baumArt '(' anweisung+ ')';
-anweisung: befehl (':' argument+)? ';';
+einstiegsPunkt: baum+ EOF;
+baum: 'baum' baumArt '(' aktion+ ')';
+aktion: befehl (':' wert+)? ';';
 befehl: (SETZE | DRUCKE | LÖSCHE);
-argument: ZAHL;
+wert: ZAHL;
 baumArt: ('avl' | 'binär');
 
 ZAHL: [0-9]+;
