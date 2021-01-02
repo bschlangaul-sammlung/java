@@ -1,11 +1,15 @@
 package org.bschlangaul.baum;
 
+import org.bschlangaul.baum.tex.TexBaumTikz;
+
 /**
  * https://www.baeldung.com/java-avl-trees
  * https://github.com/eugenp/tutorials/blob/master/data-structures/src/main/java/com/baeldung/avltree/AVLTree.java
  */
 @SuppressWarnings({ "rawtypes" })
 public class AVLBaum extends Baum {
+
+  public boolean gibTexBaumAus;
 
   private AVLKnoten kopf;
 
@@ -36,7 +40,39 @@ public class AVLBaum extends Baum {
     return aktuellerKnoten;
   }
 
+  /**
+   * Wir bestimmen die zukünfite Rotationsaktion.
+   *
+   * @param knoten Der aktuelle Knoten
+   *
+   * @return Nur wenn eine Aktion notwendig ist, wir eine String ausgegeben, sonst
+   *         null.
+   */
+  private String gibRotationsAktionsTitel(AVLKnoten knoten) {
+    aktualisiereHöhe(knoten);
+    int balance = gibBalance(knoten);
+    String aktion = null;
+    if (balance > 1) {
+      if (gibHöhe(knoten.rechts.rechts) > gibHöhe(knoten.rechts.links)) {
+        aktion = "Linksrotation";
+      } else {
+        aktion = "Rechts-Linksrotation";
+      }
+    } else if (balance < -1) {
+      if (gibHöhe(knoten.links.links) > gibHöhe(knoten.links.rechts)) {
+        aktion = "Rechtsrotation";
+      } else {
+        aktion = "Links-Rechtsrotation";
+      }
+    }
+    return aktion;
+  }
+
   private AVLKnoten rebalanciere(AVLKnoten knoten) {
+    String titel = gibRotationsAktionsTitel(knoten);
+    if (titel != null)
+      gibTexAus("Vor der " + titel);
+
     aktualisiereHöhe(knoten);
     int balance = gibBalance(knoten);
     if (balance > 1) {
@@ -55,6 +91,14 @@ public class AVLBaum extends Baum {
       }
     }
     return knoten;
+  }
+
+  private void gibTexAus(String überschrift) {
+    TexBaumTikz.gibAus(this, überschrift);
+  }
+
+  private void gibTexAus(Knoten knoten, String überschrift) {
+    TexBaumTikz.gibAus(this, knoten, überschrift);
   }
 
   private AVLKnoten rotiereRechts(AVLKnoten y) {
@@ -96,6 +140,7 @@ public class AVLBaum extends Baum {
 
   public boolean fügeEin(Comparable schlüssel) {
     kopf = fügeEin(kopf, schlüssel);
+    gibTexAus("nach Einfügen von „" + schlüssel + "“");
     return true;
   }
 

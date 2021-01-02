@@ -40,7 +40,8 @@ class UnterBefehlBaum implements Callable<Integer> {
     }
     Knoten wurzel = baum.gibKopf();
 
-    TreePrinter<Knoten> printer = new TreePrinter<>(knoten -> ("" + knoten.gibSchlüssel()), n -> n.gibLinks(), n -> n.gibRechts());
+    TreePrinter<Knoten> printer = new TreePrinter<>(knoten -> ("" + knoten.gibSchlüssel()), knoten -> knoten.gibLinks(),
+        knoten -> knoten.gibRechts());
 
     printer.setHspace(2);
     printer.setSquareBranches(false);
