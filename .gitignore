@@ -28,3 +28,10 @@ target/
 .settings/
 
 #docs/
+
+*.aux
+*.fdb_latexmk
+*.fls
+*.out
+*.pdf
+*.synctex.gz
