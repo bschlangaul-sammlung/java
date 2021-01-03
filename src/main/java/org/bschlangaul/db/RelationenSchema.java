@@ -297,6 +297,12 @@ public class RelationenSchema {
     return Tex.umgebung("liRmodell", vereinigeRelationenMethodenAusgaben("baueTeX"));
   }
 
+  public static String gibAusFürEinbettung(String formatText) {
+    RelationenSchema schema = new RelationenSchema(formatText);
+    return schema.baueÜbungsdatenbank() + "\n\n" +
+        schema.baueTeX();
+  }
+
   public static void gibAusFürProjektSprachen(String formatText) {
     RelationenSchema schema = new RelationenSchema(formatText);
 

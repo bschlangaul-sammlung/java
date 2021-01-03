@@ -13,6 +13,7 @@ import picocli.CommandLine.Parameters;
 
 import org.bschlangaul.baum.BaumFormat;
 import org.bschlangaul.db.RelationenSchema;
+import org.bschlangaul.helfer.DateiSchreiber;
 import org.bschlangaul.helfer.Tex;
 
 class ProjektSprache {
@@ -43,10 +44,26 @@ public class UnterBefehlProjektSprachenFinder implements Callable<Integer> {
     return gibTexMakroRegex("begin", name) + inhalt + gibTexMakroRegex("end", name);
   }
 
-  private String gibErsetzung(String originalProjektSpracheName, String originalProjektSpracheInhalt,
-      String erzeugteEinbettung) {
-    return Tex.umgebungArgument(umgebungsName, originalProjektSpracheInhalt.trim(), originalProjektSpracheName.trim()) + "\n"
-        + Tex.umgebung("liEinbettung", erzeugteEinbettung);
+  private String kompiliereSprache(String name, String inhalt) {
+    switch (name) {
+      case "RelationenSchema":
+        return RelationenSchema.gibAusFürEinbettung(inhalt);
+
+      case "Baum":
+        return BaumFormat.gibAusFürEinbettung(inhalt);
+
+      default:
+        break;
+    }
+    return null;
+  }
+
+  private String gibErsetzung(String sprachenName, String sprachenInhalt) {
+    sprachenInhalt = sprachenInhalt.trim();
+    sprachenName = sprachenName.trim();
+    String kompilat = kompiliereSprache(sprachenName, sprachenInhalt);
+    return Tex.umgebungArgument(umgebungsName, sprachenInhalt, sprachenName) + "\n"
+        + Tex.umgebung("liEinbettung", kompilat);
   }
 
   /**
@@ -67,14 +84,14 @@ public class UnterBefehlProjektSprachenFinder implements Callable<Integer> {
       String regexEinbettung = "([\s\n\r]*?" + gibTexUmgebungRegex("liEinbettung", ".*?") + ")?";
       Pattern pattern = Pattern.compile(regexProjektSprache + regexEinbettung, Pattern.DOTALL);
       Matcher ergebnis = pattern.matcher(inhalt);
-      int i = 0;
       while (ergebnis.find()) {
         ausgabe.add(new ProjektSprache(ergebnis.group("name"), ergebnis.group("inhalt")));
-        ergebnis.appendReplacement(sb, gibErsetzung(ergebnis.group("name"), ergebnis.group("inhalt"), "Ersetzung " + i));
-        i++;
+        ergebnis.appendReplacement(sb,
+        Matcher.quoteReplacement(gibErsetzung(ergebnis.group("name"), ergebnis.group("inhalt"))));
       }
       ergebnis.appendTail(sb);
       System.out.println(sb.toString());
+      DateiSchreiber.schreibe(datei.toString(), sb.toString());
     } catch (IOException e) {
       e.printStackTrace();
     }

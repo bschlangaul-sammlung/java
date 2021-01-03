@@ -24,6 +24,24 @@ baum avl (
   drucke;
 )
 \end{liProjektSprache}
+\begin{liEinbettung}
+\begin{tikzpicture}[li binaer baum]
+\Tree
+[.\node[label=-1]{5};
+  [.\node[label=1]{2};
+    [.\node[label=0]{1}; ]
+    [.\node[label=1]{3};
+      \edge[blank]; \node[blank]{};
+      [.\node[label=0]{4}; ]
+    ]
+  ]
+  [.\node[label=0]{7};
+    [.\node[label=0]{6}; ]
+    [.\node[label=0]{8}; ]
+  ]
+]
+\end{tikzpicture}
+\end{liEinbettung}
 
 %%
 % b)
@@ -47,6 +65,36 @@ baum avl (
   drucke;
 )
 \end{liProjektSprache}
+\begin{liEinbettung}
+\begin{tikzpicture}[li binaer baum]
+\Tree
+[.\node[label=1]{5};
+  [.\node[label=1]{2};
+    [.\node[label=0]{1}; ]
+    [.\node[label=1]{3};
+      \edge[blank]; \node[blank]{};
+      [.\node[label=0]{4}; ]
+    ]
+  ]
+  [.\node[label=0]{10};
+    [.\node[label=-1]{8};
+      [.\node[label=1]{6};
+        \edge[blank]; \node[blank]{};
+        [.\node[label=0]{7}; ]
+      ]
+      [.\node[label=0]{9}; ]
+    ]
+    [.\node[label=1]{12};
+      [.\node[label=0]{11}; ]
+      [.\node[label=1]{13};
+        \edge[blank]; \node[blank]{};
+        [.\node[label=0]{14}; ]
+      ]
+    ]
+  ]
+]
+\end{tikzpicture}
+\end{liEinbettung}
 
 %%
 % ii)
@@ -60,6 +108,24 @@ baum avl (
   drucke;
 )
 \end{liProjektSprache}
+\begin{liEinbettung}
+\begin{tikzpicture}[li binaer baum]
+\Tree
+[.\node[label=-1]{6};
+  [.\node[label=1]{2};
+    [.\node[label=0]{1}; ]
+    [.\node[label=0]{4};
+      [.\node[label=0]{3}; ]
+      [.\node[label=0]{5}; ]
+    ]
+  ]
+  [.\node[label=-1]{8};
+    [.\node[label=0]{7}; ]
+    \edge[blank]; \node[blank]{};
+  ]
+]
+\end{tikzpicture}
+\end{liEinbettung}
 
 %%
 % ii)
@@ -73,7 +139,6 @@ baum avl (
   drucke;
 )
 \end{liProjektSprache}
-
 \begin{liEinbettung}
 \begin{tikzpicture}[li binaer baum]
 \Tree

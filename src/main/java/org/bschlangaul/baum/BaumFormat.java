@@ -91,7 +91,8 @@ public class BaumFormat {
     walker.walk(antlrListener, parser.einstiegsPunkt());
   }
 
-  public static void gibAusFürProjektSprachen(String formatText) {
+  public static String gibAusFürEinbettung(String formatText) {
+    String ausgabe = "";
     BaumReporter reporter = new TexBaumReporter();
     BaumFormat baumFormat = new BaumFormat(formatText);
     for (BaumFormat.BaumArt baumArt : baumFormat.bäume) {
@@ -112,7 +113,7 @@ public class BaumFormat {
             break;
 
           case "drucke":
-            reporter.berichteBaum(baum);
+            ausgabe += reporter.erzeugeBaum(baum);
             break;
 
           case "lösche":
@@ -130,5 +131,10 @@ public class BaumFormat {
 
       }
     }
+    return ausgabe;
+  }
+
+  public static void gibAusFürProjektSprachen(String formatText) {
+    System.out.println(gibAusFürEinbettung(formatText));
   }
 }
