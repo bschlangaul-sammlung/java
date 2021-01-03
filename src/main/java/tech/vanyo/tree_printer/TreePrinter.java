@@ -2,7 +2,6 @@ package tech.vanyo.tree_printer;
 
 // https://github.com/billvanyo/tree_printer
 
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,21 +13,14 @@ public class TreePrinter<T> {
   private Function<T, T> getLeft;
   private Function<T, T> getRight;
 
-  private PrintStream outStream = System.out;
-
   private boolean squareBranches = false;
   private boolean lrAgnostic = false;
   private int hspace = 2;
-  private int tspace = 1;
 
   public TreePrinter(Function<T, String> getLabel, Function<T, T> getLeft, Function<T, T> getRight) {
     this.getLabel = getLabel;
     this.getLeft = getLeft;
     this.getRight = getRight;
-  }
-
-  public void setPrintStream(PrintStream outStream) {
-    this.outStream = outStream;
   }
 
   public void setSquareBranches(boolean squareBranches) {
@@ -47,7 +39,7 @@ public class TreePrinter<T> {
     this.hspace = tspace;
   }
 
-  /*
+  /**
    * Prints ascii representation of binary tree. Parameter hspace is minimum
    * number of spaces between adjacent node labels. Parameter squareBranches, when
    * set to true, results in branches being printed with ASCII box drawing
@@ -58,79 +50,27 @@ public class TreePrinter<T> {
     printTreeLines(treeLines);
   }
 
-  /*
-   * Prints ascii representations of multiple trees across page. Parameter hspace
-   * is minimum number of spaces between adjacent node labels in a tree. Parameter
-   * tspace is horizontal distance between trees, as well as number of blank lines
-   * between rows of trees. Parameter lineWidth is maximum width of output
-   * Parameter squareBranches, when set to true, results in branches being printed
-   * with ASCII box drawing characters.
-   */
-  public void printTrees(List<T> trees, int lineWidth) {
-    List<List<TreeLine>> allTreeLines = new ArrayList<>();
-    int[] treeWidths = new int[trees.size()];
-    int[] minLeftOffsets = new int[trees.size()];
-    int[] maxRightOffsets = new int[trees.size()];
-    for (int i = 0; i < trees.size(); i++) {
-      T treeNode = trees.get(i);
-      List<TreeLine> treeLines = buildTreeLines(treeNode);
-      allTreeLines.add(treeLines);
-      minLeftOffsets[i] = minLeftOffset(treeLines);
-      maxRightOffsets[i] = maxRightOffset(treeLines);
-      treeWidths[i] = maxRightOffsets[i] - minLeftOffsets[i] + 1;
-    }
-
-    int nextTreeIndex = 0;
-    while (nextTreeIndex < trees.size()) {
-      // print a row of trees starting at nextTreeIndex
-
-      // first figure range of trees we can print for next row
-      int sumOfWidths = treeWidths[nextTreeIndex];
-      int endTreeIndex = nextTreeIndex + 1;
-      while (endTreeIndex < trees.size() && sumOfWidths + tspace + treeWidths[endTreeIndex] < lineWidth) {
-        sumOfWidths += (tspace + treeWidths[endTreeIndex]);
-        endTreeIndex++;
-      }
-      endTreeIndex--;
-
-      // find max number of lines for tallest tree
-      int maxLines = allTreeLines.stream().mapToInt(list -> list.size()).max().orElse(0);
-
-      // print trees line by line
-      for (int i = 0; i < maxLines; i++) {
-        for (int j = nextTreeIndex; j <= endTreeIndex; j++) {
-          List<TreeLine> treeLines = allTreeLines.get(j);
-          if (i >= treeLines.size()) {
-            System.out.print(spaces(treeWidths[j]));
-          } else {
-            int leftSpaces = -(minLeftOffsets[j] - treeLines.get(i).leftOffset);
-            int rightSpaces = maxRightOffsets[j] - treeLines.get(i).rightOffset;
-            System.out.print(spaces(leftSpaces) + treeLines.get(i).line + spaces(rightSpaces));
-          }
-          if (j < endTreeIndex)
-            System.out.print(spaces(tspace));
-        }
-        System.out.println();
-      }
-
-      for (int i = 0; i < tspace; i++) {
-        System.out.println();
-      }
-
-      nextTreeIndex = endTreeIndex + 1;
-    }
+  public String generateTree(T root) {
+    List<TreeLine> treeLines = buildTreeLines(root);
+    return concatTreeLines(treeLines);
   }
 
-  private void printTreeLines(List<TreeLine> treeLines) {
+  private String concatTreeLines(List<TreeLine> treeLines) {
+    String output = "";
     if (treeLines.size() > 0) {
       int minLeftOffset = minLeftOffset(treeLines);
       int maxRightOffset = maxRightOffset(treeLines);
       for (TreeLine treeLine : treeLines) {
         int leftSpaces = -(minLeftOffset - treeLine.leftOffset);
         int rightSpaces = maxRightOffset - treeLine.rightOffset;
-        outStream.println(spaces(leftSpaces) + treeLine.line + spaces(rightSpaces));
+        output += spaces(leftSpaces) + treeLine.line + spaces(rightSpaces) + "\n";
       }
     }
+    return output;
+  }
+
+  private void printTreeLines(List<TreeLine> treeLines) {
+    System.out.println(concatTreeLines(treeLines));
   }
 
   private List<TreeLine> buildTreeLines(T root) {

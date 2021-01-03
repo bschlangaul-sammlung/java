@@ -33,7 +33,7 @@ import java.util.LinkedHashSet;
  *
  * As requested in https://github.com/remkop/picocli/issues/566
  */
-class SubkommandosListe implements IHelpSectionRenderer {
+class HilfeUnterBefehltsListe implements IHelpSectionRenderer {
   public String render(Help help) {
     CommandSpec spec = help.commandSpec();
     if (spec.subcommands().isEmpty()) {

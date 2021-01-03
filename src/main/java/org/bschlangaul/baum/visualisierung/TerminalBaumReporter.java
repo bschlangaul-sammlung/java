@@ -10,23 +10,18 @@ public class TerminalBaumReporter extends BaumReporter {
 
   @Override
   public String erzeugeBaum(Baum baum) {
-    TreePrinter<BaumKnoten> printer = new TreePrinter<>(knoten -> ("" + knoten.gibSchlüssel()), knoten -> knoten.gibLinks(),
-        knoten -> knoten.gibRechts());
+    TreePrinter<BaumKnoten> printer = new TreePrinter<>(knoten -> ("" + knoten.gibSchlüssel()),
+        knoten -> knoten.gibLinks(), knoten -> knoten.gibRechts());
 
     printer.setHspace(2);
     printer.setSquareBranches(false);
-    System.out.println();
-
-    printer.printTree(baum.gibKopf());
-    System.out.println();
-    return "";
+    return "\n" + printer.generateTree(baum.gibKopf());
   }
 
   @Override
   public String erzeugeÜberschrift(String überschrift) {
     return KonsoleHelfer.erzeugeÜberschrift(überschrift);
   }
-
 
   @Override
   public String erzeugeTraversierung(Baum baum) {
