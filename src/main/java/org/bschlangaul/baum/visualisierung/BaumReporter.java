@@ -6,25 +6,38 @@ public abstract class BaumReporter {
 
   public static int redseligkeit = 1;
 
-  public abstract void visualisiereBaum(Baum baum);
+  public abstract String erzeugeBaum(Baum baum);
 
-  public abstract void visualisiereÜberschrift(String überschrift);
-
-  public void visualisiereBaum(Baum baum, String überschrift) {
-    visualisiereBaum(baum);
-    visualisiereÜberschrift(überschrift);
-
+  public void berichteBaum(Baum baum) {
+    System.out.println(erzeugeBaum(baum));
   }
 
-  public void visualisiereBaum(String überschrift, Baum baum) {
-    visualisiereÜberschrift(überschrift);
-    visualisiereBaum(baum);
+  public abstract String erzeugeÜberschrift(String überschrift);
+
+  public void berichteÜberschrift(String überschrift) {
+    System.out.println(erzeugeÜberschrift(überschrift));
   }
 
-  public void visualisiereBaum(Baum baum, String überschrift, int redselig) {
+  public abstract String erzeugeTraversierung(Baum baum);
+
+  public void berichteTraversierung(Baum baum) {
+    System.out.println(erzeugeTraversierung(baum));
+  }
+
+  public void berichteBaum(Baum baum, String überschrift) {
+    berichteBaum(baum);
+    berichteÜberschrift(überschrift);
+  }
+
+  public void berichteBaum(String überschrift, Baum baum) {
+    berichteÜberschrift(überschrift);
+    berichteBaum(baum);
+  }
+
+  public void berichteBaum(Baum baum, String überschrift, int redselig) {
     if (redseligkeit >= redselig) {
-      visualisiereÜberschrift(überschrift);
-      visualisiereBaum(baum);
+      berichteBaum(baum);
+      berichteÜberschrift(überschrift);
     }
   }
 }

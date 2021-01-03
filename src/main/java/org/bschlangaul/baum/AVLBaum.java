@@ -42,22 +42,22 @@ public class AVLBaum extends Baum {
     int balance = gibBalance(knoten);
     if (balance > 1) {
       if (gibHöhe(knoten.rechts.rechts) > gibHöhe(knoten.rechts.links)) {
-        reporter.visualisiereBaum(this, "Linksrotation");
+        reporter.berichteBaum(this, "Linksrotation");
         knoten = rotiereLinks(knoten);
       } else {
-        reporter.visualisiereBaum(this, "Rechtsrotation");
+        reporter.berichteBaum(this, "Rechtsrotation");
         knoten.rechts = rotiereRechts(knoten.rechts);
-        reporter.visualisiereBaum(this, "Linksrotation");
+        reporter.berichteBaum(this, "Linksrotation");
         knoten = rotiereLinks(knoten);
       }
     } else if (balance < -1) {
       if (gibHöhe(knoten.links.links) > gibHöhe(knoten.links.rechts)) {
-        reporter.visualisiereBaum(this, "Rechtsrotation");
+        reporter.berichteBaum(this, "Rechtsrotation");
         knoten = rotiereRechts(knoten);
       } else {
-        reporter.visualisiereBaum(this, "Linksrotation");
+        reporter.berichteBaum(this, "Linksrotation");
         knoten.links = rotiereLinks(knoten.links);
-        reporter.visualisiereBaum(this, "Rechtsrotation");
+        reporter.berichteBaum(this, "Rechtsrotation");
         knoten = rotiereRechts(knoten);
       }
     }
@@ -102,10 +102,10 @@ public class AVLBaum extends Baum {
   }
 
   public boolean fügeEin(Comparable schlüssel) {
-    reporter.visualisiereÜberschrift("Einfügen von „" + schlüssel + "“");
-    ;
+    reporter.berichteÜberschrift("Einfügen von „" + schlüssel + "“");
+
     kopf = fügeEin(kopf, schlüssel);
-    reporter.visualisiereBaum(this);
+    reporter.berichteBaum(this);
     return true;
   }
 

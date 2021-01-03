@@ -30,7 +30,12 @@ public abstract class Baum {
   BaumKnoten kopf;
 
   /**
-   * Saake Seite 356
+   * Zuerst wird der linke Teilbaum l durchlaufen, dann die Wurzel N betrachtet
+   * und schließlich der rechte Teilbaum r durchlaufen. Diese Reihenfolge
+   * entspricht bei binären Suchbäumen der Anordnung der Schlüssel und ist für die
+   * meisten Anwendungen die gegebene.
+   *
+   * @see Saake Seite 356
    */
   private void besucheInorder(BaumKnoten knoten, ArrayList<Comparable> schlüssel) {
     if (knoten != null) {
@@ -41,7 +46,10 @@ public abstract class Baum {
   }
 
   /**
-   * Saake Seite 356
+   * Zuerst wird die Wurzel N betrachtet und anschließend der linke l, schließlich
+   * der rechte Teilbaum r durchlaufen.
+   *
+   * @see Saake Seite 356
    */
   private void besuchePreorder(BaumKnoten knoten, ArrayList<Comparable> schlüssel) {
     if (knoten != null) {
@@ -52,7 +60,10 @@ public abstract class Baum {
   }
 
   /**
-   * Saake Seite 356
+   * Zuerst wird der linke l, dann der rechte Teilbaum r durchlaufen und
+   * schließlich die Wurzel N betrachtet.
+   *
+   * @see Saake Seite 356
    */
   private void besuchePostorder(BaumKnoten knoten, ArrayList<Comparable> schlüssel) {
     if (knoten != null) {
@@ -63,26 +74,43 @@ public abstract class Baum {
   }
 
   /**
-   * Saake Seite 358
+   * Beginnend bei der Baumwurzel werden die Ebenen von links nach rechts
+   * durchlaufen.
    *
-   * @param q
+   * @see Saake Seite 358
+   *
+   * @param warteschlange
+   *
    * @throws WarteschlangeFehler
    */
-  private void printLevelorder(Warteschlange q, ArrayList<Comparable> schlüssel) throws WarteschlangeFehler {
-    while (!q.isEmpty()) {
-      BaumKnoten knoten = (BaumKnoten) q.leave();
+  private void besucheLevelorder(Warteschlange warteschlange, ArrayList<Comparable> schlüssel)
+      throws WarteschlangeFehler {
+    while (!warteschlange.isEmpty()) {
+      BaumKnoten knoten = (BaumKnoten) warteschlange.leave();
       if (knoten.gibLinks() != null)
-        q.enter(knoten.gibLinks());
+        warteschlange.enter(knoten.gibLinks());
       if (knoten.gibRechts() != null)
-        q.enter(knoten.gibRechts());
+        warteschlange.enter(knoten.gibRechts());
       schlüssel.add((Comparable) knoten.gibSchlüssel());
     }
   }
 
   /**
+   * Besuche die Knoten des Baums in verschiedenen Traversierungsmethoden.
+   *
+   * <table>
+   * <thead>
+   * <tr><td>strategie</td><td>Bezeichnung</td></tr>
+   * </thead>
+   * <tbody>
+   * <tr><td>0</td><td>INORDER</td></tr>
+   * <tr><td>1</td><td>PREORDER</td></tr>
+   * <tr><td>2</td><td>POSTORDER</td></tr>
+   * <tr><td>3</td><td>LEVELORDER</td></tr>
+   * </tbody>
+   * </table>
    *
    * @param strategie 0 (INORDER), 1 (PREORDER), 2 (POSTORDER), 3 (LEVELORDER)
-   * @throws WarteschlangeFehler
    */
   public ArrayList<Comparable> traversiere(int strategie) {
     ArrayList<Comparable> schlüssel = new ArrayList<Comparable>();
@@ -100,7 +128,7 @@ public abstract class Baum {
         Warteschlange queue = new FeldWarteschlange();
         try {
           queue.enter(kopf.gibRechts());
-          printLevelorder(queue, schlüssel);
+          besucheLevelorder(queue, schlüssel);
         } catch (WarteschlangeFehler e) {
           e.printStackTrace();
         }

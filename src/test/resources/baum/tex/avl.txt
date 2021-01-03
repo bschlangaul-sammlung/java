@@ -1,10 +1,10 @@
 \begin{tikzpicture}[li binaer baum]
 \Tree
-[.2
-  [.1 ]
-  [.4
-    [.3 ]
-    [.5 ]
+[.\node[label=1]{2};
+  [.\node[label=0]{1}; ]
+  [.\node[label=0]{4};
+    [.\node[label=0]{3}; ]
+    [.\node[label=0]{5}; ]
   ]
 ]
 \end{tikzpicture}

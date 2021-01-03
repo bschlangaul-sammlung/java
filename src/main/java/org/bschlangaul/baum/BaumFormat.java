@@ -9,7 +9,8 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.bschlangaul.antlr.BaumBaseListener;
 import org.bschlangaul.antlr.BaumLexer;
 import org.bschlangaul.antlr.BaumParser;
-import org.bschlangaul.baum.tex.TexBaumTikz;
+import org.bschlangaul.baum.visualisierung.BaumReporter;
+import org.bschlangaul.baum.visualisierung.TexBaumReporter;
 
 class AntlrListener extends BaumBaseListener {
 
@@ -91,6 +92,7 @@ public class BaumFormat {
   }
 
   public static void gibAusFürProjektSprachen(String formatText) {
+    BaumReporter reporter = new TexBaumReporter();
     BaumFormat baumFormat = new BaumFormat(formatText);
     for (BaumFormat.BaumArt baumArt : baumFormat.bäume) {
       System.out.println(baumArt.art);
@@ -110,7 +112,7 @@ public class BaumFormat {
             break;
 
           case "drucke":
-            System.out.println(TexBaumTikz.generiere(baum));
+            reporter.berichteBaum(baum);
             break;
 
           case "lösche":

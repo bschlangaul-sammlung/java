@@ -1,5 +1,7 @@
 package org.bschlangaul.baum.visualisierung;
 
+import java.util.ArrayList;
+
 import org.bschlangaul.baum.AVLBaum;
 import org.bschlangaul.baum.AVLBaumKnoten;
 import org.bschlangaul.baum.Baum;
@@ -42,19 +44,37 @@ public class TexBaumReporter extends BaumReporter {
     return "";
   }
 
-  private String generiereBaum(Baum baum) {
+  @Override
+  public String erzeugeBaum(Baum baum) {
     String tikzMarkup = generiereBaumRekursiv(baum, baum.gibKopf(), 0);
     return Tex.umgebungOption("tikzpicture", String.format("\\Tree\n%s", tikzMarkup), "li binaer baum");
   }
 
   @Override
-  public void visualisiereBaum(Baum baum) {
-    System.out.println(generiereBaum(baum));
+  public String erzeugeÜberschrift(String überschrift) {
+    return KonsoleHelfer.erzeugeÜberschrift(Tex.makro("section", überschrift));
   }
 
+  @SuppressWarnings("rawtypes")
   @Override
-  public void visualisiereÜberschrift(String überschrift) {
-    KonsoleHelfer.gibÜberschriftAus(Tex.makro("section", überschrift));
+  public String erzeugeTraversierung(Baum baum) {
+    String ausgabe = "";
+    ausgabe += "\n\n\\subsection{Traversierung}\n\n";
+    for (int i = 0; i < 4; i++) {
+      ArrayList<Comparable> schlüssel = baum.traversiere(i);
+      ausgabe += "\\subsubsection{" + Baum.traversierungsNamen[i] + "}\n";
+      int zähler = 0;
+      for (Comparable s : schlüssel) {
+        zähler++;
+        if (zähler < schlüssel.size()) {
+          ausgabe += s + ", ";
+        } else {
+          ausgabe += s.toString();
+        }
+      }
+      ausgabe += "\n\n";
+    }
+    return ausgabe;
   }
 
 }

@@ -3,10 +3,19 @@ package org.bschlangaul.baum.visualisierung;
 import org.bschlangaul.baum.Baum;
 
 public class StummerBaumReporter extends BaumReporter {
-  public void visualisiereBaum(Baum baum) {
+  @Override
+  public String erzeugeBaum(Baum baum) {
+    return "";
   }
 
-  public void visualisiereÜberschrift(String überschrift) {
+  @Override
+  public String erzeugeÜberschrift(String überschrift) {
+    return "";
+  }
+
+  @Override
+  public String erzeugeTraversierung(Baum baum) {
+    return "";
   }
 
 }

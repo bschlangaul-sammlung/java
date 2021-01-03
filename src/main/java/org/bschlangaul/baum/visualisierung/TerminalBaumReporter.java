@@ -9,7 +9,7 @@ import tech.vanyo.tree_printer.TreePrinter;
 public class TerminalBaumReporter extends BaumReporter {
 
   @Override
-  public void visualisiereBaum(Baum baum) {
+  public String erzeugeBaum(Baum baum) {
     TreePrinter<BaumKnoten> printer = new TreePrinter<>(knoten -> ("" + knoten.gibSchlüssel()), knoten -> knoten.gibLinks(),
         knoten -> knoten.gibRechts());
 
@@ -19,11 +19,18 @@ public class TerminalBaumReporter extends BaumReporter {
 
     printer.printTree(baum.gibKopf());
     System.out.println();
+    return "";
   }
 
   @Override
-  public void visualisiereÜberschrift(String überschrift) {
-    KonsoleHelfer.gibÜberschriftAus(überschrift);
+  public String erzeugeÜberschrift(String überschrift) {
+    return KonsoleHelfer.erzeugeÜberschrift(überschrift);
+  }
+
+
+  @Override
+  public String erzeugeTraversierung(Baum baum) {
+    return "";
   }
 
 }
