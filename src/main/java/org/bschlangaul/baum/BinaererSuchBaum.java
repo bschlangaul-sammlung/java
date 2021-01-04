@@ -43,14 +43,16 @@ public class BinaererSuchBaum extends BinaerBaum {
       eltern.setzeRechts(knoten);
     knoten.setzeLinks(null);
     knoten.setzeRechts(null);
+    reporter.berichteBaum("Einfügen von „" + schlüssel + "“", this, 0);
     return true;
   }
 
   /**
-   * Vergleiche Saake Seite 362.
+   * Finde einen Knoten im Binärbaum. Vergleiche Saake Seite 362.
    *
-   * @param schlüssel
-   * @return
+   * @param schlüssel Der Schlüsselwert, nach dem gesucht werden soll.
+   *
+   * @return Der Knoten, in dem sich der Schlüsselwert befindet.
    */
   protected BaumKnoten findeKnoten(Comparable schlüssel) {
     BaumKnoten knoten = gibKopf();

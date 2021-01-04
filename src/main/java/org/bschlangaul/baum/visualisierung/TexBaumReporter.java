@@ -47,12 +47,16 @@ public class TexBaumReporter extends BaumReporter {
   @Override
   public String erzeugeBaum(BinaerBaum baum) {
     String tikzMarkup = generiereBaumRekursiv(baum, baum.gibKopf(), 0);
-    return Tex.umgebungOption("tikzpicture", String.format("\\Tree\n%s", tikzMarkup), "li binaer baum");
+    // return Tex.umgebungOption("tikzpicture", String.format("\\Tree\n%s",
+    // tikzMarkup), "li binaer baum");
+    return Tex.umgebungOption("tikzpicture", String.format("\\Tree\n%s", tikzMarkup), "li binaer baum") + "\n"
+        + Tex.makro("end", "liDiagramm");
   }
 
   @Override
   public String erzeugeÜberschrift(String überschrift) {
-    return KonsoleHelfer.erzeugeÜberschrift(Tex.makro("section", überschrift));
+    // return KonsoleHelfer.erzeugeÜberschrift(überschrift);
+    return String.format("\n%s{%s}", Tex.makro("begin", "liDiagramm"), überschrift);
   }
 
   @SuppressWarnings("rawtypes")
