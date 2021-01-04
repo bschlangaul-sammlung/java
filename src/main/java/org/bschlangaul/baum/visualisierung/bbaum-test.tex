@@ -1,0 +1,63 @@
+\documentclass{lehramt-informatik-aufgabe}
+\liLadePakete{baum}
+\begin{document}
+
+\begin{tikzpicture}[
+  scale=0.8,
+  transform shape,
+  bbaum,
+  level 1/.style={level distance=10mm,sibling distance=32mm},
+  level 2/.style={level distance=10mm,sibling distance=20mm},
+]
+\node {10 \nodepart{two} 33} [->]
+  child {node {8}
+    child {node {5}}
+    child {node {9}}
+  }
+  child {node {20}
+    child {node {15}}
+    child {node {31}}
+  }
+  child {node {50}
+    child {node {45}}
+    child {node {60 \nodepart{two} 80}}
+  }
+;
+\end{tikzpicture}
+
+\begin{tikzpicture}[
+  bbaum,
+  level 1/.style={level distance=10mm,sibling distance=70mm},
+  level 2/.style={level distance=10mm,sibling distance=20mm},
+]
+\node {9}[->]
+  child {
+    node {3 \nodepart{two} 6 \nodepart{three} 18}
+    child {
+      node {1 \nodepart{two} 2}
+    }
+    child {
+      node {4 \nodepart{two} 5}
+    }
+    child {
+      node {7 \nodepart{two} 8}
+    }
+    child {
+      node {19 \nodepart{two} 20}
+    }
+  }
+  child {
+    node {12 \nodepart{two} 15}
+    child {
+      node {10 \nodepart{two} 11}
+    }
+    child {
+      node {13 \nodepart{two} 14}
+    }
+    child {
+      node {16 \nodepart{two} 17 \nodepart{three} 21}
+    }
+  };
+\end{tikzpicture}
+
+\end{document}

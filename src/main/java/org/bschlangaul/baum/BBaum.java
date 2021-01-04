@@ -12,7 +12,7 @@ public class BBaum {
    * Ein Seite (bzw. ein Knoten) eines B-Baums. Eine Seite enthält mehrer
    * Schlüsselwerte und mehrere Verweise auf andere Seiten.
    */
-  class BBaumSeite {
+  public class BBaumSeite {
 
     /**
      * Eine Konstante für eine Blatt-Seite, d. h. die Seite hat keine Kinder.
@@ -47,7 +47,7 @@ public class BBaum {
     /**
      * Eine Liste zum Speichern von Verweisen.
      */
-    Vector<BBaumSeite> zeigerListe;
+    Vector<BBaumSeite> kinderListe;
 
     /**
      * Der Type einer Seite (Blatt-Seite (0) oder innere Seite (1)).
@@ -58,33 +58,57 @@ public class BBaum {
       this.seitenTyp = seitenTyp;
       schlüsselListe = new Vector<Comparable>();
       // Zeiger werden nur bei inneren Seite angelegt.
-      zeigerListe = (seitenTyp == INNERE_SEITE ? new Vector<BBaumSeite>() : null);
-    }
-
-    public Comparable gibSchlüssel(int index) {
-      return schlüsselListe.get(index);
-    }
-
-    public Vector gibZeiger() {
-      return zeigerListe;
-    }
-
-    public BBaumSeite gibZeigerDurchIndex(int index) {
-      return zeigerListe.get(index);
-    }
-
-    public BBaumSeite gibEltern() {
-      return eltern;
+      kinderListe = (seitenTyp == INNERE_SEITE ? new Vector<BBaumSeite>() : null);
     }
 
     public int gibAnzahlSchlüssel() {
       return schlüsselListe.size();
     }
 
+    /**
+     * Gib den Schlüssel durch die Index-Nummer zurück. 0 gibt den ersten Schlüssel
+     * in der Liste, 1 den zweiten etc.
+     *
+     * @param index Eine Index-Nummer von 0 weg gezählt.
+     *
+     * @return Den Schlüsselwert.
+     */
+    public Comparable gibSchlüssel(int index) {
+      return schlüsselListe.get(index);
+    }
+
+    /**
+     * Gib die Anzahl der Kinder-Seiten zurück.
+     *
+     * @return Die Anzahl der Kinder-Seiten.
+     */
+    public int gibAnzahlKinder() {
+      if (kinderListe != null)
+        return kinderListe.size();
+      return 0;
+    }
+
+    /**
+     * Gib Kinder dieser Seite als Vector zurück.
+     *
+     * @return Instanzen des Klasse {@link BBaumSeite} als Vector.
+     */
+    public Vector gibKinder() {
+      return kinderListe;
+    }
+
+    public BBaumSeite gibKindDurchIndex(int index) {
+      return kinderListe.get(index);
+    }
+
+    public BBaumSeite gibEltern() {
+      return eltern;
+    }
+
     public void setzeSeitenType(int nt) {
       seitenTyp = nt;
-      if (zeigerListe == null && seitenTyp == INNERE_SEITE)
-        zeigerListe = new Vector<BBaumSeite>();
+      if (kinderListe == null && seitenTyp == INNERE_SEITE)
+        kinderListe = new Vector<BBaumSeite>();
     }
 
     /**
@@ -133,7 +157,7 @@ public class BBaum {
           // Stelle gefunden -> einfügen
           schlüsselListe.insertElementAt(schlüssel, i);
           if (rechtesGeschwister != null) {
-            zeigerListe.insertElementAt(rechtesGeschwister, i + 1);
+            kinderListe.insertElementAt(rechtesGeschwister, i + 1);
             rechtesGeschwister.eltern = this;
           }
           done = true;
@@ -143,12 +167,12 @@ public class BBaum {
       if (!done) {
         // Schlüssel muss am Ende eingefügt werden
         schlüsselListe.add(schlüssel);
-        if (linkesGeschwister != null && zeigerListe.isEmpty()) {
-          zeigerListe.add(linkesGeschwister);
+        if (linkesGeschwister != null && kinderListe.isEmpty()) {
+          kinderListe.add(linkesGeschwister);
           linkesGeschwister.eltern = this;
         }
         if (rechtesGeschwister != null) {
-          zeigerListe.add(rechtesGeschwister);
+          kinderListe.add(rechtesGeschwister);
           rechtesGeschwister.eltern = this;
         }
       }
@@ -169,17 +193,17 @@ public class BBaum {
         // die obere Hälfte der Schlüssel und Verweise kopieren
         sibling.schlüsselListe.add(this.gibSchlüssel(i));
         if (seitenTyp == BBaumSeite.INNERE_SEITE)
-          sibling.zeigerListe.add(this.gibZeigerDurchIndex(i));
+          sibling.kinderListe.add(this.gibKindDurchIndex(i));
       }
       // es gibt einen Verweis mehr als Schlüssel
       if (seitenTyp == BBaumSeite.INNERE_SEITE)
 
-        sibling.zeigerListe.add(this.gibZeigerDurchIndex(gibAnzahlSchlüssel()));
+        sibling.kinderListe.add(this.gibKindDurchIndex(gibAnzahlSchlüssel()));
       // und anschließend im Originalknoten löschen
       for (int i = gibAnzahlSchlüssel() - 1; i >= pos; i--) {
         schlüsselListe.remove(pos);
         if (seitenTyp == BBaumSeite.INNERE_SEITE)
-          zeigerListe.remove(pos + 1);
+          kinderListe.remove(pos + 1);
       }
       return sibling;
     }
@@ -201,6 +225,11 @@ public class BBaum {
     wurzel = new BBaumSeite(BBaumSeite.BLATT_SEITE);
   }
 
+  /**
+   * Gib die oberste Seite, die sogenannte Wurzel zurück.
+   *
+   * @return Die Wurzelseite.
+   */
   public BBaumSeite gibWurzel() {
     return wurzel;
   }
@@ -221,7 +250,7 @@ public class BBaum {
         beendet = true;
       else
         // anderenfalls Verweis verfolgen
-        seite = seite.gibZeigerDurchIndex(index);
+        seite = seite.gibKindDurchIndex(index);
     } while (!beendet);
     return ergebnis[0];
   }
@@ -258,6 +287,17 @@ public class BBaum {
   }
 
   /**
+   * Füge mehrere Schlüsselwerte auf einmal ein.
+   *
+   * @param mehrereSchlüssel Ein Feld mit mehreren Schlüsselwerten.
+   */
+  public void fügeEin(Comparable... mehrereSchlüssel) {
+    for (Comparable schlüssel : mehrereSchlüssel) {
+      fügeEin(schlüssel);
+    }
+  }
+
+  /**
    *
    * Saake Seite 395
    */
@@ -268,7 +308,7 @@ public class BBaum {
     // bis ein Blattknoten gefunden wurde
     while (seite.seitenTyp != BBaumSeite.BLATT_SEITE) {
       // Verweis verfolgen
-      seite = seite.gibZeigerDurchIndex(seite.findeSchlüsselInSeite(schlüssel, key));
+      seite = seite.gibKindDurchIndex(seite.findeSchlüsselInSeite(schlüssel, key));
     }
     return seite;
   }

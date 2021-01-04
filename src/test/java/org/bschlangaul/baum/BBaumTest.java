@@ -45,7 +45,7 @@ public class BBaumTest {
     baum.fügeEin(6);
 
     BBaum.BBaumSeite wurzel = baum.gibWurzel();
-    Vector<BBaum.BBaumSeite> zeiger = wurzel.gibZeiger();
+    Vector<BBaum.BBaumSeite> zeiger = wurzel.gibKinder();
     assertEquals(zeiger.size(), 2);
   }
 
