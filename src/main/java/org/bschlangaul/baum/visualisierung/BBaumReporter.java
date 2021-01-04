@@ -63,11 +63,8 @@ public class BBaumReporter {
           erzeugeSeite(seite.gibKindDurchIndex(i), ebene + 1));
     }
 
-    if (!kinderListe.equals(""))
-      kinderListe = "\n" + kinderListe;
-
     if (ebene == 0)
-      return String.format("\\node {%s}[->]\n%s", schlüsselListe, kinderListe);
+      return String.format("\\node {%s} [->]%s", schlüsselListe, kinderListe);
     else
       return String.format("%s  node {%s}%s\n%s", leerzeichen, schlüsselListe, kinderListe, leerzeichen);
   }
@@ -77,18 +74,15 @@ public class BBaumReporter {
 
     String ausgabe = "\\begin{tikzpicture}[\n" + "  bbaum,\n"
         + "  level 1/.style={level distance=10mm,sibling distance=32mm},\n"
-        + "  level 2/.style={level distance=10mm,sibling distance=20mm},\n" + "]\n"  + erzeugeSeite(wurzel, 0)
-        + ";\n" + "\\end{tikzpicture}";
+        + "  level 2/.style={level distance=10mm,sibling distance=20mm},\n" + "]\n" + erzeugeSeite(wurzel, 0) + ";\n"
+        + "\\end{tikzpicture}";
     System.out.println(ausgabe);
   }
 
   public static void main(String[] args) {
     BBaum bbaum = new BBaum(2);
     bbaum.fügeEin(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21);
-
     druckeBaum(bbaum);
-
   }
-
 
 }
