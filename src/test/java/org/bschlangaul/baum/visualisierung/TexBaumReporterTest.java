@@ -4,8 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.bschlangaul.TestHelfer;
 import org.bschlangaul.baum.AVLBaum;
-import org.bschlangaul.baum.Baum;
 import org.bschlangaul.baum.BinaerBaum;
+import org.bschlangaul.baum.BinaererSuchBaum;
 import org.junit.Test;
 
 public class TexBaumReporterTest {
@@ -18,7 +18,7 @@ public class TexBaumReporterTest {
 
   @Test
   public void binär() {
-    Baum baum = new BinaerBaum();
+    BinaerBaum baum = new BinaererSuchBaum();
     baum.fügeEin(1, 2, 3, 4, 5);
     System.out.println(reporter.erzeugeBaum(baum));
     assertEquals(lese("tex/binaer-baum.txt"), reporter.erzeugeBaum(baum) + "\n");
@@ -26,7 +26,7 @@ public class TexBaumReporterTest {
 
   @Test
   public void avl() {
-    Baum baum = new AVLBaum();
+    BinaerBaum baum = new AVLBaum();
     baum.fügeEin(1, 2, 3, 4, 5);
     assertEquals(lese("tex/avl.txt"), reporter.erzeugeBaum(baum) + "\n");
   }

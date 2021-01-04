@@ -1,0 +1,275 @@
+package org.bschlangaul.baum;
+
+import java.util.Vector;
+
+/**
+ * Eine Implemntation eines B-Baum nach Saake Seite 388-389.
+ */
+@SuppressWarnings("rawtypes")
+public class BBaum {
+
+  /**
+   * Ein Seite (bzw. ein Knoten) eines B-Baums. Eine Seite enthält mehrer
+   * Schlüsselwerte und mehrere Verweise auf andere Seiten.
+   */
+  class BBaumSeite {
+
+    /**
+     * Eine Konstante für eine Blatt-Seite, d. h. die Seite hat keine Kinder.
+     */
+    public static final int BLATT_SEITE = 0;
+
+    /**
+     * Eine Konstante für eine Knoten-Seite, d. h. die Seite hat Kinder.
+     */
+    public static final int INNERE_SEITE = 1;
+
+    /**
+     * Diese Konstante wird verwendet, wenn der Schlüsselwert gefunden wird.
+     */
+    public static final int SCHLÜSSEL_GEFUNDEN = -1;
+
+    /**
+     * Diese Konstante wird verwendet, wenn der Schlüsselwert nicht gefunden wird.
+     */
+    public static final int SCHLÜSSEL_NICHT_GEFUNDEN = -2;
+
+    /**
+     * Ein Verweis zum Elternknoten.
+     */
+    BBaumSeite eltern = null;
+
+    /**
+     * Eine Liste zum Speichern der Schlüssel.
+     */
+    Vector<Comparable> schlüsselListe;
+
+    /**
+     * Eine Liste zum Speichern von Verweisen.
+     */
+    Vector<BBaumSeite> zeigerListe;
+
+    /**
+     * Der Type einer Seite (Blatt-Seite (0) oder innere Seite (1)).
+     */
+    int seitenTyp;
+
+    public BBaumSeite(int seitenTyp) {
+      this.seitenTyp = seitenTyp;
+      schlüsselListe = new Vector<Comparable>();
+      // Zeiger werden nur bei inneren Seite angelegt.
+      zeigerListe = (seitenTyp == INNERE_SEITE ? new Vector<BBaumSeite>() : null);
+    }
+
+    public Comparable gibSchlüssel(int index) {
+      return schlüsselListe.get(index);
+    }
+
+    public Vector gibZeiger() {
+      return zeigerListe;
+    }
+
+    public BBaumSeite gibZeigerDurchIndex(int index) {
+      return zeigerListe.get(index);
+    }
+
+    public BBaumSeite gibEltern() {
+      return eltern;
+    }
+
+    public int gibAnzahlSchlüssel() {
+      return schlüsselListe.size();
+    }
+
+    public void setzeSeitenType(int nt) {
+      seitenTyp = nt;
+      if (zeigerListe == null && seitenTyp == INNERE_SEITE)
+        zeigerListe = new Vector<BBaumSeite>();
+    }
+
+    /**
+     * Saake Seite 391
+     *
+     * @param schlüssel Der Schlüsselwert, nach dem gesucht wird.
+     * @param ergebnis  In diesem Feld wird das Ergebnis gespeichert.
+     *
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public int findeSchlüsselInSeite(Comparable schlüssel, Comparable[] ergebnis) {
+      for (int i = 0; i < schlüsselListe.size(); i++) {
+        int erg = schlüsselListe.get(i).compareTo(schlüssel);
+        if (erg == 0) {
+          // Schlüssel gefunden
+          ergebnis[0] = schlüsselListe.get(i);
+          return SCHLÜSSEL_GEFUNDEN;
+        } else if (erg > 0)
+          return seitenTyp == INNERE_SEITE ? i : SCHLÜSSEL_NICHT_GEFUNDEN;
+      }
+      // Wenn es ein innerer Knoten ist, geben wir den letzten Verweis
+      // zurück, im Fall eines Blattes KEY NOT FOUND.
+      return (seitenTyp == INNERE_SEITE ? schlüsselListe.size() : SCHLÜSSEL_NICHT_GEFUNDEN);
+    }
+
+    /**
+     * Füge einen Schlüsselwert in eine Seite ein. Vergleiche Saake Seite 395-396.
+     *
+     * @param schlüssel          Der Schlüsselwert, der eingefügt werden soll.
+     * @param linkesGeschwister
+     * @param rechtesGeschwister
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public boolean fügeInSeiteEin(Comparable schlüssel, BBaumSeite linkesGeschwister, BBaumSeite rechtesGeschwister) {
+      boolean done = false;
+      // Position für Schlüssel suchen
+      for (int i = 0; i < schlüsselListe.size(); i++) {
+        int res = schlüsselListe.get(i).compareTo(schlüssel);
+        if (res == 0) {
+          // Schlüssel existiert schon -> ignorieren
+          done = true;
+          break;
+        } else if (res > 0) {
+          // Stelle gefunden -> einfügen
+          schlüsselListe.insertElementAt(schlüssel, i);
+          if (rechtesGeschwister != null) {
+            zeigerListe.insertElementAt(rechtesGeschwister, i + 1);
+            rechtesGeschwister.eltern = this;
+          }
+          done = true;
+          break;
+        }
+      }
+      if (!done) {
+        // Schlüssel muss am Ende eingefügt werden
+        schlüsselListe.add(schlüssel);
+        if (linkesGeschwister != null && zeigerListe.isEmpty()) {
+          zeigerListe.add(linkesGeschwister);
+          linkesGeschwister.eltern = this;
+        }
+        if (rechtesGeschwister != null) {
+          zeigerListe.add(rechtesGeschwister);
+          rechtesGeschwister.eltern = this;
+        }
+      }
+      // Knoten zu groß
+      return schlüsselListe.size() > ordnung * 2;
+    }
+
+    /**
+     * Seite 396
+     *
+     * @return
+     */
+    public BBaumSeite teile() {
+      int pos = gibAnzahlSchlüssel() / 2;
+      // Geschwisterknoten erzeugen
+      BBaumSeite sibling = new BBaumSeite(seitenTyp);
+      for (int i = pos + 1; i < gibAnzahlSchlüssel(); i++) {
+        // die obere Hälfte der Schlüssel und Verweise kopieren
+        sibling.schlüsselListe.add(this.gibSchlüssel(i));
+        if (seitenTyp == BBaumSeite.INNERE_SEITE)
+          sibling.zeigerListe.add(this.gibZeigerDurchIndex(i));
+      }
+      // es gibt einen Verweis mehr als Schlüssel
+      if (seitenTyp == BBaumSeite.INNERE_SEITE)
+
+        sibling.zeigerListe.add(this.gibZeigerDurchIndex(gibAnzahlSchlüssel()));
+      // und anschließend im Originalknoten löschen
+      for (int i = gibAnzahlSchlüssel() - 1; i >= pos; i--) {
+        schlüsselListe.remove(pos);
+        if (seitenTyp == BBaumSeite.INNERE_SEITE)
+          zeigerListe.remove(pos + 1);
+      }
+      return sibling;
+    }
+  }
+
+  private BBaumSeite wurzel = null;
+
+  private int ordnung;
+
+  /**
+   * Dieser Konstruktur erzeugt einen B-Baum mit einer bestimmten Ordnung.u
+   *
+   * @param ordnung Die Ordnung des B-Baums. Ist die Ordnung beispielsweise 2,
+   *                dann muss jede Seite mindestens 2 Knoten und maximal 4 Knoten
+   *                aufweisen.
+   */
+  public BBaum(int ordnung) {
+    this.ordnung = ordnung;
+    wurzel = new BBaumSeite(BBaumSeite.BLATT_SEITE);
+  }
+
+  public BBaumSeite gibWurzel() {
+    return wurzel;
+  }
+
+  /**
+   * Saake Seite 391
+   */
+  public Comparable finde(Comparable schlüssel) {
+    BBaumSeite seite = wurzel; // Startknoten
+    boolean beendet = false;
+    Comparable[] ergebnis = { null };
+    do {
+      // Suche Schlüssel im aktuellen Knoten
+      int index = seite.findeSchlüsselInSeite(schlüssel, ergebnis);
+      if (index == BBaumSeite.SCHLÜSSEL_GEFUNDEN || index == BBaumSeite.SCHLÜSSEL_NICHT_GEFUNDEN)
+        // Schlüssel gefunden oder auf einem
+        // Blattknoten nicht gefunden -> fertig
+        beendet = true;
+      else
+        // anderenfalls Verweis verfolgen
+        seite = seite.gibZeigerDurchIndex(index);
+    } while (!beendet);
+    return ergebnis[0];
+  }
+
+  /**
+   * Füge einen Schlüsselwert in den B-Baum ein. (nach Saake Seite 393-394)
+   *
+   * @param schlüssel Der Schlüsselwert, der eingefügt werden soll.
+   */
+  public void fügeEin(Comparable schlüssel) {
+    BBaumSeite linkesGeschwister = null, rechtesGeschwister = null;
+    // Suche Blattknoten, der den Schlüssel aufnimmt
+    BBaumSeite seite = findeBlattSeite(schlüssel);
+    // Schlüssel einfügen
+    while (seite.fügeInSeiteEin(schlüssel, linkesGeschwister, rechtesGeschwister)) {
+      // Split erforderlich
+      int pos = seite.gibAnzahlSchlüssel() / 2;
+      schlüssel = seite.gibSchlüssel(pos);
+      BBaumSeite eltern = seite.gibEltern();
+      if (eltern == null)
+        // ein neuer Elternknoten muss angelegt werden
+        eltern = new BBaumSeite(BBaumSeite.INNERE_SEITE);
+      // Split durchführen
+      linkesGeschwister = seite;
+      rechtesGeschwister = seite.teile();
+      // Wurzel anpassen
+      if (wurzel == seite)
+        wurzel = eltern;
+      // der aktuelle Knoten ist jetzt der Elternknoten
+      seite = eltern;
+      // und der muss ein innerer Knoten sein
+      seite.setzeSeitenType(BBaumSeite.INNERE_SEITE);
+    }
+  }
+
+  /**
+   *
+   * Saake Seite 395
+   */
+  private BBaumSeite findeBlattSeite(Comparable schlüssel) {
+    BBaumSeite seite = wurzel;
+    Comparable[] key = { null }; // wird eigentlich nicht benötigt
+    // den Baum von der Wurzel aus nach unten durchlaufen,
+    // bis ein Blattknoten gefunden wurde
+    while (seite.seitenTyp != BBaumSeite.BLATT_SEITE) {
+      // Verweis verfolgen
+      seite = seite.gibZeigerDurchIndex(seite.findeSchlüsselInSeite(schlüssel, key));
+    }
+    return seite;
+  }
+}

@@ -1,6 +1,6 @@
 package org.bschlangaul.baum.visualisierung;
 
-import org.bschlangaul.baum.Baum;
+import org.bschlangaul.baum.BinaerBaum;
 import org.bschlangaul.baum.BaumKnoten;
 import org.bschlangaul.cli.KonsoleHelfer;
 
@@ -9,7 +9,7 @@ import tech.vanyo.tree_printer.TreePrinter;
 public class TerminalBaumReporter extends BaumReporter {
 
   @Override
-  public String erzeugeBaum(Baum baum) {
+  public String erzeugeBaum(BinaerBaum baum) {
     TreePrinter<BaumKnoten> printer = new TreePrinter<>(knoten -> ("" + knoten.gibSchlüssel()),
         knoten -> knoten.gibLinks(), knoten -> knoten.gibRechts());
 
@@ -24,7 +24,7 @@ public class TerminalBaumReporter extends BaumReporter {
   }
 
   @Override
-  public String erzeugeTraversierung(Baum baum) {
+  public String erzeugeTraversierung(BinaerBaum baum) {
     return "";
   }
 

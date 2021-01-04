@@ -4,14 +4,14 @@ import java.util.ArrayList;
 
 import org.bschlangaul.baum.AVLBaum;
 import org.bschlangaul.baum.AVLBaumKnoten;
-import org.bschlangaul.baum.Baum;
+import org.bschlangaul.baum.BinaerBaum;
 import org.bschlangaul.baum.BaumKnoten;
 import org.bschlangaul.cli.KonsoleHelfer;
 import org.bschlangaul.helfer.Tex;
 
 public class TexBaumReporter extends BaumReporter {
 
-  private String formatiereKnoten(Baum baum, BaumKnoten knoten) {
+  private String formatiereKnoten(BinaerBaum baum, BaumKnoten knoten) {
     if (knoten instanceof AVLBaumKnoten && baum instanceof AVLBaum) {
       AVLBaum avlBaum = (AVLBaum) baum;
       AVLBaumKnoten avlKnoten = (AVLBaumKnoten) knoten;
@@ -21,7 +21,7 @@ public class TexBaumReporter extends BaumReporter {
     }
   }
 
-  private String generiereBaumRekursiv(Baum baum, BaumKnoten knoten, int einrückung) {
+  private String generiereBaumRekursiv(BinaerBaum baum, BaumKnoten knoten, int einrückung) {
     if (knoten != null) {
       String leerzeichen = " ".repeat(einrückung);
       String links = generiereBaumRekursiv(baum, knoten.gibLinks(), einrückung + 2);
@@ -45,7 +45,7 @@ public class TexBaumReporter extends BaumReporter {
   }
 
   @Override
-  public String erzeugeBaum(Baum baum) {
+  public String erzeugeBaum(BinaerBaum baum) {
     String tikzMarkup = generiereBaumRekursiv(baum, baum.gibKopf(), 0);
     return Tex.umgebungOption("tikzpicture", String.format("\\Tree\n%s", tikzMarkup), "li binaer baum");
   }
@@ -57,12 +57,12 @@ public class TexBaumReporter extends BaumReporter {
 
   @SuppressWarnings("rawtypes")
   @Override
-  public String erzeugeTraversierung(Baum baum) {
+  public String erzeugeTraversierung(BinaerBaum baum) {
     String ausgabe = "";
     ausgabe += "\n\n\\subsection{Traversierung}\n\n";
     for (int i = 0; i < 4; i++) {
       ArrayList<Comparable> schlüssel = baum.traversiere(i);
-      ausgabe += "\\subsubsection{" + Baum.traversierungsNamen[i] + "}\n";
+      ausgabe += "\\subsubsection{" + BinaerBaum.traversierungsNamen[i] + "}\n";
       int zähler = 0;
       for (Comparable s : schlüssel) {
         zähler++;

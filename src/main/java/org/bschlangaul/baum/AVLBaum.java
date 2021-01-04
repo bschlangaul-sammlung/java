@@ -5,7 +5,7 @@ package org.bschlangaul.baum;
  * https://github.com/eugenp/tutorials/blob/master/data-structures/src/main/java/com/baeldung/avltree/AVLTree.java
  */
 @SuppressWarnings({ "rawtypes" })
-public class AVLBaum extends Baum {
+public class AVLBaum extends BinaerBaum {
 
   private AVLBaumKnoten kopf;
 

@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.bschlangaul.baum.AVLBaum;
-import org.bschlangaul.baum.Baum;
-
 import org.bschlangaul.baum.BinaerBaum;
+
+import org.bschlangaul.baum.BinaererSuchBaum;
 import org.bschlangaul.baum.visualisierung.BaumReporter;
 import org.bschlangaul.baum.visualisierung.TerminalBaumReporter;
 import org.bschlangaul.baum.visualisierung.TexBaumReporter;
@@ -28,12 +28,12 @@ class UnterBefehlBaum implements Callable<Integer> {
   @Override
   public Integer call() {
 
-    Baum baum;
+    BinaerBaum baum;
 
     if (isAvl) {
       baum = new AVLBaum();
     } else {
-      baum = new BinaerBaum();
+      baum = new BinaererSuchBaum();
     }
 
     if (KommandoZeile.gibRedseligkeit() > 0)

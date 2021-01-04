@@ -1,25 +1,25 @@
 package org.bschlangaul.baum.visualisierung;
 
-import org.bschlangaul.baum.Baum;
+import org.bschlangaul.baum.BinaerBaum;
 
 public abstract class BaumReporter {
 
-  protected Baum baum;
+  protected BinaerBaum baum;
 
   public static int redseligkeit = 0;
 
-  public abstract String erzeugeBaum(Baum baum);
+  public abstract String erzeugeBaum(BinaerBaum baum);
 
   private void gibAus(String ausgabe) {
     if (ausgabe != null)
       System.out.println(ausgabe);
   }
 
-  public void berichteBaum(Baum baum) {
+  public void berichteBaum(BinaerBaum baum) {
     berichteBaum(baum, 0);
   }
 
-  public void berichteBaum(Baum baum, int redselig) {
+  public void berichteBaum(BinaerBaum baum, int redselig) {
     if (redselig <= redseligkeit)
       gibAus(erzeugeBaum(baum));
   }
@@ -35,28 +35,28 @@ public abstract class BaumReporter {
       gibAus(erzeugeÜberschrift(überschrift));
   }
 
-  public abstract String erzeugeTraversierung(Baum baum);
+  public abstract String erzeugeTraversierung(BinaerBaum baum);
 
-  public void berichteTraversierung(Baum baum) {
+  public void berichteTraversierung(BinaerBaum baum) {
     gibAus(erzeugeTraversierung(baum));
   }
 
-  public void berichteBaum(Baum baum, String überschrift, int redselig) {
+  public void berichteBaum(BinaerBaum baum, String überschrift, int redselig) {
     berichteBaum(baum, redselig);
     berichteÜberschrift(überschrift, redselig);
   }
 
-  public void berichteBaum(Baum baum, String überschrift) {
+  public void berichteBaum(BinaerBaum baum, String überschrift) {
     berichteBaum(baum);
     berichteÜberschrift(überschrift);
   }
 
-  public void berichteBaum(String überschrift, Baum baum) {
+  public void berichteBaum(String überschrift, BinaerBaum baum) {
     berichteÜberschrift(überschrift);
     berichteBaum(baum);
   }
 
-  public void berichteBaum(String überschrift, Baum baum, int redselig) {
+  public void berichteBaum(String überschrift, BinaerBaum baum, int redselig) {
     berichteÜberschrift(überschrift, redselig);
     berichteBaum(baum, redselig);
   }

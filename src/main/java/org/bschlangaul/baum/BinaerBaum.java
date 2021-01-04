@@ -1,130 +1,183 @@
 package org.bschlangaul.baum;
 
+import java.util.ArrayList;
+
+import org.bschlangaul.baum.visualisierung.BaumReporter;
+import org.bschlangaul.baum.visualisierung.StummerBaumReporter;
+import org.bschlangaul.liste.saake.FeldWarteschlange;
+import org.bschlangaul.liste.saake.Warteschlange;
+import org.bschlangaul.liste.saake.WarteschlangeFehler;
+
 /**
- * Saake Seite 357
+ * Die abstrakte Oberklasse eines Binärbaums für die Klassen {@link BinaererSuchBaum}
+ * und {@AVLBaum}.
  */
-@SuppressWarnings({ "rawtypes" })
-public class BinaerBaum extends Baum {
+@SuppressWarnings("rawtypes")
+public abstract class BinaerBaum {
+
+  public BaumReporter reporter = new StummerBaumReporter();
+
+  public static final String[] traversierungsNamen = { "INORDER", "PREORDER", "POSTORDER", "LEVELORDER" };
 
   /**
-   * Saake Seite 349
+   * Saake Seite 357
    */
-  public BinaerBaum() {
-    kopf = new BaumKnoten(null);
-    kopf.setzeRechts(null);
-  }
-
-  public BaumKnoten gibKopf() {
-    return kopf.gibRechts();
-  }
+  public static final int INORDER = 0;
+  public static final int PREORDER = 1;
+  public static final int POSTORDER = 2;
+  public static final int LEVELORDER = 3;
 
   /**
-   * Füge einen Schlüssel in den Binären Baum ein. Vergleiche Saake Seite 363.
-   *
-   * @param schlüssel Ein Schlüssel, der eingefügt werden soll.
-   *
-   * @return Wahr, wenn das Einfügen erfolgreich war.
+   * Der erste Knoten wird auf den rechten Arm gelegt. Der Kopf-Knoten selbst hat
+   * keinen Wert.
    */
-  public boolean fügeEin(Comparable schlüssel) {
-    BaumKnoten eltern = kopf;
-    BaumKnoten kind = gibKopf();
-    while (kind != null) {
-      eltern = kind;
-      int vergleich = kind.vergleiche(schlüssel);
-      if (vergleich == 0)
-        return false;
-      else
-        kind = (vergleich > 0 ? kind.gibLinks() : kind.gibRechts());
+  BaumKnoten kopf;
+
+  /**
+   * Zuerst wird der linke Teilbaum l durchlaufen, dann die Wurzel N betrachtet
+   * und schließlich der rechte Teilbaum r durchlaufen. Diese Reihenfolge
+   * entspricht bei binären Suchbäumen der Anordnung der Schlüssel und ist für die
+   * meisten Anwendungen die gegebene.
+   *
+   * @see Saake Seite 356
+   */
+  private void besucheInorder(BaumKnoten knoten, ArrayList<Comparable> schlüssel) {
+    if (knoten != null) {
+      besucheInorder(knoten.gibLinks(), schlüssel);
+      schlüssel.add((Comparable) knoten.gibSchlüssel());
+      besucheInorder(knoten.gibRechts(), schlüssel);
     }
-    BaumKnoten knoten = new BaumKnoten(schlüssel);
-    if (eltern.vergleiche(schlüssel) > 0)
-      eltern.setzeLinks(knoten);
-    else
-      eltern.setzeRechts(knoten);
-    knoten.setzeLinks(null);
-    knoten.setzeRechts(null);
-    return true;
   }
 
   /**
-   * Vergleiche Saake Seite 362.
+   * Zuerst wird die Wurzel N betrachtet und anschließend der linke l, schließlich
+   * der rechte Teilbaum r durchlaufen.
    *
-   * @param schlüssel
-   * @return
+   * @see Saake Seite 356
    */
-  protected BaumKnoten findeKnoten(Comparable schlüssel) {
-    BaumKnoten knoten = gibKopf();
-    while (knoten != null) {
-      int cmp = knoten.vergleiche(schlüssel);
-      if (cmp == 0)
-        return knoten;
-      else
-        knoten = (cmp > 0 ? knoten.gibLinks() : knoten.gibRechts());
+  private void besuchePreorder(BaumKnoten knoten, ArrayList<Comparable> schlüssel) {
+    if (knoten != null) {
+      schlüssel.add((Comparable) knoten.gibSchlüssel());
+      besuchePreorder(knoten.gibLinks(), schlüssel);
+      besuchePreorder(knoten.gibRechts(), schlüssel);
     }
-    return null;
   }
 
   /**
-   * Finde einen Schlüssel im Binär Baum. Vergleiche Saake Seite 362.
+   * Zuerst wird der linke l, dann der rechte Teilbaum r durchlaufen und
+   * schließlich die Wurzel N betrachtet.
    *
-   * @param schlüssel Der Schlüssel, nach dem gesucht werden soll.
-   *
-   * @return Wahr, wenn der Schlüssel gefunden wurde.
+   * @see Saake Seite 356
    */
-  public boolean finde(Comparable schlüssel) {
-    return (findeKnoten(schlüssel) != null);
+  private void besuchePostorder(BaumKnoten knoten, ArrayList<Comparable> schlüssel) {
+    if (knoten != null) {
+      besuchePostorder(knoten.gibLinks(), schlüssel);
+      besuchePostorder(knoten.gibRechts(), schlüssel);
+      schlüssel.add((Comparable) knoten.gibSchlüssel());
+    }
   }
 
   /**
-   * Saake Seite 365-366
+   * Beginnend bei der Baumwurzel werden die Ebenen von links nach rechts
+   * durchlaufen.
    *
-   * @param schlüssel Der Schlüssel, der gelöscht werden soll.
+   * @see Saake Seite 358
+   *
+   * @param warteschlange
+   *
+   * @throws WarteschlangeFehler
    */
-  public boolean entferne(Comparable schlüssel) {
-    BaumKnoten eltern = kopf;
-    BaumKnoten knoten = gibKopf();
-    BaumKnoten kind = null;
-    BaumKnoten tmp = null;
+  private void besucheLevelorder(Warteschlange warteschlange, ArrayList<Comparable> schlüssel)
+      throws WarteschlangeFehler {
+    while (!warteschlange.isEmpty()) {
+      BaumKnoten knoten = (BaumKnoten) warteschlange.leave();
+      if (knoten.gibLinks() != null)
+        warteschlange.enter(knoten.gibLinks());
+      if (knoten.gibRechts() != null)
+        warteschlange.enter(knoten.gibRechts());
+      schlüssel.add((Comparable) knoten.gibSchlüssel());
+    }
+  }
 
-    // zu löschenden Knoten suchen
-    while (knoten != null) {
-      int vergleich = knoten.vergleiche(schlüssel);
-      if (vergleich == 0)
+  /**
+   * Besuche die Knoten des Baums in verschiedenen Traversierungsmethoden.
+   *
+   * <table>
+   * <thead>
+   * <tr>
+   * <td>strategie</td>
+   * <td>Bezeichnung</td>
+   * </tr>
+   * </thead> <tbody>
+   * <tr>
+   * <td>0</td>
+   * <td>INORDER</td>
+   * </tr>
+   * <tr>
+   * <td>1</td>
+   * <td>PREORDER</td>
+   * </tr>
+   * <tr>
+   * <td>2</td>
+   * <td>POSTORDER</td>
+   * </tr>
+   * <tr>
+   * <td>3</td>
+   * <td>LEVELORDER</td>
+   * </tr>
+   * </tbody>
+   * </table>
+   *
+   * @param strategie 0 (INORDER), 1 (PREORDER), 2 (POSTORDER), 3 (LEVELORDER)
+   */
+  public ArrayList<Comparable> traversiere(int strategie) {
+    ArrayList<Comparable> schlüssel = new ArrayList<Comparable>();
+    switch (strategie) {
+      case INORDER:
+        besucheInorder(kopf.gibRechts(), schlüssel);
         break;
-      else {
-        eltern = knoten;
-        knoten = (vergleich > 0 ? knoten.gibLinks() : knoten.gibRechts());
+      case PREORDER:
+        besuchePreorder(kopf.gibRechts(), schlüssel);
+        break;
+      case POSTORDER:
+        besuchePostorder(kopf.gibRechts(), schlüssel);
+        break;
+      case LEVELORDER:
+        Warteschlange queue = new FeldWarteschlange();
+        try {
+          queue.enter(kopf.gibRechts());
+          besucheLevelorder(queue, schlüssel);
+        } catch (WarteschlangeFehler e) {
+          e.printStackTrace();
+        }
+        break;
+      default:
+    }
+    return schlüssel;
+  }
+
+  abstract public BaumKnoten gibKopf();
+
+  abstract public boolean fügeEin(Comparable schlüssel);
+
+  /**
+   * Füge mehrere Schlüssele auf einmal ein.
+   *
+   * @param schlüssel Mehrere Schlüssel.
+   *
+   * @return Wahr, wenn das Einfügen erfolgreich war, d. h. alle Schlüssel
+   *         eingefügt werden konnten. Konnte ein Schlüssel nicht eingefügt
+   *         werden, wird falsch zurück gegeben.
+   */
+  public boolean fügeEin(Comparable... schlüssel) {
+    boolean ergebnis = true;
+    boolean tmp;
+    for (Comparable s : schlüssel) {
+      tmp = fügeEin(s);
+      if (!tmp) {
+        ergebnis = false;
       }
     }
-    if (knoten == null)
-      // Kein Knoten gefunden
-      return false;
-    // Fall 1
-    if (knoten.gibLinks() == null && knoten.gibRechts() == null)
-      kind = null;
-    // Fall 2
-    else if (knoten.gibLinks() == null)
-      kind = knoten.gibRechts();
-    else if (knoten.gibRechts() == null)
-      kind = knoten.gibLinks();
-    else { // Fall 3
-      // minimales Element suchen
-      kind = knoten.gibRechts();
-      tmp = knoten;
-      while (kind.gibLinks() != null) {
-        tmp = kind;
-        kind = kind.gibLinks();
-      }
-      kind.setzeLinks(knoten.gibLinks());
-      if (tmp != knoten) {
-        tmp.setzeLinks(kind.gibRechts());
-        kind.setzeRechts(knoten.gibRechts());
-      }
-    }
-    if (eltern.gibLinks() == knoten)
-      eltern.setzeLinks(kind);
-    else
-      eltern.setzeRechts(kind);
-    return true;
+    return ergebnis;
   }
 }

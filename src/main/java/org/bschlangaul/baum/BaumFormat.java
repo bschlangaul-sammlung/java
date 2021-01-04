@@ -97,11 +97,11 @@ public class BaumFormat {
     BaumFormat baumFormat = new BaumFormat(formatText);
     for (BaumFormat.BaumArt baumArt : baumFormat.bäume) {
       System.out.println(baumArt.art);
-      Baum baum;
+      BinaerBaum baum;
       if (baumArt.art.equals("avl")) {
         baum = new AVLBaum();
       } else {
-        baum = new BinaerBaum();
+        baum = new BinaererSuchBaum();
       }
 
       for (BaumFormat.BaumAktion aktion : baumArt.aktionen) {

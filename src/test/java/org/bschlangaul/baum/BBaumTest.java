@@ -1,4 +1,4 @@
-package org.bschlangaul.baum.bbaum;
+package org.bschlangaul.baum;
 
 import static org.junit.Assert.assertEquals;
 
@@ -21,7 +21,7 @@ public class BBaumTest {
     baum.fügeEin(7);
     baum.fügeEin(8);
 
-    Comparable schlüssel = baum.find(8);
+    Comparable schlüssel = baum.finde(8);
     assertEquals(schlüssel, 8);
   }
 
@@ -29,7 +29,7 @@ public class BBaumTest {
   public void gibWurzel() {
     BBaum baum = new BBaum(2);
     baum.fügeEin(1);
-    BBaum.Knoten wurzel = baum.gibWurzel();
+    BBaum.BBaumSeite wurzel = baum.gibWurzel();
     assertEquals(wurzel.gibAnzahlSchlüssel(), 1);
     assertEquals(wurzel.gibSchlüssel(0), 1);
   }
@@ -44,8 +44,8 @@ public class BBaumTest {
     baum.fügeEin(5);
     baum.fügeEin(6);
 
-    BBaum.Knoten wurzel = baum.gibWurzel();
-    Vector<BBaum.Knoten> zeiger = wurzel.gibZeiger();
+    BBaum.BBaumSeite wurzel = baum.gibWurzel();
+    Vector<BBaum.BBaumSeite> zeiger = wurzel.gibZeiger();
     assertEquals(zeiger.size(), 2);
   }
 

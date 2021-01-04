@@ -1,10 +1,10 @@
 package org.bschlangaul.baum.visualisierung;
 
-import org.bschlangaul.baum.Baum;
+import org.bschlangaul.baum.BinaerBaum;
 
 public class StummerBaumReporter extends BaumReporter {
   @Override
-  public String erzeugeBaum(Baum baum) {
+  public String erzeugeBaum(BinaerBaum baum) {
     return null;
   }
 
@@ -14,7 +14,7 @@ public class StummerBaumReporter extends BaumReporter {
   }
 
   @Override
-  public String erzeugeTraversierung(Baum baum) {
+  public String erzeugeTraversierung(BinaerBaum baum) {
     return null;
   }
 

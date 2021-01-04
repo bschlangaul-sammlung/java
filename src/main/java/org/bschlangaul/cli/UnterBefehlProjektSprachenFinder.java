@@ -81,7 +81,7 @@ public class UnterBefehlProjektSprachenFinder implements Callable<Integer> {
     try {
       String inhalt = Files.readString(datei.toPath());
       String regexProjektSprache = gibTexUmgebungRegex(umgebungsName, "\\{(?<name>.*?)\\}" + "(?<inhalt>.*?)");
-      String regexEinbettung = "([\s\n\r]*?" + gibTexUmgebungRegex("liEinbettung", ".*?") + ")?";
+      String regexEinbettung = "([\\s\n\r]*?" + gibTexUmgebungRegex("liEinbettung", ".*?") + ")?";
       Pattern pattern = Pattern.compile(regexProjektSprache + regexEinbettung, Pattern.DOTALL);
       Matcher ergebnis = pattern.matcher(inhalt);
       while (ergebnis.find()) {
