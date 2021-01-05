@@ -141,18 +141,18 @@ public abstract class BinaerBaum {
     ArrayList<Comparable> schlüssel = new ArrayList<Comparable>();
     switch (strategie) {
       case INORDER:
-        besucheInorder(kopf.gibRechts(), schlüssel);
+        besucheInorder(gibKopf(), schlüssel);
         break;
       case PREORDER:
-        besuchePreorder(kopf.gibRechts(), schlüssel);
+        besuchePreorder(gibKopf(), schlüssel);
         break;
       case POSTORDER:
-        besuchePostorder(kopf.gibRechts(), schlüssel);
+        besuchePostorder(gibKopf(), schlüssel);
         break;
       case LEVELORDER:
         Warteschlange queue = new FeldWarteschlange();
         try {
-          queue.enter(kopf.gibRechts());
+          queue.enter(gibKopf());
           besucheLevelorder(queue, schlüssel);
         } catch (WarteschlangeFehler e) {
           e.printStackTrace();

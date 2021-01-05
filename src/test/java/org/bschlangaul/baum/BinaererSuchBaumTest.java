@@ -1,7 +1,6 @@
 package org.bschlangaul.baum;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,7 +8,7 @@ import java.util.Collections;
 import org.junit.Test;
 
 @SuppressWarnings("rawtypes")
-public class BinaererBaumTest {
+public class BinaererSuchBaumTest {
 
   @Test
   public void testeKonstruktor() {
@@ -109,35 +108,55 @@ public class BinaererBaumTest {
   }
 
   @Test
-  public void testeMethodeBesucheInorder() {
+  public void traversiereInorder() {
     BinaererSuchBaum baum = new BinaererSuchBaum();
     baum.fügeEin(5, 2, 7, 4, 8, 1);
     ArrayList<Comparable> schlüssel = baum.traversiere(BinaererSuchBaum.INORDER);
-    assertTrue(schlüssel.equals(generiereListe(1, 2, 4, 5, 7, 8)));
+    assertEquals(generiereListe(1, 2, 4, 5, 7, 8), schlüssel);
   }
 
   @Test
-  public void testeMethodeBesuchePreorder() {
+  public void traversierePreorder() {
     BinaererSuchBaum baum = new BinaererSuchBaum();
     baum.fügeEin(5, 2, 7, 4, 8, 1);
     ArrayList<Comparable> schlüssel = baum.traversiere(BinaererSuchBaum.PREORDER);
-    assertTrue(schlüssel.equals(generiereListe(5, 2, 1, 4, 7, 8)));
+    assertEquals(generiereListe(5, 2, 1, 4, 7, 8), schlüssel);
   }
 
   @Test
-  public void testeMethodeBesuchePostorder() {
+  public void traversierePostorder() {
     BinaererSuchBaum baum = new BinaererSuchBaum();
     baum.fügeEin(5, 2, 7, 4, 8, 1);
     ArrayList<Comparable> schlüssel = baum.traversiere(BinaererSuchBaum.POSTORDER);
-    assertTrue(schlüssel.equals(generiereListe(1, 4, 2, 8, 7, 5)));
+    assertEquals(generiereListe(1, 4, 2, 8, 7, 5), schlüssel);
   }
 
   @Test
-  public void testeMethodeBesucheLevelorder() {
+  public void traversiereLevelorder() {
     BinaererSuchBaum baum = new BinaererSuchBaum();
     baum.fügeEin(5, 2, 7, 4, 8, 1);
     ArrayList<Comparable> schlüssel = baum.traversiere(BinaererSuchBaum.LEVELORDER);
-    assertTrue(schlüssel.equals(generiereListe(5, 2, 7, 1, 4, 8)));
+    assertEquals(generiereListe(5, 2, 7, 1, 4, 8), schlüssel);
+  }
+
+  @Test
+  public void methodeGibWurzel() {
+    BinaererSuchBaum baum = new BinaererSuchBaum();
+
+    baum.fügeEin(1);
+    assertEquals(1, baum.gibKopf().schlüssel);
+
+    baum.fügeEin(2);
+    assertEquals(1, baum.gibKopf().schlüssel);
+
+    baum.fügeEin(3);
+    assertEquals(1, baum.gibKopf().schlüssel);
+
+    baum.entferne(1);
+    assertEquals(2, baum.gibKopf().schlüssel);
+
+    baum.entferne(2);
+    assertEquals(3, baum.gibKopf().schlüssel);
   }
 
 }

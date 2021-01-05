@@ -1,6 +1,10 @@
 package org.bschlangaul.baum;
 
 import static org.junit.Assert.assertEquals;
+
+import java.util.ArrayList;
+import java.util.Collections;
+
 import org.junit.Test;
 
 public class AVLBaumTest {
@@ -137,5 +141,69 @@ public class AVLBaumTest {
     assertEquals(1, kopf.links.schlüssel);
     assertEquals(21, kopf.rechts.schlüssel);
     assertEquals(41, kopf.rechts.rechts.schlüssel);
+  }
+
+  @Test
+  public void methodeGibWurzel() {
+    AVLBaum baum = new AVLBaum();
+
+    baum.fügeEin(1);
+    assertEquals(1, baum.gibKopf().schlüssel);
+
+    baum.fügeEin(2);
+    assertEquals(1, baum.gibKopf().schlüssel);
+
+    baum.fügeEin(3);
+    assertEquals(2, baum.gibKopf().schlüssel);
+
+    baum.entferne(3);
+    assertEquals(2, baum.gibKopf().schlüssel);
+
+    baum.entferne(2);
+    assertEquals(1, baum.gibKopf().schlüssel);
+  }
+
+  @SuppressWarnings("rawtypes")
+  private ArrayList<Comparable> generiereListe(Comparable... zahlen) {
+    ArrayList<Comparable> erwarte = new ArrayList<>();
+    Collections.addAll(erwarte, zahlen);
+    return erwarte;
+  }
+
+
+  @SuppressWarnings("rawtypes")
+  @Test
+  public void traversiereInorder() {
+    AVLBaum baum = new AVLBaum();
+    baum.fügeEin(5, 2, 7, 4, 8, 1);
+    ArrayList<Comparable> schlüssel = baum.traversiere(BinaerBaum.INORDER);
+    assertEquals(generiereListe(1, 2, 4, 5, 7, 8), schlüssel);
+  }
+
+  @SuppressWarnings("rawtypes")
+  @Test
+  public void traversierePreorder() {
+    AVLBaum baum = new AVLBaum();
+    baum.fügeEin(5, 2, 7, 4, 8, 1);
+    ArrayList<Comparable> schlüssel = baum.traversiere(BinaerBaum.PREORDER);
+    assertEquals(generiereListe(5, 2, 1, 4, 7, 8), schlüssel);
+  }
+
+  @SuppressWarnings("rawtypes")
+  @Test
+  public void traversierePostorder() {
+    AVLBaum baum = new AVLBaum();
+    baum.fügeEin(5, 2, 7, 4, 8, 1);
+    ArrayList<Comparable> schlüssel = baum.traversiere(BinaerBaum.POSTORDER);
+    assertEquals(generiereListe(1, 4, 2, 8, 7, 5), schlüssel);
+  }
+
+  @SuppressWarnings("rawtypes")
+  @Test
+  public void traversiereLevelorder() {
+    AVLBaum baum = new AVLBaum();
+    baum.fügeEin(5, 2, 7, 4, 8, 1);
+    ArrayList<Comparable> schlüssel = baum.traversiere(BinaerBaum.LEVELORDER);
+    assertEquals(generiereListe(5, 2, 7, 1, 4, 8), schlüssel);
   }
 }
