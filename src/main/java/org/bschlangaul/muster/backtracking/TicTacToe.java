@@ -23,15 +23,8 @@ public class TicTacToe {
     return 'x';
   }
 
-  /**
-   * Saake Seite 212
-   *
-   * @param feld
-   * @param spieler
-   *
-   * @return
-   */
   static boolean gewonnen(final char[][] feld, final char spieler) {
+    // Saake Seite 212
     for (int z = 0; z < 3; z++) {
       if (zeileGewonnen(feld, z, spieler) || spalteGewonnen(feld, z, spieler))
         return true;
@@ -39,17 +32,9 @@ public class TicTacToe {
     return diagonaleGewonnen(feld, spieler);
   }
 
-  /**
-   * Saake Seite 229-230
-   *
-   * @param feld
-   * @param spieler
-   * @param pos
-   * @param tiefe
-   *
-   * @return
-   */
+
   int waehleZug(final char[][] feld, final char spieler, final int[] pos, final int tiefe) {
+    // Saake Seite 229-230
     // Spieler o = Computer: schlechtester Wert als Startwert
     int besterWert = (spieler == 'o' ? -100 : 100);
     int bz = -1, bs = -1;

@@ -80,6 +80,8 @@ public abstract class Graph {
 
   /**
    * Gib alle Knotennamen als Feld zurück.
+   *
+   * @return Ein Feld mit den Knotennamen.
    */
   public String[] gibAlleKnotenNamen() {
     String[] ausgabe = new String[gibKnotenAnzahl()];

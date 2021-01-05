@@ -67,6 +67,8 @@ public class TexAdjazenzMatrix {
    * & A & B & C & D & E & F \\
    * }
    * </pre>
+   *
+   * @return Die Kopfzeile als TeX-Code.
    */
   private String gibMatrixKopf() {
     String ausgabe = formatiereZelle();
@@ -90,6 +92,8 @@ public class TexAdjazenzMatrix {
    * F & 0  & 0  & 0  & 0  & 0  & 0  \\
    * }
    * </pre>
+   *
+   * @return Die Zeilen und Spalten der eigentlichen Matrix als TeX-Code.
    */
   private String gibMatrixKörper() {
     String ausgabe = "";
@@ -115,6 +119,10 @@ public class TexAdjazenzMatrix {
    * \end{block}
    * }
    * </pre>
+   *
+   * @param inhalt Der Textinhalt der mit TeX-Markup eingerahmt werden soll.
+   *
+   * @return Eine Adjazenzmatrix die in einer block-Umgebung eingerahmt ist.
    */
   private String gibInnereUmgebung(String inhalt) {
     String spaltenDefintion = spaltenFormatierung.repeat(matrix.gibKnotenAnzahl() - 1);
@@ -134,6 +142,11 @@ public class TexAdjazenzMatrix {
    * \]
    * }
    * </pre>
+   *
+   *
+   * @param inhalt Der Textinhalt der mit TeX-Markup eingerahmt werden soll.
+   *
+   * @return Eine fertig gesetzte Adjazenzmatirx.
    */
   private String gibÄußereUmgebung(String inhalt) {
     String spaltenDefintion = spaltenFormatierung.repeat(matrix.gibKnotenAnzahl());

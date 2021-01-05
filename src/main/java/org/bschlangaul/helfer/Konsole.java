@@ -8,8 +8,8 @@ public class Konsole {
   /**
    * Zeigt den Format-String in der Textkonsole.
    *
-   * @param format Ein String der an {@link String.format} übergeben wird.
-   * @param eingang Ein Object das für {@link String.format} gebraucht wird.
+   * @param format  Ein Text der an String.format übergeben wird.
+   * @param eingang Ein Object das für String.format gebraucht wird.
    */
   private static void zeige(String format, Object eingang) {
     System.out.print(String.format(format, eingang));
@@ -53,8 +53,8 @@ public class Konsole {
    * Zeige eine Feld voller Zahlen in der Konsole.
    *
    *
-   * @param zahlen Eine Feld gefüllt mit Zahlen, das in der Konsole
-   *   gezeigt werden soll.
+   * @param zahlen Eine Feld gefüllt mit Zahlen, das in der Konsole gezeigt werden
+   *               soll.
    */
   public static void zeigeZahlenFeld(int[] zahlen) {
     String output = "";

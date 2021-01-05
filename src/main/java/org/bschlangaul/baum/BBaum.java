@@ -135,22 +135,23 @@ public class BBaum {
     }
 
     /**
-     * Füge einen Schlüsselwert in eine Seite ein. Vergleiche Saake Seite 395-396.
+     * Füge einen Schlüsselwert in eine Seite ein. (Vergleiche Saake Seite 395-396.)
      *
      * @param schlüssel          Der Schlüsselwert, der eingefügt werden soll.
-     * @param linkesGeschwister
-     * @param rechtesGeschwister
-     * @return
+     * @param linkesGeschwister  Die linke Geschwister-Seite.
+     * @param rechtesGeschwister Die rechte Geschwister-Seite.
+     *
+     * @return Wahr, wenn der Schlüsselwert in die Seite eingefügt werden konnte.
      */
     @SuppressWarnings("unchecked")
     public boolean fügeInSeiteEin(Comparable schlüssel, BBaumSeite linkesGeschwister, BBaumSeite rechtesGeschwister) {
-      boolean done = false;
+      boolean erledigt = false;
       // Position für Schlüssel suchen
       for (int i = 0; i < schlüsselListe.size(); i++) {
         int res = schlüsselListe.get(i).compareTo(schlüssel);
         if (res == 0) {
           // Schlüssel existiert schon -> ignorieren
-          done = true;
+          erledigt = true;
           break;
         } else if (res > 0) {
           // Stelle gefunden -> einfügen
@@ -159,11 +160,11 @@ public class BBaum {
             kinderListe.insertElementAt(rechtesGeschwister, i + 1);
             rechtesGeschwister.eltern = this;
           }
-          done = true;
+          erledigt = true;
           break;
         }
       }
-      if (!done) {
+      if (!erledigt) {
         // Schlüssel muss am Ende eingefügt werden
         schlüsselListe.add(schlüssel);
         if (linkesGeschwister != null && kinderListe.isEmpty()) {
@@ -180,31 +181,30 @@ public class BBaum {
     }
 
     /**
-     * Seite 396
+     * Teile eine Seite (Nach Saake Seite 396)
      *
-     * @return
+     * @return Die neu erzeugte Geschwisterseite.
      */
     public BBaumSeite teile() {
       int pos = gibAnzahlSchlüssel() / 2;
       // Geschwisterknoten erzeugen
-      BBaumSeite sibling = new BBaumSeite(seitenTyp);
+      BBaumSeite geschwister = new BBaumSeite(seitenTyp);
       for (int i = pos + 1; i < gibAnzahlSchlüssel(); i++) {
         // die obere Hälfte der Schlüssel und Verweise kopieren
-        sibling.schlüsselListe.add(this.gibSchlüssel(i));
+        geschwister.schlüsselListe.add(this.gibSchlüssel(i));
         if (seitenTyp == BBaumSeite.INNERE_SEITE)
-          sibling.kinderListe.add(this.gibKindDurchIndex(i));
+          geschwister.kinderListe.add(this.gibKindDurchIndex(i));
       }
       // es gibt einen Verweis mehr als Schlüssel
       if (seitenTyp == BBaumSeite.INNERE_SEITE)
-
-        sibling.kinderListe.add(this.gibKindDurchIndex(gibAnzahlSchlüssel()));
+        geschwister.kinderListe.add(this.gibKindDurchIndex(gibAnzahlSchlüssel()));
       // und anschließend im Originalknoten löschen
       for (int i = gibAnzahlSchlüssel() - 1; i >= pos; i--) {
         schlüsselListe.remove(pos);
         if (seitenTyp == BBaumSeite.INNERE_SEITE)
           kinderListe.remove(pos + 1);
       }
-      return sibling;
+      return geschwister;
     }
   }
 
@@ -234,7 +234,11 @@ public class BBaum {
   }
 
   /**
-   * Saake Seite 391
+   * Finde einen Schlüsselwert im B-Baum. (nach Saake Seite 391)
+   *
+   * @param schlüssel Der Schlüsselwert, der gesucht wird.
+   *
+   * @return Den gefunden Schlüsselwert.
    */
   public Comparable finde(Comparable schlüssel) {
     BBaumSeite seite = wurzel; // Startknoten
@@ -297,8 +301,12 @@ public class BBaum {
   }
 
   /**
+   * Finde die Blatt-Seite, in der der Schlüsselwert gespeichert ist. (nach Saake
+   * Seite 395)
    *
-   * Saake Seite 395
+   * @param schlüssel Der Schlüsselwert, nach dem gesucht werden soll.
+   *
+   * @return Die Blatt, in der der Schlüsselwert gespeichert ist.
    */
   private BBaumSeite findeBlattSeite(Comparable schlüssel) {
     BBaumSeite seite = wurzel;

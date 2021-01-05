@@ -208,6 +208,8 @@ public class KuerzesterPfadDijkstra {
    * Pfads unter Angabe des Anfangsknoten.
    *
    * @param anfangsKnoten Der Name des Anfangsknoten.
+   *
+   * @return Alle kürzesten Wege in einem Feld gespeichert.
    */
   public int[] sucheKürzestenPfadMatrix(String anfangsKnoten) {
     GraphAdjazenzMatrix matrix = new GraphAdjazenzMatrix(graphenFormat);

@@ -58,7 +58,7 @@ public class GraphenFormatKante implements Comparable<GraphenFormatKante> {
   /**
    * Diese Methode wird benötigt, um die Kanten sortieren zu können.
    *
-   * @param object Eine andere einfache Kante, die verglichen werden soll.
+   * @param kante Eine andere einfache Kante, die verglichen werden soll.
    *
    * @return 0, -1, 1
    */
