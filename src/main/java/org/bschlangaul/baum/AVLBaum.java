@@ -177,11 +177,13 @@ public class AVLBaum extends BinaerBaum {
    * @param schlüssel Der Schlüssel, der gelöscht werden soll.
    */
   public boolean entferne(Comparable schlüssel) {
+    reporter.berichteÜberschrift("Löschen von „" + schlüssel + "“", 0);
     kopf = entferne(kopf, schlüssel, "rechts");
     // Wieder auf falsch setzten, damit beim nächsten Löschvorgang der
     // Wert wieder von neuem gesetzt werden muss.
     boolean ausgabe = gelöscht;
     gelöscht = false;
+    reporter.berichteBaum(this, 0);
     return ausgabe;
   }
 

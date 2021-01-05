@@ -127,6 +127,8 @@ public class BinaererSuchBaum extends BinaerBaum {
       eltern.setzeLinks(kind);
     else
       eltern.setzeRechts(kind);
+    reporter.berichteBaum("Löschen von „" + schlüssel + "“", this);
+
     return true;
   }
 }

@@ -37,12 +37,6 @@ public abstract class BaumReporter {
       gibAus(erzeugeÜberschrift(überschrift));
   }
 
-  public abstract String erzeugeTraversierung(BinaerBaum baum);
-
-  public void berichteTraversierung(BinaerBaum baum) {
-    gibAus(erzeugeÜberschrift("Traversierung")  + "\n" + erzeugeTraversierung(baum));
-  }
-
   public void berichteBaum(BinaerBaum baum, String überschrift, int redselig) {
     berichteBaum(baum, redselig);
     berichteÜberschrift(überschrift, redselig);
@@ -89,6 +83,14 @@ public abstract class BaumReporter {
       ausgabe[i][1] = vereinigeListe(", ", schlüssel);
     }
     return ausgabe;
+  }
+
+  public abstract String erzeugeTraversierung(BinaerBaum baum);
+
+  public void berichteTraversierung(BinaerBaum baum) {
+    if (baum.gibKopf() == null)
+      return;
+    gibAus(erzeugeÜberschrift("Traversierung") + "\n" + erzeugeTraversierung(baum));
   }
 
 }
