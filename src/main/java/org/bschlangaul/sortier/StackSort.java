@@ -1,25 +1,31 @@
 package org.bschlangaul.sortier;
 
-// https://www.geeksforgeeks.org/sort-stack-using-temporary-stack/
-
-// Java program to sort a stack using
-// a auxiliary stack.
 import java.util.Stack;
 
+/**
+ * Quelle: nach <a href=
+ * "https://www.geeksforgeeks.org/sort-stack-using-temporary-stack/">geeksforgeeks.org</a>
+ */
 class StackSort {
-  // This function return the sorted stack
-  public static Stack<Integer> sortiere(Stack<Integer> input) {
+
+  /**
+   *
+   * @param zahlen Ein Feld mit Zahlen, das sortiert werden soll.
+   *
+   * @return Der sortierte Stapel.
+   */
+  public static Stack<Integer> sortiere(Stack<Integer> zahlen) {
     Stack<Integer> tmpStack = new Stack<Integer>();
-    while (!input.isEmpty()) {
+    while (!zahlen.isEmpty()) {
       // pop out the first element
-      int tmp = input.pop();
+      int tmp = zahlen.pop();
 
       // while temporary stack is not empty and
       // top of stack is greater than temp
       while (!tmpStack.isEmpty() && tmpStack.peek() > tmp) {
         // pop from temporary stack and
         // push it to the input stack
-        input.push(tmpStack.pop());
+        zahlen.push(tmpStack.pop());
       }
 
       // push temp in tempory of stack
@@ -47,4 +53,3 @@ class StackSort {
     }
   }
 }
-// This code is contributed by Danish Kaleem

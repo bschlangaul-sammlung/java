@@ -1,7 +1,8 @@
 package org.bschlangaul.sortier;
 
 /**
- * Saake Seite 412
+ * Sortiere ein Zahlen-Feld mit Hilfe des Heapsort-Algorithmus. (Nach Saake
+ * Seite 412)
  */
 public class HeapSort {
   private static void versickere(int[] zahlen, int index, int last) {
@@ -25,6 +26,13 @@ public class HeapSort {
     }
   }
 
+  /**
+   * Sortiere ein Zahlen-Feld mit Hilfe des Heapsort-Algorithmus.
+   *
+   * @param zahlen Ein Feld mit Zahlen, das sortiert werden soll.
+   *
+   * @return Das sortierte Zahlenfeld.
+   */
   public static int[] sortiere(int[] zahlen) {
     int i;
     for (i = zahlen.length / 2; i >= 0; i--)

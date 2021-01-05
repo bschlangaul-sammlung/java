@@ -112,26 +112,25 @@ public class BBaum {
     }
 
     /**
-     * Saake Seite 391
+     * Suche den Schlüssel in der Seite (nach Saake Seite 391).
      *
      * @param schlüssel Der Schlüsselwert, nach dem gesucht wird.
      * @param ergebnis  In diesem Feld wird das Ergebnis gespeichert.
      *
-     * @return
+     * @return Wird der Schlüssel gefunden, geben wird SCHLÜSSEL_GEFUNDEN (-1)
+     *         zurück. Wenn es ein innerer Knoten ist, geben wir den letzten Verweis
+     *         zurück, im Fall eines Blattes SCHLÜSSEL_NICHT_GEFUNDEN (-2).
      */
     @SuppressWarnings("unchecked")
     public int findeSchlüsselInSeite(Comparable schlüssel, Comparable[] ergebnis) {
       for (int i = 0; i < schlüsselListe.size(); i++) {
         int erg = schlüsselListe.get(i).compareTo(schlüssel);
         if (erg == 0) {
-          // Schlüssel gefunden
           ergebnis[0] = schlüsselListe.get(i);
           return SCHLÜSSEL_GEFUNDEN;
         } else if (erg > 0)
           return seitenTyp == INNERE_SEITE ? i : SCHLÜSSEL_NICHT_GEFUNDEN;
       }
-      // Wenn es ein innerer Knoten ist, geben wir den letzten Verweis
-      // zurück, im Fall eines Blattes KEY NOT FOUND.
       return (seitenTyp == INNERE_SEITE ? schlüsselListe.size() : SCHLÜSSEL_NICHT_GEFUNDEN);
     }
 

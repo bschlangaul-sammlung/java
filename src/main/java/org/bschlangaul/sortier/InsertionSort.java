@@ -1,10 +1,18 @@
 package org.bschlangaul.sortier;
 
 /**
- * Nach Saake Seite 127
+ * Sortiere ein Zahlen-Feld mit Hilfe des Insertionsort-Algorithmus. (Nach Saake
+ * Seite 127)
  */
 public class InsertionSort {
 
+  /**
+   * Sortiere ein Zahlen-Feld mit Hilfe des Insertionsort-Algorithmus.
+   *
+   * @param zahlen Ein Feld mit Zahlen, das sortiert werden soll.
+   *
+   * @return Das sortierte Zahlenfeld.
+   */
   static int[] sortiere(int[] zahlen) {
     for (int i = 1; i < zahlen.length; i++) {
       // Links von der Markierung sind die Zahlen sortiert,
@@ -26,23 +34,25 @@ public class InsertionSort {
   }
 
   /**
-   * https://www.geeksforgeeks.org/recursive-insertion-sort/
+   * Sortiere ein Zahlen-Feld mit Hilfe des Insertionsort-Algorithmus in einer
+   * rekursiven Art und Weise. (nach <a href=
+   * "https://www.geeksforgeeks.org/recursive-insertion-sort/">geeksforgeeks.org</a>)
    *
-   * @param zahlen
-   * @param n
+   * @param zahlen Ein Feld mit Zahlen, das sortiert werden soll.
+   * @param anzahl Wie viele Zahlen im Feld sortiert werden sollen.
    */
-  private static void sortiereRekursiv(int zahlen[], int n) {
+  private static void sortiereRekursiv(int zahlen[], int anzahl) {
     // Base case
-    if (n <= 1)
+    if (anzahl <= 1)
       return;
 
     // Sort first n-1 elements
-    sortiereRekursiv(zahlen, n - 1);
+    sortiereRekursiv(zahlen, anzahl - 1);
 
     // Insert last element at its correct position
     // in sorted array.
-    int last = zahlen[n - 1];
-    int j = n - 2;
+    int last = zahlen[anzahl - 1];
+    int j = anzahl - 2;
 
     /*
      * Move elements of arr[0..i-1], that are greater than key, to one position
@@ -55,6 +65,14 @@ public class InsertionSort {
     zahlen[j + 1] = last;
   }
 
+  /**
+   * Sortiere ein Zahlen-Feld mit Hilfe des Insertionsort-Algorithmus in einer
+   * rekursiven Art und Weise.
+   *
+   * @param zahlen Ein Feld mit Zahlen, das sortiert werden soll.
+   *
+   * @return Das sortierte Zahlenfeld.
+   */
   public static int[] sortiereRekursiv(int[] zahlen) {
     sortiereRekursiv(zahlen, zahlen.length);
     return zahlen;

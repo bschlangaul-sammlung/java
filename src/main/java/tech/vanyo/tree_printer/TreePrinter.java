@@ -44,6 +44,8 @@ public class TreePrinter<T> {
    * number of spaces between adjacent node labels. Parameter squareBranches, when
    * set to true, results in branches being printed with ASCII box drawing
    * characters.
+   *
+   * @param root The root node.
    */
   public void printTree(T root) {
     List<TreeLine> treeLines = buildTreeLines(root);

@@ -25,6 +25,7 @@ org.bschlangaul.helfer
 org.bschlangaul.helfer
 org.bschlangaul.helfer
 org.bschlangaul.helfer
+org.bschlangaul.helfer
 org.bschlangaul.sortier
 org.bschlangaul.sortier
 org.bschlangaul.sortier
@@ -223,8 +224,6 @@ org.bschlangaul.muster.backtracking
 org.bschlangaul.muster.rucksack
 org.bschlangaul.muster.rucksack
 org.bschlangaul.baum
-org.bschlangaul.baum.tex
-org.bschlangaul.baum.tex
 org.bschlangaul.baum
 org.bschlangaul.baum
 org.bschlangaul.baum
@@ -235,12 +234,13 @@ org.bschlangaul.baum.kompositum
 org.bschlangaul.baum.kompositum
 org.bschlangaul.baum.kompositum
 org.bschlangaul.baum.kompositum
-org.bschlangaul.baum.bbaum
 org.bschlangaul.baum.einfach
 org.bschlangaul.baum.einfach
 org.bschlangaul.baum.einfach
 org.bschlangaul.baum
 org.bschlangaul.baum
+org.bschlangaul.baum
+org.bschlangaul.baum.visualisierung
 org.bschlangaul.baum.visualisierung
 org.bschlangaul.baum.visualisierung
 org.bschlangaul.baum.visualisierung
@@ -373,6 +373,10 @@ org.bschlangaul.vererbung.saake
 org.bschlangaul.vererbung.saake
 tech.vanyo.tree_printer
 tech.vanyo.tree_printer
+org.bschlangaul.antlr
+org.bschlangaul.antlr
+org.bschlangaul.antlr
+org.bschlangaul.antlr
 org.bschlangaul.antlr
 org.bschlangaul.antlr
 org.bschlangaul.antlr

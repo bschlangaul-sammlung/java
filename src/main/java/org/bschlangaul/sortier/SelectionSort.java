@@ -1,9 +1,18 @@
 package org.bschlangaul.sortier;
 
+/**
+ * Sortiere ein Zahlen-Feld mit Hilfe des Selectionsort-Algorithmus. (Nach Saake
+ * Seite 128)
+ */
 public class SelectionSort {
 
   /**
-   * Nach Saake Seite 128
+   * Sortiere ein Zahlen-Feld mit Hilfe des Selectionsort-Algorithmus. (Nach Saake
+   * Seite 128)
+   *
+   * @param zahlen Ein Feld mit Zahlen, das sortiert werden soll.
+   *
+   * @return Das sortierte Zahlenfeld.
    */
   public static int[] sortiereIterativ(int[] zahlen) {
     // Am Anfang ist die Markierung das letzte Element im Zahlen-Array.
@@ -29,7 +38,14 @@ public class SelectionSort {
   }
 
   /**
-   * https://www.techiedelight.com/selection-sort-iterative-recursive/
+   * Sortiere ein Zahlen-Feld mit Hilfe des Selectionsort-Algorithmus in einer
+   * halbrekursiven Art und Weise. (nach <a href=
+   * "https://www.techiedelight.com/selection-sort-iterative-recursive/">techiedelight.com/</a>
+   *
+   * @param zahlen Ein Feld mit Zahlen, das sortiert werden soll.
+   * @param index  Ab welcher Index-Nummer im Zahlen-Feld sortiert werden soll.
+   * @param anzahl Wie viele Zahlen aber der gegeben Index-Nummer sortiert werden
+   *               sollen.
    */
   private static void sortiereHalbRekursiv(int[] zahlen, int index, int anzahl) {
     if (anzahl <= 0)
@@ -46,13 +62,34 @@ public class SelectionSort {
     }
   }
 
+
+  /**
+   * Sortiere ein Zahlen-Feld mit Hilfe des Selectionsort-Algorithmus in einer
+   * halbrekursiven Art und Weise. (nach <a href=
+   * "https://www.techiedelight.com/selection-sort-iterative-recursive/">techiedelight.com/</a>
+   *
+   * @param zahlen Ein Feld mit Zahlen, das sortiert werden soll.
+   *
+   * @return Das sortierte Zahlenfeld.
+   */
   public static int[] sortiereHalbRekursiv(int[] zahlen) {
     sortiereHalbRekursiv(zahlen, 0, zahlen.length);
     return zahlen;
   }
 
   /**
-   * https://www.geeksforgeeks.org/recursive-selection-sort/
+   * Gib die Indexposition im Zahlenfeld zurück, das mit der kleinsten Zahl belegt
+   * ist. (nach <a href=
+   * "https://www.geeksforgeeks.org/recursive-selection-sort/">geeksforgeeks.org</a>)
+   *
+   * @param zahlen Ein Feld mit Zahlen, das sortiert werden soll.
+   * @param i      Die Index-Nummer der einen Zahlen, mit der verglichen werden
+   *               soll.
+   * @param j      Die Index-Nummer der anderen Zahlen, mit der verglichen werden
+   *               soll.
+   *
+   * @return Die Indexposition im Zahlenfeld zurück, das mit der kleinsten Zahl
+   *         belegt.
    */
   private static int gibMinIndex(int zahlen[], int i, int j) {
     if (i == j)
@@ -61,6 +98,15 @@ public class SelectionSort {
     return (zahlen[i] < zahlen[k]) ? i : k;
   }
 
+  /**
+   * Sortiere ein Zahlen-Feld mit Hilfe des Selectionsort-Algorithmus in einer
+   * rekursiven Art und Weise.
+   *
+   * @param zahlen Ein Feld mit Zahlen, das sortiert werden soll.
+   * @param index  Ab welcher Index-Nummer im Zahlen-Feld sortiert werden soll.
+   * @param anzahl Wie viele Zahlen aber der gegeben Index-Nummer sortiert werden
+   *               sollen.
+   */
   private static void sortiereRekursiv(int zahlen[], int index, int anzahl) {
     if (index == anzahl)
       return;
@@ -71,6 +117,14 @@ public class SelectionSort {
     sortiereRekursiv(zahlen, index + 1, anzahl);
   }
 
+  /**
+   * Sortiere ein Zahlen-Feld mit Hilfe des Selectionsort-Algorithmus in einer
+   * rekursiven Art und Weise.
+   *
+   * @param zahlen Ein Feld mit Zahlen, das sortiert werden soll.
+   *
+   * @return Das sortierte Zahlenfeld.
+   */
   public static int[] sortiereRekursiv(int[] zahlen) {
     sortiereRekursiv(zahlen, 0, zahlen.length);
     return zahlen;

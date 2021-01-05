@@ -1,10 +1,18 @@
 package org.bschlangaul.sortier;
 
 /**
- * Nach Saake Seite 130-131
+ * Sortiere ein Zahlen-Feld mit Hilfe des Bubblesort-Algorithmus. (Nach Saake
+ * Seite 130-131)
  */
 public class BubbleSort {
 
+  /**
+   * Sortiere ein Zahlen-Feld mit Hilfe des Bubblesort-Algorithmus.
+   *
+   * @param zahlen Ein Feld mit Zahlen, das sortiert werden soll.
+   *
+   * @return Das sortierte Zahlenfeld.
+   */
   static int[] sortiere(int[] zahlen) {
     boolean getauscht;
     do {
@@ -24,7 +32,7 @@ public class BubbleSort {
   /**
    * https://www.geeksforgeeks.org/recursive-bubble-sort/
    *
-   * @param zahlen
+   * @param zahlen  Ein Feld mit Zahlen, das sortiert werden soll.
    * @param letztes Index-Nummer des Elements, bis zu dem sortiert werden soll.
    */
   private static void sortiereRekursiv(int[] zahlen, int letztes) {

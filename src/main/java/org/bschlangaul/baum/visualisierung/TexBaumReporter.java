@@ -6,7 +6,6 @@ import org.bschlangaul.baum.AVLBaum;
 import org.bschlangaul.baum.AVLBaumKnoten;
 import org.bschlangaul.baum.BinaerBaum;
 import org.bschlangaul.baum.BaumKnoten;
-import org.bschlangaul.cli.KonsoleHelfer;
 import org.bschlangaul.helfer.Tex;
 
 public class TexBaumReporter extends BaumReporter {

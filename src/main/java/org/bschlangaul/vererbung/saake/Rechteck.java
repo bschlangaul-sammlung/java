@@ -38,24 +38,22 @@ public class Rechteck extends GeomObjekt implements Speicherbar {
   }
 
   /**
-   * Seite 302
-   * @param out
+   * Vergleiche Saake Seite 302
+   *
+   * @param out Instance der Klasse OutputStream
    */
   public void speichern(OutputStream out) {
   }
 
   /**
-   * Seite 302
-   * @param in
+   * Vergleiche Saake Seite 302
+   *
+   * @param in Instanz der Klasse InputStream
    */
   public void laden(InputStream in) {
   }
 
-  /**
-   * Saake Seite 210
-   *
-   * @param args
-   */
+
   @SuppressWarnings("unused")
   public static void main(String[] args) {
     Rechteck r1 = new Rechteck();

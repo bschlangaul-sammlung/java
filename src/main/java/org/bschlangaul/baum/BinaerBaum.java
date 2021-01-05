@@ -9,8 +9,8 @@ import org.bschlangaul.liste.saake.Warteschlange;
 import org.bschlangaul.liste.saake.WarteschlangeFehler;
 
 /**
- * Die abstrakte Oberklasse eines Binärbaums für die Klassen {@link BinaererSuchBaum}
- * und {@AVLBaum}.
+ * Die abstrakte Oberklasse eines Binärbaums für die Klassen
+ * {@link BinaererSuchBaum} und {@AVLBaum}.
  */
 @SuppressWarnings("rawtypes")
 public abstract class BinaerBaum {
@@ -37,9 +37,11 @@ public abstract class BinaerBaum {
    * Zuerst wird der linke Teilbaum l durchlaufen, dann die Wurzel N betrachtet
    * und schließlich der rechte Teilbaum r durchlaufen. Diese Reihenfolge
    * entspricht bei binären Suchbäumen der Anordnung der Schlüssel und ist für die
-   * meisten Anwendungen die gegebene.
+   * meisten Anwendungen die gegebene. (nach Saake Seite 356)
    *
-   * @see Saake Seite 356
+   * @param knoten    Der aktuelle Baumknoten, der besucht werden soll.
+   * @param schlüssel Eine Liste, die mit den besuchten Schlüsselwerten gefüllt
+   *                  wird.
    */
   private void besucheInorder(BaumKnoten knoten, ArrayList<Comparable> schlüssel) {
     if (knoten != null) {
@@ -51,9 +53,11 @@ public abstract class BinaerBaum {
 
   /**
    * Zuerst wird die Wurzel N betrachtet und anschließend der linke l, schließlich
-   * der rechte Teilbaum r durchlaufen.
+   * der rechte Teilbaum r durchlaufen. (nach Saake Seite 356)
    *
-   * @see Saake Seite 356
+   * @param knoten    Der aktuelle Baumknoten, der besucht werden soll.
+   * @param schlüssel Eine Liste, die mit den besuchten Schlüsselwerten gefüllt
+   *                  wird.
    */
   private void besuchePreorder(BaumKnoten knoten, ArrayList<Comparable> schlüssel) {
     if (knoten != null) {
@@ -65,9 +69,11 @@ public abstract class BinaerBaum {
 
   /**
    * Zuerst wird der linke l, dann der rechte Teilbaum r durchlaufen und
-   * schließlich die Wurzel N betrachtet.
+   * schließlich die Wurzel N betrachtet. (nach Saake Seite 356)
    *
-   * @see Saake Seite 356
+   * @param knoten    Der aktuelle Baumknoten, der besucht werden soll.
+   * @param schlüssel Eine Liste, die mit den besuchten Schlüsselwerten gefüllt
+   *                  wird.
    */
   private void besuchePostorder(BaumKnoten knoten, ArrayList<Comparable> schlüssel) {
     if (knoten != null) {
@@ -79,11 +85,12 @@ public abstract class BinaerBaum {
 
   /**
    * Beginnend bei der Baumwurzel werden die Ebenen von links nach rechts
-   * durchlaufen.
+   * durchlaufen. (nach Saake Seite 358)
    *
-   * @see Saake Seite 358
-   *
-   * @param warteschlange
+   * @param warteschlange Eine Warteschlange aus der die Baumknoten entnommen
+   *                      werden.
+   * @param schlüssel     Eine Liste, die mit den besuchten Schlüsselwerten
+   *                      gefüllt wird.
    *
    * @throws WarteschlangeFehler
    */

@@ -1,12 +1,22 @@
 package org.bschlangaul.sortier;
 
 /**
- * Nach Saake Seite 134
+ * Sortiere ein Zahlen-Feld mit Hilfe des Mergesort-Algorithmus. (Nach Saake
+ * Seite 134)
  */
 public class MergeSort {
 
-  // Hilfsmethode für rekursives Sortieren durch Mischen
-  static void sortiereRekursiv(int[] zahlen, int linkeGrenze, int rechteGrenze, int[] hilfsFeld) {
+  /**
+   * Hilfsmethode für rekursives Sortieren durch Mischen
+   *
+   * @param zahlen       Ein Feld mit Zahlen, das sortiert werden soll.
+   * @param linkeGrenze  Die Index-Nummer, ab der das Zahlen-Feld sortiert werden
+   *                     soll.
+   * @param rechteGrenze Die Index-Nummer, bis zu der das Zahlen-Feld sortiert
+   *                     werden soll.
+   * @param hilfsFeld    Eine Hilfsfeld, das benötigt wird.
+   */
+  private static void sortiereRekursiv(int[] zahlen, int linkeGrenze, int rechteGrenze, int[] hilfsFeld) {
     // Wenn die rechte Grenze gleich (oder sogar kleiner) als die linke Grenze ist,
     // tue nichts.
     if (rechteGrenze <= linkeGrenze)
@@ -52,25 +62,30 @@ public class MergeSort {
     }
   }
 
-  static int[] sortiere(int[] zahlen) {
+  /**
+   * Sortiere ein Zahlen-Feld mit Hilfe des Mergesort-Algorithmus.
+   *
+   * @param zahlen Ein Feld mit Zahlen, das sortiert werden soll.
+   *
+   * @return Das sortierte Zahlenfeld.
+   */
+  public static int[] sortiere(int[] zahlen) {
     int hilfsFeld[] = new int[zahlen.length];
     sortiereRekursiv(zahlen, 0, zahlen.length - 1, hilfsFeld);
     return zahlen;
   }
 
-  static void zeigeZahlen(int[] zahlen) {
+  /**
+   * Kleine Hilfsmethode um den Algorithmus besser zu verstehen.
+   *
+   * @param zahlen Ein Feld mit Zahlen, das sortiert werden soll.
+   */
+  private static void zeigeZahlen(int[] zahlen) {
     String output = "";
     for (int i = 0; i < zahlen.length; i++) {
       output = output + zahlen[i] + " ";
     }
     System.out.println(output);
-  }
-
-  static void zeigeZahlen(int[] zahlen, int start, int ende) {
-    String output = "";
-    for (int i = start; i <= ende; i++) {
-      output = output + zahlen[i] + ", ";
-    }
   }
 
   /**
@@ -80,9 +95,10 @@ public class MergeSort {
    * @param hilfsFeld Die Zahlen müssen in der linken Hälfte anderes sortiert
    *                  sein, wie in der rechten Hälfte z.B.: [13, 12, 78, 15], [23,
    *                  42, 1], [1, 23, 42, 7, 5], [2, 4, 3, 1]
-   * @return
+   *
+   * @return Das sortierte Zahlenfeld.
    */
-  static int[] vereinigen(int[] hilfsFeld) {
+  private static int[] vereinigen(int[] hilfsFeld) {
     int[] zahlen = new int[hilfsFeld.length];
     int i = 0;
     int j = hilfsFeld.length - 1;

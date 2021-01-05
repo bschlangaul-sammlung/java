@@ -1,11 +1,25 @@
 package org.bschlangaul.sortier;
 
 /**
- * Wie Pseudo-Code auf https://de.wikipedia.org/wiki/Quicksort
- * https://javabeginners.de/Algorithmen/Sortieralgorithmen/Quicksort.php
+ * Sortiere ein Zahlen-Feld mit Hilfe des Quicksort-Algorithmus.
+ *
+ * (nach Pseudo-Code auf
+ * <a href="https://de.wikipedia.org/wiki/Quicksort">Wikipediaseite zum
+ * Quicksort-Algortihmus</a> und Code-Beispiels auf <a href=
+ * "https://javabeginners.de/Algorithmen/Sortieralgorithmen/Quicksort.php">javabeginners.de</a>)
  */
 public class QuickSortMitte {
 
+  /**
+   * Zerlege das Zahlen-Feld.
+   *
+   * @param zahlen Ein Feld mit Zahlen, das zerlegt werden soll.
+   * @param links  Die Index-Nummer ab dem das Zahlen-Feld zerlegt werden soll.
+   * @param rechts Die Index-Nummer bis zu dem das Zahlen-Feld zerlegt werden
+   *               soll.
+   *
+   * @return Die Index-Nummer, an dem das Feld zerlegt werden soll.
+   */
   static int zerlege(int[] zahlen, int links, int rechts) {
     int i, j;
     int pivotWert = zahlen[(links + rechts) / 2];
@@ -28,6 +42,16 @@ public class QuickSortMitte {
     }
   }
 
+  /**
+   * Sortiere ein Zahlen-Feld mit Hilfe des Quicksort-Algorithmus.
+   *
+   * @param zahlen Ein Feld mit Zahlen, das sortiert werden soll.
+   * @param links  Die Index-Nummer ab dem das Zahlen-Feld sortiert werden soll.
+   * @param rechts Die Index-Nummer bis zu dem das Zahlen-Feld sortiert werden
+   *               soll.
+   *
+   * @return Das sortierte Zahlenfeld.
+   */
   static int[] sortiereRekursiv(int[] zahlen, int links, int rechts) {
     int pivotPositionNeu;
     if (links < rechts) {
@@ -38,6 +62,13 @@ public class QuickSortMitte {
     return zahlen;
   }
 
+  /**
+   * Sortiere ein Zahlen-Feld mit Hilfe des Quicksort-Algorithmus.
+   *
+   * @param zahlen Ein Feld mit Zahlen, das sortiert werden soll.
+   *
+   * @return Das sortierte Zahlenfeld.
+   */
   static int[] sortiere(int[] zahlen) {
     sortiereRekursiv(zahlen, 0, zahlen.length - 1);
     return zahlen;

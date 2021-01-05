@@ -1,11 +1,21 @@
 package org.bschlangaul.sortier;
 
 /**
- * Nach Saake Seite 138
+ * Sortiere ein Zahlen-Feld mit Hilfe des Quicksort-Algorithmus. (Nach Saake
+ * Seite 138)
  */
 public class QuickSort {
 
-  // Hilfsmethode zum Zerlegen der Folge
+  /**
+   * Hilfsmethode zum Zerlegen der Folge
+   *
+   * @param zahlen        Ein Feld mit Zahlen, das sortiert werden soll.
+   * @param untereGrenze  Die Index-Nummer der unteren Grenze.
+   * @param obereGrenze   Die Index-Nummer der oberen Grenze.
+   * @param pivotPosition Die Index-Nummer der Pivot-Position.
+   *
+   * @return Die Index-Nummer der neuen Pivot-Position
+   */
   static int zerlege(int[] zahlen, int untereGrenze, int obereGrenze, int pivotPosition) {
     int pivotPositionNeu = untereGrenze;
     int pivotWert = zahlen[pivotPosition];
@@ -22,7 +32,13 @@ public class QuickSort {
     return pivotPositionNeu;
   }
 
-  // Hilfsmethode zum rekursiven Sortieren
+  /**
+   * Hilfsmethode zum rekursiven Sortieren
+   *
+   * @param zahlen        Ein Feld mit Zahlen, das sortiert werden soll.
+   * @param untereGrenze  Die Index-Nummer der unteren Grenze.
+   * @param obereGrenze   Die Index-Nummer der oberen Grenze.
+   */
   static void sortiereRekursiv(int[] zahlen, int untereGrenze, int obereGrenze) {
     // Pivot-Element bestimmen
     int pivotPosition = (untereGrenze + obereGrenze) / 2;
@@ -35,6 +51,13 @@ public class QuickSort {
     }
   }
 
+  /**
+   * Sortiere ein Zahlen-Feld mit Hilfe des Quicksort-Algorithmus.
+   *
+   * @param zahlen Ein Feld mit Zahlen, das sortiert werden soll.
+   *
+   * @return Das sortierte Zahlenfeld.
+   */
   static int[] sortiere(int[] zahlen) {
     sortiereRekursiv(zahlen, 0, zahlen.length - 1);
     return zahlen;
@@ -60,7 +83,7 @@ public class QuickSort {
     // 2 1 8 3 9 7 5
     // 2 1 3 8 9 7 5 <- 2. Zeile
     // 2 1 3 5 9 7 8 <- 3. Zeile
-    //int[] zahlen = { 42, 23, 1, 7, 5, 3, 12, 78, 15 };
+    // int[] zahlen = { 42, 23, 1, 7, 5, 3, 12, 78, 15 };
     int[] zahlen = { 8, 2, 1, 5, 9, 7, 3 };
 
     sortiere(zahlen);
