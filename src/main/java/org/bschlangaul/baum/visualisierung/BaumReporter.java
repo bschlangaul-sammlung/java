@@ -1,5 +1,7 @@
 package org.bschlangaul.baum.visualisierung;
 
+import java.util.ArrayList;
+
 import org.bschlangaul.baum.BinaerBaum;
 
 public abstract class BaumReporter {
@@ -38,7 +40,7 @@ public abstract class BaumReporter {
   public abstract String erzeugeTraversierung(BinaerBaum baum);
 
   public void berichteTraversierung(BinaerBaum baum) {
-    gibAus(erzeugeTraversierung(baum));
+    gibAus(erzeugeÜberschrift("Traversierung")  + "\n" + erzeugeTraversierung(baum));
   }
 
   public void berichteBaum(BinaerBaum baum, String überschrift, int redselig) {
@@ -59,6 +61,34 @@ public abstract class BaumReporter {
   public void berichteBaum(String überschrift, BinaerBaum baum, int redselig) {
     berichteÜberschrift(überschrift, redselig);
     berichteBaum(baum, redselig);
+  }
+
+  @SuppressWarnings("rawtypes")
+  private String vereinigeListe(String zeichenKetten, ArrayList<Comparable> liste) {
+    String ausgabe = "";
+    if (liste.size() == 0)
+      return null;
+    if (liste.size() == 1)
+      return liste.get(0).toString();
+    int i = 0;
+    for (Comparable element : liste) {
+      ausgabe += element;
+      if (i < liste.size() - 1)
+        ausgabe += zeichenKetten;
+      i++;
+    }
+    return ausgabe;
+  }
+
+  @SuppressWarnings("rawtypes")
+  public String[][] sammleTraversierungsDaten(BinaerBaum baum) {
+    String[][] ausgabe = new String[BinaerBaum.traversierungsNamen.length][2];
+    for (int i = 0; i < BinaerBaum.traversierungsNamen.length; i++) {
+      ausgabe[i][0] = BinaerBaum.traversierungsNamen[i];
+      ArrayList<Comparable> schlüssel = baum.traversiere(i);
+      ausgabe[i][1] = vereinigeListe(", ", schlüssel);
+    }
+    return ausgabe;
   }
 
 }

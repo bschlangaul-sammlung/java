@@ -20,7 +20,10 @@ import org.bschlangaul.baum.visualisierung.TexBaumReporter;
 class UnterBefehlBaum implements Callable<Integer> {
 
   @Option(names = { "-a", "--avl", "--avl-baum" }, description = "Als AVL-Baum ausgeben.")
-  boolean isAvl;
+  boolean istAvl;
+
+  @Option(names = { "-m", "--min", "--min-halde" }, description = "Als Min-Halde (Heap) ausgeben.")
+  boolean istHalde;
 
   @Parameters(arity = "1..*", description = "Zahlen, die in den Baum eingefügt werden sollen.")
   List<Integer> werte;
@@ -30,7 +33,7 @@ class UnterBefehlBaum implements Callable<Integer> {
 
     BinaerBaum baum;
 
-    if (isAvl) {
+    if (istAvl) {
       baum = new AVLBaum();
     } else {
       baum = new BinaererSuchBaum();
@@ -41,7 +44,7 @@ class UnterBefehlBaum implements Callable<Integer> {
 
     BaumReporter reporter;
 
-    if (KommandoZeile.ausgabe == Ausgabe.tex)
+    if (KommandoZeile.gibAusgabe() == Ausgabe.tex)
       reporter = new TexBaumReporter();
     else
       reporter = new TerminalBaumReporter();
@@ -52,6 +55,8 @@ class UnterBefehlBaum implements Callable<Integer> {
     for (int i = 0; i < werte.size(); i++) {
       baum.fügeEin(werte.get(i));
     }
+
+    baum.reporter.berichteTraversierung(baum);
 
     return 0;
   }

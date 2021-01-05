@@ -1,6 +1,9 @@
 package org.bschlangaul.baum.visualisierung;
 
 import org.bschlangaul.baum.BinaerBaum;
+
+import com.jakewharton.fliptables.FlipTable;
+
 import org.bschlangaul.baum.BaumKnoten;
 import org.bschlangaul.cli.KonsoleHelfer;
 
@@ -25,7 +28,9 @@ public class TerminalBaumReporter extends BaumReporter {
 
   @Override
   public String erzeugeTraversierung(BinaerBaum baum) {
-    return "";
+    String[] kopfZeile = { "Methode", "Schlüssel-Reihenfolge" };
+    String[][] zeilen = sammleTraversierungsDaten(baum);
+    return FlipTable.of(kopfZeile, zeilen);
   }
 
 }

@@ -1,7 +1,5 @@
 package org.bschlangaul.baum.visualisierung;
 
-import java.util.ArrayList;
-
 import org.bschlangaul.baum.AVLBaum;
 import org.bschlangaul.baum.AVLBaumKnoten;
 import org.bschlangaul.baum.BinaerBaum;
@@ -58,26 +56,11 @@ public class TexBaumReporter extends BaumReporter {
     return String.format("\n%s{%s}", Tex.makro("begin", "liDiagramm"), überschrift);
   }
 
-  @SuppressWarnings("rawtypes")
   @Override
   public String erzeugeTraversierung(BinaerBaum baum) {
-    String ausgabe = "";
-    ausgabe += "\n\n\\subsection{Traversierung}\n\n";
-    for (int i = 0; i < 4; i++) {
-      ArrayList<Comparable> schlüssel = baum.traversiere(i);
-      ausgabe += "\\subsubsection{" + BinaerBaum.traversierungsNamen[i] + "}\n";
-      int zähler = 0;
-      for (Comparable s : schlüssel) {
-        zähler++;
-        if (zähler < schlüssel.size()) {
-          ausgabe += s + ", ";
-        } else {
-          ausgabe += s.toString();
-        }
-      }
-      ausgabe += "\n\n";
-    }
-    return ausgabe;
+    String[] kopfZeile = { "Methode", "Schlüssel-Reihenfolge" };
+    String[][] zeilen = sammleTraversierungsDaten(baum);
+    return Tex.tabelle(kopfZeile, zeilen);
   }
 
 }

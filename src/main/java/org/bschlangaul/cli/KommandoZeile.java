@@ -20,11 +20,17 @@ class KommandoZeile implements Callable<Integer> {
   @Spec
   CommandSpec spec;
 
-  @Option(names = { "-v", "--redselig" }, scope = ScopeType.INHERIT)
+  @Option(names = { "-v", "--redselig" }, description = "Mache die Ausgabe redseliger (verbose).", scope = ScopeType.INHERIT)
   static boolean[] redselig;
 
-  @Option(names = { "-a", "--ausgabe" }, description = "Mögliche Werte: ${COMPLETION-CANDIDATES}")
+  @Option(names = { "-a", "--ausgabe" }, description = "Mögliche Werte: ${COMPLETION-CANDIDATES}.")
   static Ausgabe ausgabe;
+
+  @Option(names = { "-t", "--tex" }, description = "Als TeX ausgeben.", scope = ScopeType.INHERIT)
+  static boolean istTex;
+
+  @Option(names = { "-k", "--konsole" }, description = "Passendes Textformat für die Konsole ausgaben.", scope = ScopeType.INHERIT)
+  static boolean istKonsole;
 
   @Override
   public Integer call() {
@@ -33,8 +39,15 @@ class KommandoZeile implements Callable<Integer> {
     return 0;
   }
 
+  static Ausgabe gibAusgabe() {
+    if (istTex || (!istKonsole && ausgabe == Ausgabe.tex))
+      return Ausgabe.tex;
+    return Ausgabe.konsole;
+  }
+
   static int gibRedseligkeit() {
-    if (redselig == null) return 0;
+    if (redselig == null)
+      return 0;
     return redselig.length;
   }
 
