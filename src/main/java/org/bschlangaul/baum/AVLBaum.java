@@ -20,7 +20,7 @@ public class AVLBaum extends BinaerBaum {
   }
 
   public int gibHöhe() {
-    return kopf == null ? -1 : kopf.höhe;
+    return gibKopf() == null ? -1 : kopf.höhe;
   }
 
   public AVLBaumKnoten gibKopf() {
@@ -177,10 +177,10 @@ public class AVLBaum extends BinaerBaum {
    * @param schlüssel Der Schlüssel, der gelöscht werden soll.
    */
   public boolean entferne(Comparable schlüssel) {
-    boolean ausgabe = gelöscht;
     kopf = entferne(kopf, schlüssel, "rechts");
     // Wieder auf falsch setzten, damit beim nächsten Löschvorgang der
     // Wert wieder von neuem gesetzt werden muss.
+    boolean ausgabe = gelöscht;
     gelöscht = false;
     return ausgabe;
   }

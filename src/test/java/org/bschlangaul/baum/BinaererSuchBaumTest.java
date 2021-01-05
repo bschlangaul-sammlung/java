@@ -11,20 +11,32 @@ import org.junit.Test;
 public class BinaererSuchBaumTest {
 
   @Test
-  public void testeKonstruktor() {
+  public void konstruktor() {
     BinaererSuchBaum baum = new BinaererSuchBaum();
     assertEquals(null, baum.kopf.gibSchlüssel());
   }
 
   @Test
-  public void testeMethodeGibKopf() {
+  public void methodeGibKopf() {
     BinaererSuchBaum baum = new BinaererSuchBaum();
     baum.fügeEin(1);
     assertEquals(1, baum.gibKopf().gibSchlüssel());
+
+    baum.fügeEin(2);
+    assertEquals(1, baum.gibKopf().gibSchlüssel());
+
+    baum.fügeEin(3);
+    assertEquals(1, baum.gibKopf().gibSchlüssel());
+
+    baum.entferne(1);
+    assertEquals(2, baum.gibKopf().gibSchlüssel());
+
+    baum.entferne(2);
+    assertEquals(3, baum.gibKopf().gibSchlüssel());
   }
 
   @Test
-  public void testeMethodeFügeEin() {
+  public void methodeFügeEin() {
     BinaererSuchBaum baum = new BinaererSuchBaum();
     assertEquals(true, baum.fügeEin(1));
     assertEquals(true, baum.fügeEin(2));
@@ -33,7 +45,7 @@ public class BinaererSuchBaumTest {
   }
 
   @Test
-  public void testeMethodeFügeMehrereEin() {
+  public void methodeFügeMehrereEin() {
     BinaererSuchBaum baum = new BinaererSuchBaum();
     baum.fügeEin(1, 2, 3);
     assertEquals(true, baum.finde(1));
@@ -43,7 +55,7 @@ public class BinaererSuchBaumTest {
   }
 
   @Test
-  public void testeMethodeFügeEinString() {
+  public void methodeFügeEinString() {
     BinaererSuchBaum baum = new BinaererSuchBaum();
     baum.fügeEin("a", "b", "c");
     BaumKnoten kopf = baum.gibKopf();
@@ -53,7 +65,7 @@ public class BinaererSuchBaumTest {
   }
 
   @Test
-  public void testeMethodeFügeEinInt() {
+  public void methodeFügeEinInt() {
     BinaererSuchBaum baum = new BinaererSuchBaum();
     baum.fügeEin(1, 2, 3);
     BaumKnoten kopf = baum.gibKopf();
@@ -63,7 +75,7 @@ public class BinaererSuchBaumTest {
   }
 
   @Test
-  public void testeMethodeEntferne() {
+  public void methodeEntferne() {
     BinaererSuchBaum baum = new BinaererSuchBaum();
     assertEquals(false, baum.entferne(1));
     assertEquals(true, baum.fügeEin(1));
@@ -72,7 +84,7 @@ public class BinaererSuchBaumTest {
   }
 
   @Test
-  public void testeMethodeEntferneWurzel() {
+  public void entferneWurzel() {
     BinaererSuchBaum baum = new BinaererSuchBaum();
     baum.fügeEin(1, 2, 3);
     baum.entferne(1);
@@ -82,7 +94,7 @@ public class BinaererSuchBaumTest {
   }
 
   @Test
-  public void testeMethodeEntferneBlatt() {
+  public void entferneBlatt() {
     BinaererSuchBaum baum = new BinaererSuchBaum();
     baum.fügeEin(1, 2, 3);
     baum.entferne(3);
@@ -92,7 +104,7 @@ public class BinaererSuchBaumTest {
   }
 
   @Test
-  public void testeMethodeEntferneMitte() {
+  public void entferneMitte() {
     BinaererSuchBaum baum = new BinaererSuchBaum();
     baum.fügeEin(1, 2, 3);
     baum.entferne(2);
@@ -137,26 +149,6 @@ public class BinaererSuchBaumTest {
     baum.fügeEin(5, 2, 7, 4, 8, 1);
     ArrayList<Comparable> schlüssel = baum.traversiere(BinaererSuchBaum.LEVELORDER);
     assertEquals(generiereListe(5, 2, 7, 1, 4, 8), schlüssel);
-  }
-
-  @Test
-  public void methodeGibWurzel() {
-    BinaererSuchBaum baum = new BinaererSuchBaum();
-
-    baum.fügeEin(1);
-    assertEquals(1, baum.gibKopf().schlüssel);
-
-    baum.fügeEin(2);
-    assertEquals(1, baum.gibKopf().schlüssel);
-
-    baum.fügeEin(3);
-    assertEquals(1, baum.gibKopf().schlüssel);
-
-    baum.entferne(1);
-    assertEquals(2, baum.gibKopf().schlüssel);
-
-    baum.entferne(2);
-    assertEquals(3, baum.gibKopf().schlüssel);
   }
 
 }

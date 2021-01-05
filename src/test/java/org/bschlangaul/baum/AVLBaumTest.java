@@ -8,10 +8,31 @@ import java.util.Collections;
 import org.junit.Test;
 
 public class AVLBaumTest {
-  public void testeKonstruktor() {
+  public void konstruktor() {
     AVLBaum baum = new AVLBaum();
     baum.fügeEin(1);
   }
+
+  @Test
+  public void methodeGibKopf() {
+    AVLBaum baum = new AVLBaum();
+
+    baum.fügeEin(1);
+    assertEquals(1, baum.gibKopf().gibSchlüssel());
+
+    baum.fügeEin(2);
+    assertEquals(1, baum.gibKopf().gibSchlüssel());
+
+    baum.fügeEin(3);
+    assertEquals(2, baum.gibKopf().gibSchlüssel());
+
+    baum.entferne(3);
+    assertEquals(2, baum.gibKopf().gibSchlüssel());
+
+    baum.entferne(2);
+    assertEquals(1, baum.gibKopf().gibSchlüssel());
+  }
+
 
   @Test
   public void testeEinfügen() {
@@ -25,11 +46,11 @@ public class AVLBaumTest {
 
     AVLBaumKnoten kopf = baum.gibKopf();
 
-    assertEquals(2, kopf.schlüssel);
-    assertEquals(1, kopf.links.schlüssel);
-    assertEquals(4, kopf.rechts.schlüssel);
-    assertEquals(3, kopf.rechts.links.schlüssel);
-    assertEquals(5, kopf.rechts.rechts.schlüssel);
+    assertEquals(2, kopf.gibSchlüssel());
+    assertEquals(1, kopf.gibLinks().gibSchlüssel());
+    assertEquals(4, kopf.gibRechts().gibSchlüssel());
+    assertEquals(3, kopf.gibRechts().gibLinks().gibSchlüssel());
+    assertEquals(5, kopf.gibRechts().gibRechts().gibSchlüssel());
   }
 
   @Test
@@ -44,11 +65,11 @@ public class AVLBaumTest {
 
     AVLBaumKnoten kopf = baum.gibKopf();
 
-    assertEquals(19, kopf.schlüssel);
-    assertEquals(1, kopf.links.schlüssel);
-    assertEquals(21, kopf.rechts.schlüssel);
-    assertEquals(6, kopf.links.rechts.schlüssel);
-    assertEquals(41, kopf.rechts.rechts.schlüssel);
+    assertEquals(19, kopf.gibSchlüssel());
+    assertEquals(1, kopf.gibLinks().gibSchlüssel());
+    assertEquals(21, kopf.gibRechts().gibSchlüssel());
+    assertEquals(6, kopf.gibLinks().gibRechts().gibSchlüssel());
+    assertEquals(41, kopf.gibRechts().gibRechts().gibSchlüssel());
   }
 
   @Test
@@ -59,16 +80,41 @@ public class AVLBaumTest {
 
     AVLBaumKnoten kopf = baum.gibKopf();
 
-    assertEquals("d", kopf.schlüssel);
-    assertEquals("b", kopf.links.schlüssel);
-    assertEquals("e", kopf.rechts.schlüssel);
-    assertEquals("a", kopf.links.links.schlüssel);
-    assertEquals("c", kopf.links.rechts.schlüssel);
-    assertEquals("f", kopf.rechts.rechts.schlüssel);
+    assertEquals("d", kopf.gibSchlüssel());
+    assertEquals("b", kopf.gibLinks().gibSchlüssel());
+    assertEquals("e", kopf.gibRechts().gibSchlüssel());
+    assertEquals("a", kopf.gibLinks().gibLinks().gibSchlüssel());
+    assertEquals("c", kopf.gibLinks().gibRechts().gibSchlüssel());
+    assertEquals("f", kopf.gibRechts().gibRechts().gibSchlüssel());
+  }
+
+
+  @Test
+  public void methodeEntferne() {
+    AVLBaum baum = new AVLBaum();
+    assertEquals(false, baum.entferne(1));
+    assertEquals(false, baum.entferne(2));
+
+    assertEquals(true, baum.fügeEin(1));
+    assertEquals(1, baum.gibKopf().gibSchlüssel());
+    assertEquals(true, baum.entferne(1));
+    assertEquals(false, baum.entferne(1));
+    assertEquals(null, baum.gibKopf());
+    assertEquals(true, baum.fügeEin(1, 3, 4, 6, 8, 10, 34, 2));
+    assertEquals(true, baum.entferne(2));
+    assertEquals(true, baum.entferne(34));
+    assertEquals(true, baum.entferne(1));
+    assertEquals(false, baum.entferne(178));
+    assertEquals(true, baum.entferne(10));
+    assertEquals(true, baum.entferne(4));
+    assertEquals(true, baum.entferne(8));
+    assertEquals(true, baum.entferne(3));
+    assertEquals(true, baum.entferne(6));
+    assertEquals(false, baum.entferne(6));
   }
 
   @Test
-  public void testeLöschen() {
+  public void entfernen() {
     AVLBaum baum = new AVLBaum();
 
     baum.fügeEin(21);
@@ -80,14 +126,14 @@ public class AVLBaumTest {
     baum.entferne(21);
     AVLBaumKnoten root = baum.gibKopf();
 
-    assertEquals(19, root.schlüssel);
-    assertEquals(1, root.links.schlüssel);
-    assertEquals(41, root.rechts.schlüssel);
-    assertEquals(6, root.links.rechts.schlüssel);
+    assertEquals(19, root.gibSchlüssel());
+    assertEquals(1, root.gibLinks().gibSchlüssel());
+    assertEquals(41, root.gibRechts().gibSchlüssel());
+    assertEquals(6, root.gibLinks().gibRechts().gibSchlüssel());
   }
 
   @Test
-  public void testeLöschenWurzel() {
+  public void entferneWurzel() {
     AVLBaum baum = new AVLBaum();
 
     baum.fügeEin(21);
@@ -99,14 +145,14 @@ public class AVLBaumTest {
     baum.entferne(19);
     AVLBaumKnoten kopf = baum.gibKopf();
     // https://visualgo.net/en/bst
-    assertEquals(21, kopf.schlüssel);
-    assertEquals(1, kopf.links.schlüssel);
-    assertEquals(41, kopf.rechts.schlüssel);
-    assertEquals(6, kopf.links.rechts.schlüssel);
+    assertEquals(21, kopf.gibSchlüssel());
+    assertEquals(1, kopf.gibLinks().gibSchlüssel());
+    assertEquals(41, kopf.gibRechts().gibSchlüssel());
+    assertEquals(6, kopf.gibLinks().gibRechts().gibSchlüssel());
   }
 
   @Test
-  public void testeLöschenWurzelRechts() {
+  public void entferneWurzelRechts() {
     AVLBaum baum = new AVLBaum();
 
     baum.fügeEin(21);
@@ -118,14 +164,14 @@ public class AVLBaumTest {
     baum.entferne(19, "rechts");
     AVLBaumKnoten kopf = baum.gibKopf();
     // https://visualgo.net/en/bst
-    assertEquals(21, kopf.schlüssel);
-    assertEquals(1, kopf.links.schlüssel);
-    assertEquals(41, kopf.rechts.schlüssel);
-    assertEquals(6, kopf.links.rechts.schlüssel);
+    assertEquals(21, kopf.gibSchlüssel());
+    assertEquals(1, kopf.gibLinks().gibSchlüssel());
+    assertEquals(41, kopf.gibRechts().gibSchlüssel());
+    assertEquals(6, kopf.gibLinks().gibRechts().gibSchlüssel());
   }
 
   @Test
-  public void testeLöschenWurzelLinks() {
+  public void entferneWurzelLinks() {
     AVLBaum baum = new AVLBaum();
 
     baum.fügeEin(21);
@@ -137,30 +183,10 @@ public class AVLBaumTest {
     baum.entferne(19, "links");
     AVLBaumKnoten kopf = baum.gibKopf();
     // https://www.cs.usfca.edu/~galles/visualization/AVLbaum.html
-    assertEquals(6, kopf.schlüssel);
-    assertEquals(1, kopf.links.schlüssel);
-    assertEquals(21, kopf.rechts.schlüssel);
-    assertEquals(41, kopf.rechts.rechts.schlüssel);
-  }
-
-  @Test
-  public void methodeGibWurzel() {
-    AVLBaum baum = new AVLBaum();
-
-    baum.fügeEin(1);
-    assertEquals(1, baum.gibKopf().schlüssel);
-
-    baum.fügeEin(2);
-    assertEquals(1, baum.gibKopf().schlüssel);
-
-    baum.fügeEin(3);
-    assertEquals(2, baum.gibKopf().schlüssel);
-
-    baum.entferne(3);
-    assertEquals(2, baum.gibKopf().schlüssel);
-
-    baum.entferne(2);
-    assertEquals(1, baum.gibKopf().schlüssel);
+    assertEquals(6, kopf.gibSchlüssel());
+    assertEquals(1, kopf.gibLinks().gibSchlüssel());
+    assertEquals(21, kopf.gibRechts().gibSchlüssel());
+    assertEquals(41, kopf.gibRechts().gibRechts().gibSchlüssel());
   }
 
   @SuppressWarnings("rawtypes")
