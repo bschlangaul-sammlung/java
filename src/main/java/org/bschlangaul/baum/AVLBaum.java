@@ -4,7 +4,8 @@ package org.bschlangaul.baum;
  * Eine Implementation eines AVL-Baums. (Nach
  * <a href="https://www.baeldung.com/java-avl-trees">baeldung.com</a> bzw.
  * <a href=
- * "https://github.com/eugenp/tutorials/blob/master/data-structures/src/main/java/com/baeldung/avltree/AVLTree.java">Repository auf Gibhub</a>)
+ * "https://github.com/eugenp/tutorials/blob/master/data-structures/src/main/java/com/baeldung/avltree/AVLTree.java">Repository
+ * auf Gibhub</a>)
  */
 @SuppressWarnings({ "rawtypes" })
 public class AVLBaum extends BinaerBaum {
@@ -32,6 +33,13 @@ public class AVLBaum extends BinaerBaum {
     return kopf;
   }
 
+  /**
+   * Gib den Balancefaktor des gegebenen Knotens.
+   *
+   * @param knoten Der Knoten, dessen Balancefaktor ausgegeben werden soll.
+   *
+   * @return Der Balancefaktor des Knotens.
+   */
   public int gibBalance(AVLBaumKnoten knoten) {
     return (knoten == null) ? 0 : gibHöhe(knoten.rechts) - gibHöhe(knoten.links);
   }

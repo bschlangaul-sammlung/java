@@ -35,4 +35,13 @@ public class AVLBaumKnoten extends BaumKnoten {
   public AVLBaumKnoten gibRechts() {
     return rechts;
   }
+
+  /**
+   * Gib die Höhe des (Teil)-Baums. Eine Kindknoten hat die Höhe 0.
+   *
+   * @return Die Höhe des (Teil)-Baums.
+   */
+  public int gibHöhe() {
+    return höhe;
+  }
 }
