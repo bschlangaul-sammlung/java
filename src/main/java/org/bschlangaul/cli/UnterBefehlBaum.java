@@ -25,8 +25,8 @@ class UnterBefehlBaum implements Callable<Integer> {
   @Option(names = { "-m", "--min", "--min-halde" }, description = "Als Min-Halde (Heap) ausgeben.")
   boolean istHalde;
 
-  @Parameters(arity = "1..*", description = "Zahlen, die in den Baum eingefügt werden sollen.")
-  List<Integer> werte;
+  @Parameters(arity = "1..*", description = "Einfügen: (setze) 1 2 3; Löschen: lösche 1 2 3.")
+  List<String> werte;
 
   @Override
   public Integer call() {
@@ -52,8 +52,21 @@ class UnterBefehlBaum implements Callable<Integer> {
     baum.reporter = reporter;
     BaumReporter.redseligkeit = KommandoZeile.gibRedseligkeit();
 
+    boolean lösche = false;
     for (int i = 0; i < werte.size(); i++) {
-      baum.fügeEin(werte.get(i));
+      String wert = werte.get(i);
+      if (wert.equals("lösche")) {
+        lösche = true;
+      } else if (wert.equals("setze")) {
+        lösche = false;
+      }
+      if (!wert.equals("lösche") && !wert.equals("setze")) {
+        int zahl = Integer.parseInt(wert);
+        if (!lösche)
+          baum.fügeEin(zahl);
+        else
+          baum.entferne(zahl);
+      }
     }
 
     baum.reporter.berichteTraversierung(baum);

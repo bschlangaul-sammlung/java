@@ -9,6 +9,12 @@ public class AVLBaum extends BinaerBaum {
 
   private AVLBaumKnoten kopf;
 
+  /**
+   * Um bei der entfernen-Methode einen boolschen Rückgabewert zu haben.
+   * Der binäre Suchbaum gibt auch wahr oder falsch zurück.
+   */
+  private boolean gelöscht;
+
   private int gibHöhe(AVLBaumKnoten knoten) {
     return knoten == null ? -1 : knoten.höhe;
   }
@@ -147,6 +153,7 @@ public class AVLBaum extends BinaerBaum {
     } else {
       if (knoten.links == null || knoten.rechts == null) {
         knoten = (knoten.links == null) ? knoten.rechts : knoten.links;
+        gelöscht = true;
       } else if (neuerKopf.equals("rechts")) {
         AVLBaumKnoten ganzLinkesKind = gibÄußerstesKind(knoten.rechts, "links");
         knoten.schlüssel = ganzLinkesKind.schlüssel;
@@ -164,13 +171,18 @@ public class AVLBaum extends BinaerBaum {
   }
 
   /**
-   * Lösche einen Schlüssel aus dem AVL-Baum. Der zu lösche Knoten wird
+   * Lösche einen Schlüssel aus dem AVL-Baum. Der zu löschende Knoten wird
    * standardmäßig mit dem kleinsten Wert des rechten Teilbaums ersetzt.
    *
    * @param schlüssel Der Schlüssel, der gelöscht werden soll.
    */
-  public void entferne(Comparable schlüssel) {
+  public boolean entferne(Comparable schlüssel) {
+    boolean ausgabe = gelöscht;
     kopf = entferne(kopf, schlüssel, "rechts");
+    // Wieder auf falsch setzten, damit beim nächsten Löschvorgang der
+    // Wert wieder von neuem gesetzt werden muss.
+    gelöscht = false;
+    return ausgabe;
   }
 
   /**

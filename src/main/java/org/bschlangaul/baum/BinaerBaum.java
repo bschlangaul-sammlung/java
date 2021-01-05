@@ -187,4 +187,7 @@ public abstract class BinaerBaum {
     }
     return ergebnis;
   }
+
+  abstract public boolean entferne(Comparable schlüssel);
+
 }
