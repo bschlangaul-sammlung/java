@@ -1,8 +1,10 @@
 package org.bschlangaul.baum;
 
 /**
- * https://www.baeldung.com/java-avl-trees
- * https://github.com/eugenp/tutorials/blob/master/data-structures/src/main/java/com/baeldung/avltree/AVLTree.java
+ * Eine Implementation eines AVL-Baums. (Nach
+ * <a href="https://www.baeldung.com/java-avl-trees">baeldung.com</a> bzw.
+ * <a href=
+ * "https://github.com/eugenp/tutorials/blob/master/data-structures/src/main/java/com/baeldung/avltree/AVLTree.java">Repository auf Gibhub</a>)
  */
 @SuppressWarnings({ "rawtypes" })
 public class AVLBaum extends BinaerBaum {
@@ -10,8 +12,8 @@ public class AVLBaum extends BinaerBaum {
   private AVLBaumKnoten kopf;
 
   /**
-   * Um bei der entfernen-Methode einen boolschen Rückgabewert zu haben.
-   * Der binäre Suchbaum gibt auch wahr oder falsch zurück.
+   * Um bei der entfernen-Methode einen boolschen Rückgabewert zu haben. Der
+   * binäre Suchbaum gibt auch wahr oder falsch zurück.
    */
   private boolean gelöscht;
 
@@ -23,6 +25,9 @@ public class AVLBaum extends BinaerBaum {
     return gibKopf() == null ? -1 : kopf.höhe;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public AVLBaumKnoten gibKopf() {
     return kopf;
   }
@@ -106,6 +111,9 @@ public class AVLBaum extends BinaerBaum {
     return rebalanciere(knoten);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public boolean fügeEin(Comparable schlüssel) {
     reporter.berichteÜberschrift("Einfügen von „" + schlüssel + "“", 0);
 
@@ -115,11 +123,13 @@ public class AVLBaum extends BinaerBaum {
   }
 
   /**
+   * Gib das äußerste Kind eines Knoten.
    *
    * @param knoten   Der aktuelle Knoten.
    * @param richtung „links“: der linkesten Knoten des (Teil-)Baums oder „rechts“:
    *                 der rechtesten Knoten des linkesten Knoten des (Teil-)Baums.
-   * @return
+   *
+   * @return Das äußerste Kind eines Knoten.
    */
   private AVLBaumKnoten gibÄußerstesKind(AVLBaumKnoten knoten, String richtung) {
     AVLBaumKnoten aktuellerKnoten = knoten;
@@ -136,12 +146,14 @@ public class AVLBaum extends BinaerBaum {
   }
 
   /**
+   * Entferne einen Knoten.
    *
    * @param knoten    Der aktuelle Knoten.
    * @param schlüssel Der Schlüssel, der gelöscht werden soll.
    * @param neuerKopf „links“: rechtesten Knoten des linken Kindbaums oder
    *                  „rechts“: den linkesten Knoten des rechten Kindbaums.
-   * @return
+   *
+   * @return Den aktuellen Kopf-Knoten des Baums.
    */
   private AVLBaumKnoten entferne(AVLBaumKnoten knoten, Comparable schlüssel, String neuerKopf) {
     if (knoten == null) {
@@ -171,10 +183,7 @@ public class AVLBaum extends BinaerBaum {
   }
 
   /**
-   * Lösche einen Schlüssel aus dem AVL-Baum. Der zu löschende Knoten wird
-   * standardmäßig mit dem kleinsten Wert des rechten Teilbaums ersetzt.
-   *
-   * @param schlüssel Der Schlüssel, der gelöscht werden soll.
+   * {@inheritDoc}
    */
   public boolean entferne(Comparable schlüssel) {
     reporter.berichteÜberschrift("Löschen von „" + schlüssel + "“", 0);

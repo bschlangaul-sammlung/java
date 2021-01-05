@@ -20,10 +20,14 @@ class Zone {
   }
 
   /**
-   * Diese Methode wird zum Testen der Methode getIndex gebraucht.
+   * Diese Methode wird zum Testen der Methode {@link getIndex} gebraucht.
+   *
+   * @param hash Der Hashwert, für den eine Kollisionsliste gefunden werden soll.
+   *
+   * @return Eine Kollisionsliste bestehend aus Strings.
    */
-  public ArrayList<String> getUrlCollisionList(int h) {
-    return urlList.get(h);
+  public ArrayList<String> getUrlCollisionList(int hash) {
+    return urlList.get(hash);
   }
 
   /**
@@ -78,6 +82,12 @@ class Zone {
   /**
    * Berechne den Index einer URL in der Kollisionsliste. Ist die URL in der
    * Kollisionsliste nicht vorhanden, soll -1 zurückgeliefert werden.
+   *
+   * @param url     Die URL, für die der Index gesucht werden soll.
+   * @param urlList Die URL-Kollisionsliste, in der gesucht werden soll.
+   *
+   * @return Die Index-Nummer der gefundenen URL oder -1, wenn die URL nicht
+   *         gefunden wurde.
    */
   int getIndex(String url, ArrayList<String> urlList) {
     for (int i = 0; i < urlList.size(); i++) {

@@ -10,7 +10,7 @@ import org.bschlangaul.liste.saake.WarteschlangeFehler;
 
 /**
  * Die abstrakte Oberklasse eines Binärbaums für die Klassen
- * {@link BinaererSuchBaum} und {@AVLBaum}.
+ * {@link BinaererSuchBaum} und {@link AVLBaum}.
  */
 @SuppressWarnings("rawtypes")
 public abstract class BinaerBaum {
@@ -92,7 +92,7 @@ public abstract class BinaerBaum {
    * @param schlüssel     Eine Liste, die mit den besuchten Schlüsselwerten
    *                      gefüllt wird.
    *
-   * @throws WarteschlangeFehler
+   * @throws WarteschlangeFehler Ein Warteschlangen-Fehler.
    */
   private void besucheLevelorder(Warteschlange warteschlange, ArrayList<Comparable> schlüssel)
       throws WarteschlangeFehler {
@@ -110,6 +110,7 @@ public abstract class BinaerBaum {
    * Besuche die Knoten des Baums in verschiedenen Traversierungsmethoden.
    *
    * <table>
+   * <caption>Auflistung der Traversierungsmethoden</caption>
    * <thead>
    * <tr>
    * <td>strategie</td>
@@ -136,6 +137,9 @@ public abstract class BinaerBaum {
    * </table>
    *
    * @param strategie 0 (INORDER), 1 (PREORDER), 2 (POSTORDER), 3 (LEVELORDER)
+   *
+   * @return Eine Liste mit Schlüsselwerten in der entsprechenden
+   *         Traversierungsreihenfolge.
    */
   public ArrayList<Comparable> traversiere(int strategie) {
     ArrayList<Comparable> schlüssel = new ArrayList<Comparable>();
@@ -163,8 +167,20 @@ public abstract class BinaerBaum {
     return schlüssel;
   }
 
+  /**
+   * Gib den Kopfknoten des Baums, d. h. den ersten, obersten Knoten.
+   *
+   * @return Den Kopfknoten des Baums.
+   */
   abstract public BaumKnoten gibKopf();
 
+  /**
+   * Füge einen Schlüssel in den binären Baum ein.
+   *
+   * @param schlüssel Ein Schlüssel, der eingefügt werden soll.
+   *
+   * @return Wahr, wenn das Einfügen erfolgreich war.
+   */
   abstract public boolean fügeEin(Comparable schlüssel);
 
   /**
@@ -188,6 +204,15 @@ public abstract class BinaerBaum {
     return ergebnis;
   }
 
+  /**
+   * Lösche einen Schlüssel aus dem Baum.
+   *
+   * @param schlüssel Der Schlüsselwert, der gelöscht werden soll.
+   *
+   * @return wahr, wenn das Löschen erfolgreich war, d. h. der Schlüsselwert
+   *         befand sich im Baum. Falsch, wenn sich der Schlüsselwert nicht im
+   *         Baum befand.
+   */
   abstract public boolean entferne(Comparable schlüssel);
 
 }

@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 /**
  * Feld-Implementation einer minimalen Halde (nach
- * <a href="https://codegym.cc/groups/posts/min-heap-in-java">codegym.cc/</a>)
+ * <a href="https://codegym.cc/groups/posts/min-heap-in-java">codegym.cc</a>)
  */
 public class MinimaleHalde {
   private int[] halde;

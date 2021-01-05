@@ -1,7 +1,8 @@
 package org.bschlangaul.baum;
 
 /**
- * Saake Seite 357
+ * Eine Implementation eines binären Suchbaums. (Nach
+ * Saake Seite 357)
  */
 @SuppressWarnings({ "rawtypes" })
 public class BinaererSuchBaum extends BinaerBaum {
@@ -14,18 +15,18 @@ public class BinaererSuchBaum extends BinaerBaum {
     kopf.setzeRechts(null);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public BaumKnoten gibKopf() {
     return kopf.gibRechts();
   }
 
   /**
-   * Füge einen Schlüssel in den Binären Baum ein. Vergleiche Saake Seite 363.
-   *
-   * @param schlüssel Ein Schlüssel, der eingefügt werden soll.
-   *
-   * @return Wahr, wenn das Einfügen erfolgreich war.
+   * {@inheritDoc}
    */
   public boolean fügeEin(Comparable schlüssel) {
+    // Vergleiche Saake Seite 363.
     BaumKnoten eltern = kopf;
     BaumKnoten kind = gibKopf();
     while (kind != null) {
@@ -78,11 +79,10 @@ public class BinaererSuchBaum extends BinaerBaum {
   }
 
   /**
-   * Saake Seite 365-366
-   *
-   * @param schlüssel Der Schlüssel, der gelöscht werden soll.
+   * {@inheritDoc}
    */
   public boolean entferne(Comparable schlüssel) {
+    // Saake Seite 365-366
     BaumKnoten eltern = kopf;
     BaumKnoten knoten = gibKopf();
     BaumKnoten kind = null;

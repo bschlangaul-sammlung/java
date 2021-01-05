@@ -36,6 +36,8 @@ public class BBaumReporter {
   static String[] englischeZahlen = { "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten" };
 
   /**
+   * Erzeuge das TikZ-Markup für eine B-Baum Seite (Knoten).
+   *
    * <pre>
    * {@code
    *   child {60 \nodepart{two} 80 \nodepart{three} 90
@@ -44,6 +46,13 @@ public class BBaumReporter {
    *   }
    * }
    * </pre>
+   *
+   * @param seite Die B-Baum-Seite (Knoten), für die das Markup erzeugt werden
+   *              soll.
+   * @param ebene Auf welcher Ebene sich die Seite im B-Baum befindet, beginnend
+   *              bei 0.
+   *
+   * @return Das TikZ-Markup zum zeichnen eines B-Baums in TeX.
    */
   private static String erzeugeSeite(BBaum.BBaumSeite seite, int ebene) {
     String leerzeichen = " ".repeat(ebene * 2);

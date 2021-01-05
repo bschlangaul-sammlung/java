@@ -3,7 +3,7 @@ package org.bschlangaul.baum;
 import java.util.Vector;
 
 /**
- * Eine Implemntation eines B-Baum nach Saake Seite 388-389.
+ * Eine Implemenation eines B-Baum (nach Saake Seite 388-389).
  */
 @SuppressWarnings("rawtypes")
 public class BBaum {
