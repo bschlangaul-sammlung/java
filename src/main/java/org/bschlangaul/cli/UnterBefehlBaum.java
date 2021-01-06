@@ -25,6 +25,9 @@ class UnterBefehlBaum implements Callable<Integer> {
   @Option(names = { "-m", "--min", "--min-halde" }, description = "Als Min-Halde (Heap) ausgeben.")
   boolean istHalde;
 
+  @Option(names = { "-T", "--traversierung" }, description = "Zeige Traversierungsmethoden-Tabelle.")
+  boolean zeigeTraversierung;
+
   @Parameters(arity = "1..*", description = "Einfügen: (setze) 1 2 3; Löschen: lösche 1 2 3.")
   List<String> werte;
 
@@ -69,7 +72,8 @@ class UnterBefehlBaum implements Callable<Integer> {
       }
     }
 
-    baum.reporter.berichteTraversierung(baum);
+    if (zeigeTraversierung)
+      baum.reporter.berichteTraversierung(baum);
 
     return 0;
   }

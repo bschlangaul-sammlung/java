@@ -60,22 +60,22 @@ public class AVLBaum extends BinaerBaum {
     int balance = gibBalance(knoten);
     if (balance > 1) {
       if (gibHöhe(knoten.rechts.rechts) > gibHöhe(knoten.rechts.links)) {
-        reporter.berichteBaum(this, "Linksrotation", 1);
+        reporter.berichteBaum(this, "Nach der Linksrotation", 1);
         knoten = rotiereLinks(knoten);
       } else {
-        reporter.berichteBaum(this, "Rechtsrotation", 1);
+        reporter.berichteBaum(this, "Nach der Rechtsrotation", 1);
         knoten.rechts = rotiereRechts(knoten.rechts);
-        reporter.berichteBaum(this, "Linksrotation", 1);
+        reporter.berichteBaum(this, "Nach der Linksrotation", 1);
         knoten = rotiereLinks(knoten);
       }
     } else if (balance < -1) {
       if (gibHöhe(knoten.links.links) > gibHöhe(knoten.links.rechts)) {
-        reporter.berichteBaum(this, "Rechtsrotation", 1);
+        reporter.berichteBaum(this, "Nach der Rechtsrotation", 1);
         knoten = rotiereRechts(knoten);
       } else {
-        reporter.berichteBaum(this, "Linksrotation", 1);
+        reporter.berichteBaum(this, "Nach der Linksrotation", 1);
         knoten.links = rotiereLinks(knoten.links);
-        reporter.berichteBaum(this, "Rechtsrotation", 1);
+        reporter.berichteBaum(this, "Nach der Rechtsrotation", 1);
         knoten = rotiereRechts(knoten);
       }
     }
@@ -123,7 +123,7 @@ public class AVLBaum extends BinaerBaum {
    * {@inheritDoc}
    */
   public boolean fügeEin(Comparable schlüssel) {
-    reporter.berichteÜberschrift("Einfügen von „" + schlüssel + "“", 0);
+    reporter.berichteÜberschrift("Nach Einfügen von „" + schlüssel + "“", 0);
 
     kopf = fügeEin(kopf, schlüssel);
     reporter.berichteBaum(this, 0);
@@ -194,7 +194,7 @@ public class AVLBaum extends BinaerBaum {
    * {@inheritDoc}
    */
   public boolean entferne(Comparable schlüssel) {
-    reporter.berichteÜberschrift("Löschen von „" + schlüssel + "“", 0);
+    reporter.berichteÜberschrift("Nach Löschen von „" + schlüssel + "“", 0);
     kopf = entferne(kopf, schlüssel, "rechts");
     // Wieder auf falsch setzten, damit beim nächsten Löschvorgang der
     // Wert wieder von neuem gesetzt werden muss.
