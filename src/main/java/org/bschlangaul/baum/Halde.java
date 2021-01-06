@@ -45,16 +45,16 @@ public class Halde {
     return (index - 1) / 2;
   }
 
-  private int gibIndexLinkesKind(int index) {
+  private int gibIndexLinks(int index) {
     return (index * 2) + 1;
   }
 
-  private int gibIndexRechtesKind(int index) {
+  private int gibIndexRechts(int index) {
     return (index * 2) + 2;
   }
 
   private boolean istBlatt(int index) {
-    if (gibIndexRechtesKind(index) >= kapazität || gibIndexLinkesKind(index) >= kapazität) {
+    if (gibIndexRechts(index) >= kapazität || gibIndexLinks(index) >= kapazität) {
       return true;
     }
     return false;
@@ -118,14 +118,14 @@ public class Halde {
   private void haldefiziere(int index) {
     // Falls der Knoten kein Blattknoten ist und eins der beiden Kinder kleiner ist.
     if (!istBlatt(index)) {
-      if (vergleiche(halde[index], halde[gibIndexLinkesKind(index)])
-          || vergleiche(halde[index], halde[gibIndexRechtesKind(index)])) {
-        if (!vergleiche(halde[gibIndexLinkesKind(index)], halde[gibIndexRechtesKind(index)])) {
-          vertausche(index, gibIndexLinkesKind(index));
-          haldefiziere(gibIndexLinkesKind(index));
+      if (vergleiche(halde[index], halde[gibIndexLinks(index)])
+          || vergleiche(halde[index], halde[gibIndexRechts(index)])) {
+        if (!vergleiche(halde[gibIndexLinks(index)], halde[gibIndexRechts(index)])) {
+          vertausche(index, gibIndexLinks(index));
+          haldefiziere(gibIndexLinks(index));
         } else {
-          vertausche(index, gibIndexRechtesKind(index));
-          haldefiziere(gibIndexRechtesKind(index));
+          vertausche(index, gibIndexRechts(index));
+          haldefiziere(gibIndexRechts(index));
         }
       }
     }
