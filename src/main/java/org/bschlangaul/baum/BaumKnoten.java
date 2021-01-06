@@ -1,8 +1,8 @@
 package org.bschlangaul.baum;
 
 /**
- * Ein zur Klasse {@link BinaererSuchBaum} gehörender Knoten (nach Saake
- * Seite 349)
+ * Ein zur Klasse {@link BinaererSuchBaum} gehörender Knoten (nach Saake Seite
+ * 349)
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class BaumKnoten {
@@ -56,7 +56,16 @@ public class BaumKnoten {
     return schlüssel.toString();
   }
 
-  public int vergleiche(Comparable c) {
-    return (schlüssel == null ? -1 : ((Comparable) schlüssel).compareTo(c));
+  /**
+   * Vergleiche den Schlüsselwert dieses Knotens mit einem zweiten Schlüsselwert.
+   *
+   * @param vergleichsSchlüssel Der Schlüsselwert, mit dem verglichen werden soll.
+   *
+   * @return -1, wenn der eigene Schlüsselwert kleiner als der Vergleichswert ist.
+   *         -1, wenn der eigene Schlüsselwert null ist. 0, wenn beiden
+   *         Schlüsselwerte gleich groß sind. 1, wenn der eigene Wert größer ist.
+   */
+  public int vergleiche(Comparable vergleichsSchlüssel) {
+    return (schlüssel == null ? -1 : ((Comparable) schlüssel).compareTo(vergleichsSchlüssel));
   }
 }

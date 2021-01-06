@@ -11,17 +11,90 @@ befindet sich sich - in viele Unterpakete aufgeteilt - im Verzeichnis
 `src/main/java/org/bschlangaul`. Zu einigen Paketen gibt es Tests. Das
 Verzeichnis für die Tests lautet: `src/test/java/org/bschlangaul`.
 
-# javadoc Dokumentation erzeugen
+------------------------------------------------------------------------
+
+## Über die verwendeten Bezeichner
+
+Wo es möglich ist, werden in diesem Repository deutsche Bezeichner für
+Java Klassen, Interfaces, Variablen etc. verwendet. Besonders in den
+kleineren Jahrgangsstufen empfiehlt es sich, im Informatikunterricht
+Deutsch bei der Programmierung einzusetzen, um die Einstiegshürde so
+gering wie möglich zu halten. Wir wollen hier mit gutem Beispiel voran
+gehen.
+
+
+Bei Examensaufgaben, bei denen die Angabe ersichtlich englische
+Bezeichner verwendet, wird eine Ausnahme von dieser Regel gemacht. Mit
+Ausnahme von Klassen- und Interfacebezeichner werden auch Umlaute
+verwendet (Es müssten dann auch Umlaute in den Dateinamen verwendet
+werden, was zu Problemen führen kann). Java bietet uns diese Möglichkeit
+an. Warum sollte diese Möglichkeit nicht genutzt werden.
+
+Als Methodenname werden Verben im Imperativ verwenden, [wie zum Beispiel
+in diesem
+Wikipedia-Artikel](https://de.wikipedia.org/wiki/Methode_(Programmierung)#Beispiel)
+(`berechneEinnahmen(...)`).
+
+Methodennamen sollen mit einem Kleinbuchstaben beginnen. Der
+[Wikipedia-Artikel über Namenkonventionen in der
+Datenverarbeitung](https://de.wikipedia.org/wiki/Namenskonvention_(Datenverarbeitung)#Namenskonventionen_für_Java)
+nennt diese englischen Methodennamen als Beispiele: `add()` oder
+`remove()`.
+
+------------------------------------------------------------------------
+
+## Source-Code-Dokumentation
+
+Die Source-Code-Dokumentation dieses Projekts kann mit dem Maven-Befehl
 
 ```
 mvn javadoc:javadoc
 ```
+
+erstellt werden.
+
+------------------------------------------------------------------------
+
+## Source-Code-Formatierungsregeln
+
+
+
+Wie intelij reformat code.
+
+```java
+public class WortPaar extends WoerterbuchEintrag {
+  private final String deutsch;
+
+  private final String englisch;
+
+  public WortPaar(String deutsch, String englisch) {
+    this.deutsch = deutsch;
+    this.englisch = englisch;
+  }
+
+  public String gibDeutschesWort() {
+    return deutsch;
+  }
+
+  public String gibEnglischesWort() {
+    return englisch;
+  }
+}
+```
+
+
+
+
 
 # Testen
 
 ```
 mvn test
 ```
+
+------------------------------------------------------------------------
+
+## Abhängigkeiten
 
 ```
 mvn install:install-file \
@@ -41,39 +114,6 @@ mvn install:install-file \
    -Dversion=3.6.1 \
    -Dpackaging=jar \
    -DgeneratePom=true
-```
-
-# Java-Coding-Style
-
-## Methodenamen
-
-Verb im Imperativ: `berechneEinnahmen(...)` [wie in diesem Wikipedia-Artikel](https://de.wikipedia.org/wiki/Methode_(Programmierung)#Beispiel)
-
-Methodennamen sollen Verben sein und mit einem Kleinbuchstaben beginnen,
-z. B. add oder remove.
-[Wikipedia](https://de.wikipedia.org/wiki/Namenskonvention_(Datenverarbeitung)#Namenskonventionen_f%C3%BCr_Java)
-
-Wie intelij reformat code. Umlaute im Methodennamen etc sind erlaubt.
-
-```java
-public class WortPaar extends WörterbuchEintrag {
-  private final String deutsch;
-
-  private final String englisch;
-
-  public WortPaar(String deutsch, String englisch) {
-    this.deutsch = deutsch;
-    this.englisch = englisch;
-  }
-
-  public String gibDeutschesWort() {
-    return deutsch;
-  }
-
-  public String gibEnglischesWort() {
-    return englisch;
-  }
-}
 ```
 
 ## Eigene DSLs (Domain-specific languages)
