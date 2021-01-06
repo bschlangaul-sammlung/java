@@ -14,15 +14,16 @@ enum HaldenTyp {
  * Studge</a>
  */
 public class Halde<T extends Comparable<T>> {
-  private static final int DEFAULT_KAPAZITÄT = 10;
+  private static final int STANDARD_KAPAZITÄT = 10;
+
+  private T[] halde;
+  private int füllstand;
 
   /**
    * Der aktuelle Füllstand der Halde. Er wird hochgezählt, wenn ein neuer
    * Schlüsselwert eingefügt wird und er wird erniedrigt, wenn ein Schlüsselwert
    * entnommen wird.
    */
-  private T[] halde;
-  private int füllstand;
   private HaldenTyp typ;
 
   /**
@@ -33,7 +34,7 @@ public class Halde<T extends Comparable<T>> {
    * default type of heap is min
    */
   public Halde(HaldenTyp typ) {
-    halde = (T[]) new Comparable[DEFAULT_KAPAZITÄT];
+    halde = (T[]) new Comparable[STANDARD_KAPAZITÄT];
     füllstand = 0;
     this.typ = typ;
   }
@@ -166,7 +167,7 @@ public class Halde<T extends Comparable<T>> {
    */
   private T[] resize() {
     // add 10 to array capacity
-    return Arrays.copyOf(halde, halde.length + DEFAULT_KAPAZITÄT);
+    return Arrays.copyOf(halde, halde.length + STANDARD_KAPAZITÄT);
   }
 
   /**
@@ -307,19 +308,28 @@ public class Halde<T extends Comparable<T>> {
   }
 
   /**
-   * Overridden toString method
+   * Konvertiere die Halde zu Text.
    *
-   * @return String all values in heap without null values
+   * @return Alle Werte der Halde als Text mit Kommas zusammengehängt.
    */
   @Override
   public String toString() {
-    String retval = "";
-    for (T each : halde) {
-      if (each != null)
-        retval += each + " : ";
+    String ausgabe = "";
+    for (T schlüssel : gibHaldenFeld()) {
+      ausgabe += schlüssel + ", ";
     }
-    return retval + "\n";
+    return ausgabe;
+  }
 
+  /**
+   * Exportiere die Halde als Binärbaum.
+   *
+   * @return Ein Repräsentation als Binärbaum
+   */
+  public BinaerBaum gibBinaerBaum() {
+    BinaerBaum baum = new BinaererSuchBaum();
+    baum.fügeEin(gibHaldenFeld());
+    return baum;
   }
 
 }

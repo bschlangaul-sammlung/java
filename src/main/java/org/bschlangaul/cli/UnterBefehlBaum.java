@@ -1,5 +1,6 @@
 package org.bschlangaul.cli;
 
+import picocli.CommandLine.ArgGroup;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
@@ -11,6 +12,9 @@ import org.bschlangaul.baum.AVLBaum;
 import org.bschlangaul.baum.BinaerBaum;
 
 import org.bschlangaul.baum.BinaererSuchBaum;
+import org.bschlangaul.baum.Halde;
+import org.bschlangaul.baum.MaxHalde;
+import org.bschlangaul.baum.MinHalde;
 import org.bschlangaul.baum.visualisierung.BaumReporter;
 import org.bschlangaul.baum.visualisierung.TerminalBaumReporter;
 import org.bschlangaul.baum.visualisierung.TexBaumReporter;
@@ -19,11 +23,22 @@ import org.bschlangaul.baum.visualisierung.TexBaumReporter;
     "b" }, mixinStandardHelpOptions = true, description = "Führe baumspezifische Aufgaben aus.")
 class UnterBefehlBaum implements Callable<Integer> {
 
-  @Option(names = { "-a", "--avl", "--avl-baum" }, description = "Als AVL-Baum ausgeben.")
-  boolean istAvl;
+  @ArgGroup(exclusive = true, multiplicity = "1")
+  BaumArt baumArt;
 
-  @Option(names = { "-m", "--min", "--min-halde" }, description = "Als Min-Halde (Heap) ausgeben.")
-  boolean istHalde;
+  static class BaumArt {
+    @Option(names = { "-s", "--such", "--such-baum" }, description = "Als binärer Suchbaum ausgeben.")
+    boolean such;
+
+    @Option(names = { "-a", "--avl", "--avl-baum" }, description = "Als AVL-Baum ausgeben.")
+    boolean avl;
+
+    @Option(names = { "-m", "--min", "--min-halde" }, description = "Als Min-Halde (Heap) ausgeben.")
+    boolean minHalde;
+
+    @Option(names = { "-M", "--max", "--max-halde" }, description = "Als Max-Halde (Heap) ausgeben.")
+    boolean maxHalde;
+  }
 
   @Option(names = { "-T", "--traversierung" }, description = "Zeige Traversierungsmethoden-Tabelle.")
   boolean zeigeTraversierung;
@@ -34,9 +49,33 @@ class UnterBefehlBaum implements Callable<Integer> {
   @Override
   public Integer call() {
 
+    BaumReporter reporter;
+
+    if (KommandoZeile.gibAusgabe() == Ausgabe.tex)
+      reporter = new TexBaumReporter();
+    else
+      reporter = new TerminalBaumReporter();
+
+    if (baumArt.minHalde || baumArt.maxHalde) {
+      Halde halde;
+      if (baumArt.minHalde)
+        halde = new MinHalde<>();
+      else
+        halde = new MaxHalde<>();
+
+      for (int i = 0; i < werte.size(); i++) {
+        String wert = werte.get(i);
+        halde.fügeEin(Integer.parseInt(wert));
+      }
+
+      System.out.println(halde.toString());
+
+      return 0;
+    }
+
     BinaerBaum baum;
 
-    if (istAvl) {
+    if (baumArt.avl) {
       baum = new AVLBaum();
     } else {
       baum = new BinaererSuchBaum();
@@ -44,13 +83,6 @@ class UnterBefehlBaum implements Callable<Integer> {
 
     if (KommandoZeile.gibRedseligkeit() > 0)
       baum.reporter = new TerminalBaumReporter();
-
-    BaumReporter reporter;
-
-    if (KommandoZeile.gibAusgabe() == Ausgabe.tex)
-      reporter = new TexBaumReporter();
-    else
-      reporter = new TerminalBaumReporter();
 
     baum.reporter = reporter;
     BaumReporter.redseligkeit = KommandoZeile.gibRedseligkeit();
