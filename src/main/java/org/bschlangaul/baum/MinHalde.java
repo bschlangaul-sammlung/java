@@ -1,13 +1,9 @@
 package org.bschlangaul.baum;
 
-/**
- * Feld-Implementation einer minimalen Halde (nach
- * <a href="https://codegym.cc/groups/posts/min-heap-in-java">codegym.cc</a>)
- */
-public class MinHalde extends Halde {
+public class MinHalde<T extends Comparable<T>> extends Halde<T> {
 
-  public MinHalde(int kapazität) {
-    super(HaldenTyp.MIN, kapazität);
+  public MinHalde() {
+    super(HaldenTyp.MIN);
   }
 
 }

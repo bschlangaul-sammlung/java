@@ -1,34 +1,41 @@
 package org.bschlangaul.baum;
 
+import java.util.Arrays;
+
 enum HaldenTyp {
   MIN, MAX
 }
 
+@SuppressWarnings("unchecked")
+
 /**
- * Feld-Implementation einer minimalen Halde (nach
- * <a href="https://codegym.cc/groups/posts/min-heap-in-java">codegym.cc</a>)
- *
- * https://gist.github.com/snarkbait/86c7a4bc743e8f327dbc
+ * Feld-Implementation einer Halde (nach
+ * <a href="https://gist.github.com/snarkbait/86c7a4bc743e8f327dbc">Philboyd
+ * Studge</a>
  */
-public class Halde {
-  @SuppressWarnings({ "rawtypes" })
-  private Comparable[] halde;
+public class Halde<T extends Comparable<T>> {
+  private static final int DEFAULT_KAPAZITÄT = 10;
 
   /**
    * Der aktuelle Füllstand der Halde. Er wird hochgezählt, wenn ein neuer
    * Schlüsselwert eingefügt wird und er wird erniedrigt, wenn ein Schlüsselwert
    * entnommen wird.
    */
+  private T[] halde;
   private int füllstand;
-  private int kapazität;
-
   private HaldenTyp typ;
 
-  public Halde(HaldenTyp typ, int kapazität) {
-    this.typ = typ;
-    this.kapazität = kapazität;
+  /**
+   * Default Constructor
+   * <p>
+   * default capacity of 9 (0 index is not used)
+   * <p>
+   * default type of heap is min
+   */
+  public Halde(HaldenTyp typ) {
+    halde = (T[]) new Comparable[DEFAULT_KAPAZITÄT];
     füllstand = 0;
-    halde = new Comparable[kapazität];
+    this.typ = typ;
   }
 
   /**
@@ -36,119 +43,253 @@ public class Halde {
    *
    * @return Das Feld (Array) mit den Schlüsselwerten.
    */
-  @SuppressWarnings({ "rawtypes" })
-  public Comparable[] gibHaldenFeld() {
-    return halde;
+  public T[] gibHaldenFeld() {
+    return Arrays.copyOfRange(halde, 1, füllstand + 1);
   }
 
-  private int gibIndexEltern(int index) {
-    return (index - 1) / 2;
+  /**
+   * adds a generic type T to heap
+   * <p>
+   * percolates down the tree
+   *
+   * @param value type T value
+   */
+  public void fügeEin(T value) {
+    // resize if needed
+    if (this.füllstand >= halde.length - 1) {
+      halde = this.resize();
+    }
+
+    füllstand++;
+    halde[füllstand] = value;
+    bubbleUp();
   }
 
-  private int gibIndexLinks(int index) {
-    return (index * 2) + 1;
+  /**
+   * Removes min or max item from heap
+   * <p>
+   * re-heapifies
+   *
+   * @return value of T that is minimum or maximum value in heap
+   */
+  public T remove() {
+    T result = peek();
+
+    vertausche(1, füllstand);
+    halde[füllstand] = null;
+    füllstand--;
+
+    bubbleDown();
+
+    return result;
   }
 
-  private int gibIndexRechts(int index) {
-    return (index * 2) + 2;
-  }
-
-  private boolean istBlatt(int index) {
-    if (gibIndexRechts(index) >= kapazität || gibIndexLinks(index) >= kapazität) {
-      return true;
+  /**
+   * Remove specific object from heap
+   *
+   * @param value type T
+   * @return true if found and removed
+   */
+  public boolean remove(T value) {
+    for (int i = 0; i < halde.length; i++) {
+      if (value.equals(halde[i])) {
+        System.out.println(i);
+        vertausche(i, füllstand);
+        halde[füllstand] = null;
+        füllstand--;
+        // bubbleUp();
+        bubbleDown();
+        return true;
+      }
     }
     return false;
   }
 
-  @SuppressWarnings({ "rawtypes", "unchecked" })
-  public boolean fügeEin(Comparable schlüssel) {
-    if (füllstand >= kapazität) {
-      return false;
-    }
-    halde[füllstand] = schlüssel;
-    int aktuellerIndex = füllstand;
+  /**
+   * Removes min or max item from heap same as <code>remove()</code> but does not
+   * throw exception on empty
+   * <p>
+   * re-heapifies
+   *
+   * @return value of T that is minimum or maximum value in heap; or
+   *         <code>null</code> if empty
+   */
+  public T poll() {
+    if (isEmpty())
+      return null;
 
-    while (halde[aktuellerIndex].compareTo(halde[gibIndexEltern(aktuellerIndex)]) < 0) {
-      vertausche(aktuellerIndex, gibIndexEltern(aktuellerIndex));
-      aktuellerIndex = gibIndexEltern(aktuellerIndex);
-    }
-    füllstand++;
-    return true;
+    T result = peek();
+
+    vertausche(1, füllstand);
+    halde[füllstand] = null;
+    füllstand--;
+
+    bubbleDown();
+
+    return result;
   }
 
   /**
-   * Füge mehrere Schlüssel auf einmal ein.
+   * Checks if heap is empty
    *
-   * @param schlüssel Mehrere Schlüssel.
-   *
-   * @return Wahr, wenn das Einfügen erfolgreich war, d. h. alle Schlüssel
-   *         eingefügt werden konnten. Konnte ein Schlüssel nicht eingefügt
-   *         werden, wird falsch zurück gegeben.
+   * @return <code>true</code> if empty
    */
-  @SuppressWarnings({ "rawtypes" })
-  public boolean fügeEin(Comparable... schlüssel) {
-    boolean ergebnis = true;
-    boolean tmp;
-    for (Comparable s : schlüssel) {
-      tmp = fügeEin(s);
-      if (!tmp) {
-        ergebnis = false;
+  public boolean isEmpty() {
+    return füllstand == 0;
+  }
+
+  /**
+   * returns min/max value without removing it
+   *
+   * @return value type T
+   * @throws IllegalStateException if empty
+   */
+  public T peek() {
+    if (isEmpty())
+      throw new IllegalStateException();
+    return halde[1];
+  }
+
+  /**
+   * Length/size of heap
+   *
+   * @return int size of heap
+   */
+  public int length() {
+    return füllstand;
+  }
+
+  /**
+   * Add DEFAULT_CAPACITY to length of <code>heap</code> array
+   *
+   * @return new array of type T
+   */
+  private T[] resize() {
+    // add 10 to array capacity
+    return Arrays.copyOf(halde, halde.length + DEFAULT_KAPAZITÄT);
+  }
+
+  /**
+   * percolates new values up based on min/max
+   */
+  private void bubbleUp() {
+    int index = füllstand;
+    if (typ == HaldenTyp.MIN) {
+      while (hatEltern(index) && (parent(index).compareTo(halde[index]) > 0)) {
+        vertausche(index, gibIndexEltern(index));
+        index = gibIndexEltern(index);
       }
-    }
-    return ergebnis;
-  }
+    } else {
+      while (hatEltern(index) && (parent(index).compareTo(halde[index]) < 0)) {
+        vertausche(index, gibIndexEltern(index));
+        index = gibIndexEltern(index);
+      }
 
-  // removes and returns the minimum element from the heap
-  @SuppressWarnings({ "rawtypes" })
-  public Comparable entferne() {
-    // since its a min heap, so root = minimum
-    Comparable popped = halde[0];
-    halde[0] = halde[--füllstand];
-    haldefiziere(0);
-    return popped;
+    }
   }
 
   /**
-   * Haldefiziere (heapify), d. h. stelle die Haldeneigenschaften am Knoten mit
-   * der gegebenen Index-Nummer wieder her.
-   *
-   * @param index Index-Position im Feld, für dessen Knoten die
-   *              Haldeneigenschaften wiederhergestellt werden soll.
+   * percolates values down based on min/max
    */
-  private void haldefiziere(int index) {
-    // Falls der Knoten kein Blattknoten ist und eins der beiden Kinder kleiner ist.
-    if (!istBlatt(index)) {
-      if (vergleiche(halde[index], halde[gibIndexLinks(index)])
-          || vergleiche(halde[index], halde[gibIndexRechts(index)])) {
-        if (!vergleiche(halde[gibIndexLinks(index)], halde[gibIndexRechts(index)])) {
-          vertausche(index, gibIndexLinks(index));
-          haldefiziere(gibIndexLinks(index));
-        } else {
-          vertausche(index, gibIndexRechts(index));
-          haldefiziere(gibIndexRechts(index));
+  private void bubbleDown() {
+    int index = 1;
+    if (typ == HaldenTyp.MIN) {
+      while (hatLinks(index)) {
+        // find smaller of child values
+        int smaller = gibIndexLinks(index);
+        if (hatRechts(index) && halde[gibIndexLinks(index)].compareTo(halde[gibIndexRechts(index)]) > 0) {
+          smaller = gibIndexRechts(index);
         }
+        if (halde[index].compareTo(halde[smaller]) > 0) {
+          vertausche(index, smaller);
+        } else
+          break;
+        index = smaller;
+      }
+    } else {
+      while (hatLinks(index)) {
+        // find larger of child values
+        int larger = gibIndexLinks(index);
+        if (hatRechts(index) && halde[gibIndexLinks(index)].compareTo(halde[gibIndexRechts(index)]) < 0) {
+          larger = gibIndexRechts(index);
+        }
+        if (halde[index].compareTo(halde[larger]) < 0) {
+          vertausche(index, larger);
+        } else
+          break;
+        index = larger;
       }
     }
   }
 
   /**
-   * Damit wir gleichzeitig eine Min als auch eine Max-Halde implemenierten
-   * könnten wird der vergleich in eine Methode ausgelagert.
+   * if child has a parent
    *
-   * @param schlüssel1 Der erste Schlüsselwert, der verglichen werden soll.
-   * @param schlüssel2 Der zweite Schlüsselwert, der verglichen werden soll.
-   *
-   * @return Bei der Min-Halde wahr, wenn der erste Schlüsselwert größer ist als
-   *         der zweite Schlüsselwert, sonst falsch. Bei der Max-Halde wahr, wenn
-   *         der erste Schlüsselwert kleiner ist als der zweite Schlüsselwert,
-   *         sonst falsch.
+   * @param i integer - index
+   * @return true if index > 1
    */
-  @SuppressWarnings({ "rawtypes", "unchecked" })
-  private boolean vergleiche(Comparable schlüssel1, Comparable schlüssel2) {
-    if (typ == HaldenTyp.MIN)
-      return schlüssel1.compareTo(schlüssel1) > 0;
-    else
-      return schlüssel1.compareTo(schlüssel1) < 0;
+  private boolean hatEltern(int i) {
+    return i > 1;
+  }
+
+  /**
+   * Get left index mathematically
+   *
+   * @param i index
+   * @return index of left node from index i
+   */
+  private int gibIndexLinks(int i) {
+    return i * 2;
+  }
+
+  /**
+   * Get right index mathematically
+   *
+   * @param i index
+   * @return index of right node from index i
+   */
+  private int gibIndexRechts(int i) {
+    return i * 2 + 1;
+  }
+
+  /**
+   * Test to see if node has left child
+   *
+   * @param i index
+   * @return true if it does
+   */
+  private boolean hatLinks(int i) {
+    return gibIndexLinks(i) <= füllstand;
+  }
+
+  /**
+   * Test to see if node has right child
+   *
+   * @param i index
+   * @return true if it does
+   */
+  private boolean hatRechts(int i) {
+    return gibIndexRechts(i) <= füllstand;
+  }
+
+  /**
+   * get index of parent from child node
+   *
+   * @param i index
+   * @return index of parent
+   */
+  private int gibIndexEltern(int i) {
+    return i / 2;
+  }
+
+  /**
+   * get parent value
+   *
+   * @param i index
+   * @return value of type T
+   */
+  private T parent(int i) {
+    return halde[gibIndexEltern(i)];
   }
 
   /**
@@ -159,12 +300,26 @@ public class Halde {
    * @param index2 Die Indexnummer des zweiten Schlüsselwertes, der vertauscht
    *               werden soll.
    */
-  @SuppressWarnings({ "rawtypes" })
   private void vertausche(int index1, int index2) {
-    Comparable tmp;
-    tmp = halde[index1];
+    T tmp = halde[index1];
     halde[index1] = halde[index2];
     halde[index2] = tmp;
+  }
+
+  /**
+   * Overridden toString method
+   *
+   * @return String all values in heap without null values
+   */
+  @Override
+  public String toString() {
+    String retval = "";
+    for (T each : halde) {
+      if (each != null)
+        retval += each + " : ";
+    }
+    return retval + "\n";
+
   }
 
 }

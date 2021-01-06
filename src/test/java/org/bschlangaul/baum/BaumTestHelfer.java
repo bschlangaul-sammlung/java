@@ -8,8 +8,8 @@ public class BaumTestHelfer {
   public static Comparable[] macheFeld(Comparable... schlüssel) {
     return schlüssel;
   }
-  @SuppressWarnings({ "rawtypes" })
 
+  @SuppressWarnings({ "rawtypes" })
   public static ArrayList<Comparable> macheListe(Comparable... zahlen) {
     ArrayList<Comparable> liste = new ArrayList<>();
     Collections.addAll(liste, zahlen);
