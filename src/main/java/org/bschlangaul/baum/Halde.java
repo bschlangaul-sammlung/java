@@ -1,12 +1,16 @@
 package org.bschlangaul.baum;
 
-import java.util.Arrays;
+enum HaldenTyp {
+  MIN, MAX
+}
 
 /**
  * Feld-Implementation einer minimalen Halde (nach
  * <a href="https://codegym.cc/groups/posts/min-heap-in-java">codegym.cc</a>)
+ *
+ * https://gist.github.com/snarkbait/86c7a4bc743e8f327dbc
  */
-public class MinimaleHalde {
+public class Halde {
   @SuppressWarnings({ "rawtypes" })
   private Comparable[] halde;
 
@@ -18,12 +22,20 @@ public class MinimaleHalde {
   private int füllstand;
   private int kapazität;
 
-  public MinimaleHalde(int kapazität) {
+  private HaldenTyp typ;
+
+  public Halde(HaldenTyp typ, int kapazität) {
+    this.typ = typ;
     this.kapazität = kapazität;
     füllstand = 0;
     halde = new Comparable[kapazität];
   }
 
+  /**
+   * Gib das Feld (Array) zurück, das die Schlüsselwerte der Halde speichert.
+   *
+   * @return Das Feld (Array) mit den Schlüsselwerten.
+   */
   @SuppressWarnings({ "rawtypes" })
   public Comparable[] gibHaldenFeld() {
     return halde;
@@ -49,18 +61,41 @@ public class MinimaleHalde {
   }
 
   @SuppressWarnings({ "rawtypes", "unchecked" })
-  public void fügeEin(Comparable schlüssel) {
+  public boolean fügeEin(Comparable schlüssel) {
     if (füllstand >= kapazität) {
-      return;
+      return false;
     }
     halde[füllstand] = schlüssel;
-    int current = füllstand;
+    int aktuellerIndex = füllstand;
 
-    while (halde[current].compareTo(halde[gibIndexEltern(current)]) < 0) {
-      vertausche(current, gibIndexEltern(current));
-      current = gibIndexEltern(current);
+    while (halde[aktuellerIndex].compareTo(halde[gibIndexEltern(aktuellerIndex)]) < 0) {
+      vertausche(aktuellerIndex, gibIndexEltern(aktuellerIndex));
+      aktuellerIndex = gibIndexEltern(aktuellerIndex);
     }
     füllstand++;
+    return true;
+  }
+
+  /**
+   * Füge mehrere Schlüssel auf einmal ein.
+   *
+   * @param schlüssel Mehrere Schlüssel.
+   *
+   * @return Wahr, wenn das Einfügen erfolgreich war, d. h. alle Schlüssel
+   *         eingefügt werden konnten. Konnte ein Schlüssel nicht eingefügt
+   *         werden, wird falsch zurück gegeben.
+   */
+  @SuppressWarnings({ "rawtypes" })
+  public boolean fügeEin(Comparable... schlüssel) {
+    boolean ergebnis = true;
+    boolean tmp;
+    for (Comparable s : schlüssel) {
+      tmp = fügeEin(s);
+      if (!tmp) {
+        ergebnis = false;
+      }
+    }
+    return ergebnis;
   }
 
   // removes and returns the minimum element from the heap
@@ -80,13 +115,12 @@ public class MinimaleHalde {
    * @param index Index-Position im Feld, für dessen Knoten die
    *              Haldeneigenschaften wiederhergestellt werden soll.
    */
-  @SuppressWarnings({ "unchecked" })
   private void haldefiziere(int index) {
     // Falls der Knoten kein Blattknoten ist und eins der beiden Kinder kleiner ist.
     if (!istBlatt(index)) {
-      if (halde[index].compareTo(halde[gibIndexLinkesKind(index)]) > 0
-          || halde[index].compareTo(halde[gibIndexRechtesKind(index)]) > 0) {
-        if (halde[gibIndexLinkesKind(index)].compareTo(halde[gibIndexRechtesKind(index)]) < 0) {
+      if (vergleiche(halde[index], halde[gibIndexLinkesKind(index)])
+          || vergleiche(halde[index], halde[gibIndexRechtesKind(index)])) {
+        if (!vergleiche(halde[gibIndexLinkesKind(index)], halde[gibIndexRechtesKind(index)])) {
           vertausche(index, gibIndexLinkesKind(index));
           haldefiziere(gibIndexLinkesKind(index));
         } else {
@@ -97,23 +131,24 @@ public class MinimaleHalde {
     }
   }
 
-  // builds the min-heap using the minHeapify
-  public void minHeap() {
-    for (int i = (füllstand - 1 / 2); i >= 1; i--) {
-      haldefiziere(i);
-    }
-  }
-
-  // Function to print the contents of the heap
-  public void printHeap() {
-    for (int i = 0; i < (füllstand / 2); i++) {
-      System.out.print("Parent : " + halde[i]);
-      if (gibIndexLinkesKind(i) < füllstand)
-        System.out.print(" Left : " + halde[gibIndexLinkesKind(i)]);
-      if (gibIndexRechtesKind(i) < füllstand)
-        System.out.print(" Right :" + halde[gibIndexRechtesKind(i)]);
-      System.out.println();
-    }
+  /**
+   * Damit wir gleichzeitig eine Min als auch eine Max-Halde implemenierten
+   * könnten wird der vergleich in eine Methode ausgelagert.
+   *
+   * @param schlüssel1 Der erste Schlüsselwert, der verglichen werden soll.
+   * @param schlüssel2 Der zweite Schlüsselwert, der verglichen werden soll.
+   *
+   * @return Bei der Min-Halde wahr, wenn der erste Schlüsselwert größer ist als
+   *         der zweite Schlüsselwert, sonst falsch. Bei der Max-Halde wahr, wenn
+   *         der erste Schlüsselwert kleiner ist als der zweite Schlüsselwert,
+   *         sonst falsch.
+   */
+  @SuppressWarnings({ "rawtypes", "unchecked" })
+  private boolean vergleiche(Comparable schlüssel1, Comparable schlüssel2) {
+    if (typ == HaldenTyp.MIN)
+      return schlüssel1.compareTo(schlüssel1) > 0;
+    else
+      return schlüssel1.compareTo(schlüssel1) < 0;
   }
 
   /**
@@ -132,21 +167,4 @@ public class MinimaleHalde {
     halde[index2] = tmp;
   }
 
-  public static void main(String[] arg) {
-    MinimaleHalde minHeap = new MinimaleHalde(7);
-    minHeap.fügeEin(3);
-    minHeap.fügeEin(13);
-    minHeap.fügeEin(7);
-    minHeap.fügeEin(16);
-    minHeap.fügeEin(21);
-    minHeap.fügeEin(12);
-    minHeap.fügeEin(9);
-    minHeap.minHeap();
-
-    System.out.println("The Min Heap is : " + Arrays.toString(minHeap.halde));
-    minHeap.printHeap();
-    System.out.println("\nThe Min Value is : " + minHeap.entferne());
-    System.out.println("\nThe Min Heap is :" + Arrays.toString(minHeap.halde));
-    minHeap.printHeap();
-  }
 }

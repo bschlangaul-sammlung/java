@@ -184,7 +184,7 @@ public abstract class BinaerBaum {
   abstract public boolean fügeEin(Comparable schlüssel);
 
   /**
-   * Füge mehrere Schlüssele auf einmal ein.
+   * Füge mehrere Schlüssel auf einmal ein.
    *
    * @param schlüssel Mehrere Schlüssel.
    *

@@ -3,7 +3,6 @@ package org.bschlangaul.baum;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import org.junit.Test;
 
@@ -190,20 +189,12 @@ public class AVLBaumTest {
   }
 
   @SuppressWarnings("rawtypes")
-  private ArrayList<Comparable> generiereListe(Comparable... zahlen) {
-    ArrayList<Comparable> erwarte = new ArrayList<>();
-    Collections.addAll(erwarte, zahlen);
-    return erwarte;
-  }
-
-
-  @SuppressWarnings("rawtypes")
   @Test
   public void traversiereInorder() {
     AVLBaum baum = new AVLBaum();
     baum.fügeEin(5, 2, 7, 4, 8, 1);
     ArrayList<Comparable> schlüssel = baum.traversiere(BinaerBaum.INORDER);
-    assertEquals(generiereListe(1, 2, 4, 5, 7, 8), schlüssel);
+    assertEquals(BaumTestHelfer.macheListe(1, 2, 4, 5, 7, 8), schlüssel);
   }
 
   @SuppressWarnings("rawtypes")
@@ -212,7 +203,7 @@ public class AVLBaumTest {
     AVLBaum baum = new AVLBaum();
     baum.fügeEin(5, 2, 7, 4, 8, 1);
     ArrayList<Comparable> schlüssel = baum.traversiere(BinaerBaum.PREORDER);
-    assertEquals(generiereListe(5, 2, 1, 4, 7, 8), schlüssel);
+    assertEquals(BaumTestHelfer.macheListe(5, 2, 1, 4, 7, 8), schlüssel);
   }
 
   @SuppressWarnings("rawtypes")
@@ -221,7 +212,7 @@ public class AVLBaumTest {
     AVLBaum baum = new AVLBaum();
     baum.fügeEin(5, 2, 7, 4, 8, 1);
     ArrayList<Comparable> schlüssel = baum.traversiere(BinaerBaum.POSTORDER);
-    assertEquals(generiereListe(1, 4, 2, 8, 7, 5), schlüssel);
+    assertEquals(BaumTestHelfer.macheListe(1, 4, 2, 8, 7, 5), schlüssel);
   }
 
   @SuppressWarnings("rawtypes")
@@ -230,6 +221,6 @@ public class AVLBaumTest {
     AVLBaum baum = new AVLBaum();
     baum.fügeEin(5, 2, 7, 4, 8, 1);
     ArrayList<Comparable> schlüssel = baum.traversiere(BinaerBaum.LEVELORDER);
-    assertEquals(generiereListe(5, 2, 7, 1, 4, 8), schlüssel);
+    assertEquals(BaumTestHelfer.macheListe(5, 2, 7, 1, 4, 8), schlüssel);
   }
 }
