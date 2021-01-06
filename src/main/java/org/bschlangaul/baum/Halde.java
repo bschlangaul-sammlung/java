@@ -63,7 +63,7 @@ public class Halde<T extends Comparable<T>> {
 
     füllstand++;
     halde[füllstand] = value;
-    bubbleUp();
+    steigeAuf();
   }
 
   /**
@@ -80,7 +80,7 @@ public class Halde<T extends Comparable<T>> {
     halde[füllstand] = null;
     füllstand--;
 
-    bubbleDown();
+    versickere();
 
     return result;
   }
@@ -99,7 +99,7 @@ public class Halde<T extends Comparable<T>> {
         halde[füllstand] = null;
         füllstand--;
         // bubbleUp();
-        bubbleDown();
+        versickere();
         return true;
       }
     }
@@ -125,7 +125,7 @@ public class Halde<T extends Comparable<T>> {
     halde[füllstand] = null;
     füllstand--;
 
-    bubbleDown();
+    versickere();
 
     return result;
   }
@@ -171,28 +171,27 @@ public class Halde<T extends Comparable<T>> {
   }
 
   /**
-   * percolates new values up based on min/max
+   * Die Methode wird oft „bubbleUp“ genannt.
    */
-  private void bubbleUp() {
+  private void steigeAuf() {
     int index = füllstand;
     if (typ == HaldenTyp.MIN) {
-      while (hatEltern(index) && (parent(index).compareTo(halde[index]) > 0)) {
+      while (hatEltern(index) && (gibElternSchlüssel(index).compareTo(halde[index]) > 0)) {
         vertausche(index, gibIndexEltern(index));
         index = gibIndexEltern(index);
       }
     } else {
-      while (hatEltern(index) && (parent(index).compareTo(halde[index]) < 0)) {
+      while (hatEltern(index) && (gibElternSchlüssel(index).compareTo(halde[index]) < 0)) {
         vertausche(index, gibIndexEltern(index));
         index = gibIndexEltern(index);
       }
-
     }
   }
 
   /**
-   * percolates values down based on min/max
+   * Die Methode wird oft „percolate“ oder „bubbleDown“ genannt.
    */
-  private void bubbleDown() {
+  private void versickere() {
     int index = 1;
     if (typ == HaldenTyp.MIN) {
       while (hatLinks(index)) {
@@ -226,71 +225,75 @@ public class Halde<T extends Comparable<T>> {
   /**
    * if child has a parent
    *
-   * @param i integer - index
+   * @param index integer - index
    * @return true if index > 1
    */
-  private boolean hatEltern(int i) {
-    return i > 1;
+  private boolean hatEltern(int index) {
+    return index > 1;
   }
 
   /**
    * Get left index mathematically
    *
-   * @param i index
+   * @param index index
    * @return index of left node from index i
    */
-  private int gibIndexLinks(int i) {
-    return i * 2;
+  private int gibIndexLinks(int index) {
+    return index * 2;
   }
 
   /**
    * Get right index mathematically
    *
-   * @param i index
+   * @param index index
    * @return index of right node from index i
    */
-  private int gibIndexRechts(int i) {
-    return i * 2 + 1;
+  private int gibIndexRechts(int index) {
+    return index * 2 + 1;
   }
 
   /**
    * Test to see if node has left child
    *
-   * @param i index
+   * @param index index
+   *
    * @return true if it does
    */
-  private boolean hatLinks(int i) {
-    return gibIndexLinks(i) <= füllstand;
+  private boolean hatLinks(int index) {
+    return gibIndexLinks(index) <= füllstand;
   }
 
   /**
    * Test to see if node has right child
    *
-   * @param i index
+   * @param index index
+   *
    * @return true if it does
    */
-  private boolean hatRechts(int i) {
-    return gibIndexRechts(i) <= füllstand;
+  private boolean hatRechts(int index) {
+    return gibIndexRechts(index) <= füllstand;
   }
 
   /**
    * get index of parent from child node
    *
-   * @param i index
+   * @param index index
+   *
    * @return index of parent
    */
-  private int gibIndexEltern(int i) {
-    return i / 2;
+  private int gibIndexEltern(int index) {
+    return index / 2;
   }
 
   /**
    * get parent value
    *
-   * @param i index
+   * @param index index
+   *
    * @return value of type T
    */
-  private T parent(int i) {
-    return halde[gibIndexEltern(i)];
+  private T gibElternSchlüssel(int index) {
+    return halde[gibIndexEltern(index)];
   }
 
   /**
@@ -322,13 +325,33 @@ public class Halde<T extends Comparable<T>> {
   }
 
   /**
-   * Exportiere die Halde als Binärbaum.
+   * Exportiere die Halde als Binärbaum. Hier kann kein „normaler“ binärer
+   * Suchbaum verwendet werden, da in diesem Baum ganz andere Einfügeregeln
+   * gelten. Deshalb schummeln wir hier einen Baum, damit wir ihn darstellen
+   * können.
    *
    * @return Ein Repräsentation als Binärbaum
    */
   public BinaerBaum gibBinaerBaum() {
-    BinaerBaum baum = new BinaererSuchBaum();
-    baum.fügeEin(gibHaldenFeld());
+    BinaererSuchBaum baum = new BinaererSuchBaum();
+
+    T[] haldenFeld = gibHaldenFeld();
+
+    BaumKnoten[] knoten = new BaumKnoten[haldenFeld.length];
+    for (int i = 0; i < haldenFeld.length; i++) {
+      knoten[i] = new BaumKnoten(haldenFeld[i]);
+    }
+
+    for (int i = 0; i < haldenFeld.length; i++) {
+      BaumKnoten k = knoten[i];
+      // Die Halde setzt den ersten Wert auf das 2. Element des Feldes.
+      if (hatLinks(i + 1))
+        k.setzeLinks(knoten[gibIndexLinks(i + 1) - 1]);
+      if (hatRechts(i + 1))
+        k.setzeRechts(knoten[gibIndexRechts(i + 1) - 1]);
+    }
+    // Der erste Knoten ist auf rechts gesetzt.
+    baum.kopf.setzeRechts(knoten[0]);
     return baum;
   }
 

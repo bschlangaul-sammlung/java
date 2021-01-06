@@ -68,6 +68,9 @@ class UnterBefehlBaum implements Callable<Integer> {
         halde.fügeEin(Integer.parseInt(wert));
       }
 
+      BinaerBaum haldenBaum = halde.gibBinaerBaum();
+      reporter.berichteBaum(haldenBaum);
+
       System.out.println(halde.toString());
 
       return 0;
