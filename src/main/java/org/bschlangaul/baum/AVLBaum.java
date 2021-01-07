@@ -82,24 +82,42 @@ public class AVLBaum extends BinaerBaum {
     return knoten;
   }
 
-  private AVLBaumKnoten rotiereRechts(AVLBaumKnoten y) {
-    AVLBaumKnoten x = y.links;
-    AVLBaumKnoten z = x.rechts;
-    x.rechts = y;
-    y.links = z;
-    aktualisiereHöhe(y);
-    aktualisiereHöhe(x);
-    return x;
+  /**
+   * Führe eine Rechtsrotation durch.
+   *
+   * @param knoten Knoten mit einem Balancefaktor von -2.
+   *
+   * @return Der linke Kindknoten des gegebenen Eingangsknoten mit dem
+   *         Balancefaktor -1.
+   */
+  private AVLBaumKnoten rotiereRechts(AVLBaumKnoten knoten) {
+    // Linker Knoten mit Balancefaktor -1
+    AVLBaumKnoten links = knoten.gibLinks();
+    AVLBaumKnoten rechtsVonLinks = links.gibRechts();
+    links.rechts = knoten;
+    knoten.links = rechtsVonLinks;
+    aktualisiereHöhe(knoten);
+    aktualisiereHöhe(links);
+    return links;
   }
 
-  private AVLBaumKnoten rotiereLinks(AVLBaumKnoten y) {
-    AVLBaumKnoten x = y.rechts;
-    AVLBaumKnoten z = x.links;
-    x.links = y;
-    y.rechts = z;
-    aktualisiereHöhe(y);
-    aktualisiereHöhe(x);
-    return x;
+  /**
+   * Führe eine Linksrotation durch.
+   *
+   * @param knoten Knoten mit einem Balancefaktor von +2.
+   *
+   * @return Der rechte Kindknoten des gegebenen Eingangsknoten mit dem
+   *         Balancefaktor von +1.
+   */
+  private AVLBaumKnoten rotiereLinks(AVLBaumKnoten knoten) {
+    // Rechter Knoten mit Balancefaktor +1
+    AVLBaumKnoten rechts = knoten.gibRechts();
+    AVLBaumKnoten linksVonRechts = rechts.gibLinks();
+    rechts.links = knoten;
+    knoten.rechts = linksVonRechts;
+    aktualisiereHöhe(knoten);
+    aktualisiereHöhe(rechts);
+    return rechts;
   }
 
   private void aktualisiereHöhe(AVLBaumKnoten knoten) {
