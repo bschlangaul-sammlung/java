@@ -1,7 +1,6 @@
 package org.bschlangaul.examen.examen_66116_2016_09.pki;
 
-public class MapEntry {
-
+class MapEntry {
   String key;
   Object value;
 
@@ -10,5 +9,4 @@ public class MapEntry {
     this.key = key;
     this.value = value;
   }
-
 }

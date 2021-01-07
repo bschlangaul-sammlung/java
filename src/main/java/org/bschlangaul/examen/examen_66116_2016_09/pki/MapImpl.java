@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 class MapImpl implements IMap {
-
   final static long serialVersionUID = 123;
 
   private List<MapEntry> entries;
@@ -21,5 +20,4 @@ class MapImpl implements IMap {
     // Nicht verlangt in der Aufgabenstellung.
     entries.add(new MapEntry(key, value));
   }
-
 }
