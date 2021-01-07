@@ -95,11 +95,12 @@ public class Halde<T extends Comparable<T>> {
   public boolean entferne(T value) {
     for (int i = 0; i < halde.length; i++) {
       if (value.equals(halde[i])) {
-        System.out.println(i);
+        reporter.berichteÜberschrift("Nach dem Entfernen von „" + value + "“", 0);
         vertausche(i, füllstand);
         halde[füllstand] = null;
         füllstand--;
         versickere();
+        berichteBaum(0);
         return true;
       }
     }
@@ -338,6 +339,8 @@ public class Halde<T extends Comparable<T>> {
 
     T[] haldenFeld = gibHaldenFeld();
 
+    berichteHaldenFeldAlsTabelle(haldenFeld);
+
     BaumKnoten[] knoten = new BaumKnoten[haldenFeld.length];
     for (int i = 0; i < haldenFeld.length; i++) {
       knoten[i] = new BaumKnoten(haldenFeld[i]);
@@ -354,6 +357,21 @@ public class Halde<T extends Comparable<T>> {
     // Der erste Knoten ist auf rechts gesetzt.
     baum.kopf.setzeRechts(knoten[0]);
     return baum;
+  }
+
+  private void berichteHaldenFeldAlsTabelle(T[] haldenFeld) {
+    String[] kopfZeile = new String[haldenFeld.length];
+    for (int i = 0; i < haldenFeld.length; i++) {
+      kopfZeile[i] = String.valueOf(i);
+    }
+
+    String[][] zeilen = new String[1][haldenFeld.length];
+
+    for (int i = 0; i < haldenFeld.length; i++) {
+      zeilen[0][i] = String.valueOf(haldenFeld[i]);
+    }
+
+    reporter.berichteTabelle(kopfZeile, zeilen);
   }
 
   public void berichteBaum(int redselig) {

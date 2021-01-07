@@ -43,6 +43,10 @@ public class TerminalBaumReporter extends BaumReporter {
   public String erzeugeTraversierung(BinaerBaum baum) {
     String[] kopfZeile = { "Methode", "Schlüssel-Reihenfolge" };
     String[][] zeilen = sammleTraversierungsDaten(baum);
+    return erzeugeTabelle(kopfZeile, zeilen);
+  }
+
+  public String erzeugeTabelle(String[] kopfZeile, String[][] zeilen) {
     return FlipTable.of(kopfZeile, zeilen);
   }
 

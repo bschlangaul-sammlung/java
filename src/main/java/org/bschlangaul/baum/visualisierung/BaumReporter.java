@@ -93,4 +93,10 @@ public abstract class BaumReporter {
     gibAus(erzeugeÜberschrift("Traversierung") + "\n" + erzeugeTraversierung(baum));
   }
 
+  public abstract String erzeugeTabelle(String[] kopfZeile, String[][] zeilen);
+
+  public void berichteTabelle(String[] kopfZeile, String[][] zeilen) {
+    gibAus(erzeugeTabelle(kopfZeile, zeilen));
+  }
+
 }

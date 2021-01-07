@@ -18,4 +18,8 @@ public class StummerBaumReporter extends BaumReporter {
     return null;
   }
 
+  public String erzeugeTabelle(String[] kopfZeile, String[][] zeilen) {
+    return null;
+  }
+
 }

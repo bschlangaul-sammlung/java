@@ -46,6 +46,34 @@ class UnterBefehlBaum implements Callable<Integer> {
   @Parameters(arity = "1..*", description = "Einfügen: (setze) 1 2 3; Löschen: lösche 1 2 3.")
   List<String> werte;
 
+  private void fügeHinzuOderLösche(Object haldeOderBaum) {
+    boolean lösche = false;
+    for (int i = 0; i < werte.size(); i++) {
+      String wert = werte.get(i);
+      if (wert.equals("lösche")) {
+        lösche = true;
+      } else if (wert.equals("setze")) {
+        lösche = false;
+      }
+      if (!wert.equals("lösche") && !wert.equals("setze")) {
+        int zahl = Integer.parseInt(wert);
+        if (haldeOderBaum instanceof BinaerBaum) {
+          BinaerBaum baum = (BinaerBaum) haldeOderBaum;
+          if (!lösche)
+            baum.fügeEin(zahl);
+          else
+            baum.entferne(zahl);
+        } else {
+          Halde halde = (Halde) haldeOderBaum;
+          if (!lösche)
+            halde.fügeEin(zahl);
+          else
+            halde.entferne(zahl);
+        }
+      }
+    }
+  }
+
   @Override
   @SuppressWarnings({ "rawtypes", "unchecked" })
   public Integer call() {
@@ -67,11 +95,7 @@ class UnterBefehlBaum implements Callable<Integer> {
 
       halde.reporter = reporter;
 
-      for (int i = 0; i < werte.size(); i++) {
-        String wert = werte.get(i);
-        halde.fügeEin(Integer.parseInt(wert));
-      }
-
+      fügeHinzuOderLösche(halde);
       return 0;
     }
 
@@ -88,22 +112,7 @@ class UnterBefehlBaum implements Callable<Integer> {
 
     baum.reporter = reporter;
 
-    boolean lösche = false;
-    for (int i = 0; i < werte.size(); i++) {
-      String wert = werte.get(i);
-      if (wert.equals("lösche")) {
-        lösche = true;
-      } else if (wert.equals("setze")) {
-        lösche = false;
-      }
-      if (!wert.equals("lösche") && !wert.equals("setze")) {
-        int zahl = Integer.parseInt(wert);
-        if (!lösche)
-          baum.fügeEin(zahl);
-        else
-          baum.entferne(zahl);
-      }
-    }
+    fügeHinzuOderLösche(baum);
 
     if (zeigeTraversierung)
       baum.reporter.berichteTraversierung(baum);
