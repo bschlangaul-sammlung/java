@@ -47,9 +47,11 @@ class UnterBefehlBaum implements Callable<Integer> {
   List<String> werte;
 
   @Override
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   public Integer call() {
 
     BaumReporter reporter;
+    BaumReporter.redseligkeit = KommandoZeile.gibRedseligkeit();
 
     if (KommandoZeile.gibAusgabe() == Ausgabe.tex)
       reporter = new TexBaumReporter();
@@ -63,15 +65,12 @@ class UnterBefehlBaum implements Callable<Integer> {
       else
         halde = new MaxHalde<>();
 
+      halde.reporter = reporter;
+
       for (int i = 0; i < werte.size(); i++) {
         String wert = werte.get(i);
         halde.fügeEin(Integer.parseInt(wert));
       }
-
-      BinaerBaum haldenBaum = halde.gibBinaerBaum();
-      reporter.berichteBaum(haldenBaum);
-
-      System.out.println(halde.toString());
 
       return 0;
     }
@@ -88,7 +87,6 @@ class UnterBefehlBaum implements Callable<Integer> {
       baum.reporter = new TerminalBaumReporter();
 
     baum.reporter = reporter;
-    BaumReporter.redseligkeit = KommandoZeile.gibRedseligkeit();
 
     boolean lösche = false;
     for (int i = 0; i < werte.size(); i++) {

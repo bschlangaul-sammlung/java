@@ -20,9 +20,17 @@ public class MaxHaldeTest {
   }
 
   @Test
-  public void methodeGibHaldenFeld() {
+  public void aufsteigendFünfZahlen() {
     vergleicheHaldenFeld(feld(1, 2, 3, 4, 5), feld(5, 4, 2, 1, 3));
+  }
+
+  @Test
+  public void absteigendFünfZahlen() {
     vergleicheHaldenFeld(feld(5, 4, 3, 2, 1), feld(5, 4, 3, 2, 1));
+  }
+
+  @Test
+  public void neunZahlen() {
     vergleicheHaldenFeld(feld(9, 5, 7, 1, 6, 4, 8, 2, 3), feld(9, 6, 8, 3, 5, 4, 7, 1, 2));
   }
 

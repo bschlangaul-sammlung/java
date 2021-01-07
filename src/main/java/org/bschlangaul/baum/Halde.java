@@ -2,6 +2,9 @@ package org.bschlangaul.baum;
 
 import java.util.Arrays;
 
+import org.bschlangaul.baum.visualisierung.BaumReporter;
+import org.bschlangaul.baum.visualisierung.StummerBaumReporter;
+
 enum HaldenTyp {
   MIN, MAX
 }
@@ -14,6 +17,9 @@ enum HaldenTyp {
  * Studge</a>
  */
 public class Halde<T extends Comparable<T>> {
+
+  public BaumReporter reporter = new StummerBaumReporter();
+
   private static final int STANDARD_KAPAZITÄT = 10;
 
   private T[] halde;
@@ -27,11 +33,9 @@ public class Halde<T extends Comparable<T>> {
   private HaldenTyp typ;
 
   /**
-   * Default Constructor
-   * <p>
-   * default capacity of 9 (0 index is not used)
-   * <p>
-   * default type of heap is min
+   * Der Standard-Konstruktor.
+   *
+   * @param typ Ob es sich um eine Min-Halde oder eine Max-Halde handeln soll.
    */
   public Halde(HaldenTyp typ) {
     halde = (T[]) new Comparable[STANDARD_KAPAZITÄT];
@@ -56,14 +60,14 @@ public class Halde<T extends Comparable<T>> {
    * @param value type T value
    */
   public void fügeEin(T value) {
-    // resize if needed
+    reporter.berichteÜberschrift("Nach dem Einfügen von „" + value + "“", 0);
     if (this.füllstand >= halde.length - 1) {
-      halde = this.resize();
+      halde = this.vergrößern();
     }
-
     füllstand++;
     halde[füllstand] = value;
     steigeAuf();
+    berichteBaum(0);
   }
 
   /**
@@ -73,15 +77,12 @@ public class Halde<T extends Comparable<T>> {
    *
    * @return value of T that is minimum or maximum value in heap
    */
-  public T remove() {
+  public T entferne() {
     T result = peek();
-
     vertausche(1, füllstand);
     halde[füllstand] = null;
     füllstand--;
-
     versickere();
-
     return result;
   }
 
@@ -91,14 +92,13 @@ public class Halde<T extends Comparable<T>> {
    * @param value type T
    * @return true if found and removed
    */
-  public boolean remove(T value) {
+  public boolean entferne(T value) {
     for (int i = 0; i < halde.length; i++) {
       if (value.equals(halde[i])) {
         System.out.println(i);
         vertausche(i, füllstand);
         halde[füllstand] = null;
         füllstand--;
-        // bubbleUp();
         versickere();
         return true;
       }
@@ -116,17 +116,13 @@ public class Halde<T extends Comparable<T>> {
    *         <code>null</code> if empty
    */
   public T poll() {
-    if (isEmpty())
+    if (istLeer())
       return null;
-
     T result = peek();
-
     vertausche(1, füllstand);
     halde[füllstand] = null;
     füllstand--;
-
     versickere();
-
     return result;
   }
 
@@ -135,7 +131,7 @@ public class Halde<T extends Comparable<T>> {
    *
    * @return <code>true</code> if empty
    */
-  public boolean isEmpty() {
+  public boolean istLeer() {
     return füllstand == 0;
   }
 
@@ -146,7 +142,7 @@ public class Halde<T extends Comparable<T>> {
    * @throws IllegalStateException if empty
    */
   public T peek() {
-    if (isEmpty())
+    if (istLeer())
       throw new IllegalStateException();
     return halde[1];
   }
@@ -165,8 +161,7 @@ public class Halde<T extends Comparable<T>> {
    *
    * @return new array of type T
    */
-  private T[] resize() {
-    // add 10 to array capacity
+  private T[] vergrößern() {
     return Arrays.copyOf(halde, halde.length + STANDARD_KAPAZITÄT);
   }
 
@@ -195,31 +190,33 @@ public class Halde<T extends Comparable<T>> {
     int index = 1;
     if (typ == HaldenTyp.MIN) {
       while (hatLinks(index)) {
-        // find smaller of child values
-        int smaller = gibIndexLinks(index);
+        int kleiner = gibIndexLinks(index);
         if (hatRechts(index) && halde[gibIndexLinks(index)].compareTo(halde[gibIndexRechts(index)]) > 0) {
-          smaller = gibIndexRechts(index);
+          kleiner = gibIndexRechts(index);
         }
-        if (halde[index].compareTo(halde[smaller]) > 0) {
-          vertausche(index, smaller);
+        if (halde[index].compareTo(halde[kleiner]) > 0) {
+          vertausche(index, kleiner);
         } else
           break;
-        index = smaller;
+        index = kleiner;
       }
     } else {
       while (hatLinks(index)) {
-        // find larger of child values
-        int larger = gibIndexLinks(index);
+        int größer = gibIndexLinks(index);
         if (hatRechts(index) && halde[gibIndexLinks(index)].compareTo(halde[gibIndexRechts(index)]) < 0) {
-          larger = gibIndexRechts(index);
+          größer = gibIndexRechts(index);
         }
-        if (halde[index].compareTo(halde[larger]) < 0) {
-          vertausche(index, larger);
+        if (halde[index].compareTo(halde[größer]) < 0) {
+          vertausche(index, größer);
         } else
           break;
-        index = larger;
+        index = größer;
       }
     }
+  }
+
+  private T gibSchlüssel(int index) {
+    return halde[index];
   }
 
   /**
@@ -305,6 +302,10 @@ public class Halde<T extends Comparable<T>> {
    *               werden soll.
    */
   private void vertausche(int index1, int index2) {
+    T schlüssel1 = gibSchlüssel(index1);
+    T schlüssel2 = gibSchlüssel(index2);
+    berichteBaum(String.format("Nach Vertauschen von „%s“ und „%s“", schlüssel1, schlüssel2), 1);
+
     T tmp = halde[index1];
     halde[index1] = halde[index2];
     halde[index2] = tmp;
@@ -353,6 +354,16 @@ public class Halde<T extends Comparable<T>> {
     // Der erste Knoten ist auf rechts gesetzt.
     baum.kopf.setzeRechts(knoten[0]);
     return baum;
+  }
+
+  public void berichteBaum(int redselig) {
+    BinaerBaum haldenBaum = gibBinaerBaum();
+    reporter.berichteBaum(haldenBaum, redselig);
+  }
+
+  public void berichteBaum(String überschrift, int redselig) {
+    BinaerBaum haldenBaum = gibBinaerBaum();
+    reporter.berichteBaum(haldenBaum, überschrift, redselig);
   }
 
 }
