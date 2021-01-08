@@ -1,4 +1,4 @@
-package org.bschlangaul.aufgaben.aud.examen_46115_2014_03.suchbaum;
+package org.bschlangaul.examen.examen_46115.jahr_2014.fruehjahr.suchbaum;
 
 class Knoten {
   public int wert;

@@ -3,4 +3,4 @@
  *   Staatsexamen 46115 Theoretische Informatik / Algorithmen / Datenstrukturen (nicht vertieft) 2014 Frühjahr
  * </a>
  */
-package org.bschlangaul.aufgaben.aud.examen_46115_2014_03;
+package org.bschlangaul.examen.examen_46115.jahr_2014.fruehjahr;
