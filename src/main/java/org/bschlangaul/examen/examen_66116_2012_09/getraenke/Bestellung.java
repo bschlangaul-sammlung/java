@@ -53,6 +53,12 @@ public class Bestellung {
 
   /**
    * Nicht verlangt. Könnte auch in die Test-Methode geschrieben werden.
+   *
+   * @param flaschen     Die Belegung des Kasten mit Flaschen als
+   *                     zweidimensionales Feld der Flaschenpreise ohne
+   *                     Flaschenpfand.
+   * @param flaschenPfad Die Höhe des Flaschenpfads, dass für alle Flaschen in
+   *                     diesem Kasten gleich ist.
    */
   void bestelleKasten(double[][] flaschen, double flaschenPfad) {
     Kasten bestellterKasten = new Kasten(flaschen, flaschenPfad);
@@ -73,6 +79,10 @@ public class Bestellung {
   /**
    * Kleines Schmankerl. Nicht verlangt. Damit wir nicht 9.899999999999999 als
    * Aufgabe bekommen.
+   *
+   * @param preis Ein Preis als Gleitkommazahl.
+   *
+   * @return Der Preis als Text mit zwei Stellen nach dem Komma.
    */
   static String runde(double preis) {
     DecimalFormat df = new DecimalFormat("#.##");

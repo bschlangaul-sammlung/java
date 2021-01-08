@@ -221,74 +221,78 @@ public class Halde<T extends Comparable<T>> {
   }
 
   /**
-   * if child has a parent
+   * Überprüfe ob der Knoten einen Elternknoten hat.
    *
-   * @param index integer - index
-   * @return true if index > 1
+   * @param index Die Index-Nummer des Knoten.
+   *
+   * @return Wahr wenn der Knoten einen Elternknoten hat.
    */
   private boolean hatEltern(int index) {
     return index > 1;
   }
 
   /**
-   * Get left index mathematically
+   * Berechne die Index-Nummer des linken Kindknotens.
    *
-   * @param index index
-   * @return index of left node from index i
+   * @param index Die Index-Nummer des Knoten.
+   *
+   * @return Die Index-Nummer des linken Kindknotens.
    */
   private int gibIndexLinks(int index) {
     return index * 2;
   }
 
   /**
-   * Get right index mathematically
+   * Berechne die Index-Nummer des rechten Kindknotens.
    *
-   * @param index index
-   * @return index of right node from index i
+   * @param index Die Index-Nummer des Knoten.
+   *
+   * @return Die Index-Nummer des rechten Kindknotens.
    */
   private int gibIndexRechts(int index) {
     return index * 2 + 1;
   }
 
   /**
-   * Test to see if node has left child
+   * Berechne die Index-Nummer des Elternknoten.
    *
-   * @param index index
+   * @param index Die Index-Nummer des Knoten.
    *
-   * @return true if it does
-   */
-  private boolean hatLinks(int index) {
-    return gibIndexLinks(index) <= füllstand;
-  }
-
-  /**
-   * Test to see if node has right child
-   *
-   * @param index index
-   *
-   * @return true if it does
-   */
-  private boolean hatRechts(int index) {
-    return gibIndexRechts(index) <= füllstand;
-  }
-
-  /**
-   * get index of parent from child node
-   *
-   * @param index index
-   *
-   * @return index of parent
+   * @return Die Index-Nummer des Elternknoten.
    */
   private int gibIndexEltern(int index) {
     return index / 2;
   }
 
   /**
+   * Überprüfe, ob der Knoten einen linken Kindknoten hat.
+   *
+   * @param index Die Index-Nummer des Knoten.
+   *
+   * @return Wahr, wenn der Knoten ein linkes Kind hat.
+   */
+  private boolean hatLinks(int index) {
+    return gibIndexLinks(index) <= füllstand;
+  }
+
+  /**
+   * Überprüfe, ob der Knoten einen rechten Kindknoten hat.
+   *
+   * @param index Die Index-Nummer des Knoten.
+   *
+   * @return Wahr, wenn der Knoten ein rechtes Kind hat.
+   */
+  private boolean hatRechts(int index) {
+    return gibIndexRechts(index) <= füllstand;
+  }
+
+
+  /**
    * get parent value
    *
-   * @param index index
+   * @param index Die Index-Nummer des Knoten.
    *
-   * @return value of type T
+   * @return Der Schlüsselwert des Elternknoten.
    */
   private T gibElternSchlüssel(int index) {
     return halde[gibIndexEltern(index)];

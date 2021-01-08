@@ -61,6 +61,11 @@ public class Mergesort {
 
   /**
    * Näher an Saake, aber nicht wirklich schön.
+   *
+   * @param s Ein Zahlenfeld, das vereinigt werden soll.
+   * @param r Ein Zahlenfeld, das vereinigt werden soll.
+   *
+   * @return Das vereinte Zahlenfeld.
    */
   public int[] mergeNg(int[] s, int[] r) {
     int[] hilfsFeld = new int[s.length + r.length];
