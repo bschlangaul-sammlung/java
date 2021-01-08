@@ -46,6 +46,7 @@ class UnterBefehlBaum implements Callable<Integer> {
   @Parameters(arity = "1..*", description = "Einfügen: (setze) 1 2 3; Löschen: lösche 1 2 3.")
   List<String> werte;
 
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   private void fügeHinzuOderLösche(Object haldeOderBaum) {
     boolean lösche = false;
     for (int i = 0; i < werte.size(); i++) {
