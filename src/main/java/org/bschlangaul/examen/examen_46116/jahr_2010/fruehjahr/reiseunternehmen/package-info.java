@@ -1,8 +1,8 @@
 /**
  * Aufgabe 1: Modellierung eines Reiseunternehmens
- *
+ * <p>
  * Es sei folgender Sachverhalt gegeben:
- *
+ * <p>
  * Ein Reiseunternehmen bietet verschiedene Reisen an. Dazu beschäftigt es eine
  * Reihe von Reiseleitern, wobei eine Reise von mindestens einem Reiseleiter
  * geleitet wird. Da Reiseleiter freiberuflich arbeiten, können sie bei mehreren
