@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import org.bschlangaul.baum.visualisierung.BaumReporter;
 import org.bschlangaul.baum.visualisierung.StummerBaumReporter;
-import org.bschlangaul.liste.saake.FeldWarteschlange;
-import org.bschlangaul.liste.saake.Warteschlange;
-import org.bschlangaul.liste.saake.WarteschlangeFehler;
+import org.bschlangaul.liste.FeldWarteschlange;
+import org.bschlangaul.liste.Warteschlange;
+import org.bschlangaul.liste.WarteschlangeFehler;
 
 /**
  * Die abstrakte Oberklasse eines Binärbaums für die Klassen
@@ -96,12 +96,12 @@ public abstract class BinaerBaum {
    */
   private void besucheLevelorder(Warteschlange warteschlange, ArrayList<Comparable> schlüssel)
       throws WarteschlangeFehler {
-    while (!warteschlange.isEmpty()) {
-      BaumKnoten knoten = (BaumKnoten) warteschlange.leave();
+    while (!warteschlange.istLeer()) {
+      BaumKnoten knoten = (BaumKnoten) warteschlange.verlasse();
       if (knoten.gibLinks() != null)
-        warteschlange.enter(knoten.gibLinks());
+        warteschlange.betrete(knoten.gibLinks());
       if (knoten.gibRechts() != null)
-        warteschlange.enter(knoten.gibRechts());
+        warteschlange.betrete(knoten.gibRechts());
       schlüssel.add((Comparable) knoten.gibSchlüssel());
     }
   }
@@ -156,7 +156,7 @@ public abstract class BinaerBaum {
       case LEVELORDER:
         Warteschlange queue = new FeldWarteschlange();
         try {
-          queue.enter(gibKopf());
+          queue.betrete(gibKopf());
           besucheLevelorder(queue, schlüssel);
         } catch (WarteschlangeFehler e) {
           e.printStackTrace();

@@ -23,7 +23,7 @@ public class Disk {
   }
 
   /**
-   * * gibt die Bewertung der Disk zurück
+   * Gib die Bewertung der Disk zurück.
    *
    * @return Bewertung
    */
@@ -32,7 +32,9 @@ public class Disk {
   }
 
   /**
-   * * berechnet rekursiv die Bewertung einer Disk * @param genre Genre der Disk
+   * Berechne rekursiv die Bewertung einer Disk
+   *
+   * @param genre Genre der Disk
    *
    * @return Bewertung
    */

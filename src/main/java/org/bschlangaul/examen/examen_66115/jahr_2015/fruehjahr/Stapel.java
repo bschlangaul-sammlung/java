@@ -12,7 +12,7 @@ public class Stapel {
   }
 
   /**
-   * @param element Das Element, dass hinzugefügt werden soll zur Stapel.
+   * @param value Der Wert, der zum Stapel hinzugefügt werden soll.
    */
   public void push(int value) {
     Element element = new Element(value);
