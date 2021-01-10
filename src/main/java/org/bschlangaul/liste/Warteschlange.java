@@ -12,13 +12,13 @@ public interface Warteschlange {
    * Warteschlange eingereight. Diese Methode heißt im Englischen oft „enter()“
    * oder „enqueue()“.
    *
-   * @param objekt Ein belieiges Objekt, das in die Warteschlange eingereiht
-   *               werden kann.
+   * @param wert Ein belieiges Objekt, das in die Warteschlange eingereiht werden
+   *             kann.
    *
    * @throws WarteschlangeFehler Wirft einen Fehler, wenn die
    *                             Warteschlangenkapazität erschöpft ist.
    */
-  public void betrete(Object objekt) throws WarteschlangeFehler;
+  public void betrete(Object wert) throws WarteschlangeFehler;
 
   /**
    * Verlasse die Warteschlange. Das erste Objekt in der Warteschlange wird

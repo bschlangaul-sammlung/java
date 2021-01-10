@@ -1,12 +1,12 @@
 package org.bschlangaul.liste;
 
 /**
- * heißt im Original „LeereListeFehler“.
+ * Wird im Englischen ofr „ListEmptyException“ genannt.
  */
 @SuppressWarnings("serial")
 class LeereListeFehler extends Exception {
-  public LeereListeFehler(String errorMessage) {
-      super(errorMessage);
+  public LeereListeFehler(String fehlerMeldung) {
+      super(fehlerMeldung);
   }
   public LeereListeFehler() {
     super();

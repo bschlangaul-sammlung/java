@@ -10,11 +10,11 @@ public interface Stapel {
   /**
    * Ein Element vorne anfügen. Diese Methode heißt im Englischen oft „push()“.
    *
-   * @param objekt Ein beliebiges Objekt.
+   * @param wert Ein beliebiges Objekt.
    *
    * @throws StapelFehler Ein Stapelfehler.
    */
-  public void fügeHinzu(Object objekt) throws StapelFehler;
+  public void fügeHinzu(Object wert) throws StapelFehler;
 
   /**
    * Ein Element von vorne entfernen. Diese Methode heißt im Englischen oft

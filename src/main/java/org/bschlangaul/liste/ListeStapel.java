@@ -15,14 +15,14 @@ public class ListeStapel implements Stapel {
   }
 
   /**
-   * Element vorn anfügen
+   * {@inheritDoc}
    */
-  public void fügeHinzu(Object objekt) {
-    liste.fügeErstesHinzu(objekt);
+  public void fügeHinzu(Object wert) {
+    liste.setzeErstes(wert);
   }
 
   /**
-   * Element von vorn entfernen.
+   * {@inheritDoc}
    */
   public Object entnimm() throws StapelFehler {
     if (istLeer())
@@ -35,6 +35,9 @@ public class ListeStapel implements Stapel {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public Object zeigeOberstes() throws StapelFehler {
     if (istLeer())
       throw new StapelFehler();

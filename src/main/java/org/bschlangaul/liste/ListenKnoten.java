@@ -2,9 +2,9 @@ package org.bschlangaul.liste;
 
 class ListenKnoten {
   /**
-   * Das Datenobjekt
+   * Das Datenobjekt.
    */
-  Object datenObjekt;
+  Object wert;
 
   /**
    * Verweis auf Nachfolger.
@@ -14,26 +14,26 @@ class ListenKnoten {
   /**
    * Konstruktoren.
    *
-   * @param datenObjekt Das Datenobjekt, das gespeichert werden soll.
+   * @param wert Das Datenobjekt, das gespeichert werden soll.
    * @param knoten Der nächste Knoten
    */
-  public ListenKnoten(Object datenObjekt, ListenKnoten knoten) {
-    this.datenObjekt = datenObjekt;
+  public ListenKnoten(Object wert, ListenKnoten knoten) {
+    this.wert = wert;
     nächstes = knoten;
   }
 
   public ListenKnoten() {
-    datenObjekt = null;
+    wert = null;
     nächstes = null;
   }
 
   /**
    * Element neu belegen.
    *
-   * @param datenObjekt Das Datenobjekt, das gespeichert werden soll.
+   * @param wert Das Datenobjekt, das gespeichert werden soll.
    */
-  public void setzeDaten(Object datenObjekt) {
-    this.datenObjekt = datenObjekt;
+  public void setzeDaten(Object wert) {
+    this.wert = wert;
   }
 
   /**
@@ -42,7 +42,7 @@ class ListenKnoten {
    * @return Ein Datenobjekt.
    */
   public Object gibDaten() {
-    return datenObjekt;
+    return wert;
   }
 
   /**
