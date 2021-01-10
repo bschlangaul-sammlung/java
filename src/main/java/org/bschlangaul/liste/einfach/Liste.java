@@ -1,94 +1,96 @@
 package org.bschlangaul.liste.einfach;
 
+/**
+ * Implementation einer einfach verkettenen Liste.
+ */
 public class Liste {
   private Element anfang;
-  // private Element ende;
 
-  public void einfuegenElement(int w) {
-    Element neuesElement = new Element(w);
+  public void fügeElementEin(int wert) {
+    Element neuesElement = new Element(wert);
     if (anfang == null) {
       anfang = neuesElement;
     } else {
-      neuesElement.nachfolgerSetzen(anfang);
+      neuesElement.setzteNachfolger(anfang);
       anfang = neuesElement;
     }
   }
 
-  public void sortiertEinfuegenElement(int w) {
-    Element neuesElement = new Element(w);
+  public void fügeElementSortiertEin(int wert) {
+    Element neuesElement = new Element(wert);
     if (anfang == null) {
       anfang = neuesElement;
     } else {
       Element aktuellesElement = anfang;
-      // vor das 1. Element einf�gen
-      if (anfang.wertGeben() > w) {
-        neuesElement.nachfolgerSetzen(anfang);
+      // vor das 1. Element einfügen
+      if (anfang.gibWert() > wert) {
+        neuesElement.setzteNachfolger(anfang);
         anfang = neuesElement;
       } else {
         // Einfügestelle suchen
-        while (aktuellesElement.nachfolgerGeben() != null && aktuellesElement.nachfolgerGeben().wertGeben() < w) {
-          aktuellesElement = aktuellesElement.nachfolgerGeben();
+        while (aktuellesElement.gibNachfolger() != null && aktuellesElement.gibNachfolger().gibWert() < wert) {
+          aktuellesElement = aktuellesElement.gibNachfolger();
         }
         // als letztes einfügen
-        if (aktuellesElement.nachfolgerGeben() == null) {
-          aktuellesElement.nachfolgerSetzen(neuesElement);
+        if (aktuellesElement.gibNachfolger() == null) {
+          aktuellesElement.setzteNachfolger(neuesElement);
         }
         // Zwischendrin einfügen
         else {
-          neuesElement.nachfolgerSetzen(aktuellesElement.nachfolgerGeben());
-          aktuellesElement.nachfolgerSetzen(neuesElement);
+          neuesElement.setzteNachfolger(aktuellesElement.gibNachfolger());
+          aktuellesElement.setzteNachfolger(neuesElement);
         }
       }
     }
   }
 
-  public void entfernenElement(int w) {
+  public void fügeElementSortiertEinRekursiv(int w) {
+    Element neuesElement = new Element(w);
+    if (anfang == null) {
+      anfang = neuesElement;
+    } else {
+      if (anfang.gibWert() > w) {
+        neuesElement.setzteNachfolger(anfang);
+        anfang = neuesElement;
+      } else {
+        anfang.fügeSortiertEinRekursiv(w);
+      }
+    }
+  }
+
+  public void entfernenElement(int wert) {
     if (anfang == null) {
       return;
     } else {
-      if (anfang.wertGeben() == w) {
-        anfang = anfang.nachfolgerGeben();
+      if (anfang.gibWert() == wert) {
+        anfang = anfang.gibNachfolger();
       } else {
         Element aktuellesElement = anfang;
         // Löschstelle suchen
-        while (aktuellesElement.nachfolgerGeben() != null && aktuellesElement.nachfolgerGeben().wertGeben() != w) {
-          aktuellesElement = aktuellesElement.nachfolgerGeben();
+        while (aktuellesElement.gibNachfolger() != null && aktuellesElement.gibNachfolger().gibWert() != wert) {
+          aktuellesElement = aktuellesElement.gibNachfolger();
         }
         // nicht enthalten
-        if (aktuellesElement.nachfolgerGeben() == null) {
+        if (aktuellesElement.gibNachfolger() == null) {
           return;
         }
         // Löschen
         else {
-          if (aktuellesElement.nachfolgerGeben().nachfolgerGeben() == null) {
-            aktuellesElement.nachfolgerSetzen(null);
+          if (aktuellesElement.gibNachfolger().gibNachfolger() == null) {
+            aktuellesElement.setzteNachfolger(null);
           } else {
-            aktuellesElement.nachfolgerSetzen(aktuellesElement.nachfolgerGeben().nachfolgerGeben());
+            aktuellesElement.setzteNachfolger(aktuellesElement.gibNachfolger().gibNachfolger());
           }
         }
       }
     }
   }
 
-  public void sortiertEinfuegenElementrek(int w) {
-    Element neuesElement = new Element(w);
-    if (anfang == null) {
-      anfang = neuesElement;
-    } else {
-      if (anfang.wertGeben() > w) {
-        neuesElement.nachfolgerSetzen(anfang);
-        anfang = neuesElement;
-      } else {
-        anfang.sortiertEinfuegenRek(w);
-      }
-    }
-  }
-
-  public int laengeGeben() {
+  public int gibLänge() {
     if (anfang == null) {
       return 0;
     } else {
-      return anfang.restlaengeGeben();
+      return anfang.gibRestlänge();
     }
   }
 }

@@ -1,51 +1,51 @@
 package org.bschlangaul.liste.einfach;
 
-// einfacheListe.zip
-// Modul 2.2: Algorithmen und Datenstrukturen Digitale Präsenztage AUD_4 Digitaler Präsenztag
-// https://www.studon.fau.de/file2975901_download.html
+/**
+ * Das Datenelement bzw. der Datenknoten der einfachen Listen.
+ */
 public class Element {
   private Element nachfolger;
   private int wert;
 
-  public Element(int w) {
-    wert = w;
+  public Element(int wert) {
+    this.wert = wert;
   }
 
-  public Element nachfolgerGeben() {
+  public Element gibNachfolger() {
     return nachfolger;
   }
 
-  public int wertGeben() {
+  public int gibWert() {
     return wert;
   }
 
-  public void nachfolgerSetzen(Element neuerNachfolger) {
+  public void setzteNachfolger(Element neuerNachfolger) {
     nachfolger = neuerNachfolger;
   }
 
-  public void wertSetzen(int w) {
-    wert = w;
+  public void setzeWert(int wert) {
+    this.wert = wert;
   }
 
-  public void sortiertEinfuegenRek(int w) {
+  public void fügeSortiertEinRekursiv(int wert) {
     if (nachfolger == null) {
-      nachfolger = new Element(w);
+      nachfolger = new Element(wert);
     } else {
-      if (nachfolger.wertGeben() > w) {
-        Element neuesElement = new Element(w);
+      if (nachfolger.gibWert() > wert) {
+        Element neuesElement = new Element(wert);
         neuesElement.nachfolger = nachfolger;
         nachfolger = neuesElement;
       } else {
-        nachfolger.sortiertEinfuegenRek(w);
+        nachfolger.fügeSortiertEinRekursiv(wert);
       }
     }
   }
 
-  public int restlaengeGeben() {
+  public int gibRestlänge() {
     if (nachfolger == null) {
       return 1;
     } else {
-      return nachfolger.restlaengeGeben() + 1;
+      return nachfolger.gibRestlänge() + 1;
     }
   }
 }
