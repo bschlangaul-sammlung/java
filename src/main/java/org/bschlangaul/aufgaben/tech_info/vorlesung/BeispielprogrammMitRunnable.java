@@ -3,9 +3,11 @@ package org.bschlangaul.aufgaben.tech_info.vorlesung;
 public class BeispielprogrammMitRunnable {
 
   public static void main(String[] args) {
-    Thread[] t = new Thread[10]; // Standard-Thread-Klasse von Java
+    // Standard-Thread-Klasse von Java
+    Thread[] t = new Thread[10];
     for (int i = 0; i < t.length; i++) {
-      t[i] = new Thread(new MeinRunnable(i)); // Arbeitspaket wird übergeben
+      // Arbeitspaket wird übergeben
+      t[i] = new Thread(new MeinRunnable(i));
     }
     for (int i = 0; i < t.length; i++) {
       t[i].start();
@@ -17,7 +19,6 @@ public class BeispielprogrammMitRunnable {
         e.printStackTrace();
       }
     }
-    // Ende des Programms
   }
 }
 
