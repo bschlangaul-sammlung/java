@@ -39,9 +39,13 @@ org.bschlangaul.aufgaben.sosy.eklausur
 org.bschlangaul.aufgaben.sosy.pu_5
 org.bschlangaul.aufgaben.sosy.totale_korrektheit
 org.bschlangaul.aufgaben.sosy.white_box
+org.bschlangaul.aufgaben.tech_info.fractale
+org.bschlangaul.aufgaben.tech_info.merge_sort
+org.bschlangaul.aufgaben.tech_info.monte_carlo
 org.bschlangaul.aufgaben.tech_info.philosoph
 org.bschlangaul.aufgaben.tech_info.picasso
 org.bschlangaul.aufgaben.tech_info.schreibtischlauf
+org.bschlangaul.aufgaben.tech_info.vorlesung
 org.bschlangaul.baum
 org.bschlangaul.baum.einfach
 org.bschlangaul.baum.kompositum
