@@ -12,6 +12,7 @@ public class Stapler implements Runnable {
 
   @Override
   public void run() {
+    // aktives Warten
     for (int i = 0; i < 10; i++) {
       hinfahren();
       // seite=='l' == links == Erzeuger seite=='r' == rechts == Verbraucher
@@ -45,6 +46,40 @@ public class Stapler implements Runnable {
             }
           }
         }
+      }
+      wegfahren();
+    }
+  }
+
+  // @Override
+  public void runPassivesWarten() {
+    // passives Warten
+    for (int i = 0; i < 10; i++) {
+      hinfahren();
+
+      synchronized (palette) {
+
+        if (seite == 'l') {
+          if (palette.kiste != null) {
+            try {
+              palette.wait(); // wait() blockiert bis ein anderer Thread auf palette notify() aufruft
+              // und wait() gibt die Marke von palette zurück
+            } catch (InterruptedException e) {
+              e.printStackTrace();
+            }
+          }
+          abladen();
+        } else {
+          if (palette.kiste == null) {
+            try {
+              palette.wait();
+            } catch (InterruptedException e) {
+              e.printStackTrace();
+            }
+          }
+          aufladen();
+        }
+        palette.notify(); // anderer Thread wird "aufgeweckt"
       }
       wegfahren();
     }
