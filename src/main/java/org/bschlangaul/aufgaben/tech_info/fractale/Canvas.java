@@ -106,8 +106,8 @@ public class Canvas {
   /**
    * checks, whether a point has an assigned color or not
    *
-   * @param x
-   * @param y
+   * @param x       Number of colored areas in x-direction
+   * @param y       Number of colored areas in y-direction
    * @return <code>true</code>, if the the point (x,y) already has a color
    */
   public boolean hasColor(final int x, final int y) {

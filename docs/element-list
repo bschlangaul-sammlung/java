@@ -39,6 +39,7 @@ org.bschlangaul.aufgaben.sosy.eklausur
 org.bschlangaul.aufgaben.sosy.pu_5
 org.bschlangaul.aufgaben.sosy.totale_korrektheit
 org.bschlangaul.aufgaben.sosy.white_box
+org.bschlangaul.aufgaben.tech_info.erzeuger_verbraucher
 org.bschlangaul.aufgaben.tech_info.fractale
 org.bschlangaul.aufgaben.tech_info.merge_sort
 org.bschlangaul.aufgaben.tech_info.monte_carlo
