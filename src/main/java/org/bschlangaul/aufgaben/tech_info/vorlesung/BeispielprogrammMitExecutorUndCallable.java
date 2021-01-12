@@ -12,6 +12,7 @@ public class BeispielprogrammMitExecutorUndCallable {
     long ergebnis = 0;
 
     ExecutorService e = Executors.newFixedThreadPool(4);
+    @SuppressWarnings("unchecked")
     Future<Long>[] f = new Future[n]; // Für jedes Teilergebnis wird eine Future-Referenz erzeugt.
     // Initialisiert werden die Future-Referenzen durch das Rückgabeobjekt von
     // submit() (siehe unten)

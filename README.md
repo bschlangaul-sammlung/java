@@ -116,6 +116,19 @@ mvn install:install-file \
    -DgeneratePom=true
 ```
 
+```
+sudo wget -O /usr/local/share/java/jars/engine-alpha-3.2.0.jar https://git.engine-alpha.org/downloads/v3.2.0/engine-alpha.jar
+
+mvn install:install-file \
+   -Dfile=/usr/local/share/java/jars/engine-alpha-3.2.0.jar \
+   -DgroupId=ea.edu \
+   -DartifactId=AlphaEngine \
+   -Dversion=3.2.0 \
+   -Dpackaging=jar \
+   -DgeneratePom=true
+```
+
+
 ## Eigene DSLs (Domain-specific languages)
 
 Die Projektspezifischen Mini-Sprachen werden mit ANTLR geparst. Die
