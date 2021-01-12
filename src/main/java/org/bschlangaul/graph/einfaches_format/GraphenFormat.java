@@ -75,16 +75,16 @@ class AntlrListener extends GraphBaseListener {
 }
 
 /**
- * Ein sehr einfaches Dateiformat um einen Graph zu spezifizieren.
+ * Ein sehr einfaches Dateiformat, um einen Graph zu spezifizieren.
  *
  * <p>
+ * Eigenschaften:
  * <ul>
  * <li>Es werden nur die Kanten angegeben
  * <li>Knotennamen dürfen keine Leerzeichen haben
- * <li>Die Richtung wird durch - für ungerichtete Kanten und durch > für
+ * <li>Die Richtung wird durch {@code --} für ungerichtete Kanten und durch {@code ->} für
  * gerichtete Kanten angegeben.
  * </ul>
- * </p>
  *
  * <pre>
  * {@code

@@ -14,6 +14,8 @@ public class Suchalgorithmen {
   /**
    * Konstruktor: Erzeugt ein neues Objekt der Klasse Suchalgorithmen und macht es
    * mit dem zugehörigen Eingabefenster bekannt.
+   *
+   * @param fenster Das Eingabefenster
    */
   public Suchalgorithmen(Eingabefenster fenster) {
     this.fenster = fenster;

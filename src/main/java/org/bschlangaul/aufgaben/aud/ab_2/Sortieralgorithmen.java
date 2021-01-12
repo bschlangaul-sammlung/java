@@ -14,6 +14,8 @@ public class Sortieralgorithmen {
   /**
    * Konstruktor: Erzeugt ein neues Objekt der Klasse Sortieralgorithmen und macht
    * es mit dem zugehörigen Eingabefenster bekannt.
+   *
+   * @param fenster Das Eingabefenster
    */
   public Sortieralgorithmen(Eingabefenster fenster) {
     this.fenster = fenster;
