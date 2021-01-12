@@ -9,8 +9,8 @@ import java.util.concurrent.atomic.*;
  * In dieser Aufgabe soll das aufgeführte parallele Programm
  * {@link ThreadSafety} analysiert werden. Ihr könnt davon ausgehen, dass die
  * Programmausführung in der {@code execute}-Methode beginnt und zu Beginn alle
- * Variablen die initial zugewiesenen Werte enthalten. Gib deine Lösung in
- * einer Datei Schreibtischlauf.pdf ab.
+ * Variablen die initial zugewiesenen Werte enthalten. Gib deine Lösung in einer
+ * Datei Schreibtischlauf.pdf ab.
  *
  * <ol>
  * <li>Welche Ausgaben sind für v möglich? Begründe deine Antwort.
@@ -59,7 +59,6 @@ public class ThreadSafety {
         for (int i = 0; i < 2; i++) {
           x++;
         }
-
       }
 
       while (!b) {
@@ -70,23 +69,26 @@ public class ThreadSafety {
   }
 
   public void execute() throws Exception {
-    final Thread tl = new T1();
+    final Thread t1 = new T1();
     final Thread t2 = new T2();
-    tl.start();
+    t1.start();
     t2.start();
-    tl.join();
+    t1.join();
     t2.join();
 
     System.out.println("v = " + v);
     System.out.println("a = " + a.get());
     System.out.println("x = " + x);
     System.out.println("y = " + y);
-
   }
 
   public static void main(String[] args) throws Exception {
     ThreadSafety ts = new ThreadSafety();
     ts.execute();
+    for (int i = 0; i < 1000; i++) {
+      ts = new ThreadSafety();
+      ts.execute();
+    }
   }
 
 }
