@@ -24,6 +24,5 @@ public abstract class Philosoph implements Runnable {
       denken();
       essen();
     }
-
   }
 }

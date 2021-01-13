@@ -14,7 +14,6 @@ public class Verklemmung {
       } else {
         p[i] = new PhilosophDeadlock(f[i], f[0], i); // Der letzte Philosoph bekommt die letzte und die erste Gabel
       }
-
     }
     for (int i = 0; i < anzahl; i++) {
       new Thread(p[i]).start();
@@ -22,16 +21,48 @@ public class Verklemmung {
   }
 
   public static void PhilosophenGleichzeitigeBelegung(int anzahl) {
-    // TODO
+    PhilosophGleichzeitigeBelegung[] p = new PhilosophGleichzeitigeBelegung[anzahl];
+    Gabel[] f = new Gabel[anzahl];
+    for (int i = 0; i < anzahl; i++) {
+      f[i] = new Gabel(i);
+    }
+    for (int i = 0; i < anzahl; i++) {
+      if (i != anzahl - 1) {
+        p[i] = new PhilosophGleichzeitigeBelegung(f[i], f[i + 1], i);
+      } else {
+        // Der letzte Philosoph bekommt die Gabeln in einer anderen Reihenfolge, wie die
+        // anderen Philosophen.
+        p[i] = new PhilosophGleichzeitigeBelegung(f[i], f[0], i);
+
+      }
+    }
+    for (int i = 0; i < anzahl; i++) {
+      new Thread(p[i]).start();
+    }
   }
 
   public static void PhilosophenGlobaleOrdnung(int anzahl) {
-    // TODO
+    PhilosophGleichzeitigeBelegung[] p = new PhilosophGleichzeitigeBelegung[anzahl];
+    Gabel[] f = new Gabel[anzahl];
+    for (int i = 0; i < anzahl; i++) {
+      f[i] = new Gabel(i);
+    }
+    for (int i = 0; i < anzahl; i++) {
+      if (i != anzahl - 1) {
+        p[i] = new PhilosophGleichzeitigeBelegung(f[i], f[i + 1], i);
+      } else {
+        p[i] = new PhilosophGleichzeitigeBelegung(f[0], f[i], i); // Der letzte Philosoph bekommt die letzte und die
+                                                                  // erste Gabel
+      }
+    }
+    for (int i = 0; i < anzahl; i++) {
+      new Thread(p[i]).start();
+    }
   }
 
   public static void main(String[] args) {
-    Verklemmung.PhilosophenDeadlock(3);
-    // Verklemmung.PhilosophenGleichzeitigeBelegung(7);
+    // Verklemmung.PhilosophenDeadlock(3);
+    Verklemmung.PhilosophenGleichzeitigeBelegung(7);
     // Verklemmung.PhilosophenGlobaleOrdnung(5);
   }
 
