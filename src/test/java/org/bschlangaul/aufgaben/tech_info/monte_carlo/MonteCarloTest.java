@@ -3,7 +3,6 @@ package org.bschlangaul.aufgaben.tech_info.monte_carlo;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class MonteCarloTest {

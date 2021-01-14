@@ -49,13 +49,4 @@ public class MonteCarloImpl implements MonteCarlo {
     return flächeZufallsViereck * anteilTreffer;
   }
 
-  public static void main(String[] args) {
-    MonteCarloImpl m = new MonteCarloImpl();
-    Kreis k = new Kreis();
-    Polynomial p1 = new Polynomial(new double[] { 0, 1 });
-    // double ergebnis = m.computeIntegral(k, -1, 1, 0, k.compute(1), 8, 1000000);
-    double ergebnis = m.computeIntegral(p1, 0, 1, 0, p1.compute(1), 8, 1000000);
-    System.out.printf("Ergebnis: %f", ergebnis);
-
-  }
 }
