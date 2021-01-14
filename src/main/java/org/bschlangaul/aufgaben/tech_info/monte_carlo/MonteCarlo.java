@@ -3,7 +3,6 @@ package org.bschlangaul.aufgaben.tech_info.monte_carlo;
 public interface MonteCarlo {
 
   /**
-   *
    * Computes the integral over f from a to b.
    *
    * @param f          the function to integrate
