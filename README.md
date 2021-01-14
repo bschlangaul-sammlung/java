@@ -82,10 +82,6 @@ public class WortPaar extends WoerterbuchEintrag {
 }
 ```
 
-
-
-
-
 # Testen
 
 ```
