@@ -13,24 +13,16 @@ public class Picasso {
       while (!canvas.finished()) {
         int x = zufall.nextInt(canvas.getX());
         int y = zufall.nextInt(canvas.getY());
-        synchronized (Picasso.class) {
+        synchronized (canvas) {
           if (!canvas.hasColor(x, y)) {
             canvas.colorize(x, y, (int) getId());
             System.out.println(String.format("Hilfsmaler Nr. %s das Pixel %s (x) %s (y) aus.", getId(), x, y));
           }
         }
-        machEineKleinePause();
       }
       System.out.println(String.format("Alles ausgemalt! Hilfsmaler Nr. %s kann jetzt endlich Feierabend machen.", getId()));
-    }
-
-    /**
-     * Auch ein Hilfsmaler braucht mal eine kleine Pause. Außerdem sieht man so
-     * besser, wie das Feld langsam ausgemalt wird.
-     */
-    private void machEineKleinePause() {
       try {
-        Thread.sleep(2);
+        join();
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
