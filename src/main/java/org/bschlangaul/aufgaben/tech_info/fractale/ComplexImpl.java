@@ -1,5 +1,8 @@
 package org.bschlangaul.aufgaben.tech_info.fractale;
 
+/**
+ * https://introcs.cs.princeton.edu/java/32class/Complex.java.html
+ */
 public class ComplexImpl implements Complex {
 
   double x;
@@ -15,7 +18,8 @@ public class ComplexImpl implements Complex {
   }
 
   public double betrag() {
-    return Math.sqrt(x * x + y * y) ;
+    return Math.hypot(x, y);
+    //return Math.sqrt(x * x + y * y) ;
   }
 
   public ComplexImpl mal(ComplexImpl b) {

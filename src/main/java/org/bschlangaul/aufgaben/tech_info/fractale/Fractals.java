@@ -23,7 +23,11 @@ public class Fractals {
    * @return number of iterations between [0..maxIter]
    */
   public static int computeIterations(ComplexImpl start, ComplexImpl step, int maxIter) {
-    return 0;
+    for (int t = 0; t < maxIter; t++) {
+        if (start.betrag() > 2.0) return t;
+        start = start.mal(start).plus(step);
+    }
+    return maxIter;
   }
 
   /**
