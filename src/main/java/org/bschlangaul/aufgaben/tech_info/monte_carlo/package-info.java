@@ -22,13 +22,13 @@
  *
  * <dd>
  * <p>
- * Die Zahl iterations gibt die Gesamtanzahl an Punkten an, die zufällig gesetzt
- * werden sollen. Das heißt, dass diese Gesamtanzahl an Punkten auf die Threads
- * aufgeteilt werden soll.
+ * Die Zahl {@code iterations} gibt die Gesamtanzahl an Punkten an, die zufällig
+ * gesetzt werden sollen. Das heißt, dass diese Gesamtanzahl an Punkten auf die
+ * Threads aufgeteilt werden soll.
  *
  * <dd>
  * <p>
- * Zum Zählweise der Punkte die „getroffen“ haben muss thread- sicher
+ * Zum Zählweise der Punkte die „getroffen“ haben muss thread-sicher
  * implementiert werden.
  *
  * <dd>

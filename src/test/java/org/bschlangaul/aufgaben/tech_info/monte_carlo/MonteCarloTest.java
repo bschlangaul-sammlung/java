@@ -9,8 +9,9 @@ public class MonteCarloTest {
 
   private MonteCarlo m;
   public static final int THREADS = 8;
-  public static final double EPSILON = 0.1;
-  public static final int ITERATIONS = 100000;
+  public static final double EPSILON = 0.001;
+  // 100000000;
+  public static final int ITERATIONS = 100000000;
 
   @Before
   public void before() {
