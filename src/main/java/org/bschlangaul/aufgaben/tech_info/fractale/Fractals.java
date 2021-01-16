@@ -24,8 +24,9 @@ public class Fractals {
    */
   public static int computeIterations(ComplexImpl start, ComplexImpl step, int maxIter) {
     for (int t = 0; t < maxIter; t++) {
-        if (start.betrag() > 2.0) return t;
-        start = start.mal(start).plus(step);
+      if (start.betrag() > MAXLENGTH)
+        return t;
+      start = start.mal(start).plus(step);
     }
     return maxIter;
   }
@@ -48,7 +49,15 @@ public class Fractals {
    */
   public Color[][] julia(int x, int y, Color[] palette, double realBegin, double imBegin, double realEnd, double imEnd,
       ComplexImpl step, int threads) {
-    return null;
+        Color[][] pixel = new Color[x][y];
+        for (int i = 0; i < x; i++) {
+          for (int j = 0; j < y; j++) {
+            ComplexImpl start = new ComplexImpl((realEnd - realBegin) / x * (i), (imEnd - imBegin) / y * (j));
+            int maxIterations = computeIterations(start, step, palette.length);
+            pixel[i][j] = palette[maxIterations - 1];
+          }
+        }
+        return pixel;
   }
 
   /**
@@ -68,7 +77,16 @@ public class Fractals {
    */
   public Color[][] mandelbrot(int x, int y, double realBegin, double imBegin, double realEnd, double imEnd,
       Color[] palette, int threads) {
-    return null;
+    Color[][] pixel = new Color[x][y];
+    for (int i = 0; i < x; i++) {
+      for (int j = 0; j < y; j++) {
+        ComplexImpl start = new ComplexImpl(0, 0);
+        ComplexImpl step = new ComplexImpl((realEnd - realBegin) / x * (i + 1), (imEnd - imBegin) / y * (j + 1));
+        int maxIterations = computeIterations(start, step, palette.length-1);
+        pixel[i][j] = palette[maxIterations];
+      }
+    }
+    return pixel;
   }
 
   public static void main(String[] args) {
@@ -78,13 +96,14 @@ public class Fractals {
     Color[][] feld = new Fractals().mandelbrot(x, y, -1.5, -1, 0.5, 1, palette, 4);
     Canvas.show(feld, "full mandelbrot");
     Color[][] feld2 = new Fractals().mandelbrot(x, y, -0.87484, 0.22884, -0.85084, 0.25284, palette, 4);
-    Color[][] feld3 = new Fractals().mandelbrot(x, y, -0.415, -0.683, -0.415 + 0.05, -0.683 + 0.05, palette, 4);
-    Canvas.show(feld3, "mandel 3");
     Canvas.show(feld2, "mandel 2");
-    Color[][] feld4 = new Fractals().julia(x, y, palette, -1, -1, 1, 1, new ComplexImpl(-0.81, -0.177), 4);
-    Color[][] feld5 = new Fractals().julia(x, y, palette, -1, -1, 1, 1, new ComplexImpl(-0.8, 0.156), 4);
-    Canvas.show(feld4, "Julia");
-    Canvas.show(feld5, "Julia 2");
+
+    // Color[][] feld3 = new Fractals().mandelbrot(x, y, -0.415, -0.683, -0.415 + 0.05, -0.683 + 0.05, palette, 4);
+    // Canvas.show(feld3, "mandel 3");
+    //Color[][] feld4 = new Fractals().julia(x, y, palette, -1, -1, 1, 1, new ComplexImpl(-0.81, -0.177), 4);
+    // Color[][] feld5 = new Fractals().julia(x, y, palette, -1, -1, 1, 1, new ComplexImpl(-0.8, 0.156), 4);
+    // Canvas.show(feld4, "Julia");
+    // Canvas.show(feld5, "Julia 2");
   }
 
   public static void saveImage(String path, Color[][] array, int x, int y) {
