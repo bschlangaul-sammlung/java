@@ -1,12 +1,23 @@
 package org.bschlangaul.aufgaben.tech_info.merge_sort;
 
+import java.util.Arrays;
+
 public class MergeSortImpl implements MergeSort {
 
   /**
    * @param arr Das zu sortierende Array.
    */
   public void seqMergeSort(int[] arr) {
-    // TODO
+    if (arr.length < 2) {
+      return;
+    }
+    int mitte = arr.length / 2;
+    int[] links = Arrays.copyOfRange(arr, 0, mitte);
+    int[] rechts = Arrays.copyOfRange(arr, mitte, arr.length);
+
+    seqMergeSort(links);
+    seqMergeSort(rechts);
+    merge(links, rechts, arr);
   }
 
   /**
