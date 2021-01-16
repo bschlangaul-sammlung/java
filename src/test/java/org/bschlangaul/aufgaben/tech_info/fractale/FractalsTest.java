@@ -8,7 +8,6 @@ import java.awt.Color;
 import java.util.Arrays;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class FractalsTest {
