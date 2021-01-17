@@ -52,7 +52,7 @@ public class Client {
    * IP-Adresse „127.0.0.1“ oder „localhost“ gewählt werden.
    */
   public static void main(String[] args) {
-
+    new Client("localhost", Server.DEFAULT_PORT);
   }
 
   /**
@@ -108,15 +108,73 @@ public class Client {
    * </ul>
    */
   public void sprichMitPolly() {
+    String consolenInput;
+    String pollysAntwort;
+    if (in.hasNextLine()) {
+      pollysAntwort = in.nextLine();
+      out.println("[Server] Pollys Antwort: " + pollysAntwort);
+    }
 
+    if (!isRunning) {
+      serverTrennen();
+    } else {
+      out.println("[Client] Was willst du Polly sagen?");
+      if (stdIn.hasNextLine()) {
+        consolenInput = stdIn.nextLine();
+        sendeNachricht(consolenInput);
+      }
+
+      if (in.hasNextLine()) {
+        pollysAntwort = in.nextLine();
+        out.println("[Client] Pollys Antwort: " + pollysAntwort);
+        if (pollysAntwort.equalsIgnoreCase("Okay Polly geht schlafen!")) {
+          isRunning = false;
+        }
+      }
+    }
   }
 
-  private void sendeNachrich(String msg) {
-
+  /**
+   * Implementiere in beiden Klassen {@link Client} und {@link ClientHandler} die
+   * Methode sendeNachricht(String msg):
+   *
+   * <p>
+   * Die Nachricht msg soll mit der Methode println(...) vom PrintWriter in den
+   * Puffer geschrieben werden.
+   *
+   * <p>
+   * Anschließend soll mit der Methode flush() vom PrintWriter die Daten in den
+   * OutputStream geschrieben und damit „abgeschickt“ werden.
+   *
+   * @param msg
+   */
+  private void sendeNachricht(String msg) {
+    out.println(msg);
+    out.flush();
   }
 
+  /**
+   * Implementiere in beiden Klassen Client und ClientHandler die Methoden
+   * serverTrennen() und clientTrennen(). Beide Methoden erledigen dieselben
+   * Schritte:
+   *
+   * <ul>
+   * <li>Zunächst sollen die beiden Methoden den Scanner und den PrintWriter
+   * schließen
+   * <li>Anschließend soll der Socket geschlossen werden
+   * </ul>
+   * <p>
+   * So werden zunächst die In- und Out-Kanäle und anschließend die Verbindung
+   * selbst zwischen Client und ClientHandler geschlossen.
+   */
   private void serverTrennen() {
-
+    in.close();
+    out.close();
+    try {
+      socket.close();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   /**

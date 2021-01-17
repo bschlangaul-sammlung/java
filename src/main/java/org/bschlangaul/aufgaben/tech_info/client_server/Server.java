@@ -1,9 +1,17 @@
 package org.bschlangaul.aufgaben.tech_info.client_server;
 
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+
 @SuppressWarnings("unused")
 public class Server {
 
+  public static int DEFAULT_PORT = 7569;
+
   private boolean isRunning;
+
+  private ServerSocket serverSocket;
 
   /**
    * Im Konstruktor müssen alle Attribute initialisiert werden ({@link isRunning}
@@ -13,6 +21,11 @@ public class Server {
    */
   public Server(int port) {
     isRunning = true;
+    try {
+      serverSocket = new ServerSocket();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
     listen();
   }
 
@@ -23,7 +36,7 @@ public class Server {
    * @param args Kommandozeilen-Argumenten, die hier nicht genutzt werden.
    */
   public static void main(String[] args) {
-
+    new Server(Server.DEFAULT_PORT);
   }
 
   /**
@@ -41,7 +54,6 @@ public class Server {
    * selbst zwischen Client und ClientHandler geschlossen.
    */
   private void serverTrennen() {
-
   }
 
   /**
@@ -49,7 +61,7 @@ public class Server {
    * werden.
    */
   public void serverBeenden() {
-
+    isRunning = false;
   }
 
   /**
@@ -69,16 +81,31 @@ public class Server {
    * </ul>
    *
    * <p>
-   * Nachdem die Verbindungsanfrage akzeptiert und in der lokalen Variable {@link client}
-   * gespeichert wurde, soll ein neuer {@link ClientHandler} mit diesem gespeicherten
-   * Socket client erzeugt werden.
+   * Nachdem die Verbindungsanfrage akzeptiert und in der lokalen Variable
+   * {@link client} gespeichert wurde, soll ein neuer {@link ClientHandler} mit
+   * diesem gespeicherten Socket client erzeugt werden.
    *
    * <p>
    * Anschließend soll der {@link ClientHandler} mithilfe eines Threads parallel
    * gestartet werden.
    */
   private void listen() {
-
+    while (isRunning) {
+      try {
+        if (serverSocket.isBound()) {
+          Socket client = serverSocket.accept();
+          ClientHandler clientHandler = new ClientHandler(client);
+          new Thread(clientHandler).start();
+        }
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
+    try {
+      serverSocket.close();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
 }

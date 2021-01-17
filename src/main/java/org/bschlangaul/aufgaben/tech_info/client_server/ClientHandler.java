@@ -24,7 +24,7 @@ import java.util.Scanner;
  * Grundgerüst!
  */
 @SuppressWarnings("unused")
-public class ClientHandler {
+public class ClientHandler implements Runnable {
 
   private Scanner in;
   private boolean istWach;
@@ -79,7 +79,14 @@ public class ClientHandler {
    * </ul>
    */
   public void run() {
-
+    sendeNachrich("Polly ist wach und will einen Keks");
+    String antwort;
+    while(istWach) {
+      if (in.hasNextLine()) {
+        antwort = pollysReaktion(in.nextLine());
+        sendeNachrich(antwort);
+      }
+    }
   }
 
   /**
@@ -97,7 +104,13 @@ public class ClientHandler {
    * selbst zwischen Client und ClientHandler geschlossen.
    */
   private void clientTrennen() {
-
+    in.close();
+    out.close();
+    try {
+      socket.close();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   /**
@@ -119,12 +132,31 @@ public class ClientHandler {
    *
    * @param msg
    */
-  private void pollysReaktion(String msg) {
-
+  private String pollysReaktion(String msg) {
+    if (msg.equalsIgnoreCase("nerv nicht")) {
+      istWach = false;
+      return "Okay Polly geht schlafen!";
+    }
+    return "Polly will noch einen Keks!";
   }
 
-  private void sendeNachricht(String msg) {
-
+  /**
+   * Implementiere in beiden Klassen {@link Client} und {@link ClientHandler} die
+   * Methode sendeNachricht(String msg):
+   *
+   * <p>
+   * Die Nachricht msg soll mit der Methode println(...) vom PrintWriter in den
+   * Puffer geschrieben werden.
+   *
+   * <p>
+   * Anschließend soll mit der Methode flush() vom PrintWriter die Daten in den
+   * OutputStream geschrieben und damit „abgeschickt“ werden.
+   *
+   * @param msg
+   */
+  private void sendeNachrich(String msg) {
+    out.println(msg);
+    out.flush();
   }
 
 }
