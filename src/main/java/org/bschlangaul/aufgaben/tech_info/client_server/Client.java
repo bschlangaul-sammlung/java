@@ -10,6 +10,9 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.Scanner;
 
+/**
+ * Der Klient, der mit Polly reden soll.
+ */
 public class Client {
 
   private InetSocketAddress address;
