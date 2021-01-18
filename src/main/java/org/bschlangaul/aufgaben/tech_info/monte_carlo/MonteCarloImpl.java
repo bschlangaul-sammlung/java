@@ -1,6 +1,7 @@
 package org.bschlangaul.aufgaben.tech_info.monte_carlo;
 
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Die Klasse {@link MonteCarloImpl} berechnet parallel, d. h. mit Hilfe von
@@ -17,6 +18,8 @@ public class MonteCarloImpl implements MonteCarlo {
    * als die sequentielle.
    */
   private Random zufall = new Random();
+
+  private AtomicInteger treffer;
 
   /**
    * Die Klasse {@link PunkteRechner} implementiert das Interface {@link Runnable}
@@ -57,37 +60,22 @@ public class MonteCarloImpl implements MonteCarlo {
      * {@inheritDoc}
      */
     public void run() {
-      // Berechnung des Bereichs für die Zufallszahlen auf der Y-Achse.
-      // Das Integral ist ja die Fläche von der X-Achse (y=0) zur Linie des Graphen.
-      // Es muss mindestens einmal 0 vorkommen, entweder beim minimalen Y oder beim
-      // maximalen Y.
-      yMin = yMin > 0 ? 0 : yMin;
-      yMax = yMax < 0 ? 0 : yMax;
-
-      long treffer = 0;
       for (int i = 0; i <= iterations; i++) {
         double x = gibZufallsZahl(xMin, xMax);
         double y = gibZufallsZahl(yMin, yMax);
         double berechntesY = f.compute(x);
-        // Ich glaube die “=” Zeichen bei “>=”sind nicht relevant. Die Test werden so
+        // Ich glaube die “=” Zeichen bei “>=” sind nicht relevant. Die Test werden so
         // oder so bestanden. Sie schaden aber auch nicht.
         if (berechntesY >= y && y >= 0) {
-          treffer++;
+          treffer.incrementAndGet();
         } else if (berechntesY < y && y < 0) {
           // Das Integral einer Funktion entspricht der Fläche zwischen dem
           // Graphen der Funktion und der x-Achse. Hierbei zählen die
           // Flächenstücke unterhalb der x-Achse negativ. Wir ziehen also von der Zahl
           // treffer ab.
-          treffer--;
+          treffer.decrementAndGet();
         }
       }
-      // In diesem Viereck wurden an zufälligen Stellen Werte platziert.
-      // Wir berechnen die Größe des Vierecks.
-      double flächeZufallsViereck = (xMax - xMin) * (yMax - yMin);
-      // Diesen cast braucht man, da int bzw. long durch int/long wieder int/long
-      // ergibt, hier also 0.
-      double anteilTreffer = (double) treffer / iterations;
-      ergebnis = flächeZufallsViereck * anteilTreffer;
     }
 
     /**
@@ -133,7 +121,16 @@ public class MonteCarloImpl implements MonteCarlo {
    */
   public double computeIntegral(Function funktion, double xMin, double xMax, double yMin, double yMax,
       int anzahlThreads, long wiederholungen) {
+    treffer = new AtomicInteger();
     PunkteRechner[] rechner = new PunkteRechner[anzahlThreads];
+
+    // Berechnung des Bereichs für die Zufallszahlen auf der Y-Achse.
+    // Das Integral ist ja die Fläche von der X-Achse (y=0) zur Linie des Graphen.
+    // Es muss mindestens einmal 0 vorkommen, entweder beim minimalen Y oder beim
+    // maximalen Y.
+    yMin = yMin > 0 ? 0 : yMin;
+    yMax = yMax < 0 ? 0 : yMax;
+
     for (int i = 0; i < anzahlThreads; i++) {
       rechner[i] = new PunkteRechner(funktion, xMin, xMax, yMin, yMax, wiederholungen / anzahlThreads);
       Thread thread = new Thread(rechner[i]);
@@ -145,11 +142,14 @@ public class MonteCarloImpl implements MonteCarlo {
       }
     }
 
-    // Bilde den Mittelwert der Ergebnisse aller Threads.
-    double ergebnis = 0;
-    for (int i = 0; i < anzahlThreads; i++) {
-      ergebnis += rechner[i].gibErgebnis();
-    }
-    return ergebnis / anzahlThreads;
+    // In diesem Viereck wurden an zufälligen Stellen Werte platziert.
+    // Wir berechnen die Größe des Vierecks.
+    double flächeZufallsViereck = (xMax - xMin) * (yMax - yMin);
+    // Diesen cast braucht man, da int bzw. long durch int/long wieder int/long
+    // ergibt, hier also 0.
+    double anteilTreffer = (double) treffer.get() / wiederholungen;
+
+    return flächeZufallsViereck * anteilTreffer;
+
   }
 }
