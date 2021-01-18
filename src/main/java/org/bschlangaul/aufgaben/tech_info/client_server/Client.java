@@ -10,7 +10,6 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.Scanner;
 
-@SuppressWarnings("unused")
 public class Client {
 
   private InetSocketAddress address;
@@ -41,140 +40,6 @@ public class Client {
     stelleVerbindungHer();
     isRunning = true;
     sprichMitPolly();
-  }
-
-  /**
-   * In der main-Methode soll ein neuer {@link Client} mit der IP-Adresse des
-   * gerade programmierten Servers und mit dem gewählten Port des Servers (z.B.
-   * 7569) erstellt werden.
-   *
-   * Falls der Server auf demselben Rechner läuft wie der Client, kann die
-   * IP-Adresse „127.0.0.1“ oder „localhost“ gewählt werden.
-   */
-  public static void main(String[] args) {
-    new Client("localhost", Server.DEFAULT_PORT);
-  }
-
-  /**
-   * Zuletzt muss noch die Kommunikation vom Client mit Polly fertiggestellt
-   * werden. Die Methode sprichMitPolly() wird nach der Verbindungsherstellung mit
-   * dem Server im Konstruktor aufgerufen.
-   *
-   * <p>
-   * Der Client soll ermöglichen, dass du über die Konsole direkt mit Polly
-   * sprechen kannst. Also soll der Client die Antworten von Polly auf der Konsole
-   * ausgeben, deine Eingaben auf der Konsole einlesen und an den Server
-   * verschicken und anschließend wieder die Antwort von Polly wieder empfangen
-   * und ausgeben.
-   *
-   * <p>
-   * Hierfür werden zwei lokale Variablen consolenInput und pollysAntwort vom
-   * Datentyp String benötigt
-   *
-   * <p>
-   * Der Ablauf der Methode ist visuell auf der nächsten Folie dargestellt
-   *
-   * <ul>
-   * <li>Falls man beim InputStream eine neue Zeile lesen kann, dann
-   * <ul>
-   * <li>Zeile einlesen und der Variablen pollysAntwort zuweisen
-   * <li>Pollys Antwort ausgeben in der Form: [Server] Pollys Antwort:
-   * “+pollysAntwort
-   * </ul>
-   *
-   * <li>Ausgabe auf Konsole in der Form: [Client] Was willst du Polly sagen?
-   *
-   * <li>Falls man eine neue Zeile von der Konsole einlesen kann (hasNextLine()
-   * auf stdIn), dann
-   *
-   * <ul>
-   * <li>Dann soll die Variable consolenInput (für die Nachricht an Polly) mit dem
-   * Input des Benutzers eingelesen werden (nextLine() auf stdIn)
-   * <li>Die gerade eingelesene Nachricht soll versendet werden
-   * </ul>
-   *
-   * <li>Falls man beim InputStream über den Scanner in eine neue Zeile einlesen
-   * kann, dann
-   *
-   * <ul>
-   * <li>Dann soll diese Antwort von Polly in der Variable pollysAntwort
-   * gespeichert werden
-   * <li>Pollys Antwort ausgeben in der Form: „[Client] Pollys Antwort:
-   * “+pollysAntwort
-   * <li>Falls Pollys Antwort „Okay Polly geht schlafen!“ entspricht -> isRunning
-   * auf false
-   * </ul>
-   *
-   * </ul>
-   */
-  public void sprichMitPolly() {
-    String consolenInput;
-    String pollysAntwort;
-    if (in.hasNextLine()) {
-      pollysAntwort = in.nextLine();
-      out.println("[Server] Pollys Antwort: " + pollysAntwort);
-    }
-
-    if (!isRunning) {
-      serverTrennen();
-    } else {
-      out.println("[Client] Was willst du Polly sagen?");
-      if (stdIn.hasNextLine()) {
-        consolenInput = stdIn.nextLine();
-        sendeNachricht(consolenInput);
-      }
-
-      if (in.hasNextLine()) {
-        pollysAntwort = in.nextLine();
-        out.println("[Client] Pollys Antwort: " + pollysAntwort);
-        if (pollysAntwort.equalsIgnoreCase("Okay Polly geht schlafen!")) {
-          isRunning = false;
-        }
-      }
-    }
-  }
-
-  /**
-   * Implementiere in beiden Klassen {@link Client} und {@link ClientHandler} die
-   * Methode sendeNachricht(String msg):
-   *
-   * <p>
-   * Die Nachricht msg soll mit der Methode println(...) vom PrintWriter in den
-   * Puffer geschrieben werden.
-   *
-   * <p>
-   * Anschließend soll mit der Methode flush() vom PrintWriter die Daten in den
-   * OutputStream geschrieben und damit „abgeschickt“ werden.
-   *
-   * @param msg
-   */
-  private void sendeNachricht(String msg) {
-    out.println(msg);
-    out.flush();
-  }
-
-  /**
-   * Implementiere in beiden Klassen Client und ClientHandler die Methoden
-   * serverTrennen() und clientTrennen(). Beide Methoden erledigen dieselben
-   * Schritte:
-   *
-   * <ul>
-   * <li>Zunächst sollen die beiden Methoden den Scanner und den PrintWriter
-   * schließen
-   * <li>Anschließend soll der Socket geschlossen werden
-   * </ul>
-   * <p>
-   * So werden zunächst die In- und Out-Kanäle und anschließend die Verbindung
-   * selbst zwischen Client und ClientHandler geschlossen.
-   */
-  private void serverTrennen() {
-    in.close();
-    out.close();
-    try {
-      socket.close();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
   }
 
   /**
@@ -240,4 +105,139 @@ public class Client {
       e.printStackTrace();
     }
   }
+
+  /**
+   * Zuletzt muss noch die Kommunikation vom Client mit Polly fertiggestellt
+   * werden. Die Methode sprichMitPolly() wird nach der Verbindungsherstellung mit
+   * dem Server im Konstruktor aufgerufen.
+   *
+   * <p>
+   * Der Client soll ermöglichen, dass du über die Konsole direkt mit Polly
+   * sprechen kannst. Also soll der Client die Antworten von Polly auf der Konsole
+   * ausgeben, deine Eingaben auf der Konsole einlesen und an den Server
+   * verschicken und anschließend wieder die Antwort von Polly wieder empfangen
+   * und ausgeben.
+   *
+   * <p>
+   * Hierfür werden zwei lokale Variablen consolenInput und pollysAntwort vom
+   * Datentyp String benötigt
+   *
+   * <p>
+   * Der Ablauf der Methode ist visuell auf der nächsten Folie dargestellt
+   *
+   * <ul>
+   * <li>Falls man beim InputStream eine neue Zeile lesen kann, dann
+   * <ul>
+   * <li>Zeile einlesen und der Variablen pollysAntwort zuweisen
+   * <li>Pollys Antwort ausgeben in der Form: [Server] Pollys Antwort:
+   * “+pollysAntwort
+   * </ul>
+   *
+   * <li>Ausgabe auf Konsole in der Form: [Client] Was willst du Polly sagen?
+   *
+   * <li>Falls man eine neue Zeile von der Konsole einlesen kann (hasNextLine()
+   * auf stdIn), dann
+   *
+   * <ul>
+   * <li>Dann soll die Variable consolenInput (für die Nachricht an Polly) mit dem
+   * Input des Benutzers eingelesen werden (nextLine() auf stdIn)
+   * <li>Die gerade eingelesene Nachricht soll versendet werden
+   * </ul>
+   *
+   * <li>Falls man beim InputStream über den Scanner in eine neue Zeile einlesen
+   * kann, dann
+   *
+   * <ul>
+   * <li>Dann soll diese Antwort von Polly in der Variable pollysAntwort
+   * gespeichert werden
+   * <li>Pollys Antwort ausgeben in der Form: „[Client] Pollys Antwort:
+   * “+pollysAntwort
+   * <li>Falls Pollys Antwort „Okay Polly geht schlafen!“ entspricht -> isRunning
+   * auf false
+   * </ul>
+   *
+   * </ul>
+   */
+  public void sprichMitPolly() {
+    String consolenInput;
+    String pollysAntwort;
+    if (in.hasNextLine()) {
+      pollysAntwort = in.nextLine();
+      System.out.println("[Server] Pollys Antwort: " + pollysAntwort);
+    }
+
+    while (isRunning) {
+      System.out.println("[Client] Was willst du Polly sagen?");
+      if (stdIn.hasNextLine()) {
+        consolenInput = stdIn.nextLine();
+        sendeNachricht(consolenInput);
+      }
+
+      if (in.hasNextLine()) {
+        pollysAntwort = in.nextLine();
+        System.out.println("[Client] Pollys Antwort: " + pollysAntwort);
+        if (pollysAntwort.equalsIgnoreCase("Okay Polly geht schlafen!")) {
+          isRunning = false;
+        }
+      }
+    }
+
+    serverTrennen();
+  }
+
+  /**
+   * Implementiere in beiden Klassen {@link Client} und {@link ClientHandler} die
+   * Methode sendeNachricht(String msg):
+   *
+   * <p>
+   * Die Nachricht msg soll mit der Methode println(...) vom PrintWriter in den
+   * Puffer geschrieben werden.
+   *
+   * <p>
+   * Anschließend soll mit der Methode flush() vom PrintWriter die Daten in den
+   * OutputStream geschrieben und damit „abgeschickt“ werden.
+   *
+   * @param msg
+   */
+  private void sendeNachricht(String msg) {
+    out.println(msg);
+    out.flush();
+  }
+
+  /**
+   * Implementiere in beiden Klassen Client und ClientHandler die Methoden
+   * serverTrennen() und clientTrennen(). Beide Methoden erledigen dieselben
+   * Schritte:
+   *
+   * <ul>
+   * <li>Zunächst sollen die beiden Methoden den Scanner und den PrintWriter
+   * schließen
+   * <li>Anschließend soll der Socket geschlossen werden
+   * </ul>
+   * <p>
+   * So werden zunächst die In- und Out-Kanäle und anschließend die Verbindung
+   * selbst zwischen Client und ClientHandler geschlossen.
+   */
+  private void serverTrennen() {
+    in.close();
+    out.close();
+    try {
+      socket.close();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * In der main-Methode soll ein neuer {@link Client} mit der IP-Adresse des
+   * gerade programmierten Servers und mit dem gewählten Port des Servers (z.B.
+   * 7569) erstellt werden.
+   *
+   * Falls der Server auf demselben Rechner läuft wie der Client, kann die
+   * IP-Adresse „127.0.0.1“ oder „localhost“ gewählt werden.
+   */
+  public static void main(String[] args) {
+    new Client("localhost", Server.DEFAULT_PORT);
+  }
+
 }

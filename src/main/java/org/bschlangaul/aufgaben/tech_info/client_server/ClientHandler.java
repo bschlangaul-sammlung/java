@@ -79,12 +79,12 @@ public class ClientHandler implements Runnable {
    * </ul>
    */
   public void run() {
-    sendeNachrich("Polly ist wach und will einen Keks");
+    sendeNachricht("Polly ist wach und will einen Keks");
     String antwort;
     while(istWach) {
       if (in.hasNextLine()) {
         antwort = pollysReaktion(in.nextLine());
-        sendeNachrich(antwort);
+        sendeNachricht(antwort);
       }
     }
   }
@@ -133,6 +133,7 @@ public class ClientHandler implements Runnable {
    * @param msg
    */
   private String pollysReaktion(String msg) {
+    System.out.println("ClientHandler.pollysReaktion: " + msg);
     if (msg.equalsIgnoreCase("nerv nicht")) {
       istWach = false;
       return "Okay Polly geht schlafen!";
@@ -154,8 +155,9 @@ public class ClientHandler implements Runnable {
    *
    * @param msg
    */
-  private void sendeNachrich(String msg) {
+  private void sendeNachricht(String msg) {
     out.println(msg);
+    System.out.println("ClientHandler.sendeNachricht: " + msg);
     out.flush();
   }
 

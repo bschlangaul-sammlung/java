@@ -22,46 +22,13 @@ public class Server {
   public Server(int port) {
     isRunning = true;
     try {
-      serverSocket = new ServerSocket();
+      serverSocket = new ServerSocket(port);
+      System.out.println("ServerSocket gestartet auf Port " + port);
+
     } catch (IOException e) {
       e.printStackTrace();
     }
     listen();
-  }
-
-  /**
-   * In der main-Methode soll ein neuer Server mit einem beliebigen Port größer
-   * als 1024 (z. B. 7569) erstellt werden
-   *
-   * @param args Kommandozeilen-Argumenten, die hier nicht genutzt werden.
-   */
-  public static void main(String[] args) {
-    new Server(Server.DEFAULT_PORT);
-  }
-
-  /**
-   * Implementiere in beiden Klassen Client und ClientHandler die Methoden
-   * serverTrennen() und clientTrennen(). Beide Methoden erledigen dieselben
-   * Schritte:
-   *
-   * <ul>
-   * <li>Zunächst sollen die beiden Methoden den Scanner und den PrintWriter
-   * schließen
-   * <li>Anschließend soll der Socket geschlossen werden
-   * </ul>
-   * <p>
-   * So werden zunächst die In- und Out-Kanäle und anschließend die Verbindung
-   * selbst zwischen Client und ClientHandler geschlossen.
-   */
-  private void serverTrennen() {
-  }
-
-  /**
-   * In der Methode {@link serverBeenden} soll {@link isRunning} auf false gesetzt
-   * werden.
-   */
-  public void serverBeenden() {
-    isRunning = false;
   }
 
   /**
@@ -92,11 +59,11 @@ public class Server {
   private void listen() {
     while (isRunning) {
       try {
-        if (serverSocket.isBound()) {
-          Socket client = serverSocket.accept();
-          ClientHandler clientHandler = new ClientHandler(client);
-          new Thread(clientHandler).start();
-        }
+        System.out.println("lausche auf eingehende Verbindungen");
+        Socket client = serverSocket.accept();
+        ClientHandler clientHandler = new ClientHandler(client);
+        new Thread(clientHandler).start();
+        System.out.println("clientHandler gestartet");
       } catch (IOException e) {
         e.printStackTrace();
       }
@@ -108,4 +75,38 @@ public class Server {
     }
   }
 
+  /**
+   * Implementiere in beiden Klassen Client und ClientHandler die Methoden
+   * serverTrennen() und clientTrennen(). Beide Methoden erledigen dieselben
+   * Schritte:
+   *
+   * <ul>
+   * <li>Zunächst sollen die beiden Methoden den Scanner und den PrintWriter
+   * schließen
+   * <li>Anschließend soll der Socket geschlossen werden
+   * </ul>
+   * <p>
+   * So werden zunächst die In- und Out-Kanäle und anschließend die Verbindung
+   * selbst zwischen Client und ClientHandler geschlossen.
+   */
+  private void serverTrennen() {
+  }
+
+  /**
+   * In der Methode {@link serverBeenden} soll {@link isRunning} auf false gesetzt
+   * werden.
+   */
+  public void serverBeenden() {
+    isRunning = false;
+  }
+
+  /**
+   * In der main-Methode soll ein neuer Server mit einem beliebigen Port größer
+   * als 1024 (z. B. 7569) erstellt werden
+   *
+   * @param args Kommandozeilen-Argumenten, die hier nicht genutzt werden.
+   */
+  public static void main(String[] args) {
+    new Server(Server.DEFAULT_PORT);
+  }
 }
