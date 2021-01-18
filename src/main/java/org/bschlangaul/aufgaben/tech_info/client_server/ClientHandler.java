@@ -23,7 +23,6 @@ import java.util.Scanner;
  * ClientHandler implementiert das Interface Runnable. Implementiere das
  * Grundgerüst!
  */
-@SuppressWarnings("unused")
 public class ClientHandler implements Runnable {
 
   private Scanner in;
@@ -34,9 +33,11 @@ public class ClientHandler implements Runnable {
   /**
    * Im Konstruktor sollen alle Attribute des ClientHandlers initialisiert werden:
    *
-   * Dem Referenzattribut socket wird der Übergabeparameter zugewiesen. istWach
-   * ist true, da Polly jetzt Kekse haben will in und out wird genauso wie beim
-   * Client initialisiert:
+   * Dem Referenzattribut {@code socket} wird der Übergabeparameter zugewiesen.
+   * {@code istWach} ist {@code true}, da Polly jetzt Kekse haben will. {@code in}
+   * und {@code out} wird genauso wie beim Client initialisiert:
+   *
+   * @param socket Der Client-Socket.
    */
   public ClientHandler(Socket socket) {
     this.socket = socket;
@@ -62,7 +63,7 @@ public class ClientHandler implements Runnable {
    * <li>Sende als Erstes eine Nachricht an den Client: "Polly ist wach und will
    * einen Keks“
    * <li>Definiere dir für die Antwort an den Client eine lokale Variable antwort
-   * <li>Solange Polly wach ist, soll der Client mit ihr kommunizieren können ->
+   * <li>Solange Polly wach ist, soll der Client mit ihr kommunizieren können:
    * Dauerschleife (Inhalt der Dauerschleife siehe nächste Folie)
    * <li>Nach der Schleife soll die Verbindung zum Client getrennt werden.
    * </ul>
@@ -81,24 +82,26 @@ public class ClientHandler implements Runnable {
   public void run() {
     sendeNachricht("Polly ist wach und will einen Keks");
     String antwort;
-    while(istWach) {
+    while (istWach) {
       if (in.hasNextLine()) {
         antwort = pollysReaktion(in.nextLine());
         sendeNachricht(antwort);
       }
     }
+    clientTrennen();
   }
 
   /**
-   * Implementiere in beiden Klassen Client und ClientHandler die Methoden
-   * serverTrennen() und clientTrennen(). Beide Methoden erledigen dieselben
-   * Schritte:
+   * Implementiere in beiden Klassen {@link Client} und {@link ClientHandler} die
+   * Methoden serverTrennen() und clientTrennen(). Beide Methoden erledigen
+   * dieselben Schritte:
    *
    * <ul>
-   * <li>Zunächst sollen die beiden Methoden den Scanner und den PrintWriter
-   * schließen
-   * <li>Anschließend soll der Socket geschlossen werden
+   * <li>Zunächst sollen die beiden Methoden den {@link Scanner} und den
+   * {@link PrintWriter} schließen
+   * <li>Anschließend soll der {@link Socket} geschlossen werden
    * </ul>
+   *
    * <p>
    * So werden zunächst die In- und Out-Kanäle und anschließend die Verbindung
    * selbst zwischen Client und ClientHandler geschlossen.
@@ -130,10 +133,11 @@ public class ClientHandler implements Runnable {
    * Tipp: Nutze hierfür die Methode equalsIgnoreCase(...), um die Groß- und
    * Kleinschreibung nicht zu beachten!
    *
-   * @param msg
+   * @param msg Inhalt der Nachricht, auf die Polly reagieren soll.
+   *
+   * @return Inhalt der Nachricht, mit der Polly reagiert.
    */
   private String pollysReaktion(String msg) {
-    System.out.println("ClientHandler.pollysReaktion: " + msg);
     if (msg.equalsIgnoreCase("nerv nicht")) {
       istWach = false;
       return "Okay Polly geht schlafen!";
@@ -153,11 +157,10 @@ public class ClientHandler implements Runnable {
    * Anschließend soll mit der Methode flush() vom PrintWriter die Daten in den
    * OutputStream geschrieben und damit „abgeschickt“ werden.
    *
-   * @param msg
+   * @param msg Inhalt der Nachricht, die geschickt werden soll.
    */
   private void sendeNachricht(String msg) {
     out.println(msg);
-    System.out.println("ClientHandler.sendeNachricht: " + msg);
     out.flush();
   }
 

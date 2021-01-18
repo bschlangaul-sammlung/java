@@ -80,7 +80,6 @@ import javax.swing.KeyStroke;
  * For additional documentation, see
  * <a href="https://introcs.cs.princeton.edu/31datatype">Section 3.1</a> of
  * <i>Computer Science: An Interdisciplinary Approach</i> by Robert Sedgewick
- * and Kevin Wayne. See {@link GrayscalePicture} for a version that supports
  * grayscale images.
  *
  * @author Robert Sedgewick

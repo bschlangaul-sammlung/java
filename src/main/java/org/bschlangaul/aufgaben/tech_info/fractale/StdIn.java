@@ -163,7 +163,6 @@ import java.util.regex.Pattern;
  *  <li> {@code StdIn} is a set of static methods and reads
  *       reads input from only standard input. It is suitable for use before
  *       a programmer knows about objects.
- *       See {@link In} for an object-oriented version that handles
  *       input from files, URLs,
  *       and sockets.
  *  <li> {@code StdIn} uses whitespace as the delimiter pattern
@@ -172,7 +171,6 @@ import java.util.regex.Pattern;
  *  <li> {@code StdIn} coerces the character-set encoding to UTF-8,
  *       which is the most widely used character encoding for Unicode.
  *  <li> {@code StdIn} coerces the locale to {@link Locale#US},
- *       for consistency with {@link StdOut}, {@link Double#parseDouble(String)},
  *       and floating-point literals.
  *  <li> {@code StdIn} has convenient methods for reading a single
  *       character; reading in sequences of integers, doubles, or strings;

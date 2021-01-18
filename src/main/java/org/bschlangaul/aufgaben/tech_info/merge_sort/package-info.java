@@ -12,12 +12,12 @@
  *
  * <ul>
  * <li><a href="https://www.youtube.com/watch?v=JSceec-wEyw">Merge Sort | GeeksforGeeks</a> (1,5 min)
- * <li><a href="https://www.youtube.com/watch?v=4VqmGXwpLqc ">Merge sort in 3 minutes</a> (3 min)
+ * <li><a href="https://www.youtube.com/watch?v=4VqmGXwpLqc">Merge sort in 3 minutes</a> (3 min)
  * </ul>
  *
  * <p>
  * Die Klasse {@link MergeSortImpl} soll dafür vervollständigt werden. Die
- * {@link merge}-Methode ist dabei bereits vorgegeben. Sie führt das vorsortierte
+ * {@code merge}-Methode ist dabei bereits vorgegeben. Sie führt das vorsortierte
  * Array {@code left} und das vorsortierte Array {@code right} im übergebenen Array arr in
  * richtiger Reihenfolge zusammen. Die Länge von {@code arr} muss dabei gleich der Länge
  * von {@code left} plus der Länge von {@code right} sein.

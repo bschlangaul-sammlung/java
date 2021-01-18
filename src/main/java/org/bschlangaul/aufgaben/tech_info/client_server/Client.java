@@ -33,6 +33,9 @@ public class Client {
    * <li>Danach soll die Methode sprichMitPolly() aufgerufen werden. Diese Methode
    * kommuniziert mit dem Server/Polly
    * </ul>
+   *
+   * @param hostname IP-Adresse oder Host-name
+   * @param port Der TCP-Port
    */
   public Client(String hostname, int port) {
     stdIn = new Scanner(System.in);
@@ -55,7 +58,7 @@ public class Client {
    * OutputStream des Socket folgendermaßen initialisiert:
    * </ul>
    *
-   * <h2>Erklärung zur Initialisierung des In-/Out-Kanals</h2>
+   * <b>Erklärung zur Initialisierung des In-/Out-Kanals</b>
    *
    * <p>
    * Jeder Socket besitzt einen InputStream und einen OutputStream. Wenn sich zwei
@@ -64,13 +67,12 @@ public class Client {
    * umgekehrt. (siehe Bild)
    *
    * <p>
-   * Der InputStream und OutputStream arbeiten auf Bitebene. Das heißt, es werden
+   * Der {@code InputStream} und OutputStream arbeiten auf Bitebene. Das heißt, es werden
    * beim InputStream Bytes gelesen/empfangen und beim OutputStream Bytes
    * geschrieben/versendet.
    *
-   *
    * <p>
-   * Die Klassen InputStreamReader und OutputStreamWriter ermöglichen es, dass man
+   * Die Klassen {@link InputStreamReader} und OutputStreamWriter ermöglichen es, dass man
    * die Daten zeichenweise (Buchstaben, Zahlen und Sonderzeichen nach einem
    * spezifizierten Zeichensatz) lesen/schreiben kann.
    *
@@ -152,7 +154,7 @@ public class Client {
    * gespeichert werden
    * <li>Pollys Antwort ausgeben in der Form: „[Client] Pollys Antwort:
    * “+pollysAntwort
-   * <li>Falls Pollys Antwort „Okay Polly geht schlafen!“ entspricht -> isRunning
+   * <li>Falls Pollys Antwort „Okay Polly geht schlafen!“ entspricht: {@code isRunning}
    * auf false
    * </ul>
    *
@@ -161,28 +163,22 @@ public class Client {
   public void sprichMitPolly() {
     String consolenInput;
     String pollysAntwort;
-    if (in.hasNextLine()) {
-      pollysAntwort = in.nextLine();
-      System.out.println("[Server] Pollys Antwort: " + pollysAntwort);
-    }
-
     while (isRunning) {
-      System.out.println("[Client] Was willst du Polly sagen?");
-      if (stdIn.hasNextLine()) {
-        consolenInput = stdIn.nextLine();
-        sendeNachricht(consolenInput);
-      }
-
       if (in.hasNextLine()) {
         pollysAntwort = in.nextLine();
-        System.out.println("[Client] Pollys Antwort: " + pollysAntwort);
+        System.out.println("[Server] Pollys Antwort: " + pollysAntwort);
         if (pollysAntwort.equalsIgnoreCase("Okay Polly geht schlafen!")) {
           isRunning = false;
+          serverTrennen();
+        } else {
+          System.out.println("[Client] Was willst du Polly sagen?");
+          if (stdIn.hasNextLine()) {
+            consolenInput = stdIn.nextLine();
+            sendeNachricht(consolenInput);
+          }
         }
       }
     }
-
-    serverTrennen();
   }
 
   /**
@@ -197,7 +193,7 @@ public class Client {
    * Anschließend soll mit der Methode flush() vom PrintWriter die Daten in den
    * OutputStream geschrieben und damit „abgeschickt“ werden.
    *
-   * @param msg
+   * @param msg Inhalt der Nachricht, die versendet werden soll.
    */
   private void sendeNachricht(String msg) {
     out.println(msg);
@@ -235,6 +231,8 @@ public class Client {
    *
    * Falls der Server auf demselben Rechner läuft wie der Client, kann die
    * IP-Adresse „127.0.0.1“ oder „localhost“ gewählt werden.
+   *
+   * @param args Kommandozeilen-Argumente, die wir nicht verwenden.
    */
   public static void main(String[] args) {
     new Client("localhost", Server.DEFAULT_PORT);

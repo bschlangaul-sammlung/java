@@ -4,7 +4,11 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-@SuppressWarnings("unused")
+/**
+ * Der {@link Server} stellt einen Papagei mit dem Namen Polly dar. Polly ist
+ * sehr stur und will immer nur Kekse essen, ganz egal was man ihr auch sagt.
+ * Aber wenigstens geht sie auf Kommando („nerv nicht“) schlafen.
+ */
 public class Server {
 
   public static int DEFAULT_PORT = 7569;
@@ -17,14 +21,12 @@ public class Server {
    * Im Konstruktor müssen alle Attribute initialisiert werden ({@link isRunning}
    * auf true) und am Ende die Methode listen() aufgerufen werden.
    *
-   * @param port
+   * @param port Der Port, auf dem der Server lauschen soll.
    */
   public Server(int port) {
     isRunning = true;
     try {
       serverSocket = new ServerSocket(port);
-      System.out.println("ServerSocket gestartet auf Port " + port);
-
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -49,7 +51,7 @@ public class Server {
    *
    * <p>
    * Nachdem die Verbindungsanfrage akzeptiert und in der lokalen Variable
-   * {@link client} gespeichert wurde, soll ein neuer {@link ClientHandler} mit
+   * {@code client} gespeichert wurde, soll ein neuer {@link ClientHandler} mit
    * diesem gespeicherten Socket client erzeugt werden.
    *
    * <p>
@@ -59,37 +61,22 @@ public class Server {
   private void listen() {
     while (isRunning) {
       try {
-        System.out.println("lausche auf eingehende Verbindungen");
         Socket client = serverSocket.accept();
         ClientHandler clientHandler = new ClientHandler(client);
         new Thread(clientHandler).start();
-        System.out.println("clientHandler gestartet");
       } catch (IOException e) {
         e.printStackTrace();
       }
     }
+    serverTrennen();
+  }
+
+  private void serverTrennen() {
     try {
       serverSocket.close();
     } catch (IOException e) {
       e.printStackTrace();
     }
-  }
-
-  /**
-   * Implementiere in beiden Klassen Client und ClientHandler die Methoden
-   * serverTrennen() und clientTrennen(). Beide Methoden erledigen dieselben
-   * Schritte:
-   *
-   * <ul>
-   * <li>Zunächst sollen die beiden Methoden den Scanner und den PrintWriter
-   * schließen
-   * <li>Anschließend soll der Socket geschlossen werden
-   * </ul>
-   * <p>
-   * So werden zunächst die In- und Out-Kanäle und anschließend die Verbindung
-   * selbst zwischen Client und ClientHandler geschlossen.
-   */
-  private void serverTrennen() {
   }
 
   /**
