@@ -20,12 +20,50 @@ public class MergeSortImpl implements MergeSort {
     merge(links, rechts, arr);
   }
 
+  public class ParallelMergeSort extends Thread {
+    int[] arr;
+    int threadCount;
+
+    public ParallelMergeSort(int[] arr, int threadCount) {
+      this.arr = arr;
+      this.threadCount = threadCount;
+    }
+
+    public void run() {
+      int mitte = arr.length / 2;
+      int[] links = Arrays.copyOfRange(arr, 0, mitte);
+      int[] rechts = Arrays.copyOfRange(arr, mitte, arr.length);
+
+      if (threadCount > 1) {
+        try {
+          Thread threadLinks = new ParallelMergeSort(links, threadCount / 2);
+          threadLinks.start();
+          threadLinks.join();
+          Thread threadRechts = new ParallelMergeSort(rechts, threadCount / 2);
+          threadRechts.start();
+          threadRechts.join();
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
+        merge(links, rechts, arr);
+      } else {
+        Arrays.sort(arr);
+      }
+    }
+  }
+
   /**
    * @param arr         Das zu sortierende Array.
    * @param threadCount Anzahl der Threads; bei Initialaufruf eine Zweierpotenz
    */
   public void parallelMergeSort(int[] arr, int threadCount) {
-    // TODO
+    try {
+      Thread thread = new ParallelMergeSort(arr, threadCount);
+      thread.start();
+      thread.join();
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
   }
 
   /**

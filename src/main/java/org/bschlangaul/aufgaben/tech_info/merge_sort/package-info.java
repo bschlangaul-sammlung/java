@@ -18,7 +18,7 @@
  * <p>
  * Die Klasse {@link MergeSortImpl} soll dafür vervollständigt werden. Die
  * {@code merge}-Methode ist dabei bereits vorgegeben. Sie führt das vorsortierte
- * Array {@code left} und das vorsortierte Array {@code right} im übergebenen Array arr in
+ * Array {@code left} und das vorsortierte Array {@code right} im übergebenen Array {@code arr} in
  * richtiger Reihenfolge zusammen. Die Länge von {@code arr} muss dabei gleich der Länge
  * von {@code left} plus der Länge von {@code right} sein.
  *
@@ -43,7 +43,7 @@
  * https://docs.oracle.com/javase/7/docs/api/java/util/Arrays.html
  * </dl>
  *
- * <li>Nun soll der Algorithmus in parallelMergeSort() parallelisiert werden.
+ * <li>Nun soll der Algorithmus in {@code parallelMergeSort()} parallelisiert werden.
  *
  * <dl>
  * <dt>Hilfestellung
@@ -52,8 +52,8 @@
  * Die Anzahl der verfügbaren Threads soll immer einer 2er-Potenz sein und wird
  * beim Methodenaufruf übergeben. So kann die rekursive sequentielle Methode
  * erweitert werden, dass je Halbierung zwei neue Threads erzeugt werden. Diese
- * Threads rufen in ihrer run()-Methode nur die ursprüngliche Methode
- * parallelMergeSort() (rekursiv) auf.
+ * Threads rufen in ihrer {@code run()}-Methode nur die ursprüngliche Methode
+ * {@code parallelMergeSort()} (rekursiv) auf.
  *
  * <dd>
  * <p>

@@ -47,39 +47,39 @@ public class MergeSortTest {
 
   @Test
   public void parallel_8size_2threads() {
-    x.seqMergeSort(arr1);
+    x.parallelMergeSort(arr1, 2);
     Assert.assertTrue("parallel wurde nicht richtig sortiert, bei Array der Länge 8 und 2 Threads", isSorted(arr1));
   }
 
   @Test
   public void parallel_8size_8threads() {
-    x.seqMergeSort(arr1);
+    x.parallelMergeSort(arr1, 8);
     Assert.assertTrue("parallel wurde nicht richtig sortiert, bei Array der Länge 8 und 8 Threads", isSorted(arr1));
   }
 
   @Test
   public void parallel_1000size_2thread() {
-    x.seqMergeSort(arr2);
+    x.parallelMergeSort(arr2, 2);
     Assert.assertTrue("parallel wurde nicht richtig sortiert, bei Array der Länge 1000 und 2 Threads", isSorted(arr2));
   }
 
   @Test
   public void parallel_1000size_8thread() {
-    x.seqMergeSort(arr3);
+    x.parallelMergeSort(arr2, 8);
     Assert.assertTrue("parallel wurde nicht richtig sortiert, bei Array der Länge 100000 und 8 Threads",
-        isSorted(arr3));
+        isSorted(arr2));
   }
 
   @Test
   public void parallel_2msize_2thread() {
-    x.seqMergeSort(arr4);
+    x.parallelMergeSort(arr4, 2);
     Assert.assertTrue("parallel wurde nicht richtig sortiert, bei Array der Länge 2000001 und 2 Threads",
         isSorted(arr4));
   }
 
   @Test
   public void parallel_20msize_32thread() {
-    x.seqMergeSort(arr5);
+    x.parallelMergeSort(arr5, 32);
     Assert.assertTrue("parallel wurde nicht richtig sortiert, bei Array der Länge 20000001 und 32 Threads",
         isSorted(arr5));
   }
