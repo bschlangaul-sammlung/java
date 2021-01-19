@@ -3,7 +3,7 @@ package org.bschlangaul.aufgaben.tech_info.merge_sort;
 import java.util.Arrays;
 
 public class MergeSortImpl implements MergeSort {
-
+  // Verbessert nach Email vom Tue, 19 Jan 2021 16:04:09 +0100
   /**
    * @param arr Das zu sortierende Array.
    */
@@ -62,18 +62,17 @@ public class MergeSortImpl implements MergeSort {
     if (threadCount > 1) {
       try {
         Thread threadLinks = new ParallelMergeSort(links, threadCount / 2);
-        threadLinks.start();
-        threadLinks.join();
         Thread threadRechts = new ParallelMergeSort(rechts, threadCount / 2);
+        threadLinks.start();
         threadRechts.start();
+        threadLinks.join();
         threadRechts.join();
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
       merge(links, rechts, arr);
     } else {
-      // Darf laut Joachim verwendet werden.
-      Arrays.sort(arr);
+      seqMergeSort(arr);
     }
   }
 
