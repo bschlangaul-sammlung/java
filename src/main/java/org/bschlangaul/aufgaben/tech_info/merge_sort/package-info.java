@@ -11,21 +11,24 @@
  * eignen sich folgende Kurzerklärungen:
  *
  * <ul>
- * <li><a href="https://www.youtube.com/watch?v=JSceec-wEyw">Merge Sort | GeeksforGeeks</a> (1,5 min)
- * <li><a href="https://www.youtube.com/watch?v=4VqmGXwpLqc">Merge sort in 3 minutes</a> (3 min)
+ * <li><a href="https://www.youtube.com/watch?v=JSceec-wEyw">Merge Sort |
+ * GeeksforGeeks</a> (1,5 min)
+ * <li><a href="https://www.youtube.com/watch?v=4VqmGXwpLqc">Merge sort in 3
+ * minutes</a> (3 min)
  * </ul>
  *
  * <p>
  * Die Klasse {@link MergeSortImpl} soll dafür vervollständigt werden. Die
- * {@code merge}-Methode ist dabei bereits vorgegeben. Sie führt das vorsortierte
- * Array {@code left} und das vorsortierte Array {@code right} im übergebenen Array {@code arr} in
- * richtiger Reihenfolge zusammen. Die Länge von {@code arr} muss dabei gleich der Länge
- * von {@code left} plus der Länge von {@code right} sein.
+ * {@code merge}-Methode ist dabei bereits vorgegeben. Sie führt das
+ * vorsortierte Array {@code left} und das vorsortierte Array {@code right} im
+ * übergebenen Array {@code arr} in richtiger Reihenfolge zusammen. Die Länge
+ * von {@code arr} muss dabei gleich der Länge von {@code left} plus der Länge
+ * von {@code right} sein.
  *
  * <h3>Aufgabenstellung und Hilfestellung</h3>
  *
  * <ol>
- * <li>Schreibe zunächst die Methode seqMergeSort(). Diese Methode soll das
+ * <li>Schreibe zunächst die Methode {@code seqMergeSort()}. Diese Methode soll das
  * übergebene Array sequentiell rekursiv mit dem MergeSort-Algorithmus
  * sortieren.
  *
@@ -35,15 +38,16 @@
  * <p>
  * Damit ihr euch viel Arbeit erspart, dürft ihr Arrays beliebig kopieren. Das
  * ermöglicht, dass man beim Halbieren eines Arrays nicht mit Indizes arbeiten
- * muss, sondern sich einfach die beiden Hälften (Array left und Array right)
- * aus dem Ursprungsarray herauskopiert und anschließend wieder im
- * Ursprungsarray zusammenführt (merge)!
+ * muss, sondern sich einfach die beiden Hälften (Array {@code left} und Array
+ * {@code right}) aus dem Ursprungsarray herauskopiert und anschließend wieder
+ * im Ursprungsarray zusammenführt (merge)!
  *
  * <dd>Nutze hierfür die Methode Arrays.copyOfRange(...); siehe hierfür
  * https://docs.oracle.com/javase/7/docs/api/java/util/Arrays.html
  * </dl>
  *
- * <li>Nun soll der Algorithmus in {@code parallelMergeSort()} parallelisiert werden.
+ * <li>Nun soll der Algorithmus in {@code parallelMergeSort()} parallelisiert
+ * werden.
  *
  * <dl>
  * <dt>Hilfestellung

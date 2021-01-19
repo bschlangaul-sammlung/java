@@ -30,26 +30,20 @@ public class MergeSortImpl implements MergeSort {
     }
 
     public void run() {
-      int mitte = arr.length / 2;
-      int[] links = Arrays.copyOfRange(arr, 0, mitte);
-      int[] rechts = Arrays.copyOfRange(arr, mitte, arr.length);
-
-      if (threadCount > 1) {
-        try {
-          Thread threadLinks = new ParallelMergeSort(links, threadCount / 2);
-          threadLinks.start();
-          threadLinks.join();
-          Thread threadRechts = new ParallelMergeSort(rechts, threadCount / 2);
-          threadRechts.start();
-          threadRechts.join();
-        } catch (InterruptedException e) {
-          e.printStackTrace();
-        }
-        merge(links, rechts, arr);
-      } else {
-        Arrays.sort(arr);
-      }
+      parallelMergeSort(arr, threadCount);
     }
+  }
+
+  private boolean istZweierPotzenz(int anzahl) {
+    if (anzahl == 0)
+      return false;
+
+    while (anzahl != 1) {
+      if (anzahl % 2 != 0)
+        return false;
+      anzahl = anzahl / 2;
+    }
+    return true;
   }
 
   /**
@@ -57,12 +51,29 @@ public class MergeSortImpl implements MergeSort {
    * @param threadCount Anzahl der Threads; bei Initialaufruf eine Zweierpotenz
    */
   public void parallelMergeSort(int[] arr, int threadCount) {
-    try {
-      Thread thread = new ParallelMergeSort(arr, threadCount);
-      thread.start();
-      thread.join();
-    } catch (InterruptedException e) {
-      e.printStackTrace();
+    if (!istZweierPotzenz(threadCount)) {
+      System.out.println("Bitte gib eine 2er Potenz als Threadanzahl an!");
+      return;
+    }
+    int mitte = arr.length / 2;
+    int[] links = Arrays.copyOfRange(arr, 0, mitte);
+    int[] rechts = Arrays.copyOfRange(arr, mitte, arr.length);
+
+    if (threadCount > 1) {
+      try {
+        Thread threadLinks = new ParallelMergeSort(links, threadCount / 2);
+        threadLinks.start();
+        threadLinks.join();
+        Thread threadRechts = new ParallelMergeSort(rechts, threadCount / 2);
+        threadRechts.start();
+        threadRechts.join();
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+      merge(links, rechts, arr);
+    } else {
+      // Darf laut Joachim verwendet werden.
+      Arrays.sort(arr);
     }
   }
 
