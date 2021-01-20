@@ -7,9 +7,12 @@ public class PhilosophGlobaleOrdnung extends Philosoph {
 
   @Override
   public void essen() {
-    synchronized (Object.class) {
+    if (ersteGabel.getId() < zweiteGabel.getId()) {
       ersteGabel.lock();
       zweiteGabel.lock();
+    } else {
+      zweiteGabel.lock();
+      ersteGabel.lock();
     }
 
     System.out.println("Philosoph " + id + " isst gerade!");

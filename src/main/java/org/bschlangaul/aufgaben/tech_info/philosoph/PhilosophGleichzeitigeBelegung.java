@@ -7,7 +7,7 @@ public class PhilosophGleichzeitigeBelegung extends Philosoph {
 
   @Override
   public void essen() {
-    synchronized (Object.class) {
+    synchronized (Gabel.class) {
       ersteGabel.lock();
       zweiteGabel.lock();
     }

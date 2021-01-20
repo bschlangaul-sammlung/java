@@ -30,10 +30,7 @@ public class Verklemmung {
       if (i != anzahl - 1) {
         p[i] = new PhilosophGleichzeitigeBelegung(f[i], f[i + 1], i);
       } else {
-        // Der letzte Philosoph bekommt die Gabeln in einer anderen Reihenfolge, wie die
-        // anderen Philosophen.
         p[i] = new PhilosophGleichzeitigeBelegung(f[i], f[0], i);
-
       }
     }
     for (int i = 0; i < anzahl; i++) {
@@ -42,17 +39,16 @@ public class Verklemmung {
   }
 
   public static void PhilosophenGlobaleOrdnung(int anzahl) {
-    PhilosophGleichzeitigeBelegung[] p = new PhilosophGleichzeitigeBelegung[anzahl];
+    PhilosophGlobaleOrdnung[] p = new PhilosophGlobaleOrdnung[anzahl];
     Gabel[] f = new Gabel[anzahl];
     for (int i = 0; i < anzahl; i++) {
       f[i] = new Gabel(i);
     }
     for (int i = 0; i < anzahl; i++) {
       if (i != anzahl - 1) {
-        p[i] = new PhilosophGleichzeitigeBelegung(f[i], f[i + 1], i);
+        p[i] = new PhilosophGlobaleOrdnung(f[i], f[i + 1], i);
       } else {
-        p[i] = new PhilosophGleichzeitigeBelegung(f[0], f[i], i); // Der letzte Philosoph bekommt die letzte und die
-                                                                  // erste Gabel
+        p[i] = new PhilosophGlobaleOrdnung(f[i], f[0], i);
       }
     }
     for (int i = 0; i < anzahl; i++) {
@@ -63,7 +59,7 @@ public class Verklemmung {
   public static void main(String[] args) {
     // Verklemmung.PhilosophenDeadlock(3);
     Verklemmung.PhilosophenGleichzeitigeBelegung(7);
-    // Verklemmung.PhilosophenGlobaleOrdnung(5);
+    //Verklemmung.PhilosophenGlobaleOrdnung(5);
   }
 
 }
