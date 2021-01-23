@@ -52,9 +52,9 @@ public class Fractals {
     Color[][] pixel = new Color[x][y];
     for (int i = 0; i < x; i++) {
       for (int j = 0; j < y; j++) {
-        ComplexImpl start = new ComplexImpl((realEnd - realBegin) / x * (i), (imEnd - imBegin) / y * (j));
+        ComplexImpl start = new ComplexImpl(realBegin + ((realEnd - realBegin) / x * i), imBegin + ((imEnd - imBegin) / y * j));
         int maxIterations = computeIterations(start, step, palette.length - 1);
-        pixel[i][j] = palette[maxIterations - 1];
+        pixel[i][j] = palette[maxIterations];
       }
     }
     return pixel;
@@ -81,7 +81,7 @@ public class Fractals {
     for (int i = 0; i < x; i++) {
       for (int j = 0; j < y; j++) {
         ComplexImpl start = new ComplexImpl(0, 0);
-        ComplexImpl step = new ComplexImpl((realEnd - realBegin) / x * i, (imEnd - imBegin) / y * j);
+        ComplexImpl step = new ComplexImpl(realBegin + ((realEnd - realBegin) / x * i), imBegin + ((imEnd - imBegin) / y * j));
         int maxIterations = computeIterations(start, step, palette.length - 1);
         pixel[i][j] = palette[maxIterations];
       }
