@@ -1,4 +1,4 @@
-package org.bschlangaul.aufgaben.tech_info.fractale;
+package org.bschlangaul.aufgaben.tech_info.mandelbrot;
 
 import java.awt.Color;
 
