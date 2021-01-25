@@ -40,6 +40,11 @@ public class Fractals {
     return maxIter;
   }
 
+  /**
+   * Jeder Thread bekommt einen Streifen einer bestimmten X-Breite zum Berechnen.
+   * Der letzte Thread bekommt unter Umständen einen etwas breiteren Streifen
+   * (plus Rest)
+   */
   public class Mandelbrot extends Thread {
     Color[][] pixel;
     int x;
@@ -98,30 +103,37 @@ public class Fractals {
       Color[] palette, int threads) {
     Color[][] pixel = new Color[x][y];
 
-    int xBegin = 0;
-    int xEnd = xBegin;
-    int streifen = x / threads;
-    Mandelbrot[] m = new Mandelbrot[threads];
-
-
-
-    for (int i = 0; i < threads; i++) {
-      xEnd = xBegin + streifen;
-      m[i] = new Mandelbrot(pixel, x, xBegin, xEnd, y, palette, realBegin, imBegin, realEnd, imEnd);
-      m[i].start();
-      xBegin = xEnd;
-    }
+    int streifenBreite = x / threads;
 
     int rest = x % threads;
 
+    // Wir bauen ein Feld mit den x-Breiten, die ein Thread bearbeiten soll.
+    // Über dieses Feld können wir dann iterien, und brauchen das Starten der
+    // Threads nur einmal behandeln und nicht für den Rest extra.
+    // z. B. x = 100, threads = 5: { 20, 20, 20, 20, 20 }
+    // oder bei „krummen“ Werten:
+    // z. B. x = 53, threads = 5: { 10, 10, 10, 10, 53 }
+    int[] streifen;
+
+    streifen = new int[threads];
+    Arrays.fill(streifen, streifenBreite);
+
     if (rest > 0) {
-      Mandelbrot mandel = new Mandelbrot(pixel, x, x - rest, x, y, palette, realBegin, imBegin, realEnd, imEnd);
-      mandel.start();
-      try {
-        mandel.join();
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
+      streifen[threads - 1] = streifenBreite + rest;
+    }
+
+    // Damit wir die Threads wieder einfangen könnten mit join().
+    Mandelbrot[] m = new Mandelbrot[streifen.length];
+
+    int i = 0;
+    int xBegin = 0;
+    int xEnd = xBegin;
+    for (int breite : streifen) {
+      xEnd = xBegin + breite;
+      m[i] = new Mandelbrot(pixel, x, xBegin, xEnd, y, palette, realBegin, imBegin, realEnd, imEnd);
+      m[i].start();
+      i++;
+      xBegin = xEnd;
     }
 
     for (Mandelbrot mandelbrot : m) {
@@ -149,13 +161,14 @@ public class Fractals {
    *
    * @return Pixel array of the picture
    */
-  public Color[][] mandelbrotS(int x, int y, double realBegin, double imBegin, double realEnd, double imEnd,
-      Color[] palette, int threads) {
+  public Color[][] mandelbrotSingleThreaded(int x, int y, double realBegin, double imBegin, double realEnd,
+      double imEnd, Color[] palette, int threads) {
     Color[][] pixel = new Color[x][y];
     for (int i = 0; i < x; i++) {
       for (int j = 0; j < y; j++) {
         ComplexImpl start = new ComplexImpl(0, 0);
-        ComplexImpl step = new ComplexImpl(realBegin + ((realEnd - realBegin) / x * i), imBegin + ((imEnd - imBegin) / y * j));
+        ComplexImpl step = new ComplexImpl(realBegin + ((realEnd - realBegin) / x * i),
+            imBegin + ((imEnd - imBegin) / y * j));
         int maxIterations = computeIterations(start, step, palette.length - 1);
         pixel[i][j] = palette[maxIterations];
       }
