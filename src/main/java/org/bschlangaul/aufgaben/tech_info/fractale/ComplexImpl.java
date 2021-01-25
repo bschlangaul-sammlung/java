@@ -29,7 +29,7 @@ public class ComplexImpl implements Complex {
     double bY = b.nenneY();
     // (aX + aY) * (bX + bY)
     // aX*bX + aX*bY + aY*bX + aY*bY
-    return new ComplexImpl(aX * bX + aY * bY * -1, aX * bY + aY * bX);
+    return new ComplexImpl(aX * bX - aY * bY, aX * bY + aY * bX);
   }
 
   public double nenneX() {

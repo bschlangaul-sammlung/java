@@ -8,7 +8,6 @@ import java.awt.Color;
 import java.util.Arrays;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class FractalsTest {
@@ -80,7 +79,6 @@ public class FractalsTest {
   }
 
   @Test
-  @Ignore
   public void testMandelbrotOneThreadSmall1() {
     final Color[][] result = fractal.mandelbrot(5, 5, 0.5, 0.5, 1, 1, createTestPalette(), 1);
     assertEquals(5, result.length);
@@ -102,7 +100,6 @@ public class FractalsTest {
     assertArrayEquals(new Color[] { Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE }, result[4]);
   }
 
-  @Ignore
   @Test
   public void testMandelbrotOneThreadMedium1() {
     final Color[][] result = fractal.mandelbrot(50, 50, -1, -1, 1, 1, createBWPalette(), 1);
@@ -124,7 +121,7 @@ public class FractalsTest {
     assertEquals(Color.WHITE, result[0][49]);
     assertEquals(Color.WHITE, result[49][49]);
   }
-  @Ignore
+
   @Test
   public void testMandelbrotOneThreadMedium2() {
     final Color[][] result = fractal.mandelbrot(50, 50, -0.749, 0.122, -0.739, 0.132, createBWPalette(), 1);
@@ -152,7 +149,6 @@ public class FractalsTest {
   }
 
   @Test
-  @Ignore
   public void testMandelbrotOneThreadLarge() {
     final Color[][] result = fractal.mandelbrot(200, 200, -1, -1, 1.0 / 3.0, 1, createBWPalette(), 1);
     assertEquals(200, result.length);
@@ -225,7 +221,7 @@ public class FractalsTest {
 
     assertTrue(Arrays.deepEquals(resultSeq, resultPar));
   }
-  @Ignore
+
   @Test
   public void testJuliaParSmall() {
     final Color[][] result = fractal.julia(5, 5, createTestPalette(), -1, -1, 1, 1, new ComplexImpl(1.5, 1.5), 4);
@@ -235,7 +231,7 @@ public class FractalsTest {
     assertArrayEquals(new Color[] { Color.RED, Color.RED, Color.GREEN, Color.GREEN, Color.GREEN }, result[3]);
     assertArrayEquals(new Color[] { Color.RED, Color.RED, Color.GREEN, Color.GREEN, Color.GREEN }, result[4]);
   }
-  @Ignore
+
   @Test
   public void testJuliaParMedium() {
     final Color[][] result = fractal.julia(50, 50, createBWPalette(), -1, -1, 1, 1, new ComplexImpl(-0.15, 0.15), 4);
@@ -256,7 +252,7 @@ public class FractalsTest {
     assertEquals(Color.BLACK, result[28][49]);
     assertEquals(Color.WHITE, result[31][49]);
   }
-  @Ignore
+
   @Test
   public void testJuliaParLarge() {
     final Color[][] result = fractal.julia(200, 200, createBWPalette(), -0.2, 0.1, 0, 0.3, new ComplexImpl(-0.8, 0.156),

@@ -7,6 +7,14 @@ import java.io.File;
 
 public class Fractals {
 
+  public class Julia extends Thread {
+
+    public void run() {
+
+    }
+
+  }
+
   /**
    * Specifies when the computation is aborted
    */
@@ -31,32 +39,79 @@ public class Fractals {
     return maxIter;
   }
 
+  public class Mandelbrot extends Thread {
+    Color[][] pixel;
+    int x;
+    int xBegin;
+    int xEnd;
+    int y;
+    Color[] palette;
+    double realBegin;
+    double imBegin;
+    double realEnd;
+    double imEnd;
+
+    public Mandelbrot(Color[][] pixel, int x, int xBegin, int xEnd, int y, Color[] palette, double realBegin, double imBegin, double realEnd,
+        double imEnd) {
+      this.pixel = pixel;
+      this.x = x;
+      this.xBegin = xBegin;
+      this.xEnd = xEnd;
+      this.y = y;
+      this.palette = palette;
+      this.realBegin = realBegin;
+      this.imBegin = imBegin;
+      this.realEnd = realEnd;
+      this.imEnd = imEnd;
+    }
+
+    public void run() {
+      for (int i = xBegin; i < xEnd; i++) {
+        for (int j = 0; j < y; j++) {
+          ComplexImpl start = new ComplexImpl(0, 0);
+          ComplexImpl step = new ComplexImpl(realBegin + ((realEnd - realBegin) / x * i),
+              imBegin + ((imEnd - imBegin) / y * j));
+          int maxIterations = computeIterations(start, step, palette.length - 1);
+          pixel[i][j] = palette[maxIterations];
+        }
+      }
+    }
+  }
+
   /**
-   * Creates a Julia-Picture in parallel with the size [x,y] using the area
-   * [realBegin + (imBegin)i, realEnd + (imEnd)i)
+   * Creates a Mandelbrot-Picture with the size [x,y] using the area [realBegin +
+   * (imBegin)i, realEnd + (imEnd)i)
    *
    * @param x         Number of pixels in x direction
    * @param y         Number of pixels in y direction
-   * @param palette   Number of used colors (limits the iteration count)
    * @param realBegin Real begin of the area
    * @param imBegin   Imaginary begin of the area
    * @param realEnd   Real end of the area
    * @param imEnd     Imaginary end of the area
-   * @param step      The increment of the Julia-Set
+   * @param palette   Number of used colors (limits the iteration count)
    * @param threads   Number of threads
    *
    * @return Pixel array of the picture
    */
-  public Color[][] julia(int x, int y, Color[] palette, double realBegin, double imBegin, double realEnd, double imEnd,
-      ComplexImpl step, int threads) {
+  public Color[][] mandelbrotMultiThreaded(int x, int y, double realBegin, double imBegin, double realEnd, double imEnd,
+      Color[] palette, int threads) {
     Color[][] pixel = new Color[x][y];
-    for (int i = 0; i < x; i++) {
-      for (int j = 0; j < y; j++) {
-        ComplexImpl start = new ComplexImpl(realBegin + ((realEnd - realBegin) / x * i), imBegin + ((imEnd - imBegin) / y * j));
-        int maxIterations = computeIterations(start, step, palette.length - 1);
-        pixel[i][j] = palette[maxIterations];
-      }
+
+    int xBegin = 0;
+    int xEnd = xBegin;
+    int streifen = x / threads;
+    for (int i = 0; i < threads; i++) {
+      xEnd = xBegin + streifen;
+      Mandelbrot m = new Mandelbrot(pixel, x, xBegin, xEnd, y, palette, realBegin, imBegin, realEnd, imEnd);
+      m.start();
+      xBegin = xEnd;
     }
+
+    if (x - xEnd > 1) {
+      Mandelbrot m = new Mandelbrot(pixel, x, x - xEnd, x - 1, y, palette, realBegin, imBegin, realEnd, imEnd);
+      m.start();
+    }
+
     return pixel;
   }
 
@@ -82,6 +137,36 @@ public class Fractals {
       for (int j = 0; j < y; j++) {
         ComplexImpl start = new ComplexImpl(0, 0);
         ComplexImpl step = new ComplexImpl(realBegin + ((realEnd - realBegin) / x * i), imBegin + ((imEnd - imBegin) / y * j));
+        int maxIterations = computeIterations(start, step, palette.length - 1);
+        pixel[i][j] = palette[maxIterations];
+      }
+    }
+    return pixel;
+  }
+
+  /**
+   * Creates a Julia-Picture in parallel with the size [x,y] using the area
+   * [realBegin + (imBegin)i, realEnd + (imEnd)i)
+   *
+   * @param x         Number of pixels in x direction
+   * @param y         Number of pixels in y direction
+   * @param palette   Number of used colors (limits the iteration count)
+   * @param realBegin Real begin of the area
+   * @param imBegin   Imaginary begin of the area
+   * @param realEnd   Real end of the area
+   * @param imEnd     Imaginary end of the area
+   * @param step      The increment of the Julia-Set
+   * @param threads   Number of threads
+   *
+   * @return Pixel array of the picture
+   */
+  public Color[][] julia(int x, int y, Color[] palette, double realBegin, double imBegin, double realEnd, double imEnd,
+      ComplexImpl step, int threads) {
+    Color[][] pixel = new Color[x][y];
+    for (int i = 0; i < x; i++) {
+      for (int j = 0; j < y; j++) {
+        ComplexImpl start = new ComplexImpl(realBegin + ((realEnd - realBegin) / x * i),
+            imBegin + ((imEnd - imBegin) / y * j));
         int maxIterations = computeIterations(start, step, palette.length - 1);
         pixel[i][j] = palette[maxIterations];
       }
