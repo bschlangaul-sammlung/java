@@ -7,15 +7,6 @@ import java.io.File;
 import java.util.Arrays;
 
 public class Fractals {
-
-  public class Julia extends Thread {
-
-    public void run() {
-
-    }
-
-  }
-
   /**
    * Specifies when the computation is aborted
    */
@@ -41,9 +32,11 @@ public class Fractals {
   }
 
   /**
-   * Jeder Thread bekommt einen Streifen einer bestimmten X-Breite zum Berechnen.
-   * Der letzte Thread bekommt unter Umständen einen etwas breiteren Streifen
-   * (plus Rest)
+   * Jeder Thread bearbeitet eine entsprechende Anzahl an Spalten des Bilds. Ein
+   * Thread (hier der letzte) muss zusätzlich zu seinem Anteil den Rest erledigen,
+   * der nicht mehr aufteilbar ist. Jeder Thread bekommt einen Streifen einer
+   * bestimmten X-Breite zum Berechnen. Der letzte Thread bekommt unter Umständen
+   * einen etwas breiteren Streifen (plus Rest)
    */
   public class Mandelbrot extends Thread {
     Color[][] pixel;
@@ -122,7 +115,7 @@ public class Fractals {
       streifen[threads - 1] = streifenBreite + rest;
     }
 
-    // Damit wir die Threads wieder einfangen könnten mit join().
+    // Damit wir die Threads wieder einfangen können mit join().
     Mandelbrot[] m = new Mandelbrot[streifen.length];
 
     int i = 0;
@@ -177,6 +170,53 @@ public class Fractals {
   }
 
   /**
+   * Jeder Thread bearbeitet zyklisch die ihm zugeordneten Spalten. (Die
+   * Extrabehandlung des nicht mehr aufteilbaren Rests funktioniert ohne weiteres
+   * Zutun.)
+   */
+  public class Julia extends Thread {
+    Color[][] pixel;
+    int x;
+    int xStart;
+    int threadAnzahl;
+    int y;
+    Color[] palette;
+    double realBegin;
+    double imBegin;
+    double realEnd;
+    double imEnd;
+    ComplexImpl step;
+
+    public Julia(Color[][] pixel, int x, int xStart, int threadAnzahl, int y, Color[] palette, double realBegin,
+        double imBegin, double realEnd, double imEnd, ComplexImpl step) {
+      this.pixel = pixel;
+      this.x = x;
+      this.xStart = xStart;
+      this.threadAnzahl = threadAnzahl;
+      this.y = y;
+      this.palette = palette;
+      this.realBegin = realBegin;
+      this.imBegin = imBegin;
+      this.realEnd = realEnd;
+      this.imEnd = imEnd;
+      this.step = step;
+    }
+
+    public void run() {
+      int i = xStart;
+      while (i < x) {
+        for (int j = 0; j < y; j++) {
+          ComplexImpl start = new ComplexImpl(realBegin + ((realEnd - realBegin) / x * i),
+              imBegin + ((imEnd - imBegin) / y * j));
+          int maxIterations = computeIterations(start, step, palette.length - 1);
+          pixel[i][j] = palette[maxIterations];
+        }
+        i += threadAnzahl;
+      }
+    }
+  }
+
+  /**
    * Creates a Julia-Picture in parallel with the size [x,y] using the area
    * [realBegin + (imBegin)i, realEnd + (imEnd)i)
    *
@@ -194,6 +234,42 @@ public class Fractals {
    */
   public Color[][] julia(int x, int y, Color[] palette, double realBegin, double imBegin, double realEnd, double imEnd,
       ComplexImpl step, int threads) {
+    Color[][] pixel = new Color[x][y];
+    Julia[] j = new Julia[threads];
+
+    for (int i = 0; i < threads; i++) {
+      j[i] = new Julia(pixel, x, i, threads, y, palette, realBegin, imBegin, realEnd, imEnd, step);
+      j[i].start();
+    }
+
+    for (Julia julia : j) {
+      try {
+        julia.join();
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    }
+    return pixel;
+  }
+
+  /**
+   * Creates a Julia-Picture in parallel with the size [x,y] using the area
+   * [realBegin + (imBegin)i, realEnd + (imEnd)i)
+   *
+   * @param x         Number of pixels in x direction
+   * @param y         Number of pixels in y direction
+   * @param palette   Number of used colors (limits the iteration count)
+   * @param realBegin Real begin of the area
+   * @param imBegin   Imaginary begin of the area
+   * @param realEnd   Real end of the area
+   * @param imEnd     Imaginary end of the area
+   * @param step      The increment of the Julia-Set
+   * @param threads   Number of threads
+   *
+   * @return Pixel array of the picture
+   */
+  public Color[][] juliaSingleThreaded(int x, int y, Color[] palette, double realBegin, double imBegin, double realEnd,
+      double imEnd, ComplexImpl step, int threads) {
     Color[][] pixel = new Color[x][y];
     for (int i = 0; i < x; i++) {
       for (int j = 0; j < y; j++) {
