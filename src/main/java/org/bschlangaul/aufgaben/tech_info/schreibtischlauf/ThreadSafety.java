@@ -119,20 +119,20 @@ public class ThreadSafety {
     t1.join();
     t2.join();
 
-    // System.out.println("v = " + v);
-    // System.out.println("a = " + a.get());
-    // System.out.println("x = " + x);
-    // System.out.println("y = " + y);
-    if (v != 2)
-      System.out.println("v = " + v); // 1 oder 2
-    // if (a.get() != 1) System.out.println("a = " + a.get()); // 1 oder 2 (16x a )
-    // if (x != 4) System.out.println("x = " + x);
+    System.out.println("v = " + v);
+    System.out.println("a = " + a.get());
+    System.out.println("x = " + x);
+    System.out.println("y = " + y);
+    // if (v != 2) System.out.println("v = " + v); // 1 oder 2
+    // if (a.get() != 1) System.out.println("a = " + a.get()); // 1 oder 2
+    // if (x != 4) System.out.println("x = " + x); // immer 4
     // if (y != 42) System.out.println("y = " + y); // immer 42
   }
 
   public static void main(String[] args) throws Exception {
     ThreadSafety ts = new ThreadSafety();
     ts.execute();
+    // 1 Million mal ausprobieren
     for (int i = 0; i < 1000000; i++) {
       ts = new ThreadSafety();
       ts.execute();
