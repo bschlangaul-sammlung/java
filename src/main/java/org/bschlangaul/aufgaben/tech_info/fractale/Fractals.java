@@ -4,6 +4,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.Arrays;
 
 public class Fractals {
 
@@ -51,8 +52,8 @@ public class Fractals {
     double realEnd;
     double imEnd;
 
-    public Mandelbrot(Color[][] pixel, int x, int xBegin, int xEnd, int y, Color[] palette, double realBegin, double imBegin, double realEnd,
-        double imEnd) {
+    public Mandelbrot(Color[][] pixel, int x, int xBegin, int xEnd, int y, Color[] palette, double realBegin,
+        double imBegin, double realEnd, double imEnd) {
       this.pixel = pixel;
       this.x = x;
       this.xBegin = xBegin;
@@ -93,25 +94,43 @@ public class Fractals {
    *
    * @return Pixel array of the picture
    */
-  public Color[][] mandelbrotMultiThreaded(int x, int y, double realBegin, double imBegin, double realEnd, double imEnd,
+  public Color[][] mandelbrot(int x, int y, double realBegin, double imBegin, double realEnd, double imEnd,
       Color[] palette, int threads) {
     Color[][] pixel = new Color[x][y];
 
     int xBegin = 0;
     int xEnd = xBegin;
     int streifen = x / threads;
+    Mandelbrot[] m = new Mandelbrot[threads];
+
+
+
     for (int i = 0; i < threads; i++) {
       xEnd = xBegin + streifen;
-      Mandelbrot m = new Mandelbrot(pixel, x, xBegin, xEnd, y, palette, realBegin, imBegin, realEnd, imEnd);
-      m.start();
+      m[i] = new Mandelbrot(pixel, x, xBegin, xEnd, y, palette, realBegin, imBegin, realEnd, imEnd);
+      m[i].start();
       xBegin = xEnd;
     }
 
-    if (x - xEnd > 1) {
-      Mandelbrot m = new Mandelbrot(pixel, x, x - xEnd, x - 1, y, palette, realBegin, imBegin, realEnd, imEnd);
-      m.start();
+    int rest = x % threads;
+
+    if (rest > 0) {
+      Mandelbrot mandel = new Mandelbrot(pixel, x, x - rest, x, y, palette, realBegin, imBegin, realEnd, imEnd);
+      mandel.start();
+      try {
+        mandel.join();
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
     }
 
+    for (Mandelbrot mandelbrot : m) {
+      try {
+        mandelbrot.join();
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    }
     return pixel;
   }
 
@@ -130,7 +149,7 @@ public class Fractals {
    *
    * @return Pixel array of the picture
    */
-  public Color[][] mandelbrot(int x, int y, double realBegin, double imBegin, double realEnd, double imEnd,
+  public Color[][] mandelbrotS(int x, int y, double realBegin, double imBegin, double realEnd, double imEnd,
       Color[] palette, int threads) {
     Color[][] pixel = new Color[x][y];
     for (int i = 0; i < x; i++) {
