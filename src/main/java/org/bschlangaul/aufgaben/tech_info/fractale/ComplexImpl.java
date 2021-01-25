@@ -1,8 +1,5 @@
 package org.bschlangaul.aufgaben.tech_info.fractale;
 
-/**
- * https://introcs.cs.princeton.edu/java/32class/Complex.java.html
- */
 public class ComplexImpl implements Complex {
 
   double x;
