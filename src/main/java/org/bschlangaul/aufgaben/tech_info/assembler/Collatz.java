@@ -1,4 +1,4 @@
-package org.bschlangaul.aufgaben;
+package org.bschlangaul.aufgaben.tech_info.assembler;
 
 public class Collatz {
   public static void main(String[] args) {
