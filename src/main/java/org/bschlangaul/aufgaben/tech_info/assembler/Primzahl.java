@@ -4,7 +4,7 @@ public class Primzahl {
 
   public static boolean istPrimzahl(int k) {
     if (k == 1)
-      return true;
+      return false;
     int a = 0;
     int t = 1;
 
@@ -29,7 +29,6 @@ public class Primzahl {
     }
     System.out.println(String.format("Die Zahl %d ist %seine Primzahl", k, keine));
   }
-
 
   public static void main(String[] args) {
     berichtePrimzahl(1);
