@@ -3,7 +3,7 @@ package org.bschlangaul.aufgaben.tech_info.assembler;
 public class Pulverdose {
 
   public static void berechne() {
-    int V = 400000;
+    int V = 32766;
     int y = V;
     int z = 1;
     int erg;
