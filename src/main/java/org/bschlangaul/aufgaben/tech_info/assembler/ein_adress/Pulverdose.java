@@ -1,4 +1,4 @@
-package org.bschlangaul.aufgaben.tech_info.assembler;
+package org.bschlangaul.aufgaben.tech_info.assembler.ein_adress;
 
 public class Pulverdose {
 
