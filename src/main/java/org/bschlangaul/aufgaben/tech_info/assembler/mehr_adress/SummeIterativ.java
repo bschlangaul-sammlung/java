@@ -4,8 +4,9 @@ public class SummeIterativ {
 
   public static int summe(int n) {
     int erg = 0;
-    for (int i = 1; i <= n; i++) {
-      erg = i + erg;
+    while (n > 0) {
+      erg = n + erg;
+      n--;
     }
     return erg;
   }
