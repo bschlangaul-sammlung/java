@@ -14,4 +14,13 @@ public class Euklid {
     return a;
   }
 
+  public static void main(String[] args) {
+    System.out.println(euklid(3780, 3528)); // 252
+    System.out.println(euklid(12, 18)); // 6
+    System.out.println(euklid(17, 1)); // 1
+    System.out.println(euklid(1, 17)); // 1
+    System.out.println(euklid(0, 3)); // 3
+    System.out.println(euklid(3, 0)); // 3
+  }
+
 }
