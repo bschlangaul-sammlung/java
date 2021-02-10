@@ -11,7 +11,7 @@ public class SummeIterativ {
   }
 
   public static void main(String[] args) {
-    System.out.println(summe(7));
+    int n = 7;
+    System.out.println(summe(n)); // 28
   }
-
 }
