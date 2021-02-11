@@ -2,7 +2,7 @@ package org.bschlangaul.aufgaben.tech_info.assembler.mehr_adress;
 
 public class FibonacciIterativ {
 
-  static int fib(int n) {
+  public static int fib(int n) {
     if (n <= 1)
       return n;
 
