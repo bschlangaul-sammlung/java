@@ -4,9 +4,9 @@ public class TestRegularExpressions {
 
   // Hier bitte Lösungen der Aufgaben eintragen.
   static String regexABBA = "(a|b)*abba(a|b)*";
-  static String regexGeradeA = "b*(ab*ab*)*";
-  static String regexUngeradeB = "a*ba*(ba*ba*)*";
-  static String regexGeradzahligA = "(((a|b)a)*(a|b))|(((a|b)a)*)";
+  static String regexGeradeA = "b*(ab*ab*)*"; // Epsilon aa aaaa abba bbaa aabb bbb
+  static String regexUngeradeB = "a*ba*(ba*ba*)*"; // Epsilon b bbb abababa
+  static String regexGeradzahligA = "((a|b)a)*((a|b)|)";
   static String regexEMAIL = "[a-zA-Z0-9]+@[a-zA-Z0-9]+\\.(de|com)";
   // Wenn die Lösungen stimmen, geben alle Tests true aus
 
@@ -117,6 +117,4 @@ public class TestRegularExpressions {
       }
     }
   }
-
-
 }
