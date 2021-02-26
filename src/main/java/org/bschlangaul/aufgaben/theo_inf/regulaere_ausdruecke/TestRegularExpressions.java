@@ -1,13 +1,13 @@
 package org.bschlangaul.aufgaben.theo_inf.regulaere_ausdruecke;
 
 public class TestRegularExpressions {
-  // Hier bitte Loseungen der Aufgaben eintragen.
+  // Hier bitte Lösungen der Aufgaben eintragen.
   static String regexABBA = "(a|b)*abba(a|b)*";
-  static String regexGeradeA = "(b+(aa)*)*";
-  static String regexUngeradeB = ".*b(bb)*.*";
-  static String regexGeradzahligA = "((a|b)a)*";
+  static String regexGeradeA = "b*(ab*ab*)*";
+  static String regexUngeradeB = "a*b*(ba*ba*)*";
+  static String regexGeradzahligA = "((a|b)a)*(a|b)*";
   static String regexEMAIL = "[a-zA-Z0-9]+@[a-zA-Z0-9]+\\.(de|com)";
-  // Wenn die Losungen stimmen, geben alle Tests true aus
+  // Wenn die Lösungen stimmen, geben alle Tests true aus
 
   public static void testregexABBA() {
     boolean[] b = new boolean[7];
@@ -110,10 +110,10 @@ public class TestRegularExpressions {
   }
 
   public static void main(String[] args) {
-    testregexABBA();
-    testregexGeradeA();
+    // testregexABBA();
+    //testregexGeradeA();
     testregexUngeradeB();
-    testregexGeradzahligA();
-    testregexEMAIL();
+    // testregexGeradzahligA();
+    // testregexEMAIL();
   }
 }
