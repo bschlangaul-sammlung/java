@@ -23,8 +23,38 @@ public class SelectionSort {
     }
   }
 
+  public static void rekSelectionSort(int[] A, int n, int index) {
+    int k, tmp;
+
+    if (index == n - 1) {
+      return;
+    }
+    k = minIndex(A, index, n);
+    if (k != index) {
+      tmp = A[k];
+      A[k] = A[index];
+      A[index] = tmp;
+    }
+    rekSelectionSort(A, n, index + 1);
+  }
+
+  public static int minIndex(int[] A, int x, int y) {
+    int smallest = x;
+    for (int i = x; i < y; i++) {
+      if (A[i] < A[smallest]) {
+        smallest = i;
+      }
+    }
+    return smallest;
+  }
+
   public static void main(String[] args) {
-    selectionSort(new int[] { 27, 32, 3, 6, 17, 44, 42, 29, 8, 14 });
+    int[] A = new int[] { 27, 32, 3, 6, 17, 44, 42, 29, 8, 14 };
+    selectionSort(A);
+
+    A = new int[] { 27, 32, 3, 6, 17, 44, 42, 29, 8, 14 };
+    rekSelectionSort(A, A.length, 0);
+    zeigeZahlenFeld(A);
   }
 
 }
