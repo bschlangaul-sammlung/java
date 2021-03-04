@@ -39,6 +39,8 @@ org.bschlangaul.aufgaben.sosy.eklausur
 org.bschlangaul.aufgaben.sosy.pu_5
 org.bschlangaul.aufgaben.sosy.totale_korrektheit
 org.bschlangaul.aufgaben.sosy.white_box
+org.bschlangaul.aufgaben.tech_info.assembler.ein_adress
+org.bschlangaul.aufgaben.tech_info.assembler.mehr_adress
 org.bschlangaul.aufgaben.tech_info.client_server
 org.bschlangaul.aufgaben.tech_info.erzeuger_verbraucher
 org.bschlangaul.aufgaben.tech_info.fractale
@@ -48,6 +50,7 @@ org.bschlangaul.aufgaben.tech_info.philosoph
 org.bschlangaul.aufgaben.tech_info.picasso
 org.bschlangaul.aufgaben.tech_info.schreibtischlauf
 org.bschlangaul.aufgaben.tech_info.vorlesung
+org.bschlangaul.aufgaben.theo_inf.regulaere_ausdruecke
 org.bschlangaul.baum
 org.bschlangaul.baum.einfach
 org.bschlangaul.baum.kompositum
@@ -75,6 +78,8 @@ org.bschlangaul.examen.examen_46115.jahr_2014.fruehjahr.rekursion
 org.bschlangaul.examen.examen_46115.jahr_2014.fruehjahr.suchbaum
 org.bschlangaul.examen.examen_46115.jahr_2016.herbst
 org.bschlangaul.examen.examen_46115.jahr_2017.herbst
+org.bschlangaul.examen.examen_46115.jahr_2019.herbst
+org.bschlangaul.examen.examen_46115.jahr_2019.herbst.mystery_stack
 org.bschlangaul.examen.examen_46116.jahr_2010.fruehjahr.reiseunternehmen
 org.bschlangaul.examen.examen_46116.jahr_2011.fruehjahr
 org.bschlangaul.examen.examen_46116.jahr_2013.fruehjahr.t2_ta1_a1

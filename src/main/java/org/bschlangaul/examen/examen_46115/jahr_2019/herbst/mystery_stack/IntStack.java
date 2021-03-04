@@ -9,18 +9,29 @@ import java.util.Stack;
 public class IntStack {
   private Stack<Integer> stack = new Stack<Integer>();
 
-  // legt Element i auf den Stack
+  /**
+   * Legt Element i auf den Stack.
+   *
+   * @param i Eine Zahl, die auf dem Stack gelegt werden soll.
+   */
   public void push(int i) {
     stack.push(i);
-
   }
 
-  // gibt oberstes Element vom Stack
+  /**
+   * Gibt oberstes Element vom Stack.
+   *
+   * @return Das oberste Element auf dem Stapel.
+   */
   public int pop() {
     return stack.pop();
   }
 
-  // fragt ab ob Stack leer ist
+  /**
+   * Fragt ab, ob Stack leer ist.
+   *
+   * @return Wahr, wenn der Stapel leer ist.
+   */
   public boolean isEmpty() {
     return stack.empty();
   }
