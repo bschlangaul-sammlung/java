@@ -3,96 +3,126 @@ package org.bschlangaul.graph.algorithmen;
 import org.bschlangaul.graph.GraphAdjazenzMatrix;
 
 /**
- * https://algorithms.tutorialhorizon.com/prims-minimum-spanning-tree-mst-using-adjacency-matrix/
+ * Implementation des Algorithmus von Prim / Jarník.
+ *
+ * Nach dem Tutorial auf <a href=
+ * "https://algorithms.tutorialhorizon.com/prims-minimum-spanning-tree-mst-using-adjacency-matrix/">tutorialhorizon.com</a>.
  */
-
 class MinimalerSpannbaumPrim extends GraphAdjazenzMatrix {
 
   public MinimalerSpannbaumPrim(String graphenFormat) {
     super(graphenFormat);
   }
 
-  // get the vertex with minimum key which is not included in MST
-  private int getMinimumVertex(boolean[] mst, int[] key) {
-    int minKey = Integer.MAX_VALUE;
-    int vertex = -1;
+  /**
+   * Gib den Knoten mit dem minimalen Gewicht, der sich noch nicht im minimalen
+   * Spannbaum befindet.
+   *
+   * @param minimalerSpannbaum Ein Feld mit der gleichen Länge, wie es Knoten im
+   *                           Graphen gibt. Befindet sich beispielsweise ein
+   *                           Knoten mit der Index-Nummer 3 im minimalen
+   *                           Spannbaum, so wird das Feld an der Index-Position 3
+   *                           auf wahr gesetzt.
+   * @param kantenGewichte
+   *
+   * @return Die ID des Knoten mit dem minimalen Gewicht. Es können Zahlen
+   *         beginnend mit 0 vorkommen.
+   */
+  private int gibMinimumKnoten(boolean[] minimalerSpannbaum, int[] kantenGewichte) {
+    int minGewicht = Integer.MAX_VALUE;
+    int knoten = -1;
     for (int i = 0; i < gibKnotenAnzahl(); i++) {
-      if (mst[i] == false && minKey > key[i]) {
-        minKey = key[i];
-        vertex = i;
+      if (minimalerSpannbaum[i] == false && minGewicht > kantenGewichte[i]) {
+        minGewicht = kantenGewichte[i];
+        knoten = i;
       }
     }
-    return vertex;
+    return knoten;
   }
 
-  class ResultSet {
-    // will store the vertex(parent) from which the current vertex will reached
-    int parent;
-    // will store the weight for printing the MST weight
-    int weight;
+  /**
+   * Die Instanzen der Klasse Ergebnis wird in das Feld {@code ergebnisse}
+   * gespeichert. Die Klasse speichert das Kantengewicht von einem bestimmten
+   * Knoten zu seinem Elternknoten.
+   */
+  class Ergebnis {
+    /**
+     * Die Index-Nummer des Elternknoten über den der aktuelle Knoten erreicht wird.
+     */
+    int eltern;
+
+    /**
+     * Das Gewicht der Kante vom Elternknoten zum aktuellen Knoten.
+     */
+    int gewicht;
   }
 
+  /**
+   * Führe den Algorithmus von Prim / Jarník aus.
+   *
+   * @return Die Summer aller Kantengewichte.
+   */
   public int führeAus() {
-    boolean[] mst = new boolean[gibKnotenAnzahl()];
-    ResultSet[] resultSet = new ResultSet[gibKnotenAnzahl()];
-    int[] key = new int[gibKnotenAnzahl()];
+    boolean[] minimalerSpannbaum = new boolean[gibKnotenAnzahl()];
+    Ergebnis[] ergebnisse = new Ergebnis[gibKnotenAnzahl()];
+    int[] gewichte = new int[gibKnotenAnzahl()];
 
-    // Initialize all the keys to infinity and
-    // initialize resultSet for all the gibKnotenAnzahl()
     for (int i = 0; i < gibKnotenAnzahl(); i++) {
-      key[i] = Integer.MAX_VALUE;
-      resultSet[i] = new ResultSet();
+      // Initialisiere alle Gewichte mit Unendlich
+      gewichte[i] = Integer.MAX_VALUE;
+      // Erzeuge leere Ergebnis-Instanzen.
+      ergebnisse[i] = new Ergebnis();
     }
 
     // start from the vertex 0
-    key[0] = 0;
-    resultSet[0] = new ResultSet();
-    resultSet[0].parent = -1;
+    gewichte[0] = 0;
+    ergebnisse[0] = new Ergebnis();
+    ergebnisse[0].eltern = -1;
 
-    // create MST
     for (int i = 0; i < gibKnotenAnzahl(); i++) {
-
-      // get the vertex with the minimum key
-      int vertex = getMinimumVertex(mst, key);
-
-      System.out.println("Besuche: " +  gibKnotenName(vertex));
-
-      // include this vertex in MST
-      mst[vertex] = true;
-
-      // iterate through all the adjacent gibKnotenAnzahl() of above vertex and update
-      // the keys
+      int knoten = gibMinimumKnoten(minimalerSpannbaum, gewichte);
+      System.out.println("Besuche Knoten „" + gibKnotenName(knoten) + "“");
+      minimalerSpannbaum[knoten] = true;
       for (int j = 0; j < gibKnotenAnzahl(); j++) {
-        // check of the edge
-        if (matrix[vertex][j] > 0) {
-          // check if this vertex 'j' already in mst and
-          // if no then check if key needs an update or not
-          if (mst[j] == false && matrix[vertex][j] < key[j]) {
-            System.out.println("Update Kante: " +  gibKnotenName(vertex) + "--" + gibKnotenName(j));
-
-            // update the key
-            key[j] = matrix[vertex][j];
-            // update the result set
-            resultSet[j].parent = vertex;
-            resultSet[j].weight = key[j];
+        if (matrix[knoten][j] > 0) {
+          if (minimalerSpannbaum[j] == false && matrix[knoten][j] < gewichte[j]) {
+            gewichte[j] = matrix[knoten][j];
+            ergebnisse[j].eltern = knoten;
+            ergebnisse[j].gewicht = gewichte[j];
+            System.out
+                .println("Aktualisiere Kante " + gibKnotenName(knoten) + "--" + gibKnotenName(j) + ": " + gewichte[j]);
           }
         }
       }
     }
-    // print mst
-    return printMST(resultSet);
+
+    return gibErgebnisAus(ergebnisse);
   }
 
-  private int printMST(ResultSet[] resultSet) {
-    int total_min_weight = 0;
-    System.out.println("Minimum Spanning Tree: ");
+  /**
+   * Gib die Ergebnisse aus.
+   *
+   * @param ergebnisse Ein Feld mit allen Ergebnissen.
+   *
+   * @return Die Summer aller Kantengewichte.
+   */
+  private int gibErgebnisAus(Ergebnis[] ergebnisse) {
+    int summeGewichte = 0;
+    System.out.println("Minimaler Spannbaum: ");
     for (int i = 1; i < gibKnotenAnzahl(); i++) {
-      System.out.println("Kante: " + gibKnotenName(resultSet[i].parent) + " - " + gibKnotenName(i) + " gewicht: "
-          + resultSet[i].weight);
-      total_min_weight += resultSet[i].weight;
+      System.out.println("Kante: " + gibKnotenName(ergebnisse[i].eltern) + "--" + gibKnotenName(i) + " Gewicht: "
+          + ergebnisse[i].gewicht);
+      summeGewichte += ergebnisse[i].gewicht;
     }
-    System.out.println("Total minimum key: " + total_min_weight);
-    return total_min_weight;
+    System.out.println("Summer aller Kantengewichte: " + summeGewichte);
+    return summeGewichte;
+  }
+
+  public static void main(String[] args) {
+    MinimalerSpannbaumPrim prim = new MinimalerSpannbaumPrim(
+        "v0--v1:2;v1--v2:3;v0--v3:6;v1--v3:8;v1--v4:5;v2--v4:7;v3--v4:9;");
+    prim.gibMatrixAus();
+    prim.führeAus();
   }
 
 }

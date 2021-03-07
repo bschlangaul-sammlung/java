@@ -8,7 +8,7 @@ import org.bschlangaul.graph.GraphAdjazenzMatrix;
 
 class MinimalerSpannbaumKruskal extends GraphAdjazenzMatrix {
 
-  public MinimalerSpannbaumKruskal (String graphenFormat) {
+  public MinimalerSpannbaumKruskal(String graphenFormat) {
     super(graphenFormat);
   }
 
@@ -60,31 +60,10 @@ class MinimalerSpannbaumKruskal extends GraphAdjazenzMatrix {
     return mincost;
   }
 
-  // Driver code
   public static void main(String[] args) {
-    /*
-     * Let us create the following graph
-     *     2    3
-     * (0)--(1)--(2)
-     * |   / \   |
-     *6| 8/   \5 |7
-     * | /     \ |
-     * 3)-------(4)
-     *       9
-     */
-
-    // Print the solution
-    MinimalerSpannbaumKruskal kruskal = new MinimalerSpannbaumKruskal("v0--v1:2;v1--v2:3;v0--v3:6;v1--v3:8;v1--v4:5;v2--v4:7;v3--v4:9");
+    MinimalerSpannbaumKruskal kruskal = new MinimalerSpannbaumKruskal(
+        "v0--v1:2;v1--v2:3;v0--v3:6;v1--v3:8;v1--v4:5;v2--v4:7;v3--v4:9;");
     kruskal.gibMatrixAus();
     kruskal.führeAus();
   }
 }
-
-// This code contributed by Rajput-Ji
-
-// Edge 0:(0, 1) cost:2
-// Edge 1:(1, 2) cost:3
-// Edge 2:(1, 4) cost:5
-// Edge 3:(0, 3) cost:6
-
-//  Minimum cost= 16
