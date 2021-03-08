@@ -8,7 +8,7 @@ import org.bschlangaul.graph.GraphAdjazenzMatrix;
  * Nach dem Tutorial auf <a href=
  * "https://algorithms.tutorialhorizon.com/prims-minimum-spanning-tree-mst-using-adjacency-matrix/">tutorialhorizon.com</a>.
  */
-class MinimalerSpannbaumPrim extends GraphAdjazenzMatrix {
+public class MinimalerSpannbaumPrim extends GraphAdjazenzMatrix {
 
   public MinimalerSpannbaumPrim(String graphenFormat) {
     super(graphenFormat);

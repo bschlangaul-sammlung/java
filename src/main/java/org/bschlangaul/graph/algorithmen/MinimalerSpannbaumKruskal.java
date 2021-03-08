@@ -6,7 +6,7 @@ import org.bschlangaul.graph.GraphAdjazenzMatrix;
 // Simple Java implementation for Kruskal's
 // algorithm
 
-class MinimalerSpannbaumKruskal extends GraphAdjazenzMatrix {
+public class MinimalerSpannbaumKruskal extends GraphAdjazenzMatrix {
 
   public MinimalerSpannbaumKruskal(String graphenFormat) {
     super(graphenFormat);
