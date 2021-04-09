@@ -14,6 +14,6 @@ public class CountUp {
   }
 
   public static void main(String[] args) {
-    System.out.println(countup(1000000, 100));
+    System.out.println(countup(3, 2));
   }
 }
