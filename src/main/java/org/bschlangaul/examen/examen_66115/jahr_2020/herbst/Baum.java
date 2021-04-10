@@ -31,9 +31,6 @@ public class Baum {
     A = new int[] { 2, 4, 6, 14 };
     System.out.println(magic(0, 3)); // true
 
-    A = new int[] { 2, 4, 6, 1 };
-    System.out.println(magic(0, 3)); // gibt auch true, müsste false sein
-
     // Aufgabe 2e)
     A = new int[] { 1, 2, 3 };
     System.out.println(magic(0, 2)); // true
