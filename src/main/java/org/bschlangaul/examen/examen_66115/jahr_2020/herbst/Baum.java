@@ -16,10 +16,21 @@ public class Baum {
   }
 
   public static void main(String[] args) {
-    A = new int[] { 2, 4, 6, 14 };
-    System.out.println(magic(0, 3));
-
-    A = new int[] { 2, 4, 6, 14, 12, 10, 8, 22, 20, 18, 16 };
+    A = new int[] { 2, 4, 6, 14, 12, 10, 8, 22, 20, 12, 16 }; // true
     System.out.println(magic(0, 10));
+
+    // Aufgabe 2b)
+    A = new int[] { 2, 4, 6, 14 };
+    System.out.println(magic(0, 3)); // true
+
+    A = new int[] { 2, 4, 6, 1 };
+    System.out.println(magic(0, 3)); // gibt auch true, müsste false sein
+
+    // Aufgabe 2e)
+    A = new int[] { 1, 2, 3 };
+    System.out.println(magic(0, 2)); // true
+
+    A = new int[] { 2, 1, 3 };
+    System.out.println(magic(0, 2)); // false
   }
 }
