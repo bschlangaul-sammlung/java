@@ -81,7 +81,7 @@ public class BBaumReporter {
   public static void druckeBaum(BBaum bbaum) {
     BBaum.BBaumSeite wurzel = bbaum.gibWurzel();
 
-    String ausgabe = "\\begin{tikzpicture}[\n" + "  bbaum,\n"
+    String ausgabe = "\\begin{tikzpicture}[\n" + "  li bbaum,\n"
         + "  level 1/.style={level distance=10mm,sibling distance=32mm},\n"
         + "  level 2/.style={level distance=10mm,sibling distance=20mm},\n" + "]\n" + erzeugeSeite(wurzel, 0) + ";\n"
         + "\\end{tikzpicture}";
