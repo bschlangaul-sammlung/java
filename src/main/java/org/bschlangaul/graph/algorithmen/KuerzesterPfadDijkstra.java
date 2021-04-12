@@ -2,7 +2,6 @@ package org.bschlangaul.graph.algorithmen;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.jakewharton.fliptables.FlipTable;
 
 import org.bschlangaul.graph.Graph;
 import org.bschlangaul.graph.GraphAdjazenzMatrix;
@@ -95,8 +94,10 @@ public class KuerzesterPfadDijkstra {
           Object zelle;
           if (ergebnis == Integer.MAX_VALUE) {
             zelle = alsTex ? "$\\infty$" : "∞";
-          // Damit erst im 1. Schritt der erste Knoten hervorgehoben ist und nicht schon im 0. Schritt
-          } else if ((schrittNummer != 0 && gibBearbeitungsNummer(j) == schrittNummer) || (schrittNummer == 1 && gibBearbeitungsNummer(j) == schrittNummer -1)) {
+            // Damit erst im 1. Schritt der erste Knoten hervorgehoben ist und nicht schon
+            // im 0. Schritt
+          } else if ((schrittNummer != 0 && gibBearbeitungsNummer(j) == schrittNummer)
+              || (schrittNummer == 1 && gibBearbeitungsNummer(j) == schrittNummer - 1)) {
             String z = String.valueOf(schritt.entfernungen[j]);
             zelle = alsTex ? Tex.makro("bf", z) : Farbe.rot(z);
           } else if (gibBearbeitungsNummer(j) < schrittNummer) {
@@ -111,13 +112,13 @@ public class KuerzesterPfadDijkstra {
     }
 
     public void gibErgebnisTabelle(boolean alsTex) {
-      String[] kopfZeile = { "von ->\nnach", "Entfernung", "Bearbeitungs-\nReihenfolge", "Pfad" };
+      String[] kopfZeile = { "nach", "Entfernung", "Reihenfolge", "Pfad" };
       String[][] zeilen = new String[pfade.size()][4];
       for (int i = 0; i < pfade.size(); i++) {
-        zeilen[i][0] = formatiereVonNach(i);
+        zeilen[i][0] = formatiereVonNach(i, alsTex);
         zeilen[i][1] = String.valueOf(kürzesteEntfernungen[i]);
         zeilen[i][2] = String.valueOf(gibBearbeitungsNummer(i));
-        zeilen[i][3] = formatierePfade(pfade.get(i));
+        zeilen[i][3] = formatierePfade(pfade.get(i), alsTex);
       }
       System.out.println(Tabelle.gibAus(kopfZeile, zeilen, alsTex));
     }
@@ -139,16 +140,23 @@ public class KuerzesterPfadDijkstra {
       sammlePfade(nachKnotenNr, vorgänger[aktuelleKnotenNr], vorgänger);
     }
 
-    private String formatiereVonNach(int knotenNr) {
-      return String.format("%s -> %s", gibKnotenName(startKnotenNr), gibKnotenName(knotenNr));
+    private String formatiereVonNach(int knotenNr, boolean alsTex) {
+      String pfeil = " -> ";
+      if (alsTex)
+        pfeil = " $\\rightarrow$ ";
+      return String.format("%s %s %s", gibKnotenName(startKnotenNr), pfeil, gibKnotenName(knotenNr));
     }
 
-    private String formatierePfade(List<Integer> pfade) {
+    private String formatierePfade(List<Integer> pfade, boolean alsTex) {
       String ausgabe = "";
+      String pfeil = " -> ";
+      if (alsTex)
+        pfeil = " $\\rightarrow$ ";
       for (int i = pfade.size() - 1; i >= 0; i--) {
-        ausgabe += gibKnotenName(pfade.get(i)) + " -> ";
+        ausgabe += gibKnotenName(pfade.get(i));
+        if (i >= 1) ausgabe += pfeil;
       }
-      return ausgabe.replaceFirst(" -> $", "");
+      return ausgabe;
     }
 
     private String gibKnotenName(int knotenNummer) {
@@ -159,7 +167,7 @@ public class KuerzesterPfadDijkstra {
 
   String graphenFormat;
 
-  Graph graph;
+  public Graph graph;
 
   /**
    * In diesem Feld werden die kürzesten Entfernungen zu den einzelnen Knoten
