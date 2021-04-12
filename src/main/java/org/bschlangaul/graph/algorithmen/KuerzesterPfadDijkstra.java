@@ -70,26 +70,35 @@ public class KuerzesterPfadDijkstra {
       int spaltenAnzahl = knotenAnzahl + knotenVerschiebung;
       String[] kopfzeile = new String[spaltenAnzahl];
       kopfzeile[0] = "Nr.";
-      kopfzeile[1] = "ausgewählt";
+      kopfzeile[1] = "besucht";
       for (int i = 0; i < knotenAnzahl; i++) {
         kopfzeile[i + knotenVerschiebung] = gibKnotenName(i);
       }
 
       String[][] zeilen = new String[schritte.size()][spaltenAnzahl];
       for (int i = 0; i < schritte.size(); i++) {
-        int schrittNummer = i + 1;
+        // Nr.
+        int schrittNummer = i;
         zeilen[i][0] = String.valueOf(schrittNummer);
-        Bearbeitungsschritt schritt = schritte.get(i);
-        zeilen[i][1] = gibKnotenName(schritt.aktuellerKnoten);
+
+        // besucht
+        Bearbeitungsschritt schritt = schritte.get(schrittNummer);
+        if (schrittNummer == 0)
+          zeilen[i][1] = "";
+        else
+          zeilen[i][1] = gibKnotenName(schritt.aktuellerKnoten);
+
+        // Entfernungen zu den Knoten
         for (int j = 0; j < schritt.entfernungen.length; j++) {
           int ergebnis = schritt.entfernungen[j];
           Object zelle;
           if (ergebnis == Integer.MAX_VALUE) {
             zelle = fürTex ? "$\\infty$" : "∞";
-          } else if (gibBearbeitungsNummer(j) == schrittNummer - 1) {
+          // Damit erst im 1. Schritt der erste Knoten hervorgehoben ist und nicht schon im 0. Schritt
+          } else if ((schrittNummer != 0 && gibBearbeitungsNummer(j) == schrittNummer) || (schrittNummer == 1 && gibBearbeitungsNummer(j) == schrittNummer -1)) {
             String z = String.valueOf(schritt.entfernungen[j]);
-            zelle = fürTex ? Tex.makro("bf", z): Farbe.rot(z);
-          } else if (gibBearbeitungsNummer(j) < schrittNummer - 1) {
+            zelle = fürTex ? Tex.makro("bf", z) : Farbe.rot(z);
+          } else if (gibBearbeitungsNummer(j) < schrittNummer) {
             zelle = "|";
           } else {
             zelle = String.valueOf(schritt.entfernungen[j]);
@@ -234,6 +243,9 @@ public class KuerzesterPfadDijkstra {
     // Die Entfernung vom Anfangsknoten zu sich selbst ist immer 0.
     kürzesteEntfernungen[startKnotenNr] = 0;
 
+    reporter.starte();
+    reporter.speichereSchritt();
+
     // Feld mit dem die Vorgänger-Knoten des kürzesten Pfads gespeichert werden.
     // Ein Vorgänger-Knoten des Pfads gibt ab, über welchen Knoten man auf
     // kürzesten Weg zum Knoten kommt.
@@ -243,7 +255,7 @@ public class KuerzesterPfadDijkstra {
     vorgänger[startKnotenNr] = KEINE_VORGÄNGER;
 
     // Hier startet der eigentliche Algorithmus.
-    reporter.starte();
+
     // Es würde auch i < knotenAnzahl reichen, aber für die Ergebnistabellen
     // lassen wir den Algorithmus nur einen Schritt weiter laufen.
     for (int i = 1; i <= knotenAnzahl; i++) {
