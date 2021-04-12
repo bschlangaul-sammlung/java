@@ -25,8 +25,9 @@ class UnterBefehlGraphDijkstra implements Callable<Integer> {
 
     KuerzesterPfadDijkstra d = new KuerzesterPfadDijkstra(einfachesGraphenFormat);
     d.sucheKürzestenPfadMatrix(startKnoten);
-    d.reporter.gibErgebnisTabelle();
-    d.reporter.gibZwischenschrittTabelleTex();
+    boolean alsTex = KommandoZeile.gibAusgabe() == Ausgabe.tex;
+    d.reporter.gibZwischenschrittTabelle(alsTex);
+    d.reporter.gibErgebnisTabelle(alsTex);
     return 0;
   }
 }

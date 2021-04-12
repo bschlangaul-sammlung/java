@@ -8,6 +8,7 @@ import org.bschlangaul.graph.Graph;
 import org.bschlangaul.graph.GraphAdjazenzMatrix;
 import org.bschlangaul.helfer.Farbe;
 import org.bschlangaul.helfer.Tex;
+import org.bschlangaul.helfer.Tabelle;
 
 /**
  * https://www.geeksforgeeks.org/printing-paths-dijkstras-shortest-path-algorithm/
@@ -65,7 +66,7 @@ public class KuerzesterPfadDijkstra {
       }
     }
 
-    public String gibZwischenschrittTabelle(boolean fürTex) {
+    public void gibZwischenschrittTabelle(boolean alsTex) {
       int knotenVerschiebung = 2;
       int spaltenAnzahl = knotenAnzahl + knotenVerschiebung;
       String[] kopfzeile = new String[spaltenAnzahl];
@@ -93,11 +94,11 @@ public class KuerzesterPfadDijkstra {
           int ergebnis = schritt.entfernungen[j];
           Object zelle;
           if (ergebnis == Integer.MAX_VALUE) {
-            zelle = fürTex ? "$\\infty$" : "∞";
+            zelle = alsTex ? "$\\infty$" : "∞";
           // Damit erst im 1. Schritt der erste Knoten hervorgehoben ist und nicht schon im 0. Schritt
           } else if ((schrittNummer != 0 && gibBearbeitungsNummer(j) == schrittNummer) || (schrittNummer == 1 && gibBearbeitungsNummer(j) == schrittNummer -1)) {
             String z = String.valueOf(schritt.entfernungen[j]);
-            zelle = fürTex ? Tex.makro("bf", z) : Farbe.rot(z);
+            zelle = alsTex ? Tex.makro("bf", z) : Farbe.rot(z);
           } else if (gibBearbeitungsNummer(j) < schrittNummer) {
             zelle = "|";
           } else {
@@ -106,21 +107,10 @@ public class KuerzesterPfadDijkstra {
           zeilen[i][j + knotenVerschiebung] = String.valueOf(zelle);
         }
       }
-      if (fürTex) {
-        return Tex.tabelle(kopfzeile, zeilen);
-      }
-      return FlipTable.of(kopfzeile, zeilen);
+      System.out.println(Tabelle.gibAus(kopfzeile, zeilen, alsTex));
     }
 
-    public void gibZwischenschrittTabelleKonsole() {
-      System.out.println(gibZwischenschrittTabelle(false));
-    }
-
-    public void gibZwischenschrittTabelleTex() {
-      System.out.println(gibZwischenschrittTabelle(true));
-    }
-
-    public void gibErgebnisTabelle() {
+    public void gibErgebnisTabelle(boolean alsTex) {
       String[] kopfZeile = { "von ->\nnach", "Entfernung", "Bearbeitungs-\nReihenfolge", "Pfad" };
       String[][] zeilen = new String[pfade.size()][4];
       for (int i = 0; i < pfade.size(); i++) {
@@ -129,8 +119,7 @@ public class KuerzesterPfadDijkstra {
         zeilen[i][2] = String.valueOf(gibBearbeitungsNummer(i));
         zeilen[i][3] = formatierePfade(pfade.get(i));
       }
-      System.out.println();
-      System.out.println(FlipTable.of(kopfZeile, zeilen));
+      System.out.println(Tabelle.gibAus(kopfZeile, zeilen, alsTex));
     }
 
     private int gibBearbeitungsNummer(int knotenNr) {
@@ -317,7 +306,7 @@ public class KuerzesterPfadDijkstra {
         "A: 1 4; B: 3 5; C: 3 3; D: 0 2; E: 5 5; F: 5 1; G: 3 0; H: 6 3; I: 8 4; A -- B: 2; A -- C: 5; A -- D: 2; B -- C: 3; B -- E; C -- D: 3; C -- E; C -- F; C -- H; D -- G: 2; E -- I: 7; F -- G: 2; F -- H: 3; H -- I;");
 
     d.sucheKürzestenPfadMatrix("A");
-    d.reporter.gibErgebnisTabelle();
-    d.reporter.gibZwischenschrittTabelleKonsole();
+    d.reporter.gibErgebnisTabelle(false);
+    d.reporter.gibZwischenschrittTabelle(false);
   }
 }
