@@ -1,7 +1,20 @@
 package org.bschlangaul.examen.examen_46115.jahr_2017.herbst;
 
 /**
- * 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 2, 3, 5, 7, 11, 13, 17, 19, 23, 29
+ * Berechne die n-te Primzahl.
+ *
+ * <ul>
+ * <li>1. Primzahl: 2
+ * <li>2. Primzahl: 3
+ * <li>3. Primzahl: 5
+ * <li>4. Primzahl: 7
+ * <li>5. Primzahl: 11
+ * <li>6. Primzahl: 13
+ * <li>7. Primzahl: 17
+ * <li>8. Primzahl: 19
+ * <li>9. Primzahl: 23
+ * <li>10. Primzahl: 29
+ * </ul>
  */
 public class PrimzahlDP {
 
@@ -16,7 +29,6 @@ public class PrimzahlDP {
         } // pruefe, ob unter den kleineren Primzahlen ein Teiler ist
       } while (i != n); // ... bis nur noch 1 und p Teiler von p sind
     }
-
     return p;
   }
 
