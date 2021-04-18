@@ -3,6 +3,9 @@ package org.bschlangaul.examen.examen_46115.jahr_2017.herbst;
 /**
  * Berechne die n-te Primzahl.
  *
+ * Eine Primzahl ist eine natürliche Zahl, die größer als 1 und ausschließlich
+ * durch sich selbst und durch 1 teilbar ist.
+ *
  * <ul>
  * <li>1. Primzahl: 2
  * <li>2. Primzahl: 3
@@ -18,6 +21,14 @@ package org.bschlangaul.examen.examen_46115.jahr_2017.herbst;
  */
 public class PrimzahlDP {
 
+  /**
+   * Die Methode pKR berechnet die n-te Primzahl (n >= 1) Kaskadenartig Rekursiv.
+   *
+   * @param n Die Nummer (n-te) der gesuchten Primzahl. Die Primzahl 2 ist die
+   *          erste Primzahl. Die Primzahl 3 ist die zweite Primzahl etc.
+   *
+   * @return Die gesuchte n-te Primzahl.
+   */
   static long pKR(int n) {
     long p = 2;
     if (n >= 2) {
@@ -32,16 +43,42 @@ public class PrimzahlDP {
     return p;
   }
 
-  private long pLR(int n, long[] ps) {
+  /**
+   * Die Methode pLR berechnet die n-te Primzahl (n >= 1) Linear Rekursiv.
+   *
+   * @param n Die Nummer (n-te) der gesuchten Primzahl. Die Primzahl 2 ist die
+   *          erste Primzahl. Die Primzahl 3 ist die zweite Primzahl etc.
+   * @param ps Primzahl Speicher. Muss mit n + 1 initialisert werden.
+   *
+   * @return Die gesuchte n-te Primzahl.
+   */
+  static long pLR(int n, long[] ps) {
     ps[1] = 2;
-    return ps[0];
+    long p = 2;
+    if (ps[n] != 0) return ps[n];
+    if (n >= 2) {
+      p = pLR(n - 1, ps); // beginne die Suche bei der vorhergehenden Primzahl
+      int i = 0;
+      do {
+        p++; // pruefe, ob die jeweils naechste Zahl prim ist, d.h. ...
+        for (i = 1; i < n && p % ps[i] != 0; i++) {
+        } // pruefe, ob unter den kleineren Primzahlen ein Teiler ist
+      } while (i != n); // ... bis nur noch 1 und p Teiler von p sind
+    }
+    ps[n] = p;
+    return p;
   }
 
   static void debug(int n) {
-    System.out.println(String.format("%d. Primzahl: %d", n, pKR(n)));
+    System.out.println(String.format("%d. Primzahl: %d (kaskadenartig rekursiv berechnet)", n, pKR(n)));
+    System.out
+        .println(String.format("%d. Primzahl: %d (linear rekursiv berechnet)", n, pLR(n, new long[n + 1])));
   }
 
   public static void main(String[] args) {
+    System.out.println(pKR(10));
+    System.out.println(pLR(10, new long[11]));
+
     for (int i = 1; i <= 10; i++) {
       debug(i);
     }
