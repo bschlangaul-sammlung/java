@@ -12,8 +12,9 @@ public class Takterkenner {
   /**
    * Erkennung der Viervierteltakte
    *
-   * @param Viervierteltakt als String
+   * @param eingabe Viervierteltakt als String
    *
+   * @return Wahr, wenn der Takt ein Viervierteltakt ist.
    */
   public boolean istViervierteltakt(String eingabe) {
     boolean ergebnis = false;
@@ -35,8 +36,7 @@ public class Takterkenner {
    * nicht gibt. Dieser sollte als Erkennung eines zu großen Taktes hinzugefügt
    * werden.
    *
-   * @param Notenwert der aktuellen Note des Taktes
-   *
+   * @param zeichen Notenwert der aktuellen Note des Taktes
    */
   private void zustandWechseln(char zeichen) {
     switch (zustand) {

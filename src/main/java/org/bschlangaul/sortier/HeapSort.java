@@ -5,14 +5,14 @@ package org.bschlangaul.sortier;
  * Seite 412)
  */
 public class HeapSort {
-  private static void versickere(int[] zahlen, int index, int last) {
+  private static void versickere(int[] zahlen, int index, int letzterIndex) {
     int i = index + 1, j;
     // zahlen[i] hat linken Sohn
-    while (2 * i <= last) {
+    while (2 * i <= letzterIndex) {
       // zahlen[j] ist linker Sohn von zahlen[i]
       j = 2 * i;
       // zahlen[i] hat auch rechten Sohn
-      if (j < last)
+      if (j < letzterIndex)
         if (zahlen[j - 1] < zahlen[j])
           // zahlen[j] ist jetzt kleiner
           j++;

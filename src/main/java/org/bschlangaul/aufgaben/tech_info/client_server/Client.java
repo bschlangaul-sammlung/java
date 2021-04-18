@@ -185,7 +185,7 @@ public class Client {
   }
 
   /**
-   * Implementiere in beiden Klassen {@link Client} und {@link ClientHandler} die
+   * Implementiere in beiden Klassen {@link Client} und {@link Server.ClientHandler} die
    * Methode sendeNachricht(String msg):
    *
    * <p>

@@ -8,9 +8,9 @@ import java.util.concurrent.Callable;
 
 import org.bschlangaul.graph.GraphenFinder;
 import org.bschlangaul.graph.algorithmen.KuerzesterPfadDijkstra;
+import org.bschlangaul.graph.einfaches_format.GraphenFormat;
 
-@Command(name = "dijkstra", aliases = {
-    "d" }, description = "Den Dijkstra-Algorithmus ausführen.")
+@Command(name = "dijkstra", aliases = { "d" }, description = "Den Dijkstra-Algorithmus ausführen.")
 class UnterBefehlGraphDijkstra implements Callable<Integer> {
 
   @Parameters(index = "0", description = "Eine TeX-Datei.")
@@ -23,10 +23,19 @@ class UnterBefehlGraphDijkstra implements Callable<Integer> {
   public Integer call() throws Exception {
     String einfachesGraphenFormat = new GraphenFinder(datei).gibGraphenFormatText();
 
-    KuerzesterPfadDijkstra d = new KuerzesterPfadDijkstra(einfachesGraphenFormat);
-    d.sucheKürzestenPfadMatrix(startKnoten);
-    d.reporter.gibErgebnisTabelle();
-    d.reporter.gibZwischenschrittTabelleTex();
+    KuerzesterPfadDijkstra dijkstra = new KuerzesterPfadDijkstra(einfachesGraphenFormat);
+    dijkstra.sucheKürzestenPfadMatrix(startKnoten);
+    new GraphenFinder(datei).gibTexAus();
+
+    boolean alsTex = KommandoZeile.gibAusgabe() == Ausgabe.tex;
+
+    if (alsTex) {
+      GraphenFormat graphenFormat = new GraphenFormat(einfachesGraphenFormat);
+      graphenFormat.gibAlsTexUmgebung();
+    }
+
+    dijkstra.reporter.gibZwischenschrittTabelle(alsTex);
+    dijkstra.reporter.gibErgebnisTabelle(alsTex);
     return 0;
   }
 }
