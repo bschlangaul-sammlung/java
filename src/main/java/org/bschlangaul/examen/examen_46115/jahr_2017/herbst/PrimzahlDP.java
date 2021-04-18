@@ -46,8 +46,8 @@ public class PrimzahlDP {
   /**
    * Die Methode pLR berechnet die n-te Primzahl (n >= 1) Linear Rekursiv.
    *
-   * @param n Die Nummer (n-te) der gesuchten Primzahl. Die Primzahl 2 ist die
-   *          erste Primzahl. Die Primzahl 3 ist die zweite Primzahl etc.
+   * @param n  Die Nummer (n-te) der gesuchten Primzahl. Die Primzahl 2 ist die
+   *           erste Primzahl. Die Primzahl 3 ist die zweite Primzahl etc.
    * @param ps Primzahl Speicher. Muss mit n + 1 initialisert werden.
    *
    * @return Die gesuchte n-te Primzahl.
@@ -55,24 +55,27 @@ public class PrimzahlDP {
   static long pLR(int n, long[] ps) {
     ps[1] = 2;
     long p = 2;
-    if (ps[n] != 0) return ps[n];
+    if (ps[n] != 0) // Fall die Primzahl bereits gefunden / berechnet wurde,
+      return ps[n]; // gib die berechnet Primzahl zurück.
     if (n >= 2) {
-      p = pLR(n - 1, ps); // beginne die Suche bei der vorhergehenden Primzahl
+      // der einzige rekursive Aufruf steht hier, damit die Methode linear rekursiv
+      // ist.
+      p = pLR(n - 1, ps);
       int i = 0;
       do {
-        p++; // pruefe, ob die jeweils naechste Zahl prim ist, d.h. ...
+        p++;
+        // Hier wird auf das gespeicherte Feld zurückgegriffen.
         for (i = 1; i < n && p % ps[i] != 0; i++) {
-        } // pruefe, ob unter den kleineren Primzahlen ein Teiler ist
-      } while (i != n); // ... bis nur noch 1 und p Teiler von p sind
+        }
+      } while (i != n);
     }
-    ps[n] = p;
+    ps[n] = p; // Die gesuchte Primzahl im Feld speichern.
     return p;
   }
 
   static void debug(int n) {
     System.out.println(String.format("%d. Primzahl: %d (kaskadenartig rekursiv berechnet)", n, pKR(n)));
-    System.out
-        .println(String.format("%d. Primzahl: %d (linear rekursiv berechnet)", n, pLR(n, new long[n + 1])));
+    System.out.println(String.format("%d. Primzahl: %d (linear rekursiv berechnet)", n, pLR(n, new long[n + 1])));
   }
 
   public static void main(String[] args) {
