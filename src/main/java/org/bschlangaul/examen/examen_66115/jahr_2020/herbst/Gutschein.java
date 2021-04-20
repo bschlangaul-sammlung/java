@@ -1,63 +1,57 @@
 package org.bschlangaul.examen.examen_66115.jahr_2020.herbst;
 
-import org.bschlangaul.helfer.Konsole;
-
+/**
+ * https://www.geeksforgeeks.org/subset-gutscheinBetrag-problem-dp-25/
+ */
 public class Gutschein {
   /**
-   * Das GUTSCHEIN-Betrag von 0, 1, ...
-   */
-  int gutscheinBetrag;
-
-  /**
-   * Das GUTSCHEIN-Problem ist gegeben durch eine Folge w1, ..., wn von
-   * Warenwerten.
-   */
-  int[] warenWerten;
-
-  boolean[][] tabelle;
-
-  public Gutschein(int G, int[] w) {
-    tabelle = new boolean[w.length][G + 1];
-  }
-
-  /**
-   * Helfer-Methode, die größere Zahl zurückgibt.
+   * @param gutscheinBetrag Das GUTSCHEIN-Betrag von 0, 1, ...
    *
-   * @param a Die Zahl a.
-   * @param b Die Zahl b
+   * @param warenWerte      Das GUTSCHEIN-Problem ist gegeben durch eine Folge w1,
+   *                        ..., wn von Warenwerten.
    *
-   * @return Die größere Zahl.
+   * @return Wahr, wenn der Gutscheinbetrag vollständig in Warenwerten eingelöst
+   *         werden kann, falsch wenn der Betrag nicht vollständig eingelöst
+   *         werden kann.
    */
-  static int max(int a, int b) {
-    return (a > b) ? a : b;
-  }
+  public static boolean gutscheinDP(int gutscheinBetrag, int warenWerte[]) {
+    // The value of subset[i][j] will be
+    // true if there is a subset of
+    // set[0..j-1] with gutscheinBetrag equal to i
+    int n = warenWerte.length;
+    boolean tabelle[][] = new boolean[gutscheinBetrag + 1][n + 1];
 
-  static int gutscheinDP(int gutscheinBetrag, int warenWerten[], int werte[]) {
-    int w, g;
-    int n = warenWerten.length;
-    int tabelle[][] = new int[n + 1][gutscheinBetrag + 1];
+    // If gutscheinBetrag is 0, then answer is true
+    for (int i = 0; i <= n; i++)
+      tabelle[0][i] = true;
 
-    for (w = 0; w <= n; w++) {
-      for (g = 0; g <= gutscheinBetrag; g++) {
-        if (w == 0 || g == 0)
-          tabelle[w][g] = 0;
-        else if (warenWerten[w - 1] <= g)
-          tabelle[w][g] = max(werte[w - 1] + tabelle[w - 1][g - warenWerten[w - 1]], tabelle[w - 1][g]);
-        else
-          tabelle[w][g] = tabelle[w - 1][g];
+    // If gutscheinBetrag is not 0 and set is empty,
+    // then answer is false
+    for (int k = 1; k <= gutscheinBetrag; k++)
+      tabelle[k][0] = false;
+
+    // Fill the subset table in botton
+    // up manner
+    for (int k = 1; k <= gutscheinBetrag; k++) {
+      for (int i = 1; i <= n; i++) {
+        tabelle[k][i] = tabelle[k][i - 1];
+        if (k >= warenWerte[i - 1])
+          tabelle[k][i] = tabelle[k][i] || tabelle[k - warenWerte[i - 1]][i - 1];
       }
     }
 
-    Konsole.zeige2DIntFeld(tabelle);
+    /*
+     * // uncomment this code to print table for (int i = 0; i <= gutscheinBetrag;
+     * i++) { for (int j = 0; j <= n; j++) System.out.println (subset[i][j]); }
+     */
 
-    return tabelle[n][gutscheinBetrag];
+    return tabelle[gutscheinBetrag][n];
   }
 
-
   public static void main(String[] args) {
-    //new Gutschein(50, new int[] { 10, 30, 40, 20, 15 });
+    // new Gutschein(50, new int[] { 10, 30, 40, 20, 15 });
 
-    System.out.println(gutscheinDP(51, new int[] { 10, 30, 40, 20, 15 }, new int[] { 1, 1, 1, 1, 1 }));
+    System.out.println(gutscheinDP(10, new int[] { 10, 30, 40, 20, 15 }));
   }
 
 }
