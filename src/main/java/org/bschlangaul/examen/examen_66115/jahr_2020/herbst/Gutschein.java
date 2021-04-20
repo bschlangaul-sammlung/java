@@ -1,5 +1,9 @@
 package org.bschlangaul.examen.examen_66115.jahr_2020.herbst;
 
+import java.util.Arrays;
+
+import org.bschlangaul.helfer.Tabelle;
+
 /**
  * https://www.geeksforgeeks.org/subset-gutscheinBetrag-problem-dp-25/
  */
@@ -15,43 +19,35 @@ public class Gutschein {
    *         werden kann.
    */
   public static boolean gutscheinDP(int gutscheinBetrag, int warenWerte[]) {
-    // The value of subset[i][j] will be
-    // true if there is a subset of
-    // set[0..j-1] with gutscheinBetrag equal to i
+    // Der Eintrag in der Tabelle tabelle[i][k] ist wahr,
+    // wenn es eine Teilsumme der
+    // warenWerte[0..i-1] gibt, die gleich k ist.
     int n = warenWerte.length;
-    boolean tabelle[][] = new boolean[gutscheinBetrag + 1][n + 1];
+    boolean tabelle[][] = new boolean[n + 1][gutscheinBetrag + 1];
 
-    // If gutscheinBetrag is 0, then answer is true
-    for (int i = 0; i <= n; i++)
-      tabelle[0][i] = true;
-
-    // If gutscheinBetrag is not 0 and set is empty,
-    // then answer is false
+    // Wenn der Gutschein-Betrag größer als 0 ist und es keine
+    // Warenwerte (n = 0) gibt, kann der Gutschein nicht eingelöst
+    // werden.
     for (int k = 1; k <= gutscheinBetrag; k++)
-      tabelle[k][0] = false;
+      tabelle[0][k] = false;
 
-    // Fill the subset table in botton
-    // up manner
-    for (int k = 1; k <= gutscheinBetrag; k++) {
-      for (int i = 1; i <= n; i++) {
-        tabelle[k][i] = tabelle[k][i - 1];
+    // Ist der Gutscheinbetrag 0, dann kann er immer eingelöst werden.
+    for (int i = 0; i <= n; i++)
+      tabelle[i][0] = true;
+
+    for (int i = 1; i <= n; i++) {
+      for (int k = 1; k <= gutscheinBetrag; k++) {
+        tabelle[i][k] = tabelle[i - 1][k];
         if (k >= warenWerte[i - 1])
-          tabelle[k][i] = tabelle[k][i] || tabelle[k - warenWerte[i - 1]][i - 1];
+          tabelle[i][k] = tabelle[i][k] || tabelle[i - 1][k - warenWerte[i - 1]];
       }
     }
-
-    /*
-     * // uncomment this code to print table for (int i = 0; i <= gutscheinBetrag;
-     * i++) { for (int j = 0; j <= n; j++) System.out.println (subset[i][j]); }
-     */
-
-    return tabelle[gutscheinBetrag][n];
+    // System.out.println(Arrays.deepToString(tabelle));
+    return tabelle[n][gutscheinBetrag];
   }
 
   public static void main(String[] args) {
-    // new Gutschein(50, new int[] { 10, 30, 40, 20, 15 });
-
     System.out.println(gutscheinDP(10, new int[] { 10, 30, 40, 20, 15 }));
+    System.out.println(gutscheinDP(3, new int[] { 1, 2, 3 }));
   }
-
 }
