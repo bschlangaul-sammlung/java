@@ -4,29 +4,44 @@ package org.bschlangaul.suche;
  * Nach Saake Seite 122-123
  */
 public class BinaereSuche {
-  public final static int NO_KEY = -1;
+  public final static int KEIN_SCHLÜSSEL = -1;
 
-  static int search(int[] array, int key) {
-    int u = 0, o = array.length - 1;
-    while (u <= o) {
-      int m = (u + o) / 2;
-      if (array[m] == key)
-        return m;
-      else if (array[m] > key)
-        o = m - 1;
-      else
-        u = m + 1;
+  public static int suche(int[] zahlen, int schlüssel) {
+    int links = 0, rechts = zahlen.length - 1;
+    while (links <= rechts) {
+      int mitte = (links + rechts) / 2;
+      if (zahlen[mitte] == schlüssel) {
+        return mitte;
+      } else if (zahlen[mitte] > schlüssel) {
+        rechts = mitte - 1;
+      } else {
+        links = mitte + 1;
+      }
     }
-    return NO_KEY;
+    return KEIN_SCHLÜSSEL;
+  }
+
+  private static int sucheRekursiv(int[] zahlen, int links, int rechts, int schlüssel) {
+    if (links > rechts) {
+      return KEIN_SCHLÜSSEL;
+    }
+    int mitte = links + (rechts - links) / 2;
+    if (schlüssel < zahlen[mitte]) {
+      return sucheRekursiv(zahlen, links, mitte - 1, schlüssel);
+    }
+    if (schlüssel > zahlen[mitte]) {
+      return sucheRekursiv(zahlen, mitte + 1, rechts, schlüssel);
+    }
+    return mitte;
+  }
+
+  public static int sucheRekursiv(int[] zahlen, int schlüssel) {
+    return sucheRekursiv(zahlen, 0, zahlen.length - 1, schlüssel);
   }
 
   public static void main(String[] args) {
-    if (args.length != 1) {
-      System.out.println("usage: BinSearch <key>");
-      return;
-    }
-    int[] f = { 2, 4, 5, 6, 7, 8, 9, 11 };
-    int k = Integer.parseInt(args[0]);
-    System.out.println("Binär: " + search(f, k));
+    int[] zahlen = { 2, 4, 5, 6, 7, 8, 9, 11 };
+    System.out.println(suche(zahlen, 6));
+    System.out.println(sucheRekursiv(zahlen, 6));
   }
 }
