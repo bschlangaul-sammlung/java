@@ -5,9 +5,8 @@ public class UngeradeGerade {
   public static boolean suche(int[] feld, int schlüssel) {
     int links = 0, rechts = feld.length - 1;
     boolean istGerade = schlüssel % 2 == 0;
-    int mitte = 0;
     while (links <= rechts) {
-      mitte = links + (rechts - links) / 2;
+      int mitte = links + (rechts - links) / 2;
       if (feld[mitte] == schlüssel) {
         return true;
       }
