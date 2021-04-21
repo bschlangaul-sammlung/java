@@ -5,7 +5,6 @@ import javax.swing.*;
 import java.awt.Color;
 import java.awt.Graphics;
 
-@SuppressWarnings("serial")
 public class Ausgabe extends JPanel {
   JFrame f;
   int[][] feld;

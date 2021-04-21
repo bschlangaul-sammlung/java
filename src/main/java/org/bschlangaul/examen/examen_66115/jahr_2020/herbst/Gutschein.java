@@ -1,8 +1,6 @@
 package org.bschlangaul.examen.examen_66115.jahr_2020.herbst;
 
-import java.util.Arrays;
-
-import org.bschlangaul.helfer.Tabelle;
+// import java.util.Arrays;
 
 /**
  * https://www.geeksforgeeks.org/subset-gutscheinBetrag-problem-dp-25/
