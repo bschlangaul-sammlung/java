@@ -37,6 +37,5 @@ public class GutscheinTest {
     assertNichtEingelöst(21, warenWerte);
     assertNichtEingelöst(16, warenWerte);
     assertNichtEingelöst(999, warenWerte);
-
   }
 }
