@@ -22,7 +22,7 @@ package org.bschlangaul.examen.examen_46115.jahr_2017.herbst;
 public class PrimzahlDP {
 
   /**
-   * Die Methode pKR berechnet die n-te Primzahl (n >= 1) Kaskadenartig Rekursiv.
+   * Die Methode pKR berechnet die n-te Primzahl ({@code n >= 1}) Kaskadenartig Rekursiv.
    *
    * @param n Die Nummer (n-te) der gesuchten Primzahl. Die Primzahl 2 ist die
    *          erste Primzahl. Die Primzahl 3 ist die zweite Primzahl etc.
@@ -44,7 +44,7 @@ public class PrimzahlDP {
   }
 
   /**
-   * Die Methode pLR berechnet die n-te Primzahl (n >= 1) Linear Rekursiv.
+   * Die Methode pLR berechnet die n-te Primzahl ({@code n >= 1}) Linear Rekursiv.
    *
    * @param n  Die Nummer (n-te) der gesuchten Primzahl. Die Primzahl 2 ist die
    *           erste Primzahl. Die Primzahl 3 ist die zweite Primzahl etc.

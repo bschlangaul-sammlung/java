@@ -23,7 +23,7 @@ public class MinimalerSpannbaumPrim extends GraphAdjazenzMatrix {
    *                           Knoten mit der Index-Nummer 3 im minimalen
    *                           Spannbaum, so wird das Feld an der Index-Position 3
    *                           auf wahr gesetzt.
-   * @param kantenGewichte
+   * @param kantenGewichte Eine Feld mit den Kantengewichten
    *
    * @return Die ID des Knoten mit dem minimalen Gewicht. Es können Zahlen
    *         beginnend mit 0 vorkommen.

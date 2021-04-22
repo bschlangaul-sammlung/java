@@ -93,6 +93,10 @@ org.bschlangaul.examen.examen_66115.jahr_2014.herbst
 org.bschlangaul.examen.examen_66115.jahr_2015.fruehjahr
 org.bschlangaul.examen.examen_66115.jahr_2017.fruehjahr
 org.bschlangaul.examen.examen_66115.jahr_2019.herbst
+org.bschlangaul.examen.examen_66115.jahr_2020.fruehjahr
+org.bschlangaul.examen.examen_66115.jahr_2020.herbst
+org.bschlangaul.examen.examen_66115.jahr_2020.herbst.counter
+org.bschlangaul.examen.examen_66115.jahr_2020.herbst.o_notation
 org.bschlangaul.examen.examen_66116.jahr_2012.herbst.getraenke
 org.bschlangaul.examen.examen_66116.jahr_2015.fruehjahr
 org.bschlangaul.examen.examen_66116.jahr_2016.herbst.pki
@@ -100,6 +104,7 @@ org.bschlangaul.examen.examen_66116.jahr_2018.fruehjahr
 org.bschlangaul.examen.examen_66116.jahr_2018.herbst.beatles
 org.bschlangaul.examen.examen_66116.jahr_2019.herbst
 org.bschlangaul.examen.examen_66116.jahr_2019.herbst.file_system
+org.bschlangaul.formale_sprachen
 org.bschlangaul.graph
 org.bschlangaul.graph.algorithmen
 org.bschlangaul.graph.einfaches_format
@@ -112,6 +117,7 @@ org.bschlangaul.muster
 org.bschlangaul.muster.backtracking
 org.bschlangaul.muster.rucksack
 org.bschlangaul.sortier
+org.bschlangaul.suche
 org.bschlangaul.testen
 org.bschlangaul.vererbung.saake
 tech.vanyo.tree_printer
