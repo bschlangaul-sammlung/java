@@ -1,8 +1,8 @@
 package org.bschlangaul.examen.examen_66116.jahr_2019.herbst;
 
 /**
- * Entspricht der „State“-Klasse in der Terminologie der Gang of
- * Four.
+ * Entspricht der „Zustand“-Klasse in der Terminologie der “Gang of
+ * Four”.
  */
 abstract class ProzessZustand {
 
@@ -41,5 +41,4 @@ abstract class ProzessZustand {
   public void abbrechen() {
     gibFehlermeldungAus("abbrechen");
   }
-
 }

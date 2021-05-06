@@ -1,8 +1,8 @@
 package org.bschlangaul.examen.examen_66116.jahr_2019.herbst;
 
 /**
- * Entspricht der „State“-Klasse in der Terminologie der Gang of
- * Four.
+ * Entspricht der „Kontext“-Klasse in der Terminologie der „Gang of
+ * Four“.
  */
 public class Prozess {
 
@@ -43,6 +43,17 @@ public class Prozess {
     prozess.fortsetzen();
     prozess.beenden();
     prozess.starten();
-  }
 
+    // Ausgabe:
+    // Der Prozess ist im Zustand „bereit“
+    // Der Prozess wird gestartet.
+    // Der Prozess ist im Zustand „aktiv“
+    // Der Prozess wird suspendiert.
+    // Der Prozess ist im Zustand „suspendiert“
+    // Der Prozess wird fortgesetzt.
+    // Der Prozess ist im Zustand „aktiv“
+    // Der Prozess wird beendet.
+    // Der Prozess ist im Zustand „beendet“
+    // Im Zustand „beendet“ kann die Transition „starten“ nicht ausführt werden!
+  }
 }

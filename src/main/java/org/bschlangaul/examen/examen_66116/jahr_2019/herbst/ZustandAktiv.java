@@ -1,8 +1,8 @@
 package org.bschlangaul.examen.examen_66116.jahr_2019.herbst;
 
 /**
- * Entspricht der „ConcreteState“-Unterklasse in der Terminologie der Gang of
- * Four.
+ * Entspricht der „KonkreterZustand“-Unterklasse in der Terminologie der „Gang of
+ * Four“.
  */
 public class ZustandAktiv extends ProzessZustand {
 
@@ -19,5 +19,4 @@ public class ZustandAktiv extends ProzessZustand {
     System.out.println("Der Prozess wird beendet.");
     prozess.setzeZustand(new ZustandBeendet(prozess));
   }
-
 }
