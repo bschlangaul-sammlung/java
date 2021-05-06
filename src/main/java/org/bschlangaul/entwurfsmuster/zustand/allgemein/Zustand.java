@@ -4,20 +4,14 @@ interface Zustand {
   public void agiere();
 }
 
-class KonkreterZustand1 implements Zustand {
+class KonkreterZustandA implements Zustand {
   public void agiere() {
-    System.out.println("KonkreterZustand1");
+    System.out.println("KonkreterZustandA");
   }
 }
 
-class KonkreterZustand2 implements Zustand {
+class KonkreterZustandB implements Zustand {
   public void agiere() {
-    System.out.println("KonkreterZustand2");
-  }
-}
-
-class KonkreterZustand3 implements Zustand {
-  public void agiere() {
-    System.out.println("KonkreterZustand3");
+    System.out.println("KonkreterZustandB");
   }
 }
