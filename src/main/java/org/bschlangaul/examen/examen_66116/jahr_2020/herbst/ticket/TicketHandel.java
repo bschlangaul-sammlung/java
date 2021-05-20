@@ -24,5 +24,4 @@ public class TicketHandel {
   public int gibVerkaufteTickets() {
     return verkaufteTickets;
   }
-
 }

@@ -6,5 +6,4 @@ public class Test {
     TicketHandel.gibInstanz().ticketKaufen(Kategorie.KIND);
     System.out.println("Anzahl verkaufter Tickets: " + TicketHandel.gibInstanz().gibVerkaufteTickets());
   }
-
 }
