@@ -2,12 +2,14 @@ package org.bschlangaul.examen.examen_66116.jahr_2020.herbst.ticket;
 
 public class TicketHandel {
   private static TicketHandel system;
-  private int verkaufteTickets;
+  private int verkaufteTickets = 0;
+  private TicketDruckerei druckerei;
 
   private TicketHandel() {
+    druckerei = new TicketDruckerei();
   }
 
-  public TicketHandel gibInstanz() {
+  public static TicketHandel gibInstanz() {
     if (system == null) {
       system = new TicketHandel();
     }
@@ -15,15 +17,11 @@ public class TicketHandel {
   }
 
   public Ticket ticketKaufen(Kategorie kategorie) {
-    if (kategorie == Kategorie.ERWACHSENEN) {
-      return new ErwachsenenTicket();
-    } else {
-      return new KinderTicket();
-    }
+    verkaufteTickets++;
+    return druckerei.erstelleTicket(kategorie);
   }
 
   public int gibVerkaufteTickets() {
     return verkaufteTickets;
   }
-
 }
