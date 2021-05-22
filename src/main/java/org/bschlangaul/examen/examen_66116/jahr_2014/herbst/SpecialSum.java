@@ -1,6 +1,6 @@
-package org.bschlangaul.aufgaben.sosy.ab_7;
+package org.bschlangaul.examen.examen_66116.jahr_2014.herbst;
 
-public class Aufgabe2 {
+public class SpecialSum {
   public static long specialSums(int until) {
     long sum = 0; // 0
     if (until > 0) { // 1
