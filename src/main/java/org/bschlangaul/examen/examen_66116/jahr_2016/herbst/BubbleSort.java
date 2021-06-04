@@ -1,6 +1,6 @@
-package org.bschlangaul.aufgaben.sosy.ab_7;
+package org.bschlangaul.examen.examen_66116.jahr_2016.herbst;
 
-public class Aufgabe4 {
+public class BubbleSort {
   public static int[] sort(int[] array) {
     boolean swapped;
     int swapTmp;
