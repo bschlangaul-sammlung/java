@@ -2,7 +2,7 @@ package org.bschlangaul.examen.examen_66116.jahr_2020.herbst;
 
 public class Palindrom {
 
-  @SuppressWarnings({"unused"})
+  @SuppressWarnings({ "unused" })
   public static boolean istWortpalindrom(char[] wort) { // 1
     boolean resultat = false; // 2
     if (wort != null) { // 3
