@@ -12,7 +12,7 @@ public class TexBaumReporter extends BaumReporter {
     if (knoten instanceof AVLBaumKnoten && baum instanceof AVLBaum) {
       AVLBaum avlBaum = (AVLBaum) baum;
       AVLBaumKnoten avlKnoten = (AVLBaumKnoten) knoten;
-      return String.format("\\node[label=%s]{%s};", avlBaum.gibBalance(avlKnoten), knoten.gibSchlüssel());
+      return String.format("\\node[label=%s]{%s};", avlBaum.gibBalanceText(avlKnoten), knoten.gibSchlüssel());
     } else {
       return knoten.gibSchlüssel().toString();
     }

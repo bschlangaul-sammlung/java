@@ -44,6 +44,23 @@ public class AVLBaum extends BinaerBaum {
     return (knoten == null) ? 0 : gibHöhe(knoten.rechts) - gibHöhe(knoten.links);
   }
 
+  /**
+   * Gib den Balancefaktor des gegebenen Knotens als Text (String). Positive
+   * Balancefaktoren haben ein Plus als Präfix.
+   *
+   * @param knoten Der Knoten, dessen Balancefaktor ausgegeben werden soll.
+   *
+   * @return Der Balancefaktor des Knotens als Text.
+   */
+  public String gibBalanceText(AVLBaumKnoten knoten) {
+    int balance = gibBalance(knoten);
+    if (balance > 0) {
+      return "+" + balance;
+    } else {
+      return "" + balance;
+    }
+  }
+
   public AVLBaumKnoten finde(Comparable schlüssel) {
     AVLBaumKnoten aktuellerKnoten = kopf;
     while (aktuellerKnoten != null) {

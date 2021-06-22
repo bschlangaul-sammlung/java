@@ -24,7 +24,7 @@ public class TerminalBaumReporter extends BaumReporter {
         AVLBaumKnoten avlKnoten = (AVLBaumKnoten) knoten;
         AVLBaum avlBaum = (AVLBaum) baum;
         // ausgabe += " h" + avlKnoten.gibHöhe();
-        ausgabe += " " + Farbe.cyan(avlBaum.gibBalance(avlKnoten));
+        ausgabe += " " + Farbe.cyan(avlBaum.gibBalanceText(avlKnoten));
       }
       return ausgabe;
     }, knoten -> knoten.gibLinks(), knoten -> knoten.gibRechts());
