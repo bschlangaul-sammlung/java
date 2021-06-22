@@ -21,40 +21,26 @@ class DoubleLinkedList {
   }
 
   public Item search(Object val) {
-
-    Item aktuell = search(val);
-    if (aktuell != null) {
-      if (head.next.equals(head)) {
-        head = null;
-      } else {
-        if (aktuell.equals(head)) {
-          head = aktuell.next;
-        }
-        aktuell.prev.next = aktuell.next;
-        aktuell.next.prev = aktuell.prev;
-      }
-    }
-
     Item item = null;
     if (head != null) {
       item = head;
-      while (!item.next.equals(head)) {
+      do {
         if (item.val == val) {
           return item;
         }
         item = item.next;
-      }
+      } while (!item.equals(head));
     }
-    return item;
+    return null;
   }
 
   public void delete(Object val) {
     Item item = search(val);
     if (item != null) {
-      if (head.next.val == head.val) {
+      if (head.next.equals(head)) {
         head = null;
       } else {
-        if (item.val == head.val) {
+        if (item.equals(head)) {
           head = item.next;
         }
         item.prev.next = item.next;
@@ -75,12 +61,23 @@ class DoubleLinkedList {
     }
   }
 
-  public void searchAndPrint(Object val) {
+  /**
+   * Hilfsmethode zum Debuggen.
+   *
+   * @param val Der Wert nach dem gesucht werden soll.
+   */
+  private void searchAndPrint(Object val) {
     Item item = search(val);
-    System.out.println(item.val);
+    if (item != null)
+      System.out.println(item.val);
+    else
+      System.out.println(item);
   }
 
-  public void printAll() {
+  /**
+   * Hilfsmethode zum Debuggen.
+   */
+  private void printAll() {
     System.out.print("All items: ");
     if (head != null) {
       System.out.print(head.val + " ");
@@ -106,8 +103,14 @@ class DoubleLinkedList {
     list.searchAndPrint("a");
     list.searchAndPrint("b");
     list.searchAndPrint("c");
+    list.searchAndPrint("x");
 
     list.delete("a");
     list.printAll();
+    list.delete("b");
+    list.printAll();
+    list.delete("c");
+    list.printAll();
+    list.delete("x");
   }
 }
