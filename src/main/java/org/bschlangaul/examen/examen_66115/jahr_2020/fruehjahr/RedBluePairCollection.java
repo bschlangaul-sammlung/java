@@ -28,16 +28,16 @@ public class RedBluePairCollection {
   }
 
   public double findMinimalDistance() {
-    double distance = Double.MAX_VALUE;
+    double distanceMin = Double.MAX_VALUE;
     for (int i = 0; i < latestIndex - 1; i++) {
       if (points[i].color != points[i + 1].color) {
-        double currentDistance = points[i + 1].x - points[i].x;
-        if (currentDistance < distance) {
-          distance = currentDistance;
+        double distance = points[i + 1].x - points[i].x;
+        if (distance < distanceMin) {
+          distanceMin = distance;
         }
       }
     }
-    return distance;
+    return distanceMin;
   }
 
   public static void main(String[] args) {
