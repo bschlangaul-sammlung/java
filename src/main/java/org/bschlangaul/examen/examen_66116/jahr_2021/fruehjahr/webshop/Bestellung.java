@@ -15,7 +15,7 @@ public class Bestellung {
   }
 
   public void addArticle(Artikel article) {
-    // mass nicht weiter aufgelöst werden, siehe Hinweise
+    // muss nicht weiter aufgelöst werden, siehe Hinweise
     articles.add(article);
     size++;
     // muss nicht weiter aufgelöst werden, siehe Hinweise
