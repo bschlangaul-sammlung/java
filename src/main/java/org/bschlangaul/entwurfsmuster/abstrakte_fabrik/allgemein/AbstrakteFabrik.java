@@ -1,43 +1,32 @@
 package org.bschlangaul.entwurfsmuster.abstrakte_fabrik.allgemein;
 
 interface AbstrakteFabrik {
-  public Produkt1 erzeugeProdukt1();
+  public AbstraktesProduktA erzeugeProduktA();
 
-  public Produkt2 erzeugeProdukt2();
-
-  public Produkt3 erzeugeProdukt3();
+  public AbstraktesProduktB erzeugeProduktB();
 }
 
-class KonkreteFabrikA implements AbstrakteFabrik {
+class Fabrik1 implements AbstrakteFabrik {
   @Override
-  public Produkt1 erzeugeProdukt1() {
-    return new KonkretesProdukt1A();
+  public AbstraktesProduktA erzeugeProduktA() {
+    return new ProduktA1();
   }
 
   @Override
-  public Produkt2 erzeugeProdukt2() {
-    return new KonkretesProdukt2A();
+  public AbstraktesProduktB erzeugeProduktB() {
+    return new ProduktB1();
   }
 
-  @Override
-  public Produkt3 erzeugeProdukt3() {
-    return new KonkretesProdukt3A();
-  }
 }
 
-class KonkreteFabrikB implements AbstrakteFabrik {
+class Fabrik2 implements AbstrakteFabrik {
   @Override
-  public Produkt1 erzeugeProdukt1() {
-    return new KonkretesProdukt1B();
+  public AbstraktesProduktA erzeugeProduktA() {
+    return new ProduktA2();
   }
 
   @Override
-  public Produkt2 erzeugeProdukt2() {
-    return new KonkretesProdukt2B();
-  }
-
-  @Override
-  public Produkt3 erzeugeProdukt3() {
-    return new KonkretesProdukt3B();
+  public AbstraktesProduktB erzeugeProduktB() {
+    return new ProduktB2();
   }
 }

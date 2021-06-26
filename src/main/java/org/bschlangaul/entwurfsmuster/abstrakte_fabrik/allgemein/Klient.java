@@ -3,20 +3,16 @@ package org.bschlangaul.entwurfsmuster.abstrakte_fabrik.allgemein;
 public class Klient {
   public static void main(String[] args) {
     // zentraler Austauschpunkt -> Implementierungsaustausch
-    AbstrakteFabrik fabrikA = new KonkreteFabrikA();
-    fabrikA.erzeugeProdukt1();
-    fabrikA.erzeugeProdukt2();
-    fabrikA.erzeugeProdukt3();
-    // KonkretesProdukt1A wurde erzeugt
-    // KonkretesProdukt2A wurde erzeugt
-    // KonkretesProdukt3A wurde erzeugt
+    AbstrakteFabrik fabrik1 = new Fabrik1();
+    fabrik1.erzeugeProduktA();
+    fabrik1.erzeugeProduktB();
+    // KonkretesProduktA1 wurde erzeugt
+    // KonkretesProduktB1 wurde erzeugt
 
-    AbstrakteFabrik fabrikB = new KonkreteFabrikB();
-    fabrikB.erzeugeProdukt1();
-    fabrikB.erzeugeProdukt2();
-    fabrikB.erzeugeProdukt3();
-    // KonkretesProdukt1B wurde erzeugt
-    // KonkretesProdukt2B wurde erzeugt
-    // KonkretesProdukt3B wurde erzeugt
+    AbstrakteFabrik fabrik2 = new Fabrik2();
+    fabrik2.erzeugeProduktA();
+    fabrik2.erzeugeProduktB();
+    // KonkretesProduktA2 wurde erzeugt
+    // KonkretesProduktB2 wurde erzeugt
   }
 }
