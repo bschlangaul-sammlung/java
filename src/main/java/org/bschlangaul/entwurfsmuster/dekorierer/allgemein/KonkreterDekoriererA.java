@@ -1,7 +1,7 @@
 package org.bschlangaul.entwurfsmuster.dekorierer.allgemein;
 
-class KonkreterDekorierer1 extends Dekorierer {
-  public KonkreterDekorierer1(Komponente komponent) {
+class KonkreterDekoriererA extends Dekorierer {
+  public KonkreterDekoriererA(Komponente komponent) {
     super(komponent);
   }
 
@@ -12,7 +12,7 @@ class KonkreterDekorierer1 extends Dekorierer {
   public void agiere() {
     komponente.agiere();
     // eigene Funktionalität:
-    System.out.println("KonkreterDekorierer1 agiert!");
+    System.out.println("KonkreterDekoriererA agiert!");
   }
 
 }
