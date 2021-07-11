@@ -35,6 +35,9 @@ public class KuerzesterPfadDijkstra {
   public class Reporter {
     List<List<Integer>> pfade;
 
+    /**
+     * Speichert die Knoten-IDs in der Reihenfolge wie sie bearbeitet werden.
+     */
     List<Integer> bearbeitungsReihenfolge;
 
     int schrittZähler = 0;
@@ -89,23 +92,23 @@ public class KuerzesterPfadDijkstra {
           zeilen[i][1] = gibKnotenName(schritt.aktuellerKnoten);
 
         // Entfernungen zu den Knoten
-        for (int j = 0; j < schritt.entfernungen.length; j++) {
-          int ergebnis = schritt.entfernungen[j];
+        for (int knotenNr = 0; knotenNr < schritt.entfernungen.length; knotenNr++) {
+          int ergebnis = schritt.entfernungen[knotenNr];
           Object zelle;
           if (ergebnis == Integer.MAX_VALUE) {
             zelle = alsTex ? "$\\infty$" : "∞";
             // Damit erst im 1. Schritt der erste Knoten hervorgehoben ist und nicht schon
             // im 0. Schritt
-          } else if ((schrittNummer != 0 && gibBearbeitungsNummer(j) == schrittNummer)
-              || (schrittNummer == 1 && gibBearbeitungsNummer(j) == schrittNummer - 1)) {
-            String z = String.valueOf(schritt.entfernungen[j]);
+          } else if ((schrittNummer != 0 && gibBearbeitungsNummer(knotenNr) == schrittNummer)
+              || (schrittNummer == 1 && gibBearbeitungsNummer(knotenNr) == schrittNummer - 1)) {
+            String z = String.valueOf(schritt.entfernungen[knotenNr]);
             zelle = alsTex ? Tex.makro("bf", z) : Farbe.rot(z);
-          } else if (gibBearbeitungsNummer(j) < schrittNummer) {
+          } else if (gibBearbeitungsNummer(knotenNr) < schrittNummer) {
             zelle = "|";
           } else {
-            zelle = String.valueOf(schritt.entfernungen[j]);
+            zelle = String.valueOf(schritt.entfernungen[knotenNr]);
           }
-          zeilen[i][j + knotenVerschiebung] = String.valueOf(zelle);
+          zeilen[i][knotenNr + knotenVerschiebung] = String.valueOf(zelle);
         }
       }
       System.out.println(Tabelle.gibAus(kopfzeile, zeilen, alsTex));
@@ -154,7 +157,8 @@ public class KuerzesterPfadDijkstra {
         pfeil = " $\\rightarrow$ ";
       for (int i = pfade.size() - 1; i >= 0; i--) {
         ausgabe += gibKnotenName(pfade.get(i));
-        if (i >= 1) ausgabe += pfeil;
+        if (i >= 1)
+          ausgabe += pfeil;
       }
       return ausgabe;
     }
@@ -191,9 +195,10 @@ public class KuerzesterPfadDijkstra {
   public boolean[] besucht;
 
   /**
-   * Der aktuelle ausgewählte, besuchte Knoten.
+   * Der aktuelle ausgewählte, besuchte Knoten. Zu Beginn des Algorithmus ist
+   * keine Knoten ausgewählt, deshalb -1.
    */
-  public int ausgewählterKnoten;
+  public int ausgewählterKnoten = -1;
 
   /**
    * Mit diesem Konstruktur wird die Adjazenzmatrix durch das einfache
@@ -310,10 +315,14 @@ public class KuerzesterPfadDijkstra {
     // Dijkstra d = new Dijkstra(
     // "a->b: 1; a->e: 7; b->c: 3; c->d: 8; c->e: 3; e->f: 1; c->f: 6; f->c: 1;
     // f->d: 3");
-    KuerzesterPfadDijkstra d = new KuerzesterPfadDijkstra(
-        "A: 1 4; B: 3 5; C: 3 3; D: 0 2; E: 5 5; F: 5 1; G: 3 0; H: 6 3; I: 8 4; A -- B: 2; A -- C: 5; A -- D: 2; B -- C: 3; B -- E; C -- D: 3; C -- E; C -- F; C -- H; D -- G: 2; E -- I: 7; F -- G: 2; F -- H: 3; H -- I;");
 
-    d.sucheKürzestenPfadMatrix("A");
+    KuerzesterPfadDijkstra d = new KuerzesterPfadDijkstra(
+        // "A: 1 4; B: 3 5; C: 3 3; D: 0 2; E: 5 5; F: 5 1; G: 3 0; H: 6 3; I: 8 4; A --
+        // B: 2; A -- C: 5; A -- D: 2; B -- C: 3; B -- E; C -- D: 3; C -- E; C -- F; C
+        // -- H; D -- G: 2; E -- I: 7; F -- G: 2; F -- H: 3; H -- I;"
+        "s: -1 0; a: 6 0; b: 0 -1; c: 4 0; d: 1 2; e: 2 0; f: 6 2; g: 2 -2; h: -2 -2; a -- c: 4; a -- f: 9; b -- e: 6; b -- g: 4; b -- s: 3; c -- d: 7; c -- e: 5; c -- f: 1; d -- e: 3; d -- f: 4; d -- s: 8; e -- g: 4; e -- s: 13; g -- h: 3; h -- s: 5;");
+
+    d.sucheKürzestenPfadMatrix("s");
     d.reporter.gibErgebnisTabelle(false);
     d.reporter.gibZwischenschrittTabelle(false);
   }
