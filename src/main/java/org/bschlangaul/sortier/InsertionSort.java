@@ -21,7 +21,7 @@ public class InsertionSort {
       int j = i;
       // Für alle Zahlen links von der Markierung.
       while (j >= 1 && zahlen[j - 1] > markierung) {
-        // Die Zahl eins weiter nach rechts setzten
+        // Die Zahl eins weiter nach rechts setzen
         // An der Position j - 1 und j stehen jetzt zweimal die gleichen
         // Zahlen
         zahlen[j] = zahlen[j - 1];
@@ -39,30 +39,24 @@ public class InsertionSort {
    * "https://www.geeksforgeeks.org/recursive-insertion-sort/">geeksforgeeks.org</a>)
    *
    * @param zahlen Ein Feld mit Zahlen, das sortiert werden soll.
-   * @param anzahl Wie viele Zahlen im Feld sortiert werden sollen.
+   * @param i Wie viele Zahlen im Feld sortiert werden sollen.
    */
-  private static void sortiereRekursiv(int zahlen[], int anzahl) {
-    // Base case
-    if (anzahl <= 1)
+  private static void sortiereRekursiv(int zahlen[], int i) {
+    // Abbruchsfall
+    if (i <= 1)
       return;
 
-    // Sort first n-1 elements
-    sortiereRekursiv(zahlen, anzahl - 1);
+    // Sortiere die ersten n-1 Elemente.
+    sortiereRekursiv(zahlen, i - 1);
 
-    // Insert last element at its correct position
-    // in sorted array.
-    int last = zahlen[anzahl - 1];
-    int j = anzahl - 2;
+    int markierung = zahlen[i - 1];
+    int j = i - 2;
 
-    /*
-     * Move elements of arr[0..i-1], that are greater than key, to one position
-     * ahead of their current position
-     */
-    while (j >= 0 && zahlen[j] > last) {
+    while (j >= 0 && zahlen[j] > markierung) {
       zahlen[j + 1] = zahlen[j];
       j--;
     }
-    zahlen[j + 1] = last;
+    zahlen[j + 1] = markierung;
   }
 
   /**
@@ -81,7 +75,8 @@ public class InsertionSort {
   public static void main(String[] args) {
     // int[] zahlen = { 42, 23, 1, 7, 5, 3, 12, 78, 15 };
     int[] zahlen = { 7, 4, 9, 2, 3 };
-    sortiere(zahlen);
+    // sortiere(zahlen);
+    sortiereRekursiv(zahlen);
 
     for (int i = 0; i < zahlen.length; i++) {
       System.out.print(zahlen[i] + " ");
