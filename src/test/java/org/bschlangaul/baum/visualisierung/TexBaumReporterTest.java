@@ -28,9 +28,6 @@ public class TexBaumReporterTest {
   public void avl() {
     BinaerBaum baum = new AVLBaum();
     baum.fügeEin(1, 2, 3, 4, 5);
-    System.out.println(lese("tex/avl.txt"));
-    System.out.println(reporter.erzeugeBaum(baum));
-
     assertEquals(lese("tex/avl.txt"), reporter.erzeugeBaum(baum) + "\n");
   }
 
