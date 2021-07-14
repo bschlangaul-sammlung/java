@@ -1,6 +1,6 @@
 \begin{tikzpicture}[li binaer baum]
 \Tree
-[.\node[label=1]{2};
+[.\node[label=+1]{2};
   [.\node[label=0]{1}; ]
   [.\node[label=0]{4};
     [.\node[label=0]{3}; ]

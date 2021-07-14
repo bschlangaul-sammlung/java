@@ -17,7 +17,7 @@ public class GraphAdjazenzMatrix extends Graph {
   public int[][] matrix;
 
   /**
-   * Konstruktor für Objekte der Klasse AdjazenzMatrix.
+   * Konstruktor für Objekte der Klasse GraphAdjazenzMatrix.
    *
    * Die maximale Anzahl der Knoten wird dabei festgelegt.
    *
