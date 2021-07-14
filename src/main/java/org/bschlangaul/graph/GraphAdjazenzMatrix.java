@@ -51,10 +51,7 @@ public class GraphAdjazenzMatrix extends Graph {
    *
    * Wenn die maximale Anzahl an Knoten erreicht wird oder der Knoten bereits
    * eingefügt ist, dann erfolgt kein Einfügen. Ob der Knoten bereits eingefügt
-   * ist, findet man mit der Methode gibKnotenNummer(name) heraus. In der Matrix
-   * soll an der Position der Diagonalen eine 0 stehen. An den übrigen Plätzen bis
-   * zu dieser Position wird eine -1 eingefügt, die in der Methode gibMatrixAus()
-   * die Ausgabe einer Leerstelle bewirkt.
+   * ist, findet man mit der Methode gibKnotenNummer(name) heraus.
    *
    * @param knotenName Name des neuen Knotens, der dem Graphen hinzugefügt wird.
    */
@@ -63,7 +60,6 @@ public class GraphAdjazenzMatrix extends Graph {
     if (knotenNummer > -1)
       return knotenNummer;
     knotenNummer = super.setzeKnoten(knotenName);
-    matrix[knotenNummer][knotenNummer] = 0;
     return knotenNummer;
   }
 
@@ -125,7 +121,7 @@ public class GraphAdjazenzMatrix extends Graph {
     int vonNummer, nachNummer;
     vonNummer = gibKnotenNummer(von);
     nachNummer = gibKnotenNummer(nach);
-    if ((vonNummer != -1) && (nachNummer != -1) && (vonNummer != nachNummer)) {
+    if (vonNummer != -1 && nachNummer != -1) {
       matrix[vonNummer][nachNummer] = gewicht;
       if (!gerichtet)
         matrix[nachNummer][vonNummer] = gewicht;

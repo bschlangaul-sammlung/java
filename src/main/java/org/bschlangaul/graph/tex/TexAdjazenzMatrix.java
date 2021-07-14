@@ -100,7 +100,13 @@ public class TexAdjazenzMatrix {
     for (int i = 0; i < matrix.gibKnotenAnzahl(); i++) {
       String zeile = formatiereZelle(matrix.gibKnotenName(i));
       for (int j = 0; j < matrix.gibKnotenAnzahl(); j++) {
-        zeile += formatiereZelle(String.valueOf(matrix.matrix[i][j]));
+        if (i == j && matrix.matrix[i][j] == Integer.MIN_VALUE) {
+          zeile += formatiereZelle("*");
+        } else if (matrix.matrix[i][j] == Integer.MIN_VALUE) {
+          zeile += formatiereZelle("-");
+        } else {
+          zeile += formatiereZelle(String.valueOf(matrix.matrix[i][j]));
+        }
       }
       ausgabe += formatiereZeile(zeile);
     }
