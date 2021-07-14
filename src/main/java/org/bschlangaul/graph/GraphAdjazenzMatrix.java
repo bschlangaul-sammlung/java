@@ -1,7 +1,5 @@
 package org.bschlangaul.graph;
 
-import org.bschlangaul.helfer.Farbe;
-
 /**
  * Klasse für einen ungerichteten, gewichteten Graphen.
  *
@@ -40,6 +38,12 @@ public class GraphAdjazenzMatrix extends Graph {
   @Override
   protected void initialisiere(int maximaleAnzahlKnoten) {
     matrix = new int[maximaleAnzahlKnoten][maximaleAnzahlKnoten];
+
+    for (int i = 0; i < matrix.length; i++) {
+      for (int j = 0; j < matrix[i].length; j++) {
+        matrix[i][j] = Integer.MIN_VALUE;
+      }
+    }
   }
 
   /**
@@ -76,7 +80,7 @@ public class GraphAdjazenzMatrix extends Graph {
     int min = 0;
     for (int[] reihe : matrix) {
       for (int gewicht : reihe) {
-        if (gewicht < min)
+        if (gewicht < min && gewicht != Integer.MIN_VALUE)
           min = gewicht;
       }
     }
@@ -145,8 +149,8 @@ public class GraphAdjazenzMatrix extends Graph {
     for (int i = 0; i < gibKnotenAnzahl(); i++) {
       System.out.print(gibKnoten(i).gibNameFormatiert(breite));
       for (int j = 0; j < gibKnotenAnzahl(); j++)
-        if (matrix[i][j] == 0) {
-          System.out.print(Farbe.gelb("0") + "   ");
+        if (matrix[i][j] == Integer.MIN_VALUE) {
+          System.out.print("-   ");
         } else if (matrix[i][j] != -1)
           System.out.print((matrix[i][j] + "   ").substring(0, breite));
         else

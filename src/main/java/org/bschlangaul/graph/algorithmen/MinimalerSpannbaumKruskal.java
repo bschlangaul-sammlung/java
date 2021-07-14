@@ -44,7 +44,7 @@ public class MinimalerSpannbaumKruskal extends GraphAdjazenzMatrix {
       int min = Integer.MAX_VALUE, a = -1, b = -1;
       for (int i = 0; i < gibKnotenAnzahl(); i++) {
         for (int j = 0; j < gibKnotenAnzahl(); j++) {
-          if (find(i) != find(j) && matrix[i][j] < min && matrix[i][j] != 0) {
+          if (find(i) != find(j) && matrix[i][j] < min && matrix[i][j] != Integer.MIN_VALUE) {
             min = matrix[i][j];
             a = i;
             b = j;
