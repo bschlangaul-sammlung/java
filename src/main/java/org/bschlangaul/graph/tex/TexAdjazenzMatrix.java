@@ -131,7 +131,7 @@ public class TexAdjazenzMatrix {
    * @return Eine Adjazenzmatrix die in einer block-Umgebung eingerahmt ist.
    */
   private String gibInnereUmgebung(String inhalt) {
-    String spaltenDefintion = spaltenFormatierung.repeat(matrix.gibKnotenAnzahl() - 1);
+    String spaltenDefintion = spaltenFormatierung.repeat(matrix.gibKnotenAnzahl());
     // c(cccccc)
     spaltenDefintion = String.format("%s(%s)", spaltenFormatierung, spaltenDefintion);
     return String.format("\\begin{block}{%s}\n%s\\end{block}", spaltenDefintion, inhalt);
@@ -155,7 +155,7 @@ public class TexAdjazenzMatrix {
    * @return Eine fertig gesetzte Adjazenzmatirx.
    */
   private String gibÄußereUmgebung(String inhalt) {
-    String spaltenDefintion = spaltenFormatierung.repeat(matrix.gibKnotenAnzahl());
+    String spaltenDefintion = spaltenFormatierung.repeat(matrix.gibKnotenAnzahl() + 1);
     return "\\[\n" + "\\begin{blockarray}{" + spaltenDefintion + "}\n" + inhalt + "\n" + "\\end{blockarray}\n"
         + "\\]\n";
   }
