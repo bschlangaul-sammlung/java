@@ -3,37 +3,53 @@ package org.bschlangaul.graph.algorithmen;
 import org.bschlangaul.graph.GraphAdjazenzMatrix;
 
 /**
- * Implementation des Algorithmus von Prim / Jarník.
+ * Implementation des Algorithmus von Prim / Jarník. Momentan beginnt der
+ * Algorithmus immer vom ersten Knoten in der Adjazenzmatrix, d.h. mit dem
+ * Knoten mit der Knotennummer 0.
  *
  * Nach dem Tutorial auf <a href=
  * "https://algorithms.tutorialhorizon.com/prims-minimum-spanning-tree-mst-using-adjacency-matrix/">tutorialhorizon.com</a>.
  */
 public class MinimalerSpannbaumPrim extends GraphAdjazenzMatrix {
+  /**
+   * Ein Feld, in dem gespeichert wird, ob der Elternknoten bereits besucht wurde.
+   * Wurde der Elternknoten mit der Nummer 3 besucht wird besucht[3] auf true
+   * gesetzt.
+   */
+  boolean[] besucht;
+
+  /**
+   * Ein Feld, in dem alle Ergebnisse gespeichert werden. Ein Ergebnis wird unter
+   * der Kindknoten-Nummer gespeichert. Manche Ergebniseinträge werden
+   * überschrieben.
+   */
+  Ergebnis[] ergebnisse = new Ergebnis[gibKnotenAnzahl()];
+
+  /**
+   * Das Gewicht wird unter der Kindknoten-Nummer gespeichert.
+   */
+  int[] gewichte = new int[gibKnotenAnzahl()];
 
   public MinimalerSpannbaumPrim(String graphenFormat) {
     super(graphenFormat);
+    besucht = new boolean[gibKnotenAnzahl()];
+    ergebnisse = new Ergebnis[gibKnotenAnzahl()];
+    gewichte = new int[gibKnotenAnzahl()];
   }
 
   /**
    * Gib den Knoten mit dem minimalen Gewicht, der sich noch nicht im minimalen
    * Spannbaum befindet.
    *
-   * @param minimalerSpannbaum Ein Feld mit der gleichen Länge, wie es Knoten im
-   *                           Graphen gibt. Befindet sich beispielsweise ein
-   *                           Knoten mit der Index-Nummer 3 im minimalen
-   *                           Spannbaum, so wird das Feld an der Index-Position 3
-   *                           auf wahr gesetzt.
-   * @param kantenGewichte Eine Feld mit den Kantengewichten
-   *
    * @return Die ID des Knoten mit dem minimalen Gewicht. Es können Zahlen
    *         beginnend mit 0 vorkommen.
    */
-  private int gibMinimumKnoten(boolean[] minimalerSpannbaum, int[] kantenGewichte) {
+  private int gibMinimumKnoten() {
     int minGewicht = Integer.MAX_VALUE;
     int knoten = -1;
     for (int i = 0; i < gibKnotenAnzahl(); i++) {
-      if (minimalerSpannbaum[i] == false && minGewicht > kantenGewichte[i]) {
-        minGewicht = kantenGewichte[i];
+      if (besucht[i] == false && minGewicht > gewichte[i]) {
+        minGewicht = gewichte[i];
         knoten = i;
       }
     }
@@ -48,13 +64,15 @@ public class MinimalerSpannbaumPrim extends GraphAdjazenzMatrix {
   class Ergebnis {
     /**
      * Die Index-Nummer des Elternknoten über den der aktuelle Knoten erreicht wird.
+     * -1 bedeuted, dass das Ergebnis keinen Elternknoten hat
      */
-    int eltern;
+    int eltern = -1;
 
     /**
-     * Das Gewicht der Kante vom Elternknoten zum aktuellen Knoten.
+     * Das Gewicht der Kante vom Elternknoten zum aktuellen Knoten. Das Feld wird
+     * benötigt um den minimale Knoten zu finden.
      */
-    int gewicht;
+    int gewicht = Integer.MIN_VALUE;
   }
 
   /**
@@ -63,10 +81,6 @@ public class MinimalerSpannbaumPrim extends GraphAdjazenzMatrix {
    * @return Die Summer aller Kantengewichte.
    */
   public int führeAus() {
-    boolean[] minimalerSpannbaum = new boolean[gibKnotenAnzahl()];
-    Ergebnis[] ergebnisse = new Ergebnis[gibKnotenAnzahl()];
-    int[] gewichte = new int[gibKnotenAnzahl()];
-
     for (int i = 0; i < gibKnotenAnzahl(); i++) {
       // Initialisiere alle Gewichte mit Unendlich
       gewichte[i] = Integer.MAX_VALUE;
@@ -80,38 +94,42 @@ public class MinimalerSpannbaumPrim extends GraphAdjazenzMatrix {
     ergebnisse[0].eltern = -1;
 
     for (int i = 0; i < gibKnotenAnzahl(); i++) {
-      int knoten = gibMinimumKnoten(minimalerSpannbaum, gewichte);
-      System.out.println("Besuche Knoten „" + gibKnotenName(knoten) + "“");
-      minimalerSpannbaum[knoten] = true;
-      for (int j = 0; j < gibKnotenAnzahl(); j++) {
-        if (matrix[knoten][j] > 0) {
-          if (minimalerSpannbaum[j] == false && matrix[knoten][j] < gewichte[j]) {
-            gewichte[j] = matrix[knoten][j];
-            ergebnisse[j].eltern = knoten;
-            ergebnisse[j].gewicht = gewichte[j];
-            System.out
-                .println("Aktualisiere Kante " + gibKnotenName(knoten) + "--" + gibKnotenName(j) + ": " + gewichte[j]);
+      int eltern = gibMinimumKnoten();
+      System.out.println("Besuche Knoten „" + gibKnotenName(eltern) + "“");
+      besucht[eltern] = true;
+      for (int kind = 0; kind < gibKnotenAnzahl(); kind++) {
+        if (matrix[eltern][kind] > 0) {
+          if (besucht[kind] == false && matrix[eltern][kind] < gewichte[kind]) {
+            gewichte[kind] = matrix[eltern][kind];
+
+            if (ergebnisse[kind].eltern != -1) {
+              System.out.println(
+                  "Aktualisiere Kante " + gibKnotenName(eltern) + "--" + gibKnotenName(kind) + ": " + gewichte[kind]);
+            } else {
+              System.out.println(
+                  "Füge hinzu Kante " + gibKnotenName(eltern) + "--" + gibKnotenName(kind) + ": " + gewichte[kind]);
+            }
+            ergebnisse[kind].eltern = eltern;
+            ergebnisse[kind].gewicht = gewichte[kind];
           }
         }
       }
     }
 
-    return gibErgebnisAus(ergebnisse);
+    return gibErgebnisAus();
   }
 
   /**
    * Gib die Ergebnisse aus.
    *
-   * @param ergebnisse Ein Feld mit allen Ergebnissen.
-   *
    * @return Die Summer aller Kantengewichte.
    */
-  private int gibErgebnisAus(Ergebnis[] ergebnisse) {
+  private int gibErgebnisAus() {
     int summeGewichte = 0;
     System.out.println("Minimaler Spannbaum: ");
     for (int i = 1; i < gibKnotenAnzahl(); i++) {
-      System.out.println("Kante: " + gibKnotenName(ergebnisse[i].eltern) + "--" + gibKnotenName(i) + " Gewicht: "
-          + ergebnisse[i].gewicht);
+      System.out.println("Kante (Eltern->Kind): " + gibKnotenName(ergebnisse[i].eltern) + "--" + gibKnotenName(i)
+          + " Gewicht: " + ergebnisse[i].gewicht);
       summeGewichte += ergebnisse[i].gewicht;
     }
     System.out.println("Summer aller Kantengewichte: " + summeGewichte);
