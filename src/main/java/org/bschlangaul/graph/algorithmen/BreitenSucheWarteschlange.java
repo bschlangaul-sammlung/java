@@ -9,10 +9,14 @@ import java.util.Vector;
  */
 public class BreitenSucheWarteschlange extends GraphAdjazenzMatrix {
 
-  // Liste der besuchten Knoten
+  /**
+   * Liste der besuchten Knoten
+   */
   private boolean[] besucht;
 
-  // Warteschlage für die Breitensuche
+  /**
+   * Warteschlage für die Breitensuche
+   */
   private Vector<String> liste = new Vector<String>();
   private Vector<String> route = new Vector<String>();
 

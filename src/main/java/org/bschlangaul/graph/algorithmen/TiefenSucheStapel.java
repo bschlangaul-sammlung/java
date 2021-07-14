@@ -8,10 +8,15 @@ import java.util.Stack;
  * nach Schulbuch: Informatik 1 Oberstufe Oldenbourg Verlag
  */
 public class TiefenSucheStapel extends GraphAdjazenzMatrix {
-  // Liste der besuchten Knoten
+
+  /**
+   * Liste der besuchten Knoten
+   */
   private boolean[] besucht;
 
-  // Stapel für die Tiefensuche
+  /**
+   * Stapel für die Tiefensuche
+   */
   private Stack<String> stapel;
   private Stack<String> route;
 
