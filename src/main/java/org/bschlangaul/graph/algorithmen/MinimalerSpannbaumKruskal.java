@@ -31,8 +31,8 @@ public class MinimalerSpannbaumKruskal extends GraphAdjazenzMatrix {
   }
 
   // Finds MST using Kruskal's algorithm
-  public int führeAus() {
-    int mincost = 0; // Cost of min MST.
+  public double führeAus() {
+    double mincost = 0; // Cost of min MST.
 
     // Initialize sets of disjoint sets.
     for (int i = 0; i < gibKnotenAnzahl(); i++)
@@ -41,10 +41,11 @@ public class MinimalerSpannbaumKruskal extends GraphAdjazenzMatrix {
     // Include minimum weight edges one by one
     int edge_count = 0;
     while (edge_count < gibKnotenAnzahl() - 1) {
-      int min = Integer.MAX_VALUE, a = -1, b = -1;
+      double min = Double.MAX_VALUE;
+      int a = -1, b = -1;
       for (int i = 0; i < gibKnotenAnzahl(); i++) {
         for (int j = 0; j < gibKnotenAnzahl(); j++) {
-          if (find(i) != find(j) && matrix[i][j] < min && matrix[i][j] != Integer.MIN_VALUE) {
+          if (find(i) != find(j) && matrix[i][j] < min && matrix[i][j] != -Double.MAX_VALUE) {
             min = matrix[i][j];
             a = i;
             b = j;

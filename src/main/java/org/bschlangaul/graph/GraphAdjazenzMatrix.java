@@ -12,7 +12,7 @@ public class GraphAdjazenzMatrix extends Graph {
   /**
    * Das zweidimensionale Feld der Adjazenzmatrix.
    */
-  public int[][] matrix;
+  public double[][] matrix;
 
   /**
    * Konstruktor für Objekte der Klasse GraphAdjazenzMatrix.
@@ -37,11 +37,11 @@ public class GraphAdjazenzMatrix extends Graph {
 
   @Override
   protected void initialisiere(int maximaleAnzahlKnoten) {
-    matrix = new int[maximaleAnzahlKnoten][maximaleAnzahlKnoten];
+    matrix = new double[maximaleAnzahlKnoten][maximaleAnzahlKnoten];
 
     for (int i = 0; i < matrix.length; i++) {
       for (int j = 0; j < matrix[i].length; j++) {
-        matrix[i][j] = Integer.MIN_VALUE;
+        matrix[i][j] = -Double.MAX_VALUE;
       }
     }
   }
@@ -72,11 +72,11 @@ public class GraphAdjazenzMatrix extends Graph {
    *
    * @return Das Gewicht der Kante mit dem Minimalgewicht.
    */
-  public int gibMinimalesGewicht() {
-    int min = 0;
-    for (int[] reihe : matrix) {
-      for (int gewicht : reihe) {
-        if (gewicht < min && gewicht != Integer.MIN_VALUE)
+  public double gibMinimalesGewicht() {
+    double min = 0;
+    for (double[] reihe : matrix) {
+      for (double gewicht : reihe) {
+        if (gewicht < min && gewicht != -Double.MAX_VALUE)
           min = gewicht;
       }
     }
@@ -92,10 +92,10 @@ public class GraphAdjazenzMatrix extends Graph {
    *
    * @return Das Gewicht der Kante mit dem Maximalgewicht.
    */
-  public int gibMaximalesGewicht() {
-    int max = 0;
-    for (int[] reihe : matrix) {
-      for (int gewicht : reihe) {
+  public double gibMaximalesGewicht() {
+    double max = 0;
+    for (double[] reihe : matrix) {
+      for (double gewicht : reihe) {
         if (gewicht > max)
           max = gewicht;
       }
@@ -117,7 +117,7 @@ public class GraphAdjazenzMatrix extends Graph {
    * @param gerichtet Ob die Kante gerichtet oder ungerichtet ist. Ist die Kante
    *                  ungerichtet werden zwei Einträge in die Matrix gesetzt.
    */
-  public void setzeKante(String von, String nach, int gewicht, boolean gerichtet) {
+  public void setzeKante(String von, String nach, double gewicht, boolean gerichtet) {
     int vonNummer, nachNummer;
     vonNummer = gibKnotenNummer(von);
     nachNummer = gibKnotenNummer(nach);
@@ -145,7 +145,7 @@ public class GraphAdjazenzMatrix extends Graph {
     for (int i = 0; i < gibKnotenAnzahl(); i++) {
       System.out.print(gibKnoten(i).gibNameFormatiert(breite));
       for (int j = 0; j < gibKnotenAnzahl(); j++)
-        if (matrix[i][j] == Integer.MIN_VALUE) {
+        if (matrix[i][j] == -Double.MAX_VALUE) {
           System.out.print("-   ");
         } else if (matrix[i][j] != -1)
           System.out.print((matrix[i][j] + "   ").substring(0, breite));
@@ -164,7 +164,7 @@ public class GraphAdjazenzMatrix extends Graph {
    *
    * @return Gewichtung der Kante
    */
-  int gibKanteGewicht(String von, String nach) {
+  double gibKanteGewicht(String von, String nach) {
     int vonNummer, nachNummer;
 
     vonNummer = gibKnotenNummer(von);

@@ -28,13 +28,13 @@ public class MinimalerSpannbaumPrim extends GraphAdjazenzMatrix {
   /**
    * Das Gewicht wird unter der Kindknoten-Nummer gespeichert.
    */
-  int[] gewichte = new int[gibKnotenAnzahl()];
+  double[] gewichte;
 
   public MinimalerSpannbaumPrim(String graphenFormat) {
     super(graphenFormat);
     besucht = new boolean[gibKnotenAnzahl()];
     ergebnisse = new Ergebnis[gibKnotenAnzahl()];
-    gewichte = new int[gibKnotenAnzahl()];
+    gewichte = new double[gibKnotenAnzahl()];
   }
 
   /**
@@ -45,7 +45,7 @@ public class MinimalerSpannbaumPrim extends GraphAdjazenzMatrix {
    *         beginnend mit 0 vorkommen.
    */
   private int gibMinimumKnoten() {
-    int minGewicht = Integer.MAX_VALUE;
+    double minGewicht = Double.MAX_VALUE;
     int knoten = -1;
     for (int i = 0; i < gibKnotenAnzahl(); i++) {
       if (besucht[i] == false && minGewicht > gewichte[i]) {
@@ -72,7 +72,7 @@ public class MinimalerSpannbaumPrim extends GraphAdjazenzMatrix {
      * Das Gewicht der Kante vom Elternknoten zum aktuellen Knoten. Das Feld wird
      * benötigt um den minimale Knoten zu finden.
      */
-    int gewicht = Integer.MIN_VALUE;
+    double gewicht = -Double.MAX_VALUE;
   }
 
   /**
@@ -80,10 +80,10 @@ public class MinimalerSpannbaumPrim extends GraphAdjazenzMatrix {
    *
    * @return Die Summer aller Kantengewichte.
    */
-  public int führeAus() {
+  public double führeAus() {
     for (int i = 0; i < gibKnotenAnzahl(); i++) {
       // Initialisiere alle Gewichte mit Unendlich
-      gewichte[i] = Integer.MAX_VALUE;
+      gewichte[i] = Double.MAX_VALUE;
       // Erzeuge leere Ergebnis-Instanzen.
       ergebnisse[i] = new Ergebnis();
     }

@@ -9,24 +9,24 @@ public class GraphAdjazenzListeTest {
   public void methodeGibKantenGewicht() {
     GraphAdjazenzListe liste = new GraphAdjazenzListe(2);
     liste.setzeKante("A", "B", 42, true);
-    assertEquals(42, liste.gibKanteGewicht("A", "B"));
-    assertEquals(-1, liste.gibKanteGewicht("A", "C"));
+    assertEquals(42, liste.gibKanteGewicht("A", "B"), 0);
+    assertEquals(-1, liste.gibKanteGewicht("A", "C"), 0);
   }
 
   @Test
   public void gerichteteKante() {
     GraphAdjazenzListe liste = new GraphAdjazenzListe(2);
     liste.setzeKante("A", "B", 42, true);
-    assertEquals(42, liste.gibKanteGewicht("A", "B"));
-    assertEquals(-1, liste.gibKanteGewicht("B", "A"));
+    assertEquals(42, liste.gibKanteGewicht("A", "B"), 0);
+    assertEquals(-1, liste.gibKanteGewicht("B", "A"), 0);
   }
 
   @Test
   public void ungerichteteKante() {
     GraphAdjazenzListe liste = new GraphAdjazenzListe(2);
     liste.setzeKante("A", "B", 42, false);
-    assertEquals(42, liste.gibKanteGewicht("A", "B"));
-    assertEquals(42, liste.gibKanteGewicht("B", "A"));
+    assertEquals(42, liste.gibKanteGewicht("A", "B"), 0);
+    assertEquals(42, liste.gibKanteGewicht("B", "A"), 0);
   }
 
   @Test

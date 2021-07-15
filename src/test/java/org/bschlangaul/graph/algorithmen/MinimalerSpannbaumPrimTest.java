@@ -9,7 +9,7 @@ public class MinimalerSpannbaumPrimTest {
 
   private void vergleiche(int erwartet, String dateiName) {
     MinimalerSpannbaumPrim p = new MinimalerSpannbaumPrim(TestHelfer.leseDatei("graph/" + dateiName));
-    assertEquals(erwartet, p.führeAus());
+    assertEquals(erwartet, p.führeAus(), 0);
   }
 
   @Test

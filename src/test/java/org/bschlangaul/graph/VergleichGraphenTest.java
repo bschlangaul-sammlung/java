@@ -15,8 +15,8 @@ class Vergleich {
   }
 
   public void vergleicheKanteGewicht(String von, String nach, int erwartet) {
-    assertEquals(erwartet, liste.gibKanteGewicht(von, nach));
-    assertEquals(erwartet, matrix.gibKanteGewicht(von, nach));
+    assertEquals(erwartet, liste.gibKanteGewicht(von, nach), 0);
+    assertEquals(erwartet, matrix.gibKanteGewicht(von, nach), 0);
   }
 
 }
@@ -31,10 +31,10 @@ public class VergleichGraphenTest {
     assertEquals(6, v.liste.gibKnotenAnzahl());
     assertEquals(6, v.matrix.gibKnotenAnzahl());
 
-    assertEquals(8, v.liste.gibMaximalesGewicht());
-    assertEquals(8, v.matrix.gibMaximalesGewicht());
+    assertEquals(8, v.liste.gibMaximalesGewicht(), 0);
+    assertEquals(8, v.matrix.gibMaximalesGewicht(), 0);
 
-    assertEquals(0, v.liste.gibMinimalesGewicht());
+    assertEquals(0, v.liste.gibMinimalesGewicht(), 0);
     //assertEquals(-1, v.matrix.gibMinimalesGewicht());
 
     v.vergleicheKanteGewicht("a", "b", 1);

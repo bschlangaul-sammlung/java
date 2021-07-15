@@ -16,13 +16,13 @@ public class KuerzesterPfadDijkstra {
 
   class Bearbeitungsschritt {
     int nr;
-    int[] entfernungen;
+    double[] entfernungen;
     int aktuellerKnoten;
 
     public Bearbeitungsschritt(int nr) {
       this.nr = nr;
       aktuellerKnoten = ausgewählterKnoten;
-      entfernungen = new int[knotenAnzahl];
+      entfernungen = new double[knotenAnzahl];
       for (int i = 0; i < knotenAnzahl; i++) {
         entfernungen[i] = kürzesteEntfernungen[i];
       }
@@ -93,7 +93,7 @@ public class KuerzesterPfadDijkstra {
 
         // Entfernungen zu den Knoten
         for (int knotenNr = 0; knotenNr < schritt.entfernungen.length; knotenNr++) {
-          int ergebnis = schritt.entfernungen[knotenNr];
+          double ergebnis = schritt.entfernungen[knotenNr];
           Object zelle;
           if (ergebnis == Integer.MAX_VALUE) {
             zelle = alsTex ? "$\\infty$" : "∞";
@@ -177,7 +177,7 @@ public class KuerzesterPfadDijkstra {
    * In diesem Feld werden die kürzesten Entfernungen zu den einzelnen Knoten
    * gespeichert.
    */
-  public int[] kürzesteEntfernungen;
+  public double[] kürzesteEntfernungen;
 
   /**
    * Feld, mit dem die Vorgänger-Knoten des kürzesten Pfads gespeichert werden.
@@ -222,13 +222,13 @@ public class KuerzesterPfadDijkstra {
    *
    * @return Alle kürzesten Wege in einem Feld gespeichert.
    */
-  public int[] sucheKürzestenPfadMatrix(String anfangsKnoten) {
+  public double[] sucheKürzestenPfadMatrix(String anfangsKnoten) {
     GraphAdjazenzMatrix matrix = new GraphAdjazenzMatrix(graphenFormat);
     startKnotenNr = matrix.gibKnotenNummer(anfangsKnoten);
     knotenAnzahl = matrix.gibKnotenAnzahl();
     graph = matrix;
 
-    kürzesteEntfernungen = new int[knotenAnzahl];
+    kürzesteEntfernungen = new double[knotenAnzahl];
 
     // besucht[i] wird auf true gesetzt, wenn sich der Knoten i im
     // Kürzesten-Pfad-Baum befindet oder der kürzeste Pfad vom Anfangskonten zum
@@ -265,7 +265,7 @@ public class KuerzesterPfadDijkstra {
       // aus den noch nicht besuchten Knoten auswählt. Beim ersten
       // Durchlauf ist dieser Knoten identisch mit dem Startknoten.
       ausgewählterKnoten = -1;
-      int entfernung = Integer.MAX_VALUE;
+      double entfernung = Double.MAX_VALUE;
       for (int j = 0; j < knotenAnzahl; j++) {
         if (!besucht[j] && kürzesteEntfernungen[j] < entfernung) {
           ausgewählterKnoten = j;
@@ -279,7 +279,7 @@ public class KuerzesterPfadDijkstra {
       // Hier werden die kürzesten Entfernung der benachbarten Knoten des ausgewählten
       // Knoten aktualisiert.
       for (int j = 0; j < knotenAnzahl; j++) {
-        int kantenEntfernung = matrix.matrix[ausgewählterKnoten][j];
+        double kantenEntfernung = matrix.matrix[ausgewählterKnoten][j];
         if (kantenEntfernung > 0 && ((entfernung + kantenEntfernung) < kürzesteEntfernungen[j])) {
           vorgänger[j] = ausgewählterKnoten;
           kürzesteEntfernungen[j] = entfernung + kantenEntfernung;
@@ -299,11 +299,11 @@ public class KuerzesterPfadDijkstra {
     return graph.gibKnotenName(knotenNummer);
   }
 
-  public int gibEntfernung(String knotenName) {
+  public double gibEntfernung(String knotenName) {
     return kürzesteEntfernungen[graph.gibKnotenNummer(knotenName)];
   }
 
-  public static int[] sucheKürzestenPfad(String einfachesGraphenFormat, String anfangsKnoten) {
+  public static double[] sucheKürzestenPfad(String einfachesGraphenFormat, String anfangsKnoten) {
     return new KuerzesterPfadDijkstra(einfachesGraphenFormat).sucheKürzestenPfadMatrix(anfangsKnoten);
   }
 

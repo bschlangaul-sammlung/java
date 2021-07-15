@@ -23,8 +23,8 @@ public class GraphAdjazenzMatrixTest {
     matrix.setzeKnoten("B");
     matrix.setzeUngerichteteKante("A", "B", 13);
 
-    assertEquals(13, matrix.gibKanteGewicht("A", "B"));
-    assertEquals(13, matrix.gibKanteGewicht("B", "A"));
+    assertEquals(13, matrix.gibKanteGewicht("A", "B"), 0);
+    assertEquals(13, matrix.gibKanteGewicht("B", "A"), 0);
   }
 
   @Test
@@ -34,24 +34,24 @@ public class GraphAdjazenzMatrixTest {
     matrix.setzeKnoten("B");
     matrix.setzeGerichteteKante("A", "B", 13);
 
-    assertEquals(13, matrix.gibKanteGewicht("A", "B"));
-    assertEquals(Integer.MIN_VALUE, matrix.gibKanteGewicht("B", "A"));
+    assertEquals(13, matrix.gibKanteGewicht("A", "B"), 0);
+    assertEquals(-Double.MAX_VALUE, matrix.gibKanteGewicht("B", "A"), 0);
   }
 
   @Test
   public void einfachesGraphenFormat() {
     GraphAdjazenzMatrix matrix = new GraphAdjazenzMatrix("a -> b: 7\na -- c: 3");
     assertEquals(3, matrix.gibKnotenAnzahl());
-    assertEquals(7, matrix.gibKanteGewicht("a", "b"));
-    assertEquals(3, matrix.gibKanteGewicht("a", "c"));
-    assertEquals(3, matrix.gibKanteGewicht("c", "a"));
-    assertEquals(-1, matrix.gibKanteGewicht("a", "x"));
+    assertEquals(7, matrix.gibKanteGewicht("a", "b"), 0);
+    assertEquals(3, matrix.gibKanteGewicht("a", "c"), 0);
+    assertEquals(3, matrix.gibKanteGewicht("c", "a"), 0);
+    assertEquals(-1, matrix.gibKanteGewicht("a", "x"), 0);
   }
 
   @Test
   public void methodeGibMaximalesGewicht() {
     GraphAdjazenzMatrix matrix = new GraphAdjazenzMatrix("a -> b: 99;a -> c: 3;a--d: 1");
-    assertEquals(99, matrix.gibMaximalesGewicht());
+    assertEquals(99, matrix.gibMaximalesGewicht(), 0);
   }
 
   @Test

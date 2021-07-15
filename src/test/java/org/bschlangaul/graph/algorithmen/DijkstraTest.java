@@ -1,6 +1,5 @@
 package org.bschlangaul.graph.algorithmen;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
@@ -14,8 +13,8 @@ class VergleichDijkstra {
     djikstra.sucheKürzestenPfadMatrix(startKnotenName);
   }
 
-  public void vergleicheEntfernung(String knotenName, int erwartet) {
-    assertEquals(erwartet, djikstra.gibEntfernung(knotenName));
+  public void vergleicheEntfernung(String knotenName, double erwartet) {
+    assertEquals(erwartet, djikstra.gibEntfernung(knotenName), 0);
   }
 
   public void vergleicheVorgänger(String knotenName, String erwartet) {
@@ -25,8 +24,13 @@ class VergleichDijkstra {
 
 public class DijkstraTest {
 
+  @Test
   public void einfachStatisch() {
-    assertArrayEquals(new int[] { 0, 2, 3 }, KuerzesterPfadDijkstra.sucheKürzestenPfad("a--b: 2; a--c: 3", "a"));
+    double[] ergebnis = KuerzesterPfadDijkstra.sucheKürzestenPfad("a--b: 2; a--c: 3", "a");
+    assertEquals(ergebnis[0], 0, 0);
+    assertEquals(ergebnis[1], 2, 0);
+    assertEquals(ergebnis[2], 3, 0);
+
   }
 
   @Test

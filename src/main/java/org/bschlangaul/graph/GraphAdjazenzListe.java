@@ -10,9 +10,9 @@ public class GraphAdjazenzListe extends Graph {
 
   public static class Kante {
     public int nachNr;
-    public int gewicht;
+    public double gewicht;
 
-    Kante(int nachNr, int gewicht) {
+    Kante(int nachNr, double gewicht) {
       this.nachNr = nachNr;
       this.gewicht = gewicht;
     }
@@ -50,7 +50,7 @@ public class GraphAdjazenzListe extends Graph {
     }
   }
 
-  public void setzeKante(String von, String nach, int gewicht, boolean gerichtet) {
+  public void setzeKante(String von, String nach, double gewicht, boolean gerichtet) {
     int vonNummer = setzeKnoten(von);
     int nachNummer = setzeKnoten(nach);
     if (gibKanteGewicht(von, nach) == -1)
@@ -59,7 +59,7 @@ public class GraphAdjazenzListe extends Graph {
       liste.get(nachNummer).add(new Kante(vonNummer, gewicht));
   }
 
-  public int gibKanteGewicht(String von, String nach) {
+  public double gibKanteGewicht(String von, String nach) {
     int vonNummer, nachNummer;
     vonNummer = gibKnotenNummer(von);
     nachNummer = gibKnotenNummer(nach);
@@ -83,8 +83,8 @@ public class GraphAdjazenzListe extends Graph {
    *
    * @return Das Gewicht der Kante mit dem Minimalgewicht.
    */
-  public int gibMinimalesGewicht() {
-    int min = 0;
+  public double gibMinimalesGewicht() {
+    double min = 0;
     for (List<Kante> unterListe : liste) {
       for (Kante kante : unterListe) {
         if (kante.gewicht < min)
@@ -103,8 +103,8 @@ public class GraphAdjazenzListe extends Graph {
    *
    * @return Das Gewicht der Kante mit dem Maximalgewicht.
    */
-  public int gibMaximalesGewicht() {
-    int max = 0;
+  public double gibMaximalesGewicht() {
+    double max = 0;
     for (List<Kante> unterListe : liste) {
       for (Kante kante : unterListe) {
         if (kante.gewicht > max)

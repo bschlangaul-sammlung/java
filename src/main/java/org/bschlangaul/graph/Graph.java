@@ -100,7 +100,7 @@ public abstract class Graph {
     return knotenListe.size();
   }
 
-  public abstract void setzeKante(String von, String nach, int gewicht, boolean gerichtet);
+  public abstract void setzeKante(String von, String nach, double gewicht, boolean gerichtet);
 
   /**
    * Füge eine gerichtete Kante in den Graphen ein.
@@ -112,7 +112,7 @@ public abstract class Graph {
    * @param nach    Der Name des Endknotens.
    * @param gewicht Die Gewichtung der Kante als Ganzzahl.
    */
-  public void setzeGerichteteKante(String von, String nach, int gewicht) {
+  public void setzeGerichteteKante(String von, String nach, double gewicht) {
     setzeKante(von, nach, gewicht, true);
   }
 
@@ -126,7 +126,7 @@ public abstract class Graph {
    * @param nach    Der Name des Endknotens.
    * @param gewicht Die Gewichtung der Kante als Ganzzahl.
    */
-  public void setzeUngerichteteKante(String von, String nach, int gewicht) {
+  public void setzeUngerichteteKante(String von, String nach, double gewicht) {
     setzeKante(von, nach, gewicht, false);
   }
 
@@ -154,7 +154,7 @@ public abstract class Graph {
    *
    * @return Das Gewicht der Kante mit dem Minimalgewicht.
    */
-  public abstract int gibMinimalesGewicht();
+  public abstract double gibMinimalesGewicht();
 
   /**
    * Berechne das größte Einzel-Kantengewicht aller Kanten.
@@ -165,7 +165,7 @@ public abstract class Graph {
    *
    * @return Das Gewicht der Kante mit dem Maximalgewicht.
    */
-  public abstract int gibMaximalesGewicht();
+  public abstract double gibMaximalesGewicht();
 
   /**
    * Ein kombinierter Wert aus der maximalen Textbreite der Knotennamen und des

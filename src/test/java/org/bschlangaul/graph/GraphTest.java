@@ -6,14 +6,14 @@ import org.junit.Test;
 
 class GraphHülle extends Graph {
 
-  public void setzeKante(String von, String nach, int gewicht, boolean gerichtet) {
+  public void setzeKante(String von, String nach, double gewicht, boolean gerichtet) {
   }
 
-  public int gibMaximalesGewicht() {
+  public double gibMaximalesGewicht() {
     return 0;
   }
 
-  public int gibMinimalesGewicht() {
+  public double gibMinimalesGewicht() {
     return 0;
   }
 }
