@@ -11,7 +11,6 @@ import org.bschlangaul.helfer.Farbe;
 import org.bschlangaul.graph.einfaches_format.GraphenFormat;
 import org.bschlangaul.graph.tex.TexAdjazenzListe;
 import org.bschlangaul.graph.tex.TexAdjazenzMatrix;
-import org.bschlangaul.graph.tex.TexGraphenFormat;
 import org.bschlangaul.graph.tex.TexTikz;
 
 /**
@@ -25,15 +24,12 @@ public class GraphenFinder {
   public GraphenFinder(File texDatei) {
     String[] einfachesGraphenFormat;
 
-    String[] texGraphenFormat;
-
     String inhalt;
     try {
       inhalt = Files.readString(texDatei.toPath());
       einfachesGraphenFormat = sucheNachEinfachem(inhalt);
-      texGraphenFormat = sucheNachTex(inhalt);
 
-      graphen = new GraphenFormat[einfachesGraphenFormat.length + texGraphenFormat.length];
+      graphen = new GraphenFormat[einfachesGraphenFormat.length];
 
       int i = 0;
 
@@ -42,10 +38,6 @@ public class GraphenFinder {
         i++;
       }
 
-      for (String format : texGraphenFormat) {
-        graphen[i] = new GraphenFormat(new TexGraphenFormat(format).gibGraphenFormat());
-        i++;
-      }
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -77,16 +69,6 @@ public class GraphenFinder {
     ArrayList<String> ausgabe = new ArrayList<String>();
     while (ergebnis.find()) {
       ausgabe.add(ergebnis.group("format"));
-    }
-    return ausgabe.toArray(new String[0]);
-  }
-
-  private String[] sucheNachTex(String inhalt) {
-    Pattern pattern = Pattern.compile(TexGraphenFormat.globalerRegex, Pattern.DOTALL);
-    Matcher ergebnis = pattern.matcher(inhalt);
-    ArrayList<String> ausgabe = new ArrayList<String>();
-    while (ergebnis.find()) {
-      ausgabe.add(ergebnis.group(0));
     }
     return ausgabe.toArray(new String[0]);
   }
