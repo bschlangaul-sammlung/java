@@ -10,10 +10,37 @@ import org.bschlangaul.graph.GraphAdjazenzMatrix;
  */
 public class MinimalerSpannbaumKruskal extends GraphAdjazenzMatrix {
 
+  class Ergebnis {
+    double kosten;
+    ErgebnisKante[] kanten;
+    int aktuelleKante;
+
+    public Ergebnis(int knotenanzahl) {
+      kanten = new ErgebnisKante[knotenanzahl - 1];
+    }
+
+    public void fügeKanteHinzu(String von, String nach, double gewicht) {
+      kanten[aktuelleKante] = new ErgebnisKante(von, nach, gewicht);
+    }
+  }
+
+  class ErgebnisKante {
+    String von;
+    String nach;
+    double gewicht;
+
+    public ErgebnisKante(String von, String nach, double gewicht) {
+      this.von = von;
+      this.nach = nach;
+      this.gewicht = gewicht;
+    }
+  }
+
   public MinimalerSpannbaumKruskal(String graphenFormat) {
     super(graphenFormat);
   }
 
+  Ergebnis ergebnis = new Ergebnis(gibKnotenAnzahl());
   int[] eltern = new int[gibKnotenAnzahl()];
 
   private int find(int i) {
@@ -53,9 +80,11 @@ public class MinimalerSpannbaumKruskal extends GraphAdjazenzMatrix {
 
       union1(knotenA, knotenB);
       kantenAnzahl++;
+      ergebnis.fügeKanteHinzu(gibKnotenName(knotenA), gibKnotenName(knotenB), gewicht);
       System.out.printf("Edge %d:(%d, %d) cost:%s \n", kantenAnzahl, knotenA, knotenB, gewicht);
       kosten += gewicht;
     }
+    ergebnis.kosten = kosten;
     System.out.printf("\n Minimum cost= %s \n", kosten);
     return kosten;
   }
