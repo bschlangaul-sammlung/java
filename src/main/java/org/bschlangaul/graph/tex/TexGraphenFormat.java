@@ -42,6 +42,7 @@ public class TexGraphenFormat {
         Matcher ergebnis = null;
         String gewicht = "1";
         boolean gerichtet = false;
+        boolean markiert = false;
 
         String regexGewicht = "\\{\\$?(?<gewicht>\\d+)\\$?\\}$";
 
@@ -51,7 +52,8 @@ public class TexGraphenFormat {
         String regexGerichtet = "^\\\\kanteR\\((?<von>\\w*?)>(?<nach>\\w*?)\\)" + regexGewicht;
         // \kante($1-$3){$2}
         // \KANTE(#1-#2)#3
-        String regexNormal = "^\\\\(kante|KANTE)\\((?<von>\\w*?)-(?<nach>\\w*?)\\)" + regexGewicht;
+        String regexNormal = "^\\\\(kante)\\((?<von>\\w*?)-(?<nach>\\w*?)\\)" + regexGewicht;
+        String regexMarkierung = "^\\\\(KANTE)\\((?<von>\\w*?)-(?<nach>\\w*?)\\)" + regexGewicht;
         if (zeile.matches(regexOhneGewicht)) {
           ergebnis = finde(regexOhneGewicht, zeile, true);
         } else if (zeile.matches(regexGerichtet)) {
@@ -61,11 +63,15 @@ public class TexGraphenFormat {
         } else if (zeile.matches(regexNormal)) {
           ergebnis = finde(regexNormal, zeile, true);
           gewicht = ergebnis.group("gewicht");
+        } else if (zeile.matches(regexMarkierung)) {
+          ergebnis = finde(regexMarkierung, zeile, true);
+          gewicht = ergebnis.group("gewicht");
+          markiert = true;
         } else {
           System.out.println(String.format("Diese Zeile kann nicht erkannt werden: %s", zeile));
         }
         if (ergebnis != null)
-          graph.fügeKanteEin(ergebnis.group("von"), ergebnis.group("nach"), gewicht, gerichtet);
+          graph.fügeKanteEin(ergebnis.group("von"), ergebnis.group("nach"), Double.parseDouble(gewicht), gerichtet, markiert);
       }
     }
   }

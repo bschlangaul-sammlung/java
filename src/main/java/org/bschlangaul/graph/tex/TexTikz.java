@@ -1,5 +1,7 @@
 package org.bschlangaul.graph.tex;
 
+import java.util.ArrayList;
+
 import org.bschlangaul.graph.einfaches_format.GraphenFormat;
 import org.bschlangaul.graph.einfaches_format.GraphenFormatKante;
 import org.bschlangaul.graph.einfaches_format.GraphenFormatKnoten;
@@ -42,8 +44,18 @@ public class TexTikz {
   }
 
   private String formatiereKante(GraphenFormatKante kante) {
-    String gerichtet = kante.gerichtet ? "[->]" : "";
-    String gewicht = kante.gewicht != 1 ? String.format(" node {%s}", formatiereZahl(kante.gewicht)) : "";
-    return String.format("\\path%s (%s) edge%s (%s);\n", gerichtet, kante.von, gewicht, kante.nach);
+    ArrayList<String> optionen = new ArrayList<String>();
+    if (kante.markiert) {
+      optionen.add("li markierung");
+    }
+    if (kante.gerichtet) {
+      optionen.add("->");
+    }
+    String opt = "";
+    if (optionen.size() > 0) {
+      opt = "[" + String.join(",", optionen) + "]";
+    }
+    String gewicht = String.format(" node {%s}", formatiereZahl(kante.gewicht));
+    return String.format("\\path%s (%s) edge%s (%s);\n", opt, kante.von, gewicht, kante.nach);
   }
 }
