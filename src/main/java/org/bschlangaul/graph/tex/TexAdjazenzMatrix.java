@@ -1,6 +1,7 @@
 package org.bschlangaul.graph.tex;
 
 import org.bschlangaul.graph.GraphAdjazenzMatrix;
+import org.bschlangaul.graph.einfaches_format.GraphenFormat;
 
 /**
  * Eine Adjazenzmatrix in TeX setzen.
@@ -105,7 +106,7 @@ public class TexAdjazenzMatrix {
         } else if (matrix.matrix[i][j] == -Double.MAX_VALUE) {
           zeile += formatiereZelle("-");
         } else {
-          zeile += formatiereZelle(String.valueOf(matrix.matrix[i][j]));
+          zeile += formatiereZelle(GraphenFormat.formatiereZahl(matrix.matrix[i][j]));
         }
       }
       ausgabe += formatiereZeile(zeile);

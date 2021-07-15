@@ -7,7 +7,7 @@ import org.junit.Test;
 
 public class MinimalerSpannbaumKruskalTest {
 
-  private void vergleiche(int erwartet, String dateiName) {
+  private void vergleiche(double erwartet, String dateiName) {
     MinimalerSpannbaumKruskal k = new MinimalerSpannbaumKruskal(TestHelfer.leseDatei("graph/" + dateiName));
     assertEquals(erwartet, k.führeAus(), 0);
   }
@@ -26,6 +26,4 @@ public class MinimalerSpannbaumKruskalTest {
   public void slideshareAdilAslam() {
     vergleiche(37, "slideshare-adil-aslam.txt");
   }
-
-
 }

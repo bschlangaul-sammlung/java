@@ -176,8 +176,8 @@ public abstract class Graph {
    *         Breite abgebildet werden können.
    */
   public int gibSpaltenBreite() {
-    int minGewicht = String.valueOf(gibMinimalesGewicht()).length();
-    int maxGewicht = String.valueOf(gibMaximalesGewicht()).length();
+    int minGewicht = GraphenFormat.formatiereZahl(gibMinimalesGewicht()).length();
+    int maxGewicht = GraphenFormat.formatiereZahl(gibMaximalesGewicht()).length();
     int maxKnoten = gibMaximaleKnotennameTextbreite();
     return Math.max(Math.max(minGewicht, maxGewicht), maxKnoten);
   }

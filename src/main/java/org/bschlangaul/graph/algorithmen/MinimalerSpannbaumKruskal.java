@@ -54,10 +54,10 @@ public class MinimalerSpannbaumKruskal extends GraphAdjazenzMatrix {
       }
 
       union1(a, b);
-      System.out.printf("Edge %d:(%d, %d) cost:%d \n", edge_count++, a, b, min);
+      System.out.printf("Edge %d:(%d, %d) cost:%s \n", edge_count++, a, b, min);
       mincost += min;
     }
-    System.out.printf("\n Minimum cost= %d \n", mincost);
+    System.out.printf("\n Minimum cost= %s \n", mincost);
     return mincost;
   }
 
