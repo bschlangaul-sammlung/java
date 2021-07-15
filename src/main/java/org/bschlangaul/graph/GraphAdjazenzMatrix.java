@@ -1,5 +1,7 @@
 package org.bschlangaul.graph;
 
+import org.bschlangaul.graph.einfaches_format.GraphenFormat;
+
 /**
  * Klasse für einen ungerichteten, gewichteten Graphen.
  *
@@ -138,19 +140,21 @@ public class GraphAdjazenzMatrix extends Graph {
     int breite = 4;
     // Kopfzeile
     System.out.print("    ");
-    for (int i = 0; i < gibKnotenAnzahl(); i++)
-      System.out.print(gibKnoten(i).gibNameFormatiert(breite));
-    System.out.println();
-
     for (int i = 0; i < gibKnotenAnzahl(); i++) {
       System.out.print(gibKnoten(i).gibNameFormatiert(breite));
-      for (int j = 0; j < gibKnotenAnzahl(); j++)
+    }
+    System.out.println();
+    for (int i = 0; i < gibKnotenAnzahl(); i++) {
+      System.out.print(gibKnoten(i).gibNameFormatiert(breite));
+      for (int j = 0; j < gibKnotenAnzahl(); j++) {
         if (matrix[i][j] == -Double.MAX_VALUE) {
           System.out.print("-   ");
-        } else if (matrix[i][j] != -1)
-          System.out.print((matrix[i][j] + "   ").substring(0, breite));
-        else
+        } else if (matrix[i][j] != -1) {
+          System.out.print((GraphenFormat.formatiereZahl(matrix[i][j]) + "   ").substring(0, breite));
+        } else {
           System.out.print("    ");
+        }
+      }
       System.out.println();
     }
   }

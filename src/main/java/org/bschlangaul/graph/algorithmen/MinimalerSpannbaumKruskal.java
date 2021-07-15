@@ -2,63 +2,62 @@ package org.bschlangaul.graph.algorithmen;
 
 import org.bschlangaul.graph.GraphAdjazenzMatrix;
 
-//https://www.geeksforgeeks.org/kruskals-algorithm-simple-implementation-for-adjacency-matrix/
-// Simple Java implementation for Kruskal's
-// algorithm
-
+/**
+ * Implementation des Algorithmus von Kruskal.
+ *
+ * Nach dem Tutorial auf <a href=
+ * "https://www.geeksforgeeks.org/kruskals-algorithm-simple-implementation-for-adjacency-matrix/">geeksforgeeks.org</a>.
+ */
 public class MinimalerSpannbaumKruskal extends GraphAdjazenzMatrix {
 
   public MinimalerSpannbaumKruskal(String graphenFormat) {
     super(graphenFormat);
   }
 
-  int[] parent = new int[gibKnotenAnzahl()];
+  int[] eltern = new int[gibKnotenAnzahl()];
 
-  // Find set of vertex i
   private int find(int i) {
-    while (parent[i] != i)
-      i = parent[i];
+    while (eltern[i] != i) {
+      i = eltern[i];
+    }
     return i;
   }
 
-  // Does union of i and j. It returns
-  // false if i and j are already in same
-  // set.
   private void union1(int i, int j) {
     int a = find(i);
     int b = find(j);
-    parent[a] = b;
+    eltern[a] = b;
   }
 
-  // Finds MST using Kruskal's algorithm
   public double führeAus() {
-    double mincost = 0; // Cost of min MST.
+    double kosten = 0;
 
-    // Initialize sets of disjoint sets.
-    for (int i = 0; i < gibKnotenAnzahl(); i++)
-      parent[i] = i;
+    for (int i = 0; i < gibKnotenAnzahl(); i++) {
+      eltern[i] = i;
+    }
 
-    // Include minimum weight edges one by one
-    int edge_count = 0;
-    while (edge_count < gibKnotenAnzahl() - 1) {
-      double min = Double.MAX_VALUE;
-      int a = -1, b = -1;
+    int kantenAnzahl = 0;
+    while (kantenAnzahl < gibKnotenAnzahl() - 1) {
+      double gewicht = Double.MAX_VALUE;
+      int knotenA = -1;
+      int knotenB = -1;
       for (int i = 0; i < gibKnotenAnzahl(); i++) {
         for (int j = 0; j < gibKnotenAnzahl(); j++) {
-          if (find(i) != find(j) && matrix[i][j] < min && matrix[i][j] != -Double.MAX_VALUE) {
-            min = matrix[i][j];
-            a = i;
-            b = j;
+          if (find(i) != find(j) && matrix[i][j] < gewicht && matrix[i][j] != -Double.MAX_VALUE) {
+            gewicht = matrix[i][j];
+            knotenA = i;
+            knotenB = j;
           }
         }
       }
 
-      union1(a, b);
-      System.out.printf("Edge %d:(%d, %d) cost:%s \n", edge_count++, a, b, min);
-      mincost += min;
+      union1(knotenA, knotenB);
+      kantenAnzahl++;
+      System.out.printf("Edge %d:(%d, %d) cost:%s \n", kantenAnzahl, knotenA, knotenB, gewicht);
+      kosten += gewicht;
     }
-    System.out.printf("\n Minimum cost= %s \n", mincost);
-    return mincost;
+    System.out.printf("\n Minimum cost= %s \n", kosten);
+    return kosten;
   }
 
   public static void main(String[] args) {

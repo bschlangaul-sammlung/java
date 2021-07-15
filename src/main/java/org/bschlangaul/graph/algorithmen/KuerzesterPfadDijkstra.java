@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.bschlangaul.graph.Graph;
 import org.bschlangaul.graph.GraphAdjazenzMatrix;
+import org.bschlangaul.graph.einfaches_format.GraphenFormat;
 import org.bschlangaul.helfer.Farbe;
 import org.bschlangaul.helfer.Tex;
 import org.bschlangaul.helfer.Tabelle;
@@ -101,12 +102,12 @@ public class KuerzesterPfadDijkstra {
             // im 0. Schritt
           } else if ((schrittNummer != 0 && gibBearbeitungsNummer(knotenNr) == schrittNummer)
               || (schrittNummer == 1 && gibBearbeitungsNummer(knotenNr) == schrittNummer - 1)) {
-            String z = String.valueOf(schritt.entfernungen[knotenNr]);
+            String z = GraphenFormat.formatiereZahl(schritt.entfernungen[knotenNr]);
             zelle = alsTex ? Tex.makro("bf", z) : Farbe.rot(z);
           } else if (gibBearbeitungsNummer(knotenNr) < schrittNummer) {
             zelle = "|";
           } else {
-            zelle = String.valueOf(schritt.entfernungen[knotenNr]);
+            zelle = GraphenFormat.formatiereZahl(schritt.entfernungen[knotenNr]);
           }
           zeilen[i][knotenNr + knotenVerschiebung] = String.valueOf(zelle);
         }
@@ -119,7 +120,7 @@ public class KuerzesterPfadDijkstra {
       String[][] zeilen = new String[pfade.size()][4];
       for (int i = 0; i < pfade.size(); i++) {
         zeilen[i][0] = formatiereVonNach(i, alsTex);
-        zeilen[i][1] = String.valueOf(kürzesteEntfernungen[i]);
+        zeilen[i][1] = GraphenFormat.formatiereZahl(kürzesteEntfernungen[i]);
         zeilen[i][2] = String.valueOf(gibBearbeitungsNummer(i));
         zeilen[i][3] = formatierePfade(pfade.get(i), alsTex);
       }
