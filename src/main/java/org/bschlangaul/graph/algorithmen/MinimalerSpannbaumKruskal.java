@@ -81,11 +81,9 @@ public class MinimalerSpannbaumKruskal extends GraphAdjazenzMatrix {
       union1(knotenA, knotenB);
       kantenAnzahl++;
       ergebnis.fügeKanteHinzu(gibKnotenName(knotenA), gibKnotenName(knotenB), gewicht);
-      System.out.printf("Edge %d:(%d, %d) cost:%s \n", kantenAnzahl, knotenA, knotenB, gewicht);
       kosten += gewicht;
     }
     ergebnis.kosten = kosten;
-    System.out.printf("\n Minimum cost= %s \n", kosten);
     return kosten;
   }
 
