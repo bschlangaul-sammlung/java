@@ -1,4 +1,4 @@
-package org.bschlangaul.aufgaben.aud.ab_1.parkhaus;
+package org.bschlangaul.examen.examen_66116.jahr_2014.fruehjahr.parkhaus;
 
 import java.util.Date;
 
@@ -30,5 +30,4 @@ public class Fahrzeug {
   public double gibHoehe() {
     return hoehe;
   }
-
 }

@@ -1,4 +1,4 @@
-package org.bschlangaul.aufgaben.aud.ab_1.parkhaus;
+package org.bschlangaul.examen.examen_66116.jahr_2014.fruehjahr.parkhaus;
 
 public class Parkplatz {
   public double laenge;
@@ -21,5 +21,4 @@ public class Parkplatz {
     }
     return false;
   }
-
 }
