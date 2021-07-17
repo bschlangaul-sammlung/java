@@ -15,8 +15,8 @@ public class Parkplatz {
     reserviert = false;
   }
 
-  public boolean groessePruefen(Fahrzeug f) {
-    if (f.gibLaenge() < this.laenge && f.gibBreite() < this.breite && f.gibHoehe() < this.hoehe) {
+  public boolean pruefeGroesse(Fahrzeug fahrzeug) {
+    if (fahrzeug.gibLaenge() < this.laenge && fahrzeug.gibBreite() < this.breite && fahrzeug.gibHoehe() < this.hoehe) {
       return true;
     }
     return false;
