@@ -17,6 +17,27 @@ public class SortierungTest {
     assertArrayEquals(SelectionSort.sortiereHalbRekursiv(test.clone()), richtig);
     assertArrayEquals(SelectionSort.sortiereIterativ(test.clone()), richtig);
     assertArrayEquals(SelectionSort.sortiereRekursiv(test.clone()), richtig);
+
+    int[] tmp;
+    tmp = test.clone();
+    Sammlung.bubblesort(tmp);
+    assertArrayEquals(tmp, richtig);
+
+    tmp = test.clone();
+    Sammlung.insertionsort(tmp);
+    assertArrayEquals(tmp, richtig);
+
+    tmp = test.clone();
+    Sammlung.selectionsort(tmp);
+    assertArrayEquals(tmp, richtig);
+
+    tmp = test.clone();
+    Sammlung.mergesort(tmp);
+    assertArrayEquals(tmp, richtig);
+
+    tmp = test.clone();
+    Sammlung.quicksort(tmp);
+    assertArrayEquals(tmp, richtig);
   }
 
   @Test
