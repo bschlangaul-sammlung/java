@@ -24,7 +24,7 @@ public class Sortieralgorithmen {
   /**
    * Hilfsmethode zum Vertauschen zweier Elemente eines Arrays.
    *
-   * @param array Ein Feld mit Zahlen.
+   * @param array  Ein Feld mit Zahlen.
    * @param index1 Index 1.
    * @param index2 Index 2.
    */
@@ -166,5 +166,4 @@ public class Sortieralgorithmen {
     sortieren.selectionSort(new int[] { 5, 3, 17, 7, 42, 23 });
     sortieren.bubbleSort(new int[] { 5, 3, 17, 7, 42, 23 });
   }
-
 }
