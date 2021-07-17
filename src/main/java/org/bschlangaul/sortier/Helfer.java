@@ -6,7 +6,8 @@ package org.bschlangaul.sortier;
 public class Helfer {
 
   /**
-   * Vertausche zwei Zahlen im einem Zahlen-Feld.
+   * Vertausche zwei Zahlen im einem Zahlen-Feld. Im Englischen heißt die Methode
+   * auch oft „swap“.
    *
    * @param zahlen Ein Feld mit Zahlen.
    * @param index1 Die Index-Nummer der ersten Zahl.

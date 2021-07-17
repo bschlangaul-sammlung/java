@@ -14,7 +14,8 @@ public class MergeSort {
    *                     soll.
    * @param rechteGrenze Die Index-Nummer, bis zu der das Zahlen-Feld sortiert
    *                     werden soll.
-   * @param hilfsFeld    Eine Hilfsfeld, das benötigt wird.
+   * @param hilfsFeld    Eine Hilfsfeld, in dem die Zahlen temporär
+   *                     zwischengespeichert werden.
    */
   private static void sortiereRekursiv(int[] zahlen, int linkeGrenze, int rechteGrenze, int[] hilfsFeld) {
     // Wenn die rechte Grenze gleich (oder sogar kleiner) als die linke Grenze ist,

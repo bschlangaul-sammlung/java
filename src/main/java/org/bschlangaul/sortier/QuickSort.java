@@ -7,7 +7,8 @@ package org.bschlangaul.sortier;
 public class QuickSort {
 
   /**
-   * Hilfsmethode zum Zerlegen der Folge
+   * Hilfsmethode zum Zerlegen der Folge. Diese Methode heißt im Englischen auch
+   * oft „partition“.
    *
    * @param zahlen        Ein Feld mit Zahlen, das sortiert werden soll.
    * @param untereGrenze  Die Index-Nummer der unteren Grenze.
@@ -35,9 +36,9 @@ public class QuickSort {
   /**
    * Hilfsmethode zum rekursiven Sortieren
    *
-   * @param zahlen        Ein Feld mit Zahlen, das sortiert werden soll.
-   * @param untereGrenze  Die Index-Nummer der unteren Grenze.
-   * @param obereGrenze   Die Index-Nummer der oberen Grenze.
+   * @param zahlen       Ein Feld mit Zahlen, das sortiert werden soll.
+   * @param untereGrenze Die Index-Nummer der unteren Grenze.
+   * @param obereGrenze  Die Index-Nummer der oberen Grenze.
    */
   static void sortiereRekursiv(int[] zahlen, int untereGrenze, int obereGrenze) {
     // Pivot-Element bestimmen
