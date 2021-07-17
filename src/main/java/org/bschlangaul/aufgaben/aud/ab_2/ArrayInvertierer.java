@@ -3,13 +3,13 @@ package org.bschlangaul.aufgaben.aud.ab_2;
 public class ArrayInvertierer {
 
   /**
-   * Invertiert das übergebene String Feld rekursiv durch Aufruf der
-   * Methode in {@link invertiereRekursiv} mit dem jeweils
-   * aktuellen Arrayindex als Startwert.
+   * Invertiert das übergebene String Feld rekursiv durch Aufruf der Methode in
+   * {@link invertiereRekursiv} mit dem jeweils aktuellen Arrayindex als
+   * Startwert.
    *
    * @param quelle Das Feld, dessen Inhalt invertiert werden soll.
-   * @param ziel Hilfs-Feld.
-   * @param index aktueller Index
+   * @param ziel   Hilfs-Feld.
+   * @param index  aktueller Index
    */
   private static void invertiereRekursiv(String[] quelle, String[] ziel, int index) {
     if (index < quelle.length) {
@@ -19,9 +19,9 @@ public class ArrayInvertierer {
   }
 
   /**
-   * Invertiert das übergebene String Feld rekursiv durch Aufruf der
-   * Methode in {@link invertiereRekursiv} mit dem Hilfsfeld und dem
-   * ersten Feldindex als Startwert.
+   * Invertiert das übergebene String Feld rekursiv durch Aufruf der Methode in
+   * {@link invertiereRekursiv} mit dem Hilfsfeld und dem ersten Feldindex als
+   * Startwert.
    *
    * @param quelle Das Feld, dessen Inhalt invertiert werden soll.
    *
@@ -34,11 +34,11 @@ public class ArrayInvertierer {
   }
 
   /**
-   * Die Lösung für die optionale Aufgaben. In situ bedeutet, dass
-   * kein neues Feld erzeugt wird.
+   * Die Lösung für die optionale Aufgaben. In situ bedeutet, dass kein neues Feld
+   * erzeugt wird.
    *
    * @param quelle Ein Feld mit Wörtern.
-   * @param index Die Index-Nummer, die bearbeitet werden soll.
+   * @param index  Die Index-Nummer, die bearbeitet werden soll.
    */
   private static void invertiereRekursivInSitu(String[] quelle, int index) {
     if (index < quelle.length / 2) {
@@ -62,10 +62,9 @@ public class ArrayInvertierer {
   /**
    * Lass Meister Yoda sprechen.
    *
-   * @param satz Ein Feld mit Wörtern.
-   * @param inSitu Bei wahr wird die Methode
-   * {@link invertiereRekursivInSitu} verwendet. Achtung! Dadurch wird
-   * das Feld verändert.
+   * @param satz   Ein Feld mit Wörtern.
+   * @param inSitu Bei wahr wird die Methode {@link invertiereRekursivInSitu}
+   *               verwendet. Achtung! Dadurch wird das Feld verändert.
    */
   public static void lassYodaSprechen(String[] satz, boolean inSitu) {
     System.out.println("\nDen Satz");
@@ -85,5 +84,4 @@ public class ArrayInvertierer {
     lassYodaSprechen(new String[] { "Ich", "find", "dich", "einfach", "klasse!" }, false);
     lassYodaSprechen(new String[] { "Das", "war", "super", "einfach/schwer" }, true);
   }
-
 }
