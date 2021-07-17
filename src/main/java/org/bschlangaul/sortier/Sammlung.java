@@ -33,7 +33,7 @@ public class Sammlung {
   /**
    * Sortiere mit Hilfe des Bubblesort-Algorithmus.
    *
-   * <h2>Weitere Abkürzungen
+   * <p><strong>Weitere Abkürzungen</strong></p>
    *
    * <ul>
    * <li>t: getauscht
@@ -84,7 +84,7 @@ public class Sammlung {
    * Hilfsmethode zum Zerlegen der Zahlen-Folge für den Quicksort-Algorithmus.
    * Diese Methode heißt im Englischen auch oft „partition“.
    *
-   * <h2>Weitere Abkürzungen
+   * <p><strong>Weitere Abkürzungen</strong></p>
    *
    * <ul>
    * <li>pn: pivotPositionNeu (Die Index-Nummer des neuen Pivot-Elements)
@@ -128,7 +128,7 @@ public class Sammlung {
    * Eine Hilfsmethode für rekursives Sortieren durch Mischen des
    * Mergesort-Algorithmus.
    *
-   * <h2>Weitere Abkürzungen
+   * <p><strong>Weitere Abkürzungen</strong></p>
    *
    * <ul>
    * <li>i: Index links

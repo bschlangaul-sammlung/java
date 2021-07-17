@@ -6,4 +6,7 @@ install_cli:
 test:
 	mvn test
 
-.phony: install_cli test
+doc:
+	mvn javadoc:javadoc
+
+.phony: install_cli test doc
