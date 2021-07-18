@@ -1,99 +1,107 @@
 package org.bschlangaul.aufgaben.aud.ab_3;
 
 public class Nikolaus {
-
-  static final int maxPunktAnz = 5;
-  static final int maxKantenAnz = 8;
-  static boolean[][] kanteZulaessig;
+  static final int maxPunktAnzahl = 5;
+  static final int maxKantenAnzahl = 8;
+  static boolean[][] kanteZulässig;
   static boolean[][] kanteGezeichnet;
-  static int[] loesungsWeg;
-  static int aktKantenAnzahl = 0;
-  static int loesungsAnzahl = 0;
+  static int[] lösungsWeg;
+  static int aktuelleKantenAnzahl = 0;
+  static int lösungsAnzahl = 0;
 
-  static void initArrays() {
-    kanteZulaessig = new boolean[maxKantenAnz + 1][maxKantenAnz + 1];
-    kanteGezeichnet = new boolean[maxKantenAnz + 1][maxKantenAnz + 1];
-    loesungsWeg = new int[maxKantenAnz + 2]; // mit Startpunkt
+  /**
+   * Zulässige Kanten für das „Haus des Nikolaus“ eintragen. Der Nummerierung
+   * liegt das Bild in main zu Grunde. Eine Anpassung an andere Graphen ist leicht
+   * möglich.
+   */
+  static void initialsiereFelder() {
+    kanteZulässig = new boolean[maxKantenAnzahl + 1][maxKantenAnzahl + 1];
+    kanteGezeichnet = new boolean[maxKantenAnzahl + 1][maxKantenAnzahl + 1];
+    lösungsWeg = new int[maxKantenAnzahl + 2]; // mit Startpunkt
     // Erst mal alles auf false ;
-    for (int i = 1; i <= maxPunktAnz; i++) {
-      for (int k = 1; k <= maxPunktAnz; k++) {
-        kanteZulaessig[i][k] = false;
+    for (int i = 1; i <= maxPunktAnzahl; i++) {
+      for (int k = 1; k <= maxPunktAnzahl; k++) {
+        kanteZulässig[i][k] = false;
         kanteGezeichnet[i][k] = false;
       }
     }
-    /*
-     * Zulaessige Kanten fuer das " Haus des Nikolaus " eintragen . Der Nummerierung
-     * liegt das Bild in main zu Grunde . Eine Anpassung 2an andere Graphen ist
-     * leicht moeglich .
-     */
-    kanteZulaessig[1][2] = true; // von 1 nach 2 zulaessig
-    kanteZulaessig[1][3] = true;
-    kanteZulaessig[1][5] = true;
-    kanteZulaessig[2][1] = true;
-    kanteZulaessig[2][3] = true;
-    kanteZulaessig[2][5] = true;
-    kanteZulaessig[3][1] = true;
-    kanteZulaessig[3][2] = true;
-    kanteZulaessig[3][4] = true;
-    kanteZulaessig[3][5] = true;
-    kanteZulaessig[4][3] = true;
-    kanteZulaessig[4][5] = true;
-    kanteZulaessig[5][1] = true;
-    kanteZulaessig[5][2] = true;
-    kanteZulaessig[5][3] = true;
-    kanteZulaessig[5][4] = true;
-    for (int i = 0; i <= maxKantenAnz; i++) {
-      loesungsWeg[i] = 0;
+
+    kanteZulässig[1][2] = true; // von 1 nach 2 zulässig
+    kanteZulässig[2][1] = true;
+
+    kanteZulässig[1][3] = true;
+    kanteZulässig[3][1] = true;
+
+    kanteZulässig[1][5] = true;
+    kanteZulässig[5][1] = true;
+
+    kanteZulässig[2][3] = true;
+    kanteZulässig[3][2] = true;
+
+    kanteZulässig[2][5] = true;
+    kanteZulässig[5][2] = true;
+
+    kanteZulässig[3][4] = true;
+    kanteZulässig[4][3] = true;
+
+    kanteZulässig[3][5] = true;
+    kanteZulässig[5][3] = true;
+
+    kanteZulässig[4][5] = true;
+    kanteZulässig[5][4] = true;
+    for (int i = 0; i <= maxKantenAnzahl; i++) {
+      lösungsWeg[i] = 0;
     }
   }
 
   static void zeichneKante(final int von, final int nach) {
     kanteGezeichnet[von][nach] = true;
     kanteGezeichnet[nach][von] = true;
-    aktKantenAnzahl++;
-    // Anzahl bereits gezeichneter Kanten erhoehen
-    loesungsWeg[aktKantenAnzahl] = nach; // neuen Wegpunkt in Loesung aufnehmen
+    // Anzahl bereits gezeichneter Kanten erhöhen
+    aktuelleKantenAnzahl++;
+    // neuen Wegpunkt in Lösung aufnehmen
+    lösungsWeg[aktuelleKantenAnzahl] = nach;
   }
 
-  static void loescheKante(final int von, final int nach) {
+  static void löscheKante(final int von, final int nach) {
     kanteGezeichnet[von][nach] = false;
     kanteGezeichnet[nach][von] = false;
-    aktKantenAnzahl--;
+    aktuelleKantenAnzahl--;
   }
 
   static boolean fertig() {
-    return (aktKantenAnzahl == maxKantenAnz);
+    return (aktuelleKantenAnzahl == maxKantenAnzahl);
   }
 
-  static void loesungAusgeben() {
-    for (int i = 0; i <= maxKantenAnz; i++) {
-      System.out.print(loesungsWeg[i]);
+  static void gibLösungAus() {
+    for (int i = 0; i <= maxKantenAnzahl; i++) {
+      System.out.print(lösungsWeg[i]);
       System.out.print(" ");
-      loesungsAnzahl++;
-      if (loesungsAnzahl % 5 == 0) {
+      lösungsAnzahl++;
+      if (lösungsAnzahl % 8 == 0) {
         System.out.println();
       }
     }
   }
 
   static void versucheKanteZuZeichnen(final int start) {
-    for (int ziel = 1; ziel <= maxPunktAnz; ziel++) {
-      if (kanteZulaessig[start][ziel] && !kanteGezeichnet[start][ziel]) {
+    for (int ziel = 1; ziel <= maxPunktAnzahl; ziel++) {
+      if (kanteZulässig[start][ziel] && !kanteGezeichnet[start][ziel]) {
         zeichneKante(start, ziel);
         if (!fertig()) {
           versucheKanteZuZeichnen(ziel);
         } else {
-          loesungAusgeben();
+          gibLösungAus();
         }
-        loescheKante(start, ziel);
+        löscheKante(start, ziel);
       }
     }
   }
 
   public static void main(final String[] arg) {
-    initArrays();
-    System.out.println(
-        " Das Programm bestimmt alle Loesungen des Problems, das Haus des Nikolaus in einem Zug zu zeichnen . ");
+    initialsiereFelder();
+    System.out
+        .println("Das Programm bestimmt alle Lösungen des Problems, das Haus des Nikolaus in einem Zug zu zeichnen.");
     System.out.println("      4      ");
     System.out.println("     . .     ");
     System.out.println("    .   .    ");
@@ -103,11 +111,11 @@ public class Nikolaus {
     System.out.println("   | . . |   ");
     System.out.println("   |.   .|   ");
     System.out.println("   1-----2   ");
-    for (int punktNr = 1; punktNr <= maxPunktAnz; punktNr++) {
-      loesungsWeg[0] = punktNr;
+    for (int punktNr = 1; punktNr <= maxPunktAnzahl; punktNr++) {
+      lösungsWeg[0] = punktNr;
       versucheKanteZuZeichnen(punktNr);
     }
     System.out.println();
-    System.out.println(" Es ergaben sich " + loesungsAnzahl + " Loesungen.");
+    System.out.println("Es ergaben sich " + lösungsAnzahl + " Lösungen.");
   }
 }
