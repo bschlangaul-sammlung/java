@@ -1,4 +1,4 @@
-package org.bschlangaul.examen.examen_66116.jahr_2018.herbst;
+package org.bschlangaul.examen.examen_66115.jahr_2018.herbst;
 
 /**
  * https://stackoverflow.com/a/14186622
