@@ -57,31 +57,9 @@ public class Gitter {
   }
 
   public static void main(String args[]) {
-    Gitter g = new Gitter(2, 2);
-    g.zeigeLoesung();
-
-    g = new Gitter(3, 3);
-    g.zeigeLoesung();
-
-    g = new Gitter(4, 4);
-    g.zeigeLoesung();
-
-    g = new Gitter(5, 5);
-    g.zeigeLoesung();
-
-    g = new Gitter(6, 6);
-    g.zeigeLoesung();
-
-    g = new Gitter(7, 7);
-    g.zeigeLoesung();
-
-    g = new Gitter(8, 8);
-    g.zeigeLoesung();
-
-    g = new Gitter(9, 9);
-    g.zeigeLoesung();
-
-    g = new Gitter(10, 10);
-    g.zeigeLoesung();
+    new Gitter(2, 2).zeigeLoesung();
+    new Gitter(3, 3).zeigeLoesung();
+    new Gitter(4, 4).zeigeLoesung();
+    new Gitter(5, 5).zeigeLoesung();
   }
 }
