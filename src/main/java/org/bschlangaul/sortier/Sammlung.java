@@ -54,6 +54,7 @@ public class Sammlung {
     } while (t);
   }
 
+
   static void insertionsort(int[] a) {
     for (int i = 1; i < a.length; i++) {
       int m = a[i];
@@ -66,6 +67,17 @@ public class Sammlung {
     }
   }
 
+  /**
+   * Sortiere mit Hilfe des Insertionsort-Algorithmus.
+   *
+   * <p><strong>Weitere Abkürzungen</strong></p>
+   *
+   * <ul>
+   * <li>m: markierung
+   * </ul>
+   *
+   * @param a Ein Feld mit Zahlen, das sortiert werden soll.
+   */
   static void selectionsort(int[] a) {
     int m = a.length - 1;
     while (m >= 0) {
@@ -80,6 +92,32 @@ public class Sammlung {
     }
   }
 
+  static void selectionsortMin(int[] a) {
+    int m = 0;
+    while (m < a.length - 1) {
+      int min = m;
+      for (int i = m; i < a.length; i++) {
+        if (a[i] < a[min]) {
+          min = i;
+        }
+      }
+      vertausche(a, m, min);
+      m++;
+    }
+  }
+
+  static void selectionsortFor(int[] a) {
+    for (int m = 0; m < a.length - 1; m++) {
+      int min = m;
+      for (int i = m; i < a.length; i++) {
+        if (a[i] < a[min]) {
+          min = i;
+        }
+      }
+      vertausche(a, m, min);
+    }
+  }
+
   /**
    * Hilfsmethode zum Zerlegen der Zahlen-Folge für den Quicksort-Algorithmus.
    * Diese Methode heißt im Englischen auch oft „partition“.
@@ -88,7 +126,6 @@ public class Sammlung {
    *
    * <ul>
    * <li>pn: pivotPositionNeu (Die Index-Nummer des neuen Pivot-Elements)
-   * <li>pw: pivotWert (Der Wert des (alten) Pivot-Elements)
    * </ul>
    *
    * @param a Ein Feld mit Zahlen, das sortiert werden soll.
@@ -100,10 +137,9 @@ public class Sammlung {
    */
   static int quicksortPartition(int[] a, int u, int o, int p) {
     int pn = u;
-    int pw = a[p];
     vertausche(a, p, o);
     for (int i = u; i < o; i++) {
-      if (a[i] <= pw) {
+      if (a[i] <= a[p]) {
         vertausche(a, pn++, i);
       }
     }

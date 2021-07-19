@@ -32,6 +32,14 @@ public class SortierungTest {
     assertArrayEquals(tmp, richtig);
 
     tmp = test.clone();
+    Sammlung.selectionsortMin(tmp);
+    assertArrayEquals(tmp, richtig);
+
+    tmp = test.clone();
+    Sammlung.selectionsortFor(tmp);
+    assertArrayEquals(tmp, richtig);
+
+    tmp = test.clone();
     Sammlung.mergesort(tmp);
     assertArrayEquals(tmp, richtig);
 
