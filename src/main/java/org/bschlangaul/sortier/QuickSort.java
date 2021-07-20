@@ -9,30 +9,77 @@ package org.bschlangaul.sortier;
  */
 public class QuickSort {
 
+
+  /**
+   * Sortiere ein Zahlen-Feld mit Hilfe des Quicksort-Algorithmus.
+   *
+   * (nach Pseudo-Code auf
+   * <a href="https://de.wikipedia.org/wiki/Quicksort">Wikipediaseite zum
+   * Quicksort-Algortihmus</a> und Code-Beispiels auf <a href=
+   * "https://javabeginners.de/Algorithmen/Sortieralgorithmen/Quicksort.php">javabeginners.de</a>)
+   *
+   * Ohne Hin- und Herkopieren des Pivot-Elements wie bei Saake. Der Pivot-Wert
+   * wird in der „zerlegen“-Methode festgelegt.
+   */
+
+  /**
+   * Zerlege das Zahlen-Feld.
+   *
+   * @param zahlen       Ein Feld mit Zahlen, das zerlegt werden soll.
+   * @param untereGrenze Die Index-Nummer ab dem das Zahlen-Feld zerlegt werden
+   *                     soll.
+   * @param obereGrenze  Die Index-Nummer bis zu dem das Zahlen-Feld zerlegt
+   *                     werden soll.
+   *
+   * @return Die Index-Nummer, an dem das Feld zerlegt werden soll.
+   */
+  static int zerlege(int[] zahlen, int untereGrenze, int obereGrenze) {
+    int i, j;
+    int pivotWert = zahlen[(untereGrenze + obereGrenze) / 2];
+    i = untereGrenze - 1;
+    j = obereGrenze + 1;
+    while (true) {
+      do {
+        i++;
+      } while (zahlen[i] < pivotWert);
+
+      do {
+        j--;
+      } while (zahlen[j] > pivotWert);
+
+      if (i < j) {
+        Helfer.vertausche(zahlen, i, j);
+      } else {
+        return j;
+      }
+    }
+  }
+
+
   /**
    * Hilfsmethode zum Zerlegen der Folge. Diese Methode heißt im Englischen auch
    * oft „partition“.
    *
-   * @param zahlen       Ein Feld mit Zahlen, das sortiert werden soll.
-   * @param untereGrenze Die Index-Nummer der unteren Grenze.
-   * @param obereGrenze  Die Index-Nummer der oberen Grenze.
-   * @param pivotIndex   Die Index-Nummer des ausgewählten Pivot-Elements.
+   * @param zahlen     Ein Feld mit Zahlen, das sortiert werden soll.
+   * @param links      Die Index-Nummer der unteren Grenze.
+   * @param rechts     Die Index-Nummer der oberen Grenze.
+   * @param pivotIndex Die Index-Nummer des ausgewählten Pivot-Elements.
    *
    * @return Die endgültige Index-Nummer des Pivot-Elements.
    */
-  static int zerlege(int[] zahlen, int untereGrenze, int obereGrenze, int pivotIndex) {
-    int pivotIndexEndgültig = untereGrenze;
+  static int zerlege(int[] zahlen, int links, int rechts, int pivotIndex) {
+    int pivotIndexEndgültig = links;
     int pivotWert = zahlen[pivotIndex];
     // Pivot-Element an das Ende verschieben
-    Helfer.vertausche(zahlen, pivotIndex, obereGrenze);
-    for (int i = untereGrenze; i < obereGrenze; i++) {
+    Helfer.vertausche(zahlen, pivotIndex, rechts);
+    for (int i = links; i < rechts; i++) {
       if (zahlen[i] <= pivotWert) {
         Helfer.vertausche(zahlen, pivotIndexEndgültig, i);
         pivotIndexEndgültig++;
       }
     }
     // Pivot-Element an die richtige Position kopieren
-    Helfer.vertausche(zahlen, obereGrenze, pivotIndexEndgültig);
+    Helfer.vertausche(zahlen, rechts, pivotIndexEndgültig);
     // neue Pivot-Position zurückgeben
     return pivotIndexEndgültig;
   }
@@ -40,19 +87,19 @@ public class QuickSort {
   /**
    * Hilfsmethode zum rekursiven Sortieren
    *
-   * @param zahlen       Ein Feld mit Zahlen, das sortiert werden soll.
-   * @param untereGrenze Die Index-Nummer der unteren Grenze.
-   * @param obereGrenze  Die Index-Nummer der oberen Grenze.
+   * @param zahlen Ein Feld mit Zahlen, das sortiert werden soll.
+   * @param links  Die Index-Nummer der unteren Grenze.
+   * @param rechts Die Index-Nummer der oberen Grenze.
    */
-  static void sortiereRekursiv(int[] zahlen, int untereGrenze, int obereGrenze) {
+  static void sortiereRekursiv(int[] zahlen, int links, int rechts) {
     // Pivot-Element bestimmen
-    int pivotIndex = (untereGrenze + obereGrenze) / 2;
-    if (obereGrenze > untereGrenze) {
+    int pivotIndex = (links + rechts) / 2;
+    if (rechts > links) {
       // Feld zerlegen
-      int pivotIndexEndgültig = zerlege(zahlen, untereGrenze, obereGrenze, pivotIndex);
+      int pivotIndexEndgültig = zerlege(zahlen, links, rechts, pivotIndex);
       // und zerlegeen sortieren
-      sortiereRekursiv(zahlen, untereGrenze, pivotIndexEndgültig - 1);
-      sortiereRekursiv(zahlen, pivotIndexEndgültig + 1, obereGrenze);
+      sortiereRekursiv(zahlen, links, pivotIndexEndgültig - 1);
+      sortiereRekursiv(zahlen, pivotIndexEndgültig + 1, rechts);
     }
   }
 
@@ -63,18 +110,52 @@ public class QuickSort {
    *
    * @return Das sortierte Zahlenfeld.
    */
-  static int[] sortiere(int[] zahlen) {
+  public static int[] sortiere(int[] zahlen) {
     sortiereRekursiv(zahlen, 0, zahlen.length - 1);
     return zahlen;
   }
 
-  static void zeigeZwischenstand(int pivotWert, int untereGrenze, int obereGrenze) {
-    System.out.println(
-        String.format("Pivot-Wert: %s; untere Grenze: %s; obere Grenze: %s", pivotWert, untereGrenze, obereGrenze));
+  /**
+   * Nach dem Pseudo Code Staatsexamen/66115/2019/09/Thema-1/Aufgabe-5.tex
+   * @param zahlen
+   * @param links
+   * @param rechts
+   * @return
+   */
+  private static int[] sortiereIterativ(int[] zahlen, int links, int rechts) {
+    int i = links;
+    int j = rechts;
+    if (j > i) {
+      int x = zahlen[links];
+      do {
+        while (zahlen[i] < x) {
+          i++;
+        }
+        while (zahlen[j] > x) {
+          j--;
+        }
+        if (i <= j) {
+          Helfer.vertausche(zahlen, i, j);
+          i++;
+          j--;
+        }
+      } while (i <= j);
+      sortiereIterativ(zahlen, links, j);
+      sortiereIterativ(zahlen, i, rechts);
+    }
+    return zahlen;
   }
 
-  static void zeigeZahlen(int[] zahlen, int untereGrenze, int obereGrenze) {
-    for (int i = untereGrenze; i <= obereGrenze; i++) {
+  public static int[] sortiereIterativ(int[] zahlen) {
+    return sortiereIterativ(zahlen, 0, zahlen.length - 1);
+  }
+
+  static void zeigeZwischenstand(int pivotWert, int links, int rechts) {
+    System.out.println(String.format("Pivot-Wert: %s; untere Grenze: %s; obere Grenze: %s", pivotWert, links, rechts));
+  }
+
+  static void zeigeZahlen(int[] zahlen, int links, int rechts) {
+    for (int i = links; i <= rechts; i++) {
       System.out.print(zahlen[i] + " ");
     }
     System.out.println();
