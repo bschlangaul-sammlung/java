@@ -137,10 +137,12 @@ public class Sammlung {
    */
   static int quicksortPartition(int[] a, int u, int o, int p) {
     int pn = u;
+    int pw = a[p];
     vertausche(a, p, o);
     for (int i = u; i < o; i++) {
-      if (a[i] <= a[p]) {
-        vertausche(a, pn++, i);
+      if (a[i] <= pw) {
+        vertausche(a, pn, i);
+        pn++;
       }
     }
     vertausche(a, o, pn);

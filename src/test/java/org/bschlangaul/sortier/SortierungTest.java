@@ -13,7 +13,7 @@ public class SortierungTest {
     assertArrayEquals(InsertionSort.sortiereRekursiv(test.clone()), richtig);
     assertArrayEquals(MergeSort.sortiere(test.clone()), richtig);
     assertArrayEquals(QuickSort.sortiere(test.clone()), richtig);
-    assertArrayEquals(QuickSortMitte.sortiere(test.clone()), richtig);
+    assertArrayEquals(QuickSortDoWhile.sortiere(test.clone()), richtig);
     assertArrayEquals(SelectionSort.sortiereHalbRekursiv(test.clone()), richtig);
     assertArrayEquals(SelectionSort.sortiereIterativ(test.clone()), richtig);
     assertArrayEquals(SelectionSort.sortiereRekursiv(test.clone()), richtig);

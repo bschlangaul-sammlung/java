@@ -3,6 +3,9 @@ package org.bschlangaul.sortier;
 /**
  * Sortiere ein Zahlen-Feld mit Hilfe des Quicksort-Algorithmus. (Nach Saake
  * Seite 138)
+ *
+ * Der Algorithmus wählt das mittlere Element aus. In der „zerlegen“ Methode wird
+ * das Pivot-Element temporär an die obere Grenze verschoben.
  */
 public class QuickSort {
 
@@ -24,7 +27,8 @@ public class QuickSort {
     Helfer.vertausche(zahlen, pivotPosition, obereGrenze);
     for (int i = untereGrenze; i < obereGrenze; i++) {
       if (zahlen[i] <= pivotWert) {
-        Helfer.vertausche(zahlen, pivotPositionNeu++, i);
+        Helfer.vertausche(zahlen, pivotPositionNeu, i);
+        pivotPositionNeu++;
       }
     }
     // Pivot-Element an die richtige Position kopieren
