@@ -4,7 +4,7 @@ package org.bschlangaul.sortier;
  * (nach <a href=
  * "https://www.geeksforgeeks.org/recursive-selection-sort/">geeksforgeeks.org</a>)
  */
-public class SelectionSortIterativ extends Sortieralgorithmus {
+public class SelectionRekursiv extends Sortieralgorithmus {
 
   /**
    * Gib die Indexposition im Zahlenfeld zurück, das mit der kleinsten Zahl belegt
@@ -54,6 +54,6 @@ public class SelectionSortIterativ extends Sortieralgorithmus {
   }
 
   public static void main(String[] args) {
-    new SelectionSortIterativ().teste();
+    new SelectionRekursiv().teste();
   }
 }

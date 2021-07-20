@@ -3,7 +3,7 @@ package org.bschlangaul.sortier;
 /**
  * Nach dem Pseudocode Staatsexamen/66115/2019/09/Thema-1/Aufgabe-5.tex
  */
-public class QuickSortIterativ extends Sortieralgorithmus {
+public class QuickIterativ extends Sortieralgorithmus {
 
   private int[] sortiereIterativ(int links, int rechts) {
     int i = links;
@@ -34,6 +34,6 @@ public class QuickSortIterativ extends Sortieralgorithmus {
   }
 
   public static void main(String[] args) {
-    new QuickSortIterativ().teste();
+    new QuickIterativ().teste();
   }
 }
