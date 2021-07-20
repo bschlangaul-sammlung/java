@@ -4,8 +4,8 @@ package org.bschlangaul.sortier;
  * Sortiere ein Zahlen-Feld mit Hilfe des Quicksort-Algorithmus. (Nach Saake
  * Seite 138)
  *
- * Der Algorithmus wählt das mittlere Element aus. In der „zerlegen“ Methode wird
- * das Pivot-Element temporär an die obere Grenze verschoben.
+ * Der Algorithmus wählt das mittlere Element aus. In der „zerlegen“ Methode
+ * wird das Pivot-Element temporär an die obere Grenze verschoben.
  */
 public class QuickSort {
 
@@ -13,28 +13,28 @@ public class QuickSort {
    * Hilfsmethode zum Zerlegen der Folge. Diese Methode heißt im Englischen auch
    * oft „partition“.
    *
-   * @param zahlen        Ein Feld mit Zahlen, das sortiert werden soll.
-   * @param untereGrenze  Die Index-Nummer der unteren Grenze.
-   * @param obereGrenze   Die Index-Nummer der oberen Grenze.
-   * @param pivotPosition Die Index-Nummer der Pivot-Position.
+   * @param zahlen       Ein Feld mit Zahlen, das sortiert werden soll.
+   * @param untereGrenze Die Index-Nummer der unteren Grenze.
+   * @param obereGrenze  Die Index-Nummer der oberen Grenze.
+   * @param pivotIndex   Die Index-Nummer des ausgewählten Pivot-Elements.
    *
-   * @return Die Index-Nummer der neuen Pivot-Position
+   * @return Die endgültige Index-Nummer des Pivot-Elements.
    */
-  static int zerlege(int[] zahlen, int untereGrenze, int obereGrenze, int pivotPosition) {
-    int pivotPositionNeu = untereGrenze;
-    int pivotWert = zahlen[pivotPosition];
+  static int zerlege(int[] zahlen, int untereGrenze, int obereGrenze, int pivotIndex) {
+    int pivotIndexEndgültig = untereGrenze;
+    int pivotWert = zahlen[pivotIndex];
     // Pivot-Element an das Ende verschieben
-    Helfer.vertausche(zahlen, pivotPosition, obereGrenze);
+    Helfer.vertausche(zahlen, pivotIndex, obereGrenze);
     for (int i = untereGrenze; i < obereGrenze; i++) {
       if (zahlen[i] <= pivotWert) {
-        Helfer.vertausche(zahlen, pivotPositionNeu, i);
-        pivotPositionNeu++;
+        Helfer.vertausche(zahlen, pivotIndexEndgültig, i);
+        pivotIndexEndgültig++;
       }
     }
     // Pivot-Element an die richtige Position kopieren
-    Helfer.vertausche(zahlen, obereGrenze, pivotPositionNeu);
+    Helfer.vertausche(zahlen, obereGrenze, pivotIndexEndgültig);
     // neue Pivot-Position zurückgeben
-    return pivotPositionNeu;
+    return pivotIndexEndgültig;
   }
 
   /**
@@ -46,13 +46,13 @@ public class QuickSort {
    */
   static void sortiereRekursiv(int[] zahlen, int untereGrenze, int obereGrenze) {
     // Pivot-Element bestimmen
-    int pivotPosition = (untereGrenze + obereGrenze) / 2;
+    int pivotIndex = (untereGrenze + obereGrenze) / 2;
     if (obereGrenze > untereGrenze) {
       // Feld zerlegen
-      int pivotPositionNeu = zerlege(zahlen, untereGrenze, obereGrenze, pivotPosition);
+      int pivotIndexEndgültig = zerlege(zahlen, untereGrenze, obereGrenze, pivotIndex);
       // und zerlegeen sortieren
-      sortiereRekursiv(zahlen, untereGrenze, pivotPositionNeu - 1);
-      sortiereRekursiv(zahlen, pivotPositionNeu + 1, obereGrenze);
+      sortiereRekursiv(zahlen, untereGrenze, pivotIndexEndgültig - 1);
+      sortiereRekursiv(zahlen, pivotIndexEndgültig + 1, obereGrenze);
     }
   }
 
