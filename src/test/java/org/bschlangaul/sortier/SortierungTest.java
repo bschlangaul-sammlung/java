@@ -6,52 +6,31 @@ import org.junit.Test;
 public class SortierungTest {
 
   void testeMehrere(int[] test, int[] richtig) {
-    // assertArrayEquals(BubbleRekursiv.sortiere(test.clone()), richtig);
-    // assertArrayEquals(BubbleRekursiv.sortiereRekursiv(test.clone()), richtig);
+    String[] algorithmen = {
+      "BubbleIterativ",
+      "BubbleMinimal",
+      "BubbleRekursiv",
+      "Heap",
+      "InsertionIterativ",
+      "InsertionMinimal",
+      "InsertionRekursiv",
+      "Merge",
+      "MergeMinimal",
+      "QuickIterativ",
+      "QuickMinimal",
+      "QuickZerlegeLinks",
+      "QuickZerlegeLinksRechts",
+      "SelectionHalbRekursiv",
+      "SelectionIterativ",
+      "SelectionMinimal",
+      "SelectionRekursiv"
+      // "Stacksort",
+    };
 
-    // assertArrayEquals(Heap.sortiere(test.clone()), richtig);
-
-    // assertArrayEquals(InsertionRekursiv.sortiere(test.clone()), richtig);
-    // assertArrayEquals(InsertionRekursiv.sortiereRekursiv(test.clone()), richtig);
-
-    // assertArrayEquals(MergeSort.sortiere(test.clone()), richtig);
-
-    // assertArrayEquals(QuickZerlegeLinks.sortiere(test.clone()), richtig);
-    // assertArrayEquals(QuickZerlegeLinks.sortiereIterativ(test.clone()), richtig);
-    // assertArrayEquals(QuickZerlegeLinksRechts.sortiere(test.clone()), richtig);
-
-    // assertArrayEquals(Selection.sortiereHalbRekursiv(test.clone()), richtig);
-    // assertArrayEquals(Selection.sortiereIterativ(test.clone()), richtig);
-    // assertArrayEquals(Selection.sortiereRekursiv(test.clone()), richtig);
-
-    int[] tmp;
-    tmp = test.clone();
-    Sammlung.bubblesort(tmp);
-    assertArrayEquals(tmp, richtig);
-
-    tmp = test.clone();
-    Sammlung.insertionsort(tmp);
-    assertArrayEquals(tmp, richtig);
-
-    tmp = test.clone();
-    Sammlung.selectionsort(tmp);
-    assertArrayEquals(tmp, richtig);
-
-    tmp = test.clone();
-    Sammlung.selectionsortMin(tmp);
-    assertArrayEquals(tmp, richtig);
-
-    tmp = test.clone();
-    Sammlung.selectionsortFor(tmp);
-    assertArrayEquals(tmp, richtig);
-
-    tmp = test.clone();
-    Sammlung.mergesort(tmp);
-    assertArrayEquals(tmp, richtig);
-
-    tmp = test.clone();
-    Sammlung.quicksort(tmp);
-    assertArrayEquals(tmp, richtig);
+    for (String algorithmus : algorithmen) {
+      int[] ergebnis = Sortierer.sortiere(algorithmus, test.clone());
+      assertArrayEquals(richtig, ergebnis);
+    }
   }
 
   @Test

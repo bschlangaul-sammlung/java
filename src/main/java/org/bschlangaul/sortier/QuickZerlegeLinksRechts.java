@@ -8,26 +8,28 @@ package org.bschlangaul.sortier;
  * Quicksort-Algortihmus</a> und Code-Beispiels auf <a href=
  * "https://javabeginners.de/Algorithmen/Sortieralgorithmen/Quicksort.php">javabeginners.de</a>)
  *
- * Ohne Hin- und Herkopieren des Pivot-Elements wie bei Saake. Der Pivot-Wert
- * wird in der „zerlegen“-Methode festgelegt.
+ * Ohne Hin- und Herkopieren des Pivot-Elements wie bei Saake
+ * {@link QuickZerlegeLinks}. Die endgültige Position des Pivot-Elements wird
+ * gefunden, indem die linke und rechte Grenze immer weiter in die Mitte
+ * verschoben wird.
  */
 public class QuickZerlegeLinksRechts extends Sortieralgorithmus {
 
   /**
    * Zerlege das Zahlen-Feld.
    *
-   * @param untereGrenze Die Index-Nummer ab dem das Zahlen-Feld zerlegt werden
+   * @param links Die Index-Nummer ab dem das Zahlen-Feld zerlegt werden
    *                     soll.
-   * @param obereGrenze  Die Index-Nummer bis zu dem das Zahlen-Feld zerlegt
+   * @param rechts  Die Index-Nummer bis zu dem das Zahlen-Feld zerlegt
    *                     werden soll.
    *
    * @return Die Index-Nummer, an dem das Feld zerlegt werden soll.
    */
-  private int zerlege(int untereGrenze, int obereGrenze) {
+  private int zerlege(int links, int rechts) {
     int i, j;
-    int pivotWert = zahlen[(untereGrenze + obereGrenze) / 2];
-    i = untereGrenze - 1;
-    j = obereGrenze + 1;
+    int pivotWert = zahlen[(links + rechts) / 2];
+    i = links - 1;
+    j = rechts + 1;
     while (true) {
       do {
         i++;
@@ -48,19 +50,19 @@ public class QuickZerlegeLinksRechts extends Sortieralgorithmus {
   /**
    * Sortiere ein Zahlen-Feld mit Hilfe des Quicksort-Algorithmus.
    *
-   * @param untereGrenze Die Index-Nummer ab dem das Zahlen-Feld sortiert werden
+   * @param links Die Index-Nummer ab dem das Zahlen-Feld sortiert werden
    *                     soll.
-   * @param obereGrenze  Die Index-Nummer bis zu dem das Zahlen-Feld sortiert
+   * @param rechts  Die Index-Nummer bis zu dem das Zahlen-Feld sortiert
    *                     werden soll.
    *
    * @return Das sortierte Zahlenfeld.
    */
-  private int[] sortiereRekursiv(int untereGrenze, int obereGrenze) {
-    int pivotPositionNeu;
-    if (untereGrenze < obereGrenze) {
-      pivotPositionNeu = zerlege(untereGrenze, obereGrenze);
-      sortiereRekursiv(untereGrenze, pivotPositionNeu);
-      sortiereRekursiv(pivotPositionNeu + 1, obereGrenze);
+  private int[] sortiereRekursiv(int links, int rechts) {
+    int pivotIndexEndgültig;
+    if (links < rechts) {
+      pivotIndexEndgültig = zerlege(links, rechts);
+      sortiereRekursiv(links, pivotIndexEndgültig);
+      sortiereRekursiv(pivotIndexEndgültig + 1, rechts);
     }
     return zahlen;
   }
