@@ -7,11 +7,11 @@ import java.io.File;
 import java.util.concurrent.Callable;
 
 import org.bschlangaul.graph.GraphenFinder;
-import org.bschlangaul.graph.algorithmen.TiefenSucheStapel;
+import org.bschlangaul.graph.algorithmen.TiefenSucheRekursion;
 
-@Command(name = "dfs", aliases = {
-    "f" }, description = "Die Tiefensuche (depth-first search = DFS) mit Hilfe eines Stapels ausführen.")
-class UnterBefehlGraphTiefensuche implements Callable<Integer> {
+@Command(name = "dfr", aliases = {
+    "r" }, description = "Die Tiefensuche (depth-first search = DFS) rekursiv ausführen.")
+class UnterBefehlGraphTiefensucheRekursion implements Callable<Integer> {
 
   @Parameters(index = "0", description = "Eine TeX-Datei.")
   private File datei;
@@ -22,7 +22,7 @@ class UnterBefehlGraphTiefensuche implements Callable<Integer> {
   @Override
   public Integer call() throws Exception {
     String einfachesGraphenFormat = new GraphenFinder(datei).gibGraphenFormatText();
-    TiefenSucheStapel t = new TiefenSucheStapel(einfachesGraphenFormat);
+    TiefenSucheRekursion t = new TiefenSucheRekursion(einfachesGraphenFormat);
     t.führeAus(startKnoten);
     return 0;
   }

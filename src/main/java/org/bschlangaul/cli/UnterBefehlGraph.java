@@ -6,7 +6,9 @@ import java.util.concurrent.Callable;
 @Command(name = "graph", aliases = {
     "g" }, mixinStandardHelpOptions = true, description = "Führe graphspezifische Aufgaben aus.", subcommands = {
         UnterBefehltGraphTex.class, UnterBefehlGraphDijkstra.class, UnterBefehlGraphPrim.class,
-        UnterBefehlGraphKruskal.class, UnterBefehlGrapBreitensuche.class, UnterBefehlGraphTiefensuche.class })
+        UnterBefehlGraphKruskal.class, UnterBefehlGrapBreitensuche.class, UnterBefehlGraphTiefensucheStapel.class,
+        UnterBefehlGraphTiefensucheRekursion.class })
+
 class UnterBefehlGraph implements Callable<Integer> {
 
   @Override

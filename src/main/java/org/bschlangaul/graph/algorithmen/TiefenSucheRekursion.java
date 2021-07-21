@@ -13,6 +13,21 @@ public class TiefenSucheRekursion extends GraphAdjazenzMatrix {
     besucht = new boolean[maximaleKnoten];
   }
 
+  /**
+   * Die Adjazenzmatrix kann mit diesem Konstruktur im einfachen Graphenformat
+   * spezifiziert werden.
+   *
+   * @param einfachesGraphenFormat Ein String im einfachen Graphenformat.
+   */
+  public TiefenSucheRekursion(String einfachesGraphenFormat) {
+    super(einfachesGraphenFormat);
+    initialisiereTiefensuche(gibKnotenAnzahl());
+  }
+
+  private void initialisiereTiefensuche(int maximaleKnoten) {
+    besucht = new boolean[maximaleKnoten];
+  }
+
   public void besucheKnoten(int knotenNummer) {
     besucht[knotenNummer] = true;
 
