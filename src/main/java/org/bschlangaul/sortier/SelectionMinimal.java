@@ -35,6 +35,6 @@ public class SelectionMinimal extends Sortieralgorithmus {
   }
 
   public static void main(String[] args) {
-
+    new SelectionMinimal().teste();
   }
 }

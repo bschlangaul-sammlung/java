@@ -6,19 +6,19 @@ import org.junit.Test;
 public class SortierungTest {
 
   void testeMehrere(int[] test, int[] richtig) {
-    assertArrayEquals(BubbleSort.sortiere(test.clone()), richtig);
-    assertArrayEquals(BubbleSort.sortiereRekursiv(test.clone()), richtig);
+    // assertArrayEquals(BubbleRekursiv.sortiere(test.clone()), richtig);
+    // assertArrayEquals(BubbleRekursiv.sortiereRekursiv(test.clone()), richtig);
 
-    assertArrayEquals(HeapSort.sortiere(test.clone()), richtig);
+    // assertArrayEquals(Heap.sortiere(test.clone()), richtig);
 
-    assertArrayEquals(InsertionSort.sortiere(test.clone()), richtig);
-    assertArrayEquals(InsertionSort.sortiereRekursiv(test.clone()), richtig);
+    // assertArrayEquals(InsertionRekursiv.sortiere(test.clone()), richtig);
+    // assertArrayEquals(InsertionRekursiv.sortiereRekursiv(test.clone()), richtig);
 
-    assertArrayEquals(MergeSort.sortiere(test.clone()), richtig);
+    // assertArrayEquals(MergeSort.sortiere(test.clone()), richtig);
 
-    assertArrayEquals(QuickSort.sortiere(test.clone()), richtig);
-    assertArrayEquals(QuickSort.sortiereIterativ(test.clone()), richtig);
-    assertArrayEquals(QuickSortDoWhile.sortiere(test.clone()), richtig);
+    // assertArrayEquals(QuickZerlegeLinks.sortiere(test.clone()), richtig);
+    // assertArrayEquals(QuickZerlegeLinks.sortiereIterativ(test.clone()), richtig);
+    // assertArrayEquals(QuickZerlegeLinksRechts.sortiere(test.clone()), richtig);
 
     // assertArrayEquals(Selection.sortiereHalbRekursiv(test.clone()), richtig);
     // assertArrayEquals(Selection.sortiereIterativ(test.clone()), richtig);

@@ -4,7 +4,7 @@ package org.bschlangaul.sortier;
  * Sortiere ein Zahlen-Feld mit Hilfe des Selectionsort-Algorithmus. (Nach Saake
  * Seite 128)
  */
-public class Selection extends Sortieralgorithmus {
+public class SelectionIterativ extends Sortieralgorithmus {
 
   public int[] sortiere() {
     // Am Anfang ist die Markierung das letzte Element im Zahlen-Array.
@@ -30,6 +30,6 @@ public class Selection extends Sortieralgorithmus {
   }
 
   public static void main(String[] args) {
-
+    new SelectionIterativ().teste();
   }
 }

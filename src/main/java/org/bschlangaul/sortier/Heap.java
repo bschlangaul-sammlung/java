@@ -4,8 +4,8 @@ package org.bschlangaul.sortier;
  * Sortiere ein Zahlen-Feld mit Hilfe des Heapsort-Algorithmus. (Nach Saake
  * Seite 412)
  */
-public class HeapSort {
-  private static void versickere(int[] zahlen, int index, int letzterIndex) {
+public class Heap extends Sortieralgorithmus {
+  private void versickere(int index, int letzterIndex) {
     int i = index + 1, j;
     // zahlen[i] hat linken Sohn
     while (2 * i <= letzterIndex) {
@@ -17,32 +17,35 @@ public class HeapSort {
           // zahlen[j] ist jetzt kleiner
           j++;
       if (zahlen[i - 1] < zahlen[j - 1]) {
-        Helfer.vertausche(zahlen, i - 1, j - 1);
+        vertausche(i - 1, j - 1);
         // versickere weiter
         i = j;
-      } else
+      } else {
         // halte an, heap-Bedingung erfüllt
         break;
+      }
     }
   }
 
   /**
-   * Sortiere ein Zahlen-Feld mit Hilfe des Heapsort-Algorithmus.
-   *
-   * @param zahlen Ein Feld mit Zahlen, das sortiert werden soll.
+   * Sortiere ein Zahlen-Feld mit Hilfe des Heapsort-Algorithmus. *
    *
    * @return Das sortierte Zahlenfeld.
    */
-  public static int[] sortiere(int[] zahlen) {
+  public int[] sortiere() {
     int i;
     for (i = zahlen.length / 2; i >= 0; i--)
-      versickere(zahlen, i, zahlen.length);
+      versickere(i, zahlen.length);
     for (i = zahlen.length - 1; i > 0; i--) {
       // tauscht jeweils letztes Element des Heaps mit dem ersten
-      Helfer.vertausche(zahlen, 0, i);
+      vertausche(0, i);
       // heap wird von Position 0 bis i hergestellt
-      versickere(zahlen, 0, i);
+      versickere(0, i);
     }
     return zahlen;
+  }
+
+  public static void main(String[] args) {
+    new Heap().teste();
   }
 }
