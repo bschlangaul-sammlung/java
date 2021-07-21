@@ -101,6 +101,7 @@ public class TiefenSucheStapel extends GraphAdjazenzMatrix {
     ts.setzeKnoten("B");
     ts.setzeKnoten("C");
     ts.setzeKnoten("D");
+
     ts.setzeKnoten("E");
     ts.setzeKnoten("F");
     ts.setzeKnoten("G");
