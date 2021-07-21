@@ -27,6 +27,21 @@ public class TiefenSucheStapel extends GraphAdjazenzMatrix {
    */
   public TiefenSucheStapel(int maximaleKnoten) {
     super(maximaleKnoten);
+    initialisiereTiefensuche(maximaleKnoten);
+  }
+
+  /**
+   * Die Adjazenzmatrix kann mit diesem Konstruktur im einfachen Graphenformat
+   * spezifiziert werden.
+   *
+   * @param einfachesGraphenFormat Ein String im einfachen Graphenformat.
+   */
+  public TiefenSucheStapel(String einfachesGraphenFormat) {
+    super(einfachesGraphenFormat);
+    initialisiereTiefensuche(gibKnotenAnzahl());
+  }
+
+  private void initialisiereTiefensuche(int maximaleKnoten) {
     besucht = new boolean[maximaleKnoten];
     stapel = new Stack<String>();
     route = new Stack<String>();
@@ -50,9 +65,9 @@ public class TiefenSucheStapel extends GraphAdjazenzMatrix {
 
       // alle nicht besuchten Nachbarn von w in den Stapel einfügen
       for (int abzweigung = 0; abzweigung <= gibKnotenAnzahl() - 1; abzweigung++) {
-        if (matrix[gibKnotenNummer(knotenName)][abzweigung] > 0 && !besucht[abzweigung]) {
+        if (matrix[gibKnotenNummer(knotenName)][abzweigung] != -Double.MAX_VALUE && !besucht[abzweigung]) {
           besucht[abzweigung] = true;
-          stapel.push(gibKnotenName(knotenNummer));
+          stapel.push(gibKnotenName(abzweigung));
         }
       }
       // Stapel ausgeben
@@ -67,7 +82,7 @@ public class TiefenSucheStapel extends GraphAdjazenzMatrix {
    *
    * @param startKnoten Bezeichnung des Startknotens
    */
-  public void starteTiefenSucheStapel(String startKnoten) {
+  public void führeAus(String startKnoten) {
     int startnummer;
     startnummer = gibKnotenNummer(startKnoten);
 
@@ -126,6 +141,6 @@ public class TiefenSucheStapel extends GraphAdjazenzMatrix {
 
     ts.gibMatrixAus();
 
-    ts.starteTiefenSucheStapel("A");
+    ts.führeAus("A");
   }
 }

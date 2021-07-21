@@ -66,7 +66,7 @@ public class BreitenSucheWarteschlange extends GraphAdjazenzMatrix {
    *
    * @param startKnoten Bezeichnung des Startknotens
    */
-  public void starteBreitenSuche(String startKnoten) {
+  public void führeAus(String startKnoten) {
     int startnummer;
     startnummer = gibKnotenNummer(startKnoten);
 
@@ -80,9 +80,9 @@ public class BreitenSucheWarteschlange extends GraphAdjazenzMatrix {
 
   public static void main(String[] args) {
     BreitenSucheWarteschlange bs = new BreitenSucheWarteschlange(
-        "a--e; a--f; a--s; b--c; b--d; b--h; c--d; c--h; c--s; d--h; e--f; f--s; g--s; h--s");
+        "a--e; a--f; a--s; b--c; b--d; b--h; c--d; c--h; c--s; d--h; e--f; f--s; g--s; h--s;");
     bs.gibMatrixAus();
-    bs.starteBreitenSuche("s");
+    bs.führeAus("s");
   }
 
 }

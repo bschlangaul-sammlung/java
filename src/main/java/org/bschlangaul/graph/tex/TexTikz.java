@@ -55,7 +55,8 @@ public class TexTikz {
     if (optionen.size() > 0) {
       opt = "[" + String.join(",", optionen) + "]";
     }
-    String gewicht = String.format(" node {%s}", formatiereZahl(kante.gewicht));
+    String gewichtZahl = kante.gewicht == 1 ? "" : formatiereZahl(kante.gewicht);
+    String gewicht = String.format(" node {%s}", gewichtZahl);
     return String.format("\\path%s (%s) edge%s (%s);\n", opt, kante.von, gewicht, kante.nach);
   }
 }

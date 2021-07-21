@@ -26,7 +26,7 @@ public class TiefenSucheRekursion extends GraphAdjazenzMatrix {
     System.out.println(gibKnotenName(knotenNummer) + "  fertig");
   }
 
-  public void führeTiefenSucheAus(String startKnoten) {
+  public void führeAus(String startKnoten) {
     int startnummer;
     startnummer = gibKnotenNummer(startKnoten);
 
@@ -58,6 +58,6 @@ public class TiefenSucheRekursion extends GraphAdjazenzMatrix {
 
     tiefensuche.gibMatrixAus();
 
-    tiefensuche.führeTiefenSucheAus("5");
+    tiefensuche.führeAus("5");
   }
 }
