@@ -55,7 +55,7 @@ public class QuickMinimal extends SortieralgorithmusMinimal {
    * </p>
    *
    * <ul>
-   * <li>p: Die Index-Nummer der endgültigen Position der Pivot-Werts.
+   * <li>p: Die Index-Nummer der endgültigen Position des Pivot-Werts.
    * </ul>
    *
    * @param l Die Index-Nummer ab dem das Zahlen-Feld sortiert werden soll.

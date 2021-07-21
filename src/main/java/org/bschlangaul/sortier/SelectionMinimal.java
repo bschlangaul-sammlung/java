@@ -4,7 +4,7 @@ package org.bschlangaul.sortier;
  * Minimales Codebeispiel des Selectionsorts mit kurzen Variablennamen.
  *
  * Zum Auswendiglernen gedacht, um den Code schnell im Examen reproduzieren zu
- * können. (Siehe Klasse {@link SelectionIterativ}, nach Saake Seite 128)
+ * können. (Siehe Klasse {@link SelectionRechtsIterativ}, nach Saake Seite 128)
  */
 public class SelectionMinimal extends SortieralgorithmusMinimal {
 

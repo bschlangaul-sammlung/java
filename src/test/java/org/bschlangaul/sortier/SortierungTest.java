@@ -21,8 +21,9 @@ public class SortierungTest {
       "QuickZerlegeLinks",
       "QuickZerlegeLinksRechts",
       "SelectionHalbRekursiv",
-      "SelectionIterativ",
+      "SelectionLinksIterativ",
       "SelectionMinimal",
+      "SelectionRechtsIterativ",
       "SelectionRekursiv"
       // "Stacksort",
     };
