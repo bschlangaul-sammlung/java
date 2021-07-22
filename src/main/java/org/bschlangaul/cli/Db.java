@@ -22,6 +22,9 @@ class Db implements Callable<Integer> {
   @Override
   public Integer call() {
     Ausgabe.findeSchlüsselKandidaten(attrs, funcDeps);
+    Ausgabe.bestimmeKanonischeÜberdeckung(funcDeps);
+    Ausgabe.istIn3NF(attrs, funcDeps);
+    Ausgabe.istInBCNF(attrs, funcDeps);
     return 0;
   }
 }

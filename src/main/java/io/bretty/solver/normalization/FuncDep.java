@@ -128,7 +128,7 @@ public final class FuncDep {
    * @return a {@code FuncDep} object
    */
   public static FuncDep of(String expr) {
-    String[] halves = expr.split("-->");
+    String[] halves = expr.split("->");
     return of(halves[0], halves[1]);
   }
 
@@ -225,7 +225,7 @@ public final class FuncDep {
       sb.append(", ");
     }
     sb.delete(sb.length() - 2, sb.length());
-    sb.append(" --> ");
+    sb.append(" -> ");
     for (Attribute at : this.right) {
       sb.append(at.toString());
       sb.append(", ");

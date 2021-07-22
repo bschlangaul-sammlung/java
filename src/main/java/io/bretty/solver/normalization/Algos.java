@@ -18,7 +18,6 @@ import java.util.Set;
  * @author SUN XIMENG (Nathaniel)
  *
  */
-
 public class Algos {
 
   /**
@@ -49,7 +48,6 @@ public class Algos {
           violating.add(fd);
         }
       }
-
     }
     return violating;
   }
@@ -148,7 +146,6 @@ public class Algos {
     for (Set<Attribute> left : map.keySet()) {
       fds.add(new FuncDep.Builder().left(left).right(map.get(left)).build());
     }
-
   }
 
   /**
@@ -214,7 +211,6 @@ public class Algos {
    * @return a set of FD's as the minimal basis
    */
   public static Set<FuncDep> minimalBasis(Set<FuncDep> fds) {
-
     Set<FuncDep> result = new HashSet<>(fds);
 
     // Step 1: split right sides

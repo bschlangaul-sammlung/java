@@ -25,4 +25,40 @@ public class Ausgabe {
       System.out.println(sa);
     }
   }
+
+  public static void bestimmeKanonischeÜberdeckung(String funcDep) {
+    System.out.println("Kanonische Überdeckung: ");
+
+    Set<FuncDep> fds = FuncDep.getSet(funcDep);
+    Set<FuncDep> mb = Algos.minimalBasis(fds);
+    for (FuncDep fd : mb) {
+      System.out.println(fd);
+    }
+  }
+
+  public static void istIn3NF (String attribute, String funcDep) {
+    Set<Attribute> attrs = Attribute.getSet(attribute);
+    Set<FuncDep> fds = FuncDep.getSet(funcDep);
+    Set<FuncDep> violating = Algos.check3NF(attrs, fds);
+    System.out.println("3NF = " + violating.isEmpty());
+    if (!violating.isEmpty()) {
+      printSet(violating);
+    }
+  }
+
+  public static void istInBCNF (String attribute, String funcDep) {
+    Set<Attribute> attrs = Attribute.getSet(attribute);
+    Set<FuncDep> fds = FuncDep.getSet(funcDep);
+    Set<FuncDep> violating = Algos.checkBCNF(attrs, fds);
+    System.out.println("BCNF = " + violating.isEmpty());
+    if (!violating.isEmpty()) {
+      printSet(violating);
+    }
+  }
+
+  private static <T> void printSet(Set<T> s) {
+    for (T t : s) {
+      System.out.println(t);
+    }
+  }
 }

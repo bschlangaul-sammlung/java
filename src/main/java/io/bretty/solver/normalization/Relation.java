@@ -37,7 +37,7 @@ public final class Relation {
    * @param names a string formatted as the following example: "name, application,
    *              date, gender"
    * @param exprs a string formatted as the following example:
-   *              "{@code a, b --> c; d --> e, f}"
+   *              "{@code a, b -> c; d -> e, f}"
    */
   public Relation(String names, String exprs) {
     this.attrs = Attribute.getSet(names);
@@ -50,7 +50,7 @@ public final class Relation {
    * @param names each element will be used as the {@code name} of an
    *              {@code Attribute} object
    * @param exprs each element is formatted as the following example:
-   *              "{@code a, b --> c, d}"
+   *              "{@code a, b -> c, d}"
    */
   public Relation(String[] names, String[] exprs) {
     this.attrs = Attribute.getSet(names);
