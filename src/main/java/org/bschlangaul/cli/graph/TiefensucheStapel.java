@@ -1,4 +1,4 @@
-package org.bschlangaul.cli;
+package org.bschlangaul.cli.graph;
 
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
@@ -11,7 +11,7 @@ import org.bschlangaul.graph.algorithmen.TiefenSucheStapel;
 
 @Command(name = "dfs", aliases = {
     "f" }, description = "Die Tiefensuche (depth-first search = DFS) mit Hilfe eines Stapels ausführen.")
-class UnterBefehlGraphTiefensucheStapel implements Callable<Integer> {
+public class TiefensucheStapel implements Callable<Integer> {
 
   @Parameters(index = "0", description = "Eine TeX-Datei.")
   private File datei;

@@ -1,4 +1,4 @@
-package org.bschlangaul.cli;
+package org.bschlangaul.cli.graph;
 
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
@@ -7,11 +7,10 @@ import java.io.File;
 import java.util.concurrent.Callable;
 
 import org.bschlangaul.graph.GraphenFinder;
-import org.bschlangaul.graph.algorithmen.MinimalerSpannbaumKruskal;
+import org.bschlangaul.graph.algorithmen.MinimalerSpannbaumPrim;
 
-@Command(name = "kruskal", aliases = {
-    "k" }, description = "Den Algorithmus von Kruskal ausführen.")
-class UnterBefehlGraphKruskal implements Callable<Integer> {
+@Command(name = "prim", aliases = { "p" }, description = "Den Algorithmus von Prim ausführen.")
+public class Prim implements Callable<Integer> {
 
   @Parameters(index = "0", description = "Eine TeX-Datei.")
   private File datei;
@@ -19,8 +18,8 @@ class UnterBefehlGraphKruskal implements Callable<Integer> {
   @Override
   public Integer call() throws Exception {
     String einfachesGraphenFormat = new GraphenFinder(datei).gibGraphenFormatText();
-    MinimalerSpannbaumKruskal k = new MinimalerSpannbaumKruskal(einfachesGraphenFormat);
-    k.führeAus();
+    MinimalerSpannbaumPrim p = new MinimalerSpannbaumPrim(einfachesGraphenFormat);
+    p.führeAus();
     return 0;
   }
 }

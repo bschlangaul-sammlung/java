@@ -1,4 +1,4 @@
-package org.bschlangaul.cli;
+package org.bschlangaul.cli.graph;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,7 +29,7 @@ class ProjektSprache {
 
 @Command(name = "projekt-sprachen", aliases = {
     "s" }, description = "Nach Projektsprachen in einer TeX-Datei suchen und diese dann ausführen.")
-public class UnterBefehlProjektSprachenFinder implements Callable<Integer> {
+public class ProjektSprachenFinder implements Callable<Integer> {
 
   String umgebungsName = "liProjektSprache";
 

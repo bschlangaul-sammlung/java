@@ -8,19 +8,20 @@ import picocli.CommandLine.Spec;
 import picocli.CommandLine.Model.CommandSpec;
 import java.util.concurrent.Callable;
 
+import org.bschlangaul.cli.graph.UnterbefehlGraph;
+import org.bschlangaul.cli.graph.ProjektSprachenFinder;
+
 import static picocli.CommandLine.Model.UsageMessageSpec.SECTION_KEY_COMMAND_LIST;
 
-enum Ausgabe {
-  konsole, tex
-}
 
 @Command(name = "didaktik", mixinStandardHelpOptions = true, version = "didaktik 0.1.0", description = "Kommandozeilen-Interface für die Java-Didaktik-Beispiele.", subcommands = {
-    UnterBefehlBaum.class, UnterBefehlGraph.class, UnterBefehlProjektSprachenFinder.class })
-class KommandoZeile implements Callable<Integer> {
+    UnterBefehlBaum.class, UnterbefehlGraph.class, ProjektSprachenFinder.class })
+public class KommandoZeile implements Callable<Integer> {
   @Spec
   CommandSpec spec;
 
-  @Option(names = { "-v", "--redselig" }, description = "Mache die Ausgabe redseliger (verbose).", scope = ScopeType.INHERIT)
+  @Option(names = { "-v",
+      "--redselig" }, description = "Mache die Ausgabe redseliger (verbose).", scope = ScopeType.INHERIT)
   static boolean[] redselig;
 
   @Option(names = { "-a", "--ausgabe" }, description = "Mögliche Werte: ${COMPLETION-CANDIDATES}.")
@@ -29,7 +30,8 @@ class KommandoZeile implements Callable<Integer> {
   @Option(names = { "-t", "--tex" }, description = "Als TeX ausgeben.", scope = ScopeType.INHERIT)
   static boolean istTex;
 
-  @Option(names = { "-k", "--konsole" }, description = "Passendes Textformat für die Konsole ausgaben.", scope = ScopeType.INHERIT)
+  @Option(names = { "-k",
+      "--konsole" }, description = "Passendes Textformat für die Konsole ausgaben.", scope = ScopeType.INHERIT)
   static boolean istKonsole;
 
   @Override
@@ -39,7 +41,7 @@ class KommandoZeile implements Callable<Integer> {
     return 0;
   }
 
-  static Ausgabe gibAusgabe() {
+  public static Ausgabe gibAusgabe() {
     if (istTex || (!istKonsole && ausgabe == Ausgabe.tex))
       return Ausgabe.tex;
     return Ausgabe.konsole;

@@ -1,4 +1,4 @@
-package org.bschlangaul.cli;
+package org.bschlangaul.cli.graph;
 
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
@@ -10,8 +10,11 @@ import org.bschlangaul.graph.GraphenFinder;
 import org.bschlangaul.graph.algorithmen.KuerzesterPfadDijkstra;
 import org.bschlangaul.graph.einfaches_format.GraphenFormat;
 
+import org.bschlangaul.cli.KommandoZeile;
+import org.bschlangaul.cli.Ausgabe;
+
 @Command(name = "dijkstra", aliases = { "d" }, description = "Den Dijkstra-Algorithmus ausführen.")
-class UnterBefehlGraphDijkstra implements Callable<Integer> {
+public class Dijkstra implements Callable<Integer> {
 
   @Parameters(index = "0", description = "Eine TeX-Datei.")
   private File datei;

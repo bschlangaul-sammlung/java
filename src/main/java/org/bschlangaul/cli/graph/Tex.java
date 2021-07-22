@@ -1,4 +1,4 @@
-package org.bschlangaul.cli;
+package org.bschlangaul.cli.graph;
 
 import org.bschlangaul.graph.GraphenFinder;
 
@@ -10,7 +10,7 @@ import java.io.File;
 
 @Command(name = "tex", aliases = {
     "t" }, description = "Lese Text-Datei ein und versuche einen Graph zu erkennen, formatiere den Graphen dann für TeX.")
-class UnterBefehltGraphTex implements Callable<Integer> {
+public class Tex implements Callable<Integer> {
 
   @Parameters(index = "0", description = "Eine TeX-Datei.")
   private File datei;

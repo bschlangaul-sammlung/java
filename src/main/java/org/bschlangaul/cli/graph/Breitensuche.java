@@ -1,4 +1,4 @@
-package org.bschlangaul.cli;
+package org.bschlangaul.cli.graph;
 
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
@@ -7,11 +7,11 @@ import java.io.File;
 import java.util.concurrent.Callable;
 
 import org.bschlangaul.graph.GraphenFinder;
-import org.bschlangaul.graph.algorithmen.TiefenSucheRekursion;
+import org.bschlangaul.graph.algorithmen.BreitenSucheWarteschlange;
 
-@Command(name = "dfr", aliases = {
-    "r" }, description = "Die Tiefensuche (depth-first search = DFS) rekursiv ausführen.")
-class UnterBefehlGraphTiefensucheRekursion implements Callable<Integer> {
+@Command(name = "bfs", aliases = {
+    "b" }, description = "Die Breitensuche (breadth-first search = BFS) mit Hilfe einer Warteschlange ausführen.")
+public class Breitensuche implements Callable<Integer> {
 
   @Parameters(index = "0", description = "Eine TeX-Datei.")
   private File datei;
@@ -22,8 +22,8 @@ class UnterBefehlGraphTiefensucheRekursion implements Callable<Integer> {
   @Override
   public Integer call() throws Exception {
     String einfachesGraphenFormat = new GraphenFinder(datei).gibGraphenFormatText();
-    TiefenSucheRekursion t = new TiefenSucheRekursion(einfachesGraphenFormat);
-    t.führeAus(startKnoten);
+    BreitenSucheWarteschlange b = new BreitenSucheWarteschlange(einfachesGraphenFormat);
+    b.führeAus(startKnoten);
     return 0;
   }
 }
