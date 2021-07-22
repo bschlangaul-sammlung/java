@@ -8,7 +8,7 @@ import java.util.concurrent.Callable;
         Tex.class, Dijkstra.class, Prim.class, Kruskal.class, Breitensuche.class, TiefensucheStapel.class,
         TiefensucheRekursion.class })
 
-public class UnterbefehlGraph implements Callable<Integer> {
+public class Graph implements Callable<Integer> {
 
   @Override
   public Integer call() {

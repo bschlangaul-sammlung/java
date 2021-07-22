@@ -8,14 +8,13 @@ import picocli.CommandLine.Spec;
 import picocli.CommandLine.Model.CommandSpec;
 import java.util.concurrent.Callable;
 
-import org.bschlangaul.cli.graph.UnterbefehlGraph;
+import org.bschlangaul.cli.graph.Graph;
 import org.bschlangaul.cli.graph.ProjektSprachenFinder;
 
 import static picocli.CommandLine.Model.UsageMessageSpec.SECTION_KEY_COMMAND_LIST;
 
-
 @Command(name = "didaktik", mixinStandardHelpOptions = true, version = "didaktik 0.1.0", description = "Kommandozeilen-Interface für die Java-Didaktik-Beispiele.", subcommands = {
-    UnterBefehlBaum.class, UnterbefehlGraph.class, ProjektSprachenFinder.class })
+    Baum.class, Db.class, Graph.class, ProjektSprachenFinder.class })
 public class KommandoZeile implements Callable<Integer> {
   @Spec
   CommandSpec spec;

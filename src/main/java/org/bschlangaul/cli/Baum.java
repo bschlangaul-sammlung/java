@@ -21,7 +21,7 @@ import org.bschlangaul.baum.visualisierung.TexBaumReporter;
 
 @Command(name = "baum", aliases = {
     "b" }, mixinStandardHelpOptions = true, description = "Führe baumspezifische Aufgaben aus.")
-class UnterBefehlBaum implements Callable<Integer> {
+class Baum implements Callable<Integer> {
 
   @ArgGroup(exclusive = true, multiplicity = "1")
   BaumArt baumArt;
