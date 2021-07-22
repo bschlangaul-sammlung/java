@@ -2,12 +2,69 @@ package org.bschlangaul.graph.algorithmen;
 
 import org.bschlangaul.graph.GraphAdjazenzMatrix;
 import org.bschlangaul.helfer.Farbe;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 /**
  * nach Schulbuch Informatik 1 Oberstufe Oldenbourg Verlag
  */
 public class BreitenSucheWarteschlange extends GraphAdjazenzMatrix {
+
+  /**
+   * Der Schnappschuss wird entweder erstellt, nachdem ein Knoten besucht wurde,
+   * oder ein Knoten aus dem Stapel entfernt wurde.
+   */
+  class SchnappSchuss {
+    String besuchterKnoten;
+    String entnommenerKnoten;
+
+    public SchnappSchuss(Vector<String> warteschlange) {
+      this.kopiereStapel(warteschlange);
+    }
+
+    /**
+     * Eine Kopie des referenzierten Stapels als einfaches Feld.
+     */
+    Object[] warteschlange;
+
+    void kopiereStapel(Vector<String> warteschlange) {
+      this.warteschlange = warteschlange.toArray();
+    }
+
+    SchnappSchuss merkeBesuch(String knotenName) {
+      this.besuchterKnoten = knotenName;
+      return this;
+    }
+
+    SchnappSchuss merkeEntnahme(String knotenName) {
+      this.entnommenerKnoten = knotenName;
+      return this;
+    }
+  }
+
+  class Protokoll {
+    List<SchnappSchuss> schnappSchuesse;
+
+    /**
+     * Eine Referenze auf den vom Algorithmus verwendeten Stapel.
+     */
+    Vector<String> warteschlange;
+
+    public Protokoll(Vector<String> warteschlange) {
+      this.schnappSchuesse = new ArrayList<SchnappSchuss>();
+      this.warteschlange = warteschlange;
+    }
+
+    void merkeBesuch(String knotenName) {
+      schnappSchuesse.add(new SchnappSchuss(warteschlange).merkeBesuch(knotenName));
+    }
+
+    void merkeEntnahme(String knotenName) {
+      schnappSchuesse.add(new SchnappSchuss(warteschlange).merkeEntnahme(knotenName));
+    }
+  }
 
   /**
    * Liste der besuchten Knoten
@@ -19,6 +76,8 @@ public class BreitenSucheWarteschlange extends GraphAdjazenzMatrix {
    */
   private Vector<String> warteschlange = new Vector<String>();
   private Vector<String> route = new Vector<String>();
+
+  Protokoll protokoll = new Protokoll(warteschlange);
 
   /**
    * Die Adjazenzmatrix kann mit diesem Konstruktur im einfachen Graphenformat
@@ -36,6 +95,7 @@ public class BreitenSucheWarteschlange extends GraphAdjazenzMatrix {
     besucht[knotenNummer] = true;
     route.add(name);
     warteschlange.add(name);
+    protokoll.merkeBesuch(name);
     System.out.println(Farbe.rot("besucht: ") + name);
     System.out.println(Farbe.grün("Warteschlange: ") + warteschlange.toString());
   }
@@ -52,6 +112,7 @@ public class BreitenSucheWarteschlange extends GraphAdjazenzMatrix {
       // oberstes Element der Liste nehmen
       String knotenName = warteschlange.remove(0);
       System.out.println(Farbe.gelb("Aus der Warteschlange entfernen: ") + knotenName);
+      protokoll.merkeEntnahme(knotenName);
 
       // alle nicht besuchten Nachbarn von knotenName in die Liste einfügen
       for (int abzweigung = 0; abzweigung <= gibKnotenAnzahl() - 1; abzweigung++) {

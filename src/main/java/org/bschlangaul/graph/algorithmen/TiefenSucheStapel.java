@@ -9,63 +9,63 @@ import java.util.Stack;
 import java.util.Vector;
 
 /**
- * Der Schnappschuss wird entweder erstellt, nachdem ein Knoten besucht wurde,
- * oder ein Knoten aus dem Stapel entfernt wurde.
- */
-class SchnappSchuss {
-  String besuchterKnoten;
-  String entnommenerKnotenStapel;
-
-  public SchnappSchuss(Stack<String> stapel) {
-    this.kopiereStapel(stapel);
-  }
-
-  /**
-   * Eine Kopie des referenzierten Stapels als einfaches Feld.
-   */
-  Object[] stapel;
-
-  void kopiereStapel(Stack<String> stapel) {
-    this.stapel = stapel.toArray();
-  }
-
-  SchnappSchuss besucheKnoten(String knotenName) {
-    this.besuchterKnoten = knotenName;
-    return this;
-  }
-
-  SchnappSchuss entnimmKnotenStapel(String knotenName) {
-    this.entnommenerKnotenStapel = knotenName;
-    return this;
-  }
-}
-
-class Protokoll {
-  List<SchnappSchuss> schnappSchuesse;
-
-  /**
-   * Eine Referenze auf den vom Algorithmus verwendeten Stapel.
-   */
-  Stack<String> stapel;
-
-  public Protokoll(Stack<String> stapel) {
-    this.schnappSchuesse = new ArrayList<SchnappSchuss>();
-    this.stapel = stapel;
-  }
-
-  void merkeBesuch(String knotenName) {
-    schnappSchuesse.add(new SchnappSchuss(stapel).besucheKnoten(knotenName));
-  }
-
-  void merkeEntnahme(String knotenName) {
-    schnappSchuesse.add(new SchnappSchuss(stapel).entnimmKnotenStapel(knotenName));
-  }
-}
-
-/**
  * nach Schulbuch: Informatik 1 Oberstufe Oldenbourg Verlag
  */
 public class TiefenSucheStapel extends GraphAdjazenzMatrix {
+
+  /**
+   * Der Schnappschuss wird entweder erstellt, nachdem ein Knoten besucht wurde,
+   * oder ein Knoten aus dem Stapel entfernt wurde.
+   */
+  class SchnappSchuss {
+    String besuchterKnoten;
+    String entnommenerKnoten;
+
+    public SchnappSchuss(Stack<String> stapel) {
+      this.kopiereStapel(stapel);
+    }
+
+    /**
+     * Eine Kopie des referenzierten Stapels als einfaches Feld.
+     */
+    Object[] stapel;
+
+    void kopiereStapel(Stack<String> stapel) {
+      this.stapel = stapel.toArray();
+    }
+
+    SchnappSchuss merkeBesuch(String knotenName) {
+      this.besuchterKnoten = knotenName;
+      return this;
+    }
+
+    SchnappSchuss merkeEntnahme(String knotenName) {
+      this.entnommenerKnoten = knotenName;
+      return this;
+    }
+  }
+
+  class Protokoll {
+    List<SchnappSchuss> schnappSchuesse;
+
+    /**
+     * Eine Referenze auf den vom Algorithmus verwendeten Stapel.
+     */
+    Stack<String> stapel;
+
+    public Protokoll(Stack<String> stapel) {
+      this.schnappSchuesse = new ArrayList<SchnappSchuss>();
+      this.stapel = stapel;
+    }
+
+    void merkeBesuch(String knotenName) {
+      schnappSchuesse.add(new SchnappSchuss(stapel).merkeBesuch(knotenName));
+    }
+
+    void merkeEntnahme(String knotenName) {
+      schnappSchuesse.add(new SchnappSchuss(stapel).merkeEntnahme(knotenName));
+    }
+  }
 
   /**
    * Liste der besuchten Knoten
