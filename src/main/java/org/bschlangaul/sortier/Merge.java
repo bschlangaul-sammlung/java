@@ -85,6 +85,7 @@ public class Merge extends Sortieralgorithmus {
    *
    * @return Das sortierte Zahlenfeld.
    */
+  @SuppressWarnings({ "unused" })
   private int[] vereinigen(int[] hilfsFeld) {
     int[] zahlen = new int[hilfsFeld.length];
     int i = 0;
