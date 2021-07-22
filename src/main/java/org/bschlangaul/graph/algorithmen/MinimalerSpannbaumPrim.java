@@ -72,7 +72,7 @@ public class MinimalerSpannbaumPrim extends GraphAdjazenzMatrix {
      * Das Gewicht der Kante vom Elternknoten zum aktuellen Knoten. Das Feld wird
      * benötigt um den minimale Knoten zu finden.
      */
-    double gewicht = -Double.MAX_VALUE;
+    double gewicht = NICHT_ERREICHBAR;
   }
 
   /**

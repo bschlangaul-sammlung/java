@@ -17,6 +17,13 @@ public class GraphAdjazenzMatrix extends Graph {
   public double[][] matrix;
 
   /**
+   * Damit wir Kanten mit negativen Werten oder Null speichern können, wird der
+   * Wert für nicht erreichbare Knoten auf den kleinsten möglichen Double-Wert
+   * gesetzt. Für Double gibt es keine MIN_VALUE Konstante wie bei Integer.
+   */
+  public double NICHT_ERREICHBAR = -Double.MAX_VALUE;
+
+  /**
    * Konstruktor für Objekte der Klasse GraphAdjazenzMatrix.
    *
    * Die maximale Anzahl der Knoten wird dabei festgelegt.
@@ -43,7 +50,7 @@ public class GraphAdjazenzMatrix extends Graph {
 
     for (int i = 0; i < matrix.length; i++) {
       for (int j = 0; j < matrix[i].length; j++) {
-        matrix[i][j] = -Double.MAX_VALUE;
+        matrix[i][j] = NICHT_ERREICHBAR;
       }
     }
   }
@@ -78,7 +85,7 @@ public class GraphAdjazenzMatrix extends Graph {
     double min = 0;
     for (double[] reihe : matrix) {
       for (double gewicht : reihe) {
-        if (gewicht < min && gewicht != -Double.MAX_VALUE)
+        if (gewicht < min && gewicht != NICHT_ERREICHBAR)
           min = gewicht;
       }
     }
@@ -147,7 +154,7 @@ public class GraphAdjazenzMatrix extends Graph {
     for (int i = 0; i < gibKnotenAnzahl(); i++) {
       System.out.print(gibKnoten(i).gibNameFormatiert(breite));
       for (int j = 0; j < gibKnotenAnzahl(); j++) {
-        if (matrix[i][j] == -Double.MAX_VALUE) {
+        if (matrix[i][j] == NICHT_ERREICHBAR) {
           System.out.print("-   ");
         } else if (matrix[i][j] != -1) {
           System.out.print((GraphenFormat.formatiereZahl(matrix[i][j]) + "   ").substring(0, breite));
@@ -170,13 +177,13 @@ public class GraphAdjazenzMatrix extends Graph {
    */
   double gibKanteGewicht(String von, String nach) {
     int vonNummer, nachNummer;
-
     vonNummer = gibKnotenNummer(von);
     nachNummer = gibKnotenNummer(nach);
-    if ((vonNummer != -1) && (nachNummer != -1))
+    if ((vonNummer != -1) && (nachNummer != -1)) {
       return matrix[vonNummer][nachNummer];
-    else
+    } else {
       return -1;
+    }
   }
 
   public static void main(String[] args) {

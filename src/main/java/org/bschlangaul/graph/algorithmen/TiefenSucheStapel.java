@@ -3,6 +3,7 @@ package org.bschlangaul.graph.algorithmen;
 import org.bschlangaul.graph.GraphAdjazenzMatrix;
 import org.bschlangaul.helfer.Farbe;
 import java.util.Stack;
+import java.util.Vector;
 
 /**
  * nach Schulbuch: Informatik 1 Oberstufe Oldenbourg Verlag
@@ -18,7 +19,7 @@ public class TiefenSucheStapel extends GraphAdjazenzMatrix {
    * Stapel für die Tiefensuche
    */
   private Stack<String> stapel;
-  private Stack<String> route;
+  private Vector<String> route = new Vector<String>();
 
   /**
    * Die maximale Anzahl der Knoten wird dabei festgelegt.
@@ -47,34 +48,37 @@ public class TiefenSucheStapel extends GraphAdjazenzMatrix {
     route = new Stack<String>();
   }
 
+  public void besuche(int knotenNummer) {
+    String name = gibKnotenName(knotenNummer);
+    besucht[knotenNummer] = true;
+    route.add(name);
+    stapel.push(name);
+    System.out.println(Farbe.rot("besucht: ") + name);
+    System.out.println(Farbe.grün("Stapel: ") + stapel.toString());
+  }
+
   /**
    * Durchlauf aller Knoten und Ausgabe auf der Konsole
    *
    * @param knotenNummer Nummer des Startknotens
    */
   public void besucheKnoten(int knotenNummer) {
-    besucht[knotenNummer] = true;
-    stapel.push(gibKnotenName(knotenNummer));
+    besuche(knotenNummer);
     // Stapel ausgeben
-    System.out.println(Farbe.grün("Stapel: ") + stapel.toString());
     while (!stapel.isEmpty()) {
       // oberstes Element des Stapels nehmen und in die Route einfügen
       String knotenName = stapel.pop();
-      System.out.println(Farbe.rot("besucht: ") + knotenName);
-      route.push(knotenName);
+      System.out.println(Farbe.gelb("Aus dem Stapel entfernen: ") + knotenName);
 
       // alle nicht besuchten Nachbarn von w in den Stapel einfügen
       for (int abzweigung = 0; abzweigung <= gibKnotenAnzahl() - 1; abzweigung++) {
-        if (matrix[gibKnotenNummer(knotenName)][abzweigung] != -Double.MAX_VALUE && !besucht[abzweigung]) {
-          besucht[abzweigung] = true;
-          stapel.push(gibKnotenName(abzweigung));
+        if (matrix[gibKnotenNummer(knotenName)][abzweigung] != NICHT_ERREICHBAR && !besucht[abzweigung]) {
+          besuche(abzweigung);
         }
       }
-      // Stapel ausgeben
-      System.out.println(Farbe.grün("Stapel: ") + stapel.toString());
     }
     // Route ausgeben
-    System.out.println(Farbe.gelb("Route: ") + route.toString());
+    System.out.println("\n" + Farbe.gelb("Route: ") + route.toString());
   }
 
   /**

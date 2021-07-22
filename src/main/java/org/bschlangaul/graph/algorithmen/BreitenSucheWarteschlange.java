@@ -15,9 +15,9 @@ public class BreitenSucheWarteschlange extends GraphAdjazenzMatrix {
   private boolean[] besucht;
 
   /**
-   * Warteschlage für die Breitensuche
+   * Eine Warteschlange für die Breitensuche
    */
-  private Vector<String> liste = new Vector<String>();
+  private Vector<String> warteschlange = new Vector<String>();
   private Vector<String> route = new Vector<String>();
 
   /**
@@ -31,31 +31,34 @@ public class BreitenSucheWarteschlange extends GraphAdjazenzMatrix {
     besucht = new boolean[gibKnotenAnzahl()];
   }
 
+  public void besuche(int knotenNummer) {
+    String name = gibKnotenName(knotenNummer);
+    besucht[knotenNummer] = true;
+    route.add(name);
+    warteschlange.add(name);
+    System.out.println(Farbe.rot("besucht: ") + name);
+    System.out.println(Farbe.grün("Warteschlange: ") + warteschlange.toString());
+  }
+
   /**
    * Durchlauf aller Knoten und Ausgabe auf der Konsole
    *
    * @param knotenNummer Nummer des Startknotens
    */
   private void besucheKnoten(int knotenNummer) {
-    besucht[knotenNummer] = true;
-    liste.add(gibKnotenName(knotenNummer));
-    // Liste gibMatrixAus
-    System.out.println(Farbe.grün("Warteschlange: ") + liste.toString());
-    while (!liste.isEmpty()) {
-      // oberstes Element der Liste nehmen und in die Route einfügen
-      String knotenName = liste.remove(0);
-      System.out.println(Farbe.rot("besucht: ") + knotenName);
-      route.add(knotenName);
+    besuche(knotenNummer);
+
+    while (!warteschlange.isEmpty()) {
+      // oberstes Element der Liste nehmen
+      String knotenName = warteschlange.remove(0);
+      System.out.println(Farbe.gelb("Aus der Warteschlange entfernen: ") + knotenName);
 
       // alle nicht besuchten Nachbarn von knotenName in die Liste einfügen
       for (int abzweigung = 0; abzweigung <= gibKnotenAnzahl() - 1; abzweigung++) {
-        if (matrix[gibKnotenNummer(knotenName)][abzweigung] > 0 && !besucht[abzweigung]) {
-          besucht[abzweigung] = true;
-          liste.add(gibKnotenName(abzweigung));
+        if (matrix[gibKnotenNummer(knotenName)][abzweigung] != NICHT_ERREICHBAR && !besucht[abzweigung]) {
+          besuche(abzweigung);
         }
       }
-      // Liste ausgeben
-      System.out.println(Farbe.grün("Warteschlange: ") + liste.toString());
     }
     // Route ausgeben
     System.out.println(Farbe.gelb("Route: ") + route.toString());
