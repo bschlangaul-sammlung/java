@@ -8,13 +8,13 @@ package org.bschlangaul.examen.examen_66115.jahr_2012.herbst;
  * Auflage 4, Kapitel 2.1
  *
  * nach Prof. Grude, Prof. Solymosi, (c) 2000-2008: 22. April 2008
- * http://public.beuth-hochschule.de/oo-plug/A&D/prog/kap21/Teilsumme.java
+ * <a href="http://public.beuth-hochschule.de/oo-plug/A&D/prog/kap21/Teilsumme.java">Teilsumme.java</a>
  */
 public class Teilsumme {
 
   /**
    * Berechne die maximale Teilsumme an der rechten Grenze. Die Eingabeparameter
-   * müssen diese Werte aufweisen: 0 <= links <= rechts < folge.length.
+   * müssen diese Werte aufweisen: 0 &lt;= links &lt;= rechts &lt; folge.length.
    *
    * @param folge  Die Zahlenfolge, in der die maximale Zahlensumme gerechnet
    *               werden soll.
@@ -35,7 +35,7 @@ public class Teilsumme {
 
   /**
    * Berechne die maximale Teilsumme an der linken Grenze. Die Eingabeparameter
-   * müssen diese Werte aufweisen: 0 <= links <= rechts < folge.length.
+   * müssen diese Werte aufweisen: 0 &lt;= links &lt;= rechts &lt; folge.length.
    *
    * @param folge  Die Zahlenfolge, in der die maximale Zahlensumme gerechnet
    *               werden soll.
@@ -57,7 +57,7 @@ public class Teilsumme {
   /**
    * Berechne die maximale Teilsumme in der Zahlenfolge zwischen einer gegeben
    * linken und rechten Grenze. Die Eingabeparameter müssen diese Werte aufweisen:
-   * 0 <= links <= rechts < folge.length.
+   * 0 &lt;= links &lt;= rechts &lt; folge.length.
    *
    * @param folge  Die Zahlenfolge, in der die maximale Zahlensumme gerechnet
    *               werden soll.

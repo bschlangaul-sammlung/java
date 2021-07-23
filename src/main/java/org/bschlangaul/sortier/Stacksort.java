@@ -11,6 +11,8 @@ class Stacksort extends Sortieralgorithmus {
   Stack<Integer> keller;
 
   /**
+   * @param keller Der Kellerspeicher.
+   *
    * @return Der sortierte Stapel.
    */
   public Stack<Integer> sortiere(Stack<Integer> keller) {

@@ -20,7 +20,6 @@ public abstract class Sortieralgorithmus {
    * Vertausche zwei Zahlen im einem Zahlen-Feld. Im Englischen heißt die Methode
    * auch oft „swap“.
    *
-   * @param zahlen Ein Feld mit Zahlen.
    * @param index1 Die Index-Nummer der ersten Zahl.
    * @param index2 Die Index-Nummer der zweiten Zahl.
    */
@@ -65,6 +64,8 @@ public abstract class Sortieralgorithmus {
   /**
    * Teste den Algorithmus mit einer gegeben Zahlenreihe und zeige das sortierte
    * Ergebnis aus der Kommandozeile.
+   *
+   * @param zahlen Eine Zahlenreihe mit der getestet werden soll.
    */
   public void teste(int[] zahlen) {
     setzeZahlen(zahlen);

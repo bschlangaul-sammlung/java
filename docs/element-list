@@ -55,7 +55,9 @@ org.bschlangaul.baum.einfach
 org.bschlangaul.baum.kompositum
 org.bschlangaul.baum.visualisierung
 org.bschlangaul.cli
+org.bschlangaul.cli.graph
 org.bschlangaul.db
+org.bschlangaul.db.normalisation
 org.bschlangaul.entwurfsmuster.abstrakte_fabrik.allgemein
 org.bschlangaul.entwurfsmuster.abstrakte_fabrik.hauer.schnitzel
 org.bschlangaul.entwurfsmuster.adapter.allgemein

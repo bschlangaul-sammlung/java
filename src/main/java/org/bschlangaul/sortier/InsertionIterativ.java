@@ -9,8 +9,6 @@ public class InsertionIterativ extends Sortieralgorithmus {
   /**
    * Sortiere ein Zahlen-Feld mit Hilfe des Insertionsort-Algorithmus.
    *
-   * @param zahlen Ein Feld mit Zahlen, das sortiert werden soll.
-   *
    * @return Das sortierte Zahlenfeld.
    */
   public int[] sortiere() {

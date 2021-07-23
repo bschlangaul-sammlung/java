@@ -101,9 +101,9 @@ public class TexAdjazenzMatrix {
     for (int i = 0; i < matrix.gibKnotenAnzahl(); i++) {
       String zeile = formatiereZelle(matrix.gibKnotenName(i));
       for (int j = 0; j < matrix.gibKnotenAnzahl(); j++) {
-        if (i == j && matrix.matrix[i][j] == matrix.NICHT_ERREICHBAR) {
+        if (i == j && matrix.matrix[i][j] == GraphAdjazenzMatrix.NICHT_ERREICHBAR) {
           zeile += formatiereZelle("*");
-        } else if (matrix.matrix[i][j] == matrix.NICHT_ERREICHBAR) {
+        } else if (matrix.matrix[i][j] == GraphAdjazenzMatrix.NICHT_ERREICHBAR) {
           zeile += formatiereZelle("-");
         } else {
           zeile += formatiereZelle(GraphenFormat.formatiereZahl(matrix.matrix[i][j]));

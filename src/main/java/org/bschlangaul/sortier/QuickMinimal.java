@@ -4,7 +4,7 @@ package org.bschlangaul.sortier;
  * Minimales Codebeispiel des Quicksort-Algortihmus mit kurzen Variablennamen.
  *
  * Zum Auswendiglernen gedacht, um den Code schnell im Examen reproduzieren zu
- * können. (Siehe Klasse {@link QuickZerlegeLinksRechts})
+ * können. (Siehe Klasse {@link QuickHorare})
  */
 public class QuickMinimal extends SortieralgorithmusMinimal {
 
@@ -75,8 +75,6 @@ public class QuickMinimal extends SortieralgorithmusMinimal {
 
   /**
    * Sortiere ein Zahlen-Feld mit Hilfe des Quicksort-Algorithmus.
-   *
-   * @param zahlen Ein Feld mit Zahlen, das sortiert werden soll.
    *
    * @return Das sortierte Zahlenfeld.
    */

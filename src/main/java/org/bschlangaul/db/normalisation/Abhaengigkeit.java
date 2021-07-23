@@ -153,15 +153,20 @@ public final class Abhaengigkeit {
 
   /**
    * @author Hermine Bschlangaul
+   *
+   * @param abhaengigkeiten Eine Menge an Funktionalen Abhängigkeiten.
+   *
+   * @return Eine Menge Attributen, die in der Menge an Funktionalen
+   *         Abhängigkeiten vorkommen.
    */
-  public static Set<Attribut> extractAttributes(Set<Abhaengigkeit> funcDeps) {
-    Set<Attribut> attributes = new HashSet<>();
-    for (Abhaengigkeit funcDep : funcDeps) {
-      for (Attribut attribute : funcDep.getAllAttributes()) {
-        attributes.add(attribute);
+  public static Set<Attribut> extrahiereAttribute(Set<Abhaengigkeit> abhaengigkeiten) {
+    Set<Attribut> attribute = new HashSet<>();
+    for (Abhaengigkeit abhaengigkeit : abhaengigkeiten) {
+      for (Attribut attribut : abhaengigkeit.getAllAttributes()) {
+        attribute.add(attribut);
       }
     }
-    return attributes;
+    return attribute;
   }
 
   protected final Set<Attribut> left;
@@ -215,6 +220,8 @@ public final class Abhaengigkeit {
 
   /**
    * @author Hermine Bschlangaul
+   *
+   * @return Eine Menger aller Attribute der Funktionalen Abhängigkeit.
    */
   public Set<Attribut> getAllAttributes() {
     HashSet<Attribut> all = new HashSet<>();

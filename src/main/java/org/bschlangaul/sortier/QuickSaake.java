@@ -9,7 +9,7 @@ package org.bschlangaul.sortier;
  * „zerlege“-Methode arbeitet sich von links nach rechts hoch um die endgültige
  * Position des Pivot-Elements zu bestimmen.
  */
-public class QuickZerlegeLinks extends Sortieralgorithmus {
+public class QuickSaake extends Sortieralgorithmus {
 
   /**
    * Hilfsmethode zum Zerlegen der Folge. Diese Methode heißt im Englischen auch
@@ -59,8 +59,6 @@ public class QuickZerlegeLinks extends Sortieralgorithmus {
   /**
    * Sortiere ein Zahlen-Feld mit Hilfe des Quicksort-Algorithmus.
    *
-   * @param zahlen Ein Feld mit Zahlen, das sortiert werden soll.
-   *
    * @return Das sortierte Zahlenfeld.
    */
   public int[] sortiere() {
@@ -69,6 +67,6 @@ public class QuickZerlegeLinks extends Sortieralgorithmus {
   }
 
   public static void main(String[] args) {
-    new QuickZerlegeLinks().teste();
+    new QuickSaake().teste();
   }
 }

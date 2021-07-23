@@ -10,7 +10,7 @@ public class AbhaengigkeitTest {
   @Test
   public void staticMethodeExtractAttributs() {
     Set<Abhaengigkeit> fds = Abhaengigkeit.getSet("a -> b; b -> c; a, b -> c; c, b-> a;");
-    Set<Attribut> actual = Abhaengigkeit.extractAttributes(fds);
+    Set<Attribut> actual = Abhaengigkeit.extrahiereAttribute(fds);
     Set<Attribut> expected = Attribut.getSet("a, b, c");
     assertEquals(expected, actual);
   }

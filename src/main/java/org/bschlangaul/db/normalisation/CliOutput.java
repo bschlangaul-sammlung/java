@@ -17,7 +17,7 @@ public class CliOutput {
 
   public CliOutput(String funcDeps) {
     this.funcDeps = Abhaengigkeit.getSet(funcDeps);
-    this.attributes = Abhaengigkeit.extractAttributes(this.funcDeps);
+    this.attributes = Abhaengigkeit.extrahiereAttribute(this.funcDeps);
   }
 
   public void findKeys() {

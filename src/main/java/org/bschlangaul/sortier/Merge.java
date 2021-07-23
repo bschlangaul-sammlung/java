@@ -65,8 +65,6 @@ public class Merge extends Sortieralgorithmus {
   /**
    * Sortiere ein Zahlen-Feld mit Hilfe des Mergesort-Algorithmus.
    *
-   * @param zahlen Ein Feld mit Zahlen, das sortiert werden soll.
-   *
    * @return Das sortierte Zahlenfeld.
    */
   public int[] sortiere() {

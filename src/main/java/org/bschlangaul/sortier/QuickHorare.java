@@ -9,19 +9,18 @@ package org.bschlangaul.sortier;
  * "https://javabeginners.de/Algorithmen/Sortieralgorithmen/Quicksort.php">javabeginners.de</a>)
  *
  * Ohne Hin- und Herkopieren des Pivot-Elements wie bei Saake
- * {@link QuickZerlegeLinks}. Die endgültige Position des Pivot-Elements wird
+ * {@link QuickSaake}. Die endgültige Position des Pivot-Elements wird
  * gefunden, indem die linke und rechte Grenze immer weiter in die Mitte
  * verschoben wird.
  */
-public class QuickZerlegeLinksRechts extends Sortieralgorithmus {
+public class QuickHorare extends Sortieralgorithmus {
 
   /**
    * Zerlege das Zahlen-Feld.
    *
-   * @param links Die Index-Nummer ab dem das Zahlen-Feld zerlegt werden
-   *                     soll.
-   * @param rechts  Die Index-Nummer bis zu dem das Zahlen-Feld zerlegt
-   *                     werden soll.
+   * @param links  Die Index-Nummer ab dem das Zahlen-Feld zerlegt werden soll.
+   * @param rechts Die Index-Nummer bis zu dem das Zahlen-Feld zerlegt werden
+   *               soll.
    *
    * @return Die Index-Nummer, an dem das Feld zerlegt werden soll.
    */
@@ -50,10 +49,9 @@ public class QuickZerlegeLinksRechts extends Sortieralgorithmus {
   /**
    * Sortiere ein Zahlen-Feld mit Hilfe des Quicksort-Algorithmus.
    *
-   * @param links Die Index-Nummer ab dem das Zahlen-Feld sortiert werden
-   *                     soll.
-   * @param rechts  Die Index-Nummer bis zu dem das Zahlen-Feld sortiert
-   *                     werden soll.
+   * @param links  Die Index-Nummer ab dem das Zahlen-Feld sortiert werden soll.
+   * @param rechts Die Index-Nummer bis zu dem das Zahlen-Feld sortiert werden
+   *               soll.
    *
    * @return Das sortierte Zahlenfeld.
    */
@@ -70,8 +68,6 @@ public class QuickZerlegeLinksRechts extends Sortieralgorithmus {
   /**
    * Sortiere ein Zahlen-Feld mit Hilfe des Quicksort-Algorithmus.
    *
-   * @param zahlen Ein Feld mit Zahlen, das sortiert werden soll.
-   *
    * @return Das sortierte Zahlenfeld.
    */
   public int[] sortiere() {
@@ -80,6 +76,6 @@ public class QuickZerlegeLinksRechts extends Sortieralgorithmus {
   }
 
   public static void main(String[] args) {
-    new QuickZerlegeLinksRechts().teste();
+    new QuickHorare().teste();
   }
 }

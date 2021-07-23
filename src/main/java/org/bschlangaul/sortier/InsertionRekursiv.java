@@ -4,9 +4,6 @@ package org.bschlangaul.sortier;
  * Sortiere ein Zahlen-Feld mit Hilfe des Insertionsort-Algorithmus in einer
  * rekursiven Art und Weise. (nach <a href=
  * "https://www.geeksforgeeks.org/recursive-insertion-sort/">geeksforgeeks.org</a>)
- *
- * @param zahlen Ein Feld mit Zahlen, das sortiert werden soll.
- * @param i Wie viele Zahlen im Feld sortiert werden sollen.
  */
 public class InsertionRekursiv extends Sortieralgorithmus {
 
