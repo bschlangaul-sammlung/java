@@ -17,13 +17,6 @@ public class GraphAdjazenzMatrix extends Graph {
   public double[][] matrix;
 
   /**
-   * Damit wir Kanten mit negativen Werten oder Null speichern können, wird der
-   * Wert für nicht erreichbare Knoten auf den kleinsten möglichen Double-Wert
-   * gesetzt. Für Double gibt es keine MIN_VALUE Konstante wie bei Integer.
-   */
-  public double NICHT_ERREICHBAR = -Double.MAX_VALUE;
-
-  /**
    * Konstruktor für Objekte der Klasse GraphAdjazenzMatrix.
    *
    * Die maximale Anzahl der Knoten wird dabei festgelegt.
@@ -47,7 +40,6 @@ public class GraphAdjazenzMatrix extends Graph {
   @Override
   protected void initialisiere(int maximaleAnzahlKnoten) {
     matrix = new double[maximaleAnzahlKnoten][maximaleAnzahlKnoten];
-
     for (int i = 0; i < matrix.length; i++) {
       for (int j = 0; j < matrix[i].length; j++) {
         matrix[i][j] = NICHT_ERREICHBAR;

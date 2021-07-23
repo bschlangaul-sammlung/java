@@ -1,12 +1,14 @@
 package org.bschlangaul.graph.einfaches_format;
 
+import org.bschlangaul.graph.Graph;
+
 /**
  * Diese Klasse dient als eine Art Zwischenspeicher für Kanteninformationen.
  */
 public class GraphenFormatKante implements Comparable<GraphenFormatKante> {
   public String von;
   public String nach;
-  public double gewicht;
+  public double gewicht = Graph.NICHT_ERREICHBAR;
   public boolean gerichtet;
 
   /**

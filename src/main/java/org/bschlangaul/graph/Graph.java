@@ -8,6 +8,13 @@ import org.bschlangaul.graph.einfaches_format.GraphenFormatKante;
 
 public abstract class Graph {
 
+  /**
+   * Damit wir Kanten mit negativen Werten oder Null speichern können, wird der
+   * Wert für nicht erreichbare Knoten auf den kleinsten möglichen Double-Wert
+   * gesetzt. Für Double gibt es keine MIN_VALUE Konstante wie bei Integer.
+   */
+  public static final double NICHT_ERREICHBAR = -Double.MAX_VALUE;
+
   private ArrayList<Knoten> knotenListe;
   private HashMap<String, Integer> knotenIndex;
 

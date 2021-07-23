@@ -9,6 +9,7 @@ public class MinimalerSpannbaumKruskalTest {
 
   private void vergleiche(double erwartet, String dateiName) {
     MinimalerSpannbaumKruskal k = new MinimalerSpannbaumKruskal(TestHelfer.leseDatei("graph/" + dateiName));
+    k.gibMatrixAus();
     assertEquals(erwartet, k.führeAus(), 0);
   }
 
