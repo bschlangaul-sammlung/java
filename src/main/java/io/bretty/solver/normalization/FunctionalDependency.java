@@ -14,7 +14,7 @@ import java.util.Set;
  *
  * @author SUN XIMENG (Nathaniel)
  */
-public final class FuncDep {
+public final class FunctionalDependency {
 
   /**
    * A builder class to help construct a {@code FuncDep} object
@@ -37,8 +37,8 @@ public final class FuncDep {
      *
      * @return a new {@code FuncDep} object
      */
-    public FuncDep build() {
-      return new FuncDep(this.left, this.right);
+    public FunctionalDependency build() {
+      return new FunctionalDependency(this.left, this.right);
     }
 
     /**
@@ -93,7 +93,7 @@ public final class FuncDep {
    *              --&gt; e,f" (white spaces are optional)
    * @return a set of {@code FuncDep} objects
    */
-  public static Set<FuncDep> getSet(String exprs) {
+  public static Set<FunctionalDependency> getSet(String exprs) {
     if (exprs.equals("")) {
       return new HashSet<>();
     }
@@ -108,10 +108,10 @@ public final class FuncDep {
    *              example: "a, b --&gt; c, d"
    * @return a set of {@code FuncDep} objects
    */
-  public static Set<FuncDep> getSet(String[] exprs) {
-    Set<FuncDep> fds = new HashSet<>();
+  public static Set<FunctionalDependency> getSet(String[] exprs) {
+    Set<FunctionalDependency> fds = new HashSet<>();
     for (String s : exprs) {
-      fds.add(FuncDep.of(s));
+      fds.add(FunctionalDependency.of(s));
     }
     return fds;
   }
@@ -123,7 +123,7 @@ public final class FuncDep {
    *             (white spaces are optional)
    * @return a {@code FuncDep} object
    */
-  public static FuncDep of(String expr) {
+  public static FunctionalDependency of(String expr) {
     String[] halves = expr.split("->");
     return of(halves[0], halves[1]);
   }
@@ -136,7 +136,7 @@ public final class FuncDep {
    * @param right a formatted string as the following example: "c, d"
    * @return a {@code FuncDep} object
    */
-  public static FuncDep of(String left, String right) {
+  public static FunctionalDependency of(String left, String right) {
     left = left.replaceAll("\\s+", "");
     right = right.replaceAll("\\s+", "");
     String[] lefts = left.split(",");
@@ -154,9 +154,9 @@ public final class FuncDep {
   /**
    * @author Hermine Bschlangaul
    */
-  public static Set<Attribute> extractAttributes(Set<FuncDep> funcDeps) {
+  public static Set<Attribute> extractAttributes(Set<FunctionalDependency> funcDeps) {
     Set<Attribute> attributes = new HashSet<>();
-    for (FuncDep funcDep : funcDeps) {
+    for (FunctionalDependency funcDep : funcDeps) {
       for (Attribute attribute : funcDep.getAllAttributes()) {
         attributes.add(attribute);
       }
@@ -176,7 +176,7 @@ public final class FuncDep {
    * @param right a set of {@code Attribute} objects to be placed on the right of
    *              the FD
    */
-  public FuncDep(Set<Attribute> left, Set<Attribute> right) {
+  public FunctionalDependency(Set<Attribute> left, Set<Attribute> right) {
     this.left = new HashSet<>(left);
     this.right = new HashSet<>(right);
   }
@@ -190,10 +190,10 @@ public final class FuncDep {
     if (o == this) {
       return true;
     }
-    if (!(o instanceof FuncDep)) {
+    if (!(o instanceof FunctionalDependency)) {
       return false;
     }
-    FuncDep fd = (FuncDep) o;
+    FunctionalDependency fd = (FunctionalDependency) o;
     return this.left.equals(fd.left) && this.right.equals(fd.right);
   }
 

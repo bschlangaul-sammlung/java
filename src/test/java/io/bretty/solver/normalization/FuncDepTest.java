@@ -9,15 +9,15 @@ import org.junit.Test;
 public class FuncDepTest {
   @Test
   public void staticMethodeExtractAttributes() {
-    Set<FuncDep> fds = FuncDep.getSet("a -> b; b -> c; a, b -> c; c, b-> a;");
-    Set<Attribute> actual = FuncDep.extractAttributes(fds);
+    Set<FunctionalDependency> fds = FunctionalDependency.getSet("a -> b; b -> c; a, b -> c; c, b-> a;");
+    Set<Attribute> actual = FunctionalDependency.extractAttributes(fds);
     Set<Attribute> expected = Attribute.getSet("a, b, c");
     assertEquals(expected, actual);
   }
 
   @Test
   public void methodeGetAllAttributes() {
-    FuncDep fd = FuncDep.of("c, b-> a");
+    FunctionalDependency fd = FunctionalDependency.of("c, b-> a");
     Set<Attribute> expected = Attribute.getSet("a, b, c");
     assertEquals(expected, fd.getAllAttributes());
   }

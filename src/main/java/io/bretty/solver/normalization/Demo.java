@@ -15,7 +15,7 @@ public class Demo {
     Attribute classroom = new Attribute("Classroom");
     Attribute course = new Attribute("Course");
 
-    FuncDep fd = new FuncDep.Builder().left(time, classroom).right(course).build();
+    FunctionalDependency fd = new FunctionalDependency.Builder().left(time, classroom).right(course).build();
 
     System.out.println("time = " + time);
     System.out.println("classroom = " + classroom);
@@ -25,15 +25,15 @@ public class Demo {
 
   public static void check3NF() {
     Set<Attribute> attrs = Attribute.getSet("A, B, C");
-    Set<FuncDep> fds = FuncDep.getSet("A,B->C; C->B");
-    System.out.println("BCNF = " + Algos.checkBCNF(attrs, fds).isEmpty());
-    System.out.println("3NF = " + Algos.check3NF(attrs, fds).isEmpty());
+    Set<FunctionalDependency> fds = FunctionalDependency.getSet("A,B->C; C->B");
+    System.out.println("BCNF = " + AlgorithmCollection.checkBCNF(attrs, fds).isEmpty());
+    System.out.println("3NF = " + AlgorithmCollection.check3NF(attrs, fds).isEmpty());
   }
 
   public static void checkBCNF() {
     Set<Attribute> attrs = Attribute.getSet("name, location, favAppl, application, provider");
-    Set<FuncDep> fds = FuncDep.getSet("name->location; name->favAppl; application->provider");
-    System.out.println(Algos.checkBCNF(attrs, fds));
+    Set<FunctionalDependency> fds = FunctionalDependency.getSet("name->location; name->favAppl; application->provider");
+    System.out.println(AlgorithmCollection.checkBCNF(attrs, fds));
   }
 
   // public static void checkLossy() {
@@ -47,21 +47,21 @@ public class Demo {
 
   public static void closure() {
     Set<Attribute> attrs = Attribute.getSet("C,S");
-    Set<FuncDep> fds = FuncDep.getSet("C->T;H,R->C;H,T->R;C,S->G;H,S->R");
+    Set<FunctionalDependency> fds = FunctionalDependency.getSet("C->T;H,R->C;H,T->R;C,S->G;H,S->R");
 
-    System.out.println(Algos.closure(attrs, fds));
+    System.out.println(AlgorithmCollection.closure(attrs, fds));
   }
 
   public static void combineRight() {
-    Set<FuncDep> fds = FuncDep.getSet("" + "A->B;" + "A,B->B,C;" + "A->C;" + "B,C->D;" + "B,C->C,E");
-    Algos.combineRight(fds);
-    Algos.removeTrivial(fds);
+    Set<FunctionalDependency> fds = FunctionalDependency.getSet("" + "A->B;" + "A,B->B,C;" + "A->C;" + "B,C->D;" + "B,C->C,E");
+    AlgorithmCollection.combineRight(fds);
+    AlgorithmCollection.removeTrivial(fds);
     printSet(fds);
   }
 
   public static void decompose() {
     Set<Attribute> attrs = Attribute.getSet("name, location, favAppl, application, provider");
-    Set<FuncDep> fds = FuncDep.getSet("name->location; name->favAppl; application->provider");
+    Set<FunctionalDependency> fds = FunctionalDependency.getSet("name->location; name->favAppl; application->provider");
     Relation original = new Relation(attrs, fds);
 
     Set<Relation> decomposed = original.decomposeToBCNF();
@@ -85,7 +85,7 @@ public class Demo {
 
   public static void decomposeTo3NF() {
     Set<Attribute> attrs = Attribute.getSet("C, T, H, R, S, G");
-    Set<FuncDep> fds = FuncDep.getSet("C->T;H,R->C;H,T->R;C,S->G;H,S->R");
+    Set<FunctionalDependency> fds = FunctionalDependency.getSet("C->T;H,R->C;H,T->R;C,S->G;H,S->R");
     Relation original = new Relation(attrs, fds);
 
     Set<Relation> decomposed = original.decomposeTo3NF();
@@ -97,17 +97,17 @@ public class Demo {
   }
 
   public static void equivalent() {
-    Set<FuncDep> a = FuncDep.getSet("A->C; A,C->D; E->A,D; E->H");
-    Set<FuncDep> b = FuncDep.getSet("A->C,D; E->A,H");
-    System.out.println(Algos.equivalent(a, b));
+    Set<FunctionalDependency> a = FunctionalDependency.getSet("A->C; A,C->D; E->A,D; E->H");
+    Set<FunctionalDependency> b = FunctionalDependency.getSet("A->C,D; E->A,H");
+    System.out.println(AlgorithmCollection.equivalent(a, b));
   }
 
   public static void findKeys() {
 
-    Set<FuncDep> fds = FuncDep.getSet("A, B -> C; C, D -> E; C -> A; C -> D; D -> B");
+    Set<FunctionalDependency> fds = FunctionalDependency.getSet("A, B -> C; C, D -> E; C -> A; C -> D; D -> B");
     Set<Attribute> atts = Attribute.getSet("A, B, C, D, E");
 
-    Set<Set<Attribute>> keys = Algos.keys(atts, fds);
+    Set<Set<Attribute>> keys = AlgorithmCollection.computeCandidateKeys(atts, fds);
     for (Set<Attribute> sa : keys) {
       System.out.println(sa);
     }
@@ -116,10 +116,10 @@ public class Demo {
   public static void findSuperKeys() {
     String[] exprs = { "A, B -> C", "C, D -> E", "C -> A", "C -> D", "D -> B" };
 
-    Set<FuncDep> fds = FuncDep.getSet(exprs);
+    Set<FunctionalDependency> fds = FunctionalDependency.getSet(exprs);
     Set<Attribute> atts = Attribute.getSet("A, B, C, D, E");
 
-    Set<Set<Attribute>> keys = Algos.superKeys(atts, fds);
+    Set<Set<Attribute>> keys = AlgorithmCollection.computeSuperKeys(atts, fds);
     for (Set<Attribute> sa : keys) {
       System.out.println(sa);
     }
@@ -129,11 +129,11 @@ public class Demo {
   public static void keys() {
     String[] exprs = { "A, B -> C", "C, D -> E", "C -> A", "C -> D", "D -> B" };
 
-    Set<FuncDep> fds = FuncDep.getSet(exprs);
+    Set<FunctionalDependency> fds = FunctionalDependency.getSet(exprs);
     Set<Attribute> atts = Attribute.getSet("A, B, C, D, E");
 
-    Set<Set<Attribute>> superkeys = Algos.superKeys(atts, fds);
-    Set<Set<Attribute>> keys = Algos.keys(atts, fds);
+    Set<Set<Attribute>> superkeys = AlgorithmCollection.computeSuperKeys(atts, fds);
+    Set<Set<Attribute>> keys = AlgorithmCollection.computeCandidateKeys(atts, fds);
 
     System.out.println("All the super keys: ");
     for (Set<Attribute> sa : superkeys) {
@@ -147,9 +147,9 @@ public class Demo {
   }
 
   public static void minimalBasis() {
-    Set<FuncDep> fds = FuncDep.getSet("name -> location;name -> favAppl;appl, name -> favAppl");
-    Set<FuncDep> mb = Algos.minimalBasis(fds);
-    for (FuncDep fd : mb) {
+    Set<FunctionalDependency> fds = FunctionalDependency.getSet("name -> location;name -> favAppl;appl, name -> favAppl");
+    Set<FunctionalDependency> mb = AlgorithmCollection.minimalBasis(fds);
+    for (FunctionalDependency fd : mb) {
       System.out.println(fd);
     }
   }
@@ -157,11 +157,11 @@ public class Demo {
   public static void powerset() {
     Set<Attribute> attrs = Attribute.getSet("A,B,C");
     Set<Attribute> notin = Attribute.getSet("D,E");
-    Set<FuncDep> fds = FuncDep.getSet("A->B,C;C,D->E;E->A;B->D");
-    Set<Set<Attribute>> powerset = Algos.powerSet(attrs);
+    Set<FunctionalDependency> fds = FunctionalDependency.getSet("A->B,C;C,D->E;E->A;B->D");
+    Set<Set<Attribute>> powerset = AlgorithmCollection.powerSet(attrs);
     Map<Set<Attribute>, Set<Attribute>> map = new HashMap<Set<Attribute>, Set<Attribute>>();
     for (Set<Attribute> sa : powerset) {
-      map.put(sa, Algos.closure(sa, fds));
+      map.put(sa, AlgorithmCollection.closure(sa, fds));
     }
     for (Set<Attribute> k : map.keySet()) {
       Set<Attribute> v = map.get(k);
@@ -180,10 +180,10 @@ public class Demo {
 
   public static void projection() {
     Set<Attribute> attrs = Attribute.getSet("name, location, favAppl, appl");
-    Set<FuncDep> fds = FuncDep.getSet("name->location,favAppl; appl->provider");
-    Set<FuncDep> result = Algos.projection(attrs, fds);
+    Set<FunctionalDependency> fds = FunctionalDependency.getSet("name->location,favAppl; appl->provider");
+    Set<FunctionalDependency> result = AlgorithmCollection.projection(attrs, fds);
     // System.out.println(result);
-    for (FuncDep fd : result) {
+    for (FunctionalDependency fd : result) {
       System.out.println(fd);
     }
   }
@@ -194,16 +194,16 @@ public class Demo {
   }
 
   public static void removeFD() {
-    Set<FuncDep> fds = FuncDep.getSet("A->B,C;B->C;A->B;A,B->C");
-    Algos.splitRight(fds);
-    int count = Algos.removeUnnecessaryEntireFD(fds);
+    Set<FunctionalDependency> fds = FunctionalDependency.getSet("A->B,C;B->C;A->B;A,B->C");
+    AlgorithmCollection.splitRight(fds);
+    int count = AlgorithmCollection.removeUnnecessaryEntireFD(fds);
     System.out.println("Removed = " + count);
     printSet(fds);
   }
 
   public static void removeTrivial() {
-    Set<FuncDep> fds = FuncDep.getSet("A->B;" + "A,B->B;" + "A,B->A;" + "C->C;" + "C,D,E,F->C,D,F");
-    Algos.removeTrivial(fds);
+    Set<FunctionalDependency> fds = FunctionalDependency.getSet("A->B;" + "A,B->B;" + "A,B->A;" + "C->C;" + "C,D,E,F->C,D,F");
+    AlgorithmCollection.removeTrivial(fds);
     printSet(fds);
   }
 

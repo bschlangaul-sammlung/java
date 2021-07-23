@@ -16,7 +16,7 @@ import java.util.Set;
 public final class Relation {
 
   private final Set<Attribute> attrs;
-  private final Set<FuncDep> fds;
+  private final Set<FunctionalDependency> fds;
 
   /**
    * The default constructors
@@ -24,7 +24,7 @@ public final class Relation {
    * @param attrs a set of attributes
    * @param fds   a set of FD's
    */
-  public Relation(Set<Attribute> attrs, Set<FuncDep> fds) {
+  public Relation(Set<Attribute> attrs, Set<FunctionalDependency> fds) {
     this.attrs = new HashSet<>(attrs);
     this.fds = new HashSet<>(fds);
   }
@@ -40,7 +40,7 @@ public final class Relation {
    */
   public Relation(String names, String exprs) {
     this.attrs = Attribute.getSet(names);
-    this.fds = FuncDep.getSet(exprs);
+    this.fds = FunctionalDependency.getSet(exprs);
   }
 
   /**
@@ -53,7 +53,7 @@ public final class Relation {
    */
   public Relation(String[] names, String[] exprs) {
     this.attrs = Attribute.getSet(names);
-    this.fds = FuncDep.getSet(exprs);
+    this.fds = FunctionalDependency.getSet(exprs);
   }
 
   /**
@@ -64,11 +64,11 @@ public final class Relation {
    */
   public Set<Relation> decomposeTo3NF() {
     Set<Relation> result = new HashSet<>();
-    Set<FuncDep> mb = Algos.minimalBasis(this.fds);
-    for (FuncDep fd : mb) {
+    Set<FunctionalDependency> mb = AlgorithmCollection.minimalBasis(this.fds);
+    for (FunctionalDependency fd : mb) {
       Set<Attribute> attrsNow = new HashSet<>(fd.getLeft());
       attrsNow.addAll(fd.getRight());
-      Set<FuncDep> proj = Algos.projection(attrsNow, mb);
+      Set<FunctionalDependency> proj = AlgorithmCollection.projection(attrsNow, mb);
       result.add(new Relation(attrsNow, proj));
     }
     Set<Relation> toRemove = new HashSet<>();
@@ -80,7 +80,7 @@ public final class Relation {
       }
     }
     result.removeAll(toRemove);
-    Set<Set<Attribute>> keys = Algos.keys(this.attrs, mb);
+    Set<Set<Attribute>> keys = AlgorithmCollection.computeCandidateKeys(this.attrs, mb);
     boolean contains = false;
     for (Relation r : result) {
       for (Set<Attribute> k : keys) {
@@ -99,7 +99,7 @@ public final class Relation {
         key = k;
         break;
       }
-      Set<FuncDep> proj = Algos.projection(key, mb);
+      Set<FunctionalDependency> proj = AlgorithmCollection.projection(key, mb);
       result.add(new Relation(key, proj));
     }
     return result;
@@ -115,25 +115,25 @@ public final class Relation {
     Set<Relation> result = new HashSet<>();
 
     // check if it's already in BCNF
-    Set<FuncDep> violating = this.getFdsViolatingBCNF();
+    Set<FunctionalDependency> violating = this.getFdsViolatingBCNF();
     if (violating.isEmpty()) {
       result.add(this);
       return result;
     }
 
     // if not, pick a violating FD to decompose
-    FuncDep pick = null;
-    for (FuncDep fd : violating) {
+    FunctionalDependency pick = null;
+    for (FunctionalDependency fd : violating) {
       pick = fd;
       break;
     }
     Set<Attribute> lefts = pick.getLeft();
-    Set<Attribute> attrs1 = Algos.closure(lefts, this.fds);
+    Set<Attribute> attrs1 = AlgorithmCollection.closure(lefts, this.fds);
     Set<Attribute> attrs2 = new HashSet<>(this.attrs);
     attrs2.removeAll(attrs1);
     attrs2.addAll(lefts);
-    Set<FuncDep> fds1 = Algos.projection(attrs1, this.fds);
-    Set<FuncDep> fds2 = Algos.projection(attrs2, this.fds);
+    Set<FunctionalDependency> fds1 = AlgorithmCollection.projection(attrs1, this.fds);
+    Set<FunctionalDependency> fds2 = AlgorithmCollection.projection(attrs2, this.fds);
 
     // check if FDs are preserved
     /*
@@ -183,23 +183,23 @@ public final class Relation {
    *
    * @return all FD's that violate the 3NF; an empty set if it's already in 3NF
    */
-  public Set<FuncDep> getFdsViolating3NF() {
-    return Algos.check3NF(this.attrs, this.fds);
+  public Set<FunctionalDependency> getFdsViolating3NF() {
+    return AlgorithmCollection.check3NF(this.attrs, this.fds);
   }
 
   /**
    *
    * @return all FD's that violate the BCNF; an empty set if it's already in BCNF
    */
-  public Set<FuncDep> getFdsViolatingBCNF() {
-    return Algos.checkBCNF(this.attrs, this.fds);
+  public Set<FunctionalDependency> getFdsViolatingBCNF() {
+    return AlgorithmCollection.checkBCNF(this.attrs, this.fds);
   }
 
   /**
    *
    * @return a set of {@code FuncDep} objects that involved in this relation
    */
-  public Set<FuncDep> getFuncDeps() {
+  public Set<FunctionalDependency> getFuncDeps() {
     return new HashSet<>(this.fds);
   }
 
@@ -209,7 +209,7 @@ public final class Relation {
    * @return a set of candidate keys, and each itself is a set of attributes
    */
   public Set<Set<Attribute>> getKeys() {
-    return Algos.keys(this.attrs, this.fds);
+    return AlgorithmCollection.computeCandidateKeys(this.attrs, this.fds);
   }
 
   /**
@@ -218,7 +218,7 @@ public final class Relation {
    * @return a set of superkeys, and each itself is a set of attributes
    */
   public Set<Set<Attribute>> getSuperkeys() {
-    return Algos.superKeys(this.attrs, this.fds);
+    return AlgorithmCollection.computeSuperKeys(this.attrs, this.fds);
   }
 
   @Override
@@ -227,7 +227,7 @@ public final class Relation {
     for (Attribute a : this.attrs) {
       hash = 31 * hash + a.hashCode();
     }
-    for (FuncDep fd : this.fds) {
+    for (FunctionalDependency fd : this.fds) {
       hash = 31 * hash + fd.hashCode();
     }
     return hash;
@@ -239,7 +239,7 @@ public final class Relation {
    *         (3NF)
    */
   public boolean is3NF() {
-    return Algos.check3NF(this.attrs, this.fds).isEmpty();
+    return AlgorithmCollection.check3NF(this.attrs, this.fds).isEmpty();
   }
 
   /**
@@ -248,7 +248,7 @@ public final class Relation {
    *         (BCNF)
    */
   public boolean isBCNF() {
-    return Algos.checkBCNF(this.attrs, this.fds).isEmpty();
+    return AlgorithmCollection.checkBCNF(this.attrs, this.fds).isEmpty();
   }
 
   @Override
@@ -261,7 +261,7 @@ public final class Relation {
     }
     sb.delete(sb.length() - 2, sb.length() - 1);
     sb.append("\nFunctional Dependencies: \n");
-    for (FuncDep fd : this.fds) {
+    for (FunctionalDependency fd : this.fds) {
       sb.append(fd);
       sb.append('\n');
     }

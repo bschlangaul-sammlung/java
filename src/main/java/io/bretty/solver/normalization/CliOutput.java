@@ -7,22 +7,22 @@ import java.util.Set;
  * @author Hermine Bschlangaul
  */
 public class CliOutput {
-  Set<FuncDep> funcDeps;
+  Set<FunctionalDependency> funcDeps;
   Set<Attribute> attributes;
 
   public CliOutput(String attributes, String funcDeps) {
     this.attributes = Attribute.getSet(attributes);
-    this.funcDeps = FuncDep.getSet(funcDeps);
+    this.funcDeps = FunctionalDependency.getSet(funcDeps);
   }
 
   public CliOutput(String funcDeps) {
-    this.funcDeps = FuncDep.getSet(funcDeps);
-    this.attributes = FuncDep.extractAttributes(this.funcDeps);
+    this.funcDeps = FunctionalDependency.getSet(funcDeps);
+    this.attributes = FunctionalDependency.extractAttributes(this.funcDeps);
   }
 
   public void findKeys() {
-    Set<Set<Attribute>> superkeys = Algos.superKeys(attributes, funcDeps);
-    Set<Set<Attribute>> keys = Algos.keys(attributes, funcDeps);
+    Set<Set<Attribute>> superkeys = AlgorithmCollection.computeSuperKeys(attributes, funcDeps);
+    Set<Set<Attribute>> keys = AlgorithmCollection.computeCandidateKeys(attributes, funcDeps);
 
     System.out.println("Alle Superschlüssel: ");
     for (Set<Attribute> sa : superkeys) {
@@ -37,14 +37,14 @@ public class CliOutput {
 
   public void findMinimalCover() {
     System.out.println("Kanonische Überdeckung: ");
-    Set<FuncDep> mb = Algos.minimalBasis(funcDeps);
-    for (FuncDep fd : mb) {
+    Set<FunctionalDependency> mb = AlgorithmCollection.minimalBasis(funcDeps);
+    for (FunctionalDependency fd : mb) {
       System.out.println(fd);
     }
   }
 
   public void isIn3NF() {
-    Set<FuncDep> violating = Algos.check3NF(attributes, funcDeps);
+    Set<FunctionalDependency> violating = AlgorithmCollection.check3NF(attributes, funcDeps);
     System.out.println("3NF = " + violating.isEmpty());
     if (!violating.isEmpty()) {
       printSet(violating);
@@ -52,7 +52,7 @@ public class CliOutput {
   }
 
   public void isInBCNF() {
-    Set<FuncDep> violating = Algos.checkBCNF(attributes, funcDeps);
+    Set<FunctionalDependency> violating = AlgorithmCollection.checkBCNF(attributes, funcDeps);
     System.out.println("BCNF = " + violating.isEmpty());
     if (!violating.isEmpty()) {
       printSet(violating);
