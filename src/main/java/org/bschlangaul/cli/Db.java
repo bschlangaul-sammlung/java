@@ -11,11 +11,10 @@ import java.util.concurrent.Callable;
     "d" }, mixinStandardHelpOptions = true, description = "Führe Aufgaben zum Themenbereich Datenbanken aus.")
 class Db implements Callable<Integer> {
 
-  @Parameters(index = "0", description = "Funktionale Abhängigkeiten in der Form (ohne Leerzeichen): a-->b;b-->c;",
-   paramLabel = "<FAs>")
+  @Parameters(index = "0", description = "Funktionale Abhängigkeiten in der Form (ohne Leerzeichen): a-->b;b-->c;", paramLabel = "<FAs>")
   private String funktionaleAbhaengigkeiten;
 
-  @Parameters(index = "1", arity= "0..1", description = "Attribute in der Form: a,b,c")
+  @Parameters(index = "1", arity = "0..1", description = "Attribute in der Form: a,b,c")
   private String attribute;
 
   @Override
