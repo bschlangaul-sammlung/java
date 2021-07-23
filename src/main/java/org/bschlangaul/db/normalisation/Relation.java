@@ -2,7 +2,7 @@
  * Copyright (c) 2015 SUN XIMENG (Nathaniel). All rights reserved.
  */
 
-package io.bretty.solver.normalization;
+package org.bschlangaul.db.normalisation;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -15,8 +15,8 @@ import java.util.Set;
  */
 public final class Relation {
 
-  private final Set<Attribute> attrs;
-  private final Set<FunctionalDependency> fds;
+  private final Set<Attribut> attrs;
+  private final Set<Abhaengigkeit> fds;
 
   /**
    * The default constructors
@@ -24,7 +24,7 @@ public final class Relation {
    * @param attrs a set of attributes
    * @param fds   a set of FD's
    */
-  public Relation(Set<Attribute> attrs, Set<FunctionalDependency> fds) {
+  public Relation(Set<Attribut> attrs, Set<Abhaengigkeit> fds) {
     this.attrs = new HashSet<>(attrs);
     this.fds = new HashSet<>(fds);
   }
@@ -39,8 +39,8 @@ public final class Relation {
    *              "{@code a, b -> c; d -> e, f}"
    */
   public Relation(String names, String exprs) {
-    this.attrs = Attribute.getSet(names);
-    this.fds = FunctionalDependency.getSet(exprs);
+    this.attrs = Attribut.getSet(names);
+    this.fds = Abhaengigkeit.getSet(exprs);
   }
 
   /**
@@ -52,8 +52,8 @@ public final class Relation {
    *              "{@code a, b -> c, d}"
    */
   public Relation(String[] names, String[] exprs) {
-    this.attrs = Attribute.getSet(names);
-    this.fds = FunctionalDependency.getSet(exprs);
+    this.attrs = Attribut.getSet(names);
+    this.fds = Abhaengigkeit.getSet(exprs);
   }
 
   /**
@@ -64,11 +64,11 @@ public final class Relation {
    */
   public Set<Relation> decomposeTo3NF() {
     Set<Relation> result = new HashSet<>();
-    Set<FunctionalDependency> mb = AlgorithmCollection.minimalBasis(this.fds);
-    for (FunctionalDependency fd : mb) {
-      Set<Attribute> attrsNow = new HashSet<>(fd.getLeft());
+    Set<Abhaengigkeit> mb = AlgorithmenSammlung.minimalBasis(this.fds);
+    for (Abhaengigkeit fd : mb) {
+      Set<Attribut> attrsNow = new HashSet<>(fd.getLeft());
       attrsNow.addAll(fd.getRight());
-      Set<FunctionalDependency> proj = AlgorithmCollection.projection(attrsNow, mb);
+      Set<Abhaengigkeit> proj = AlgorithmenSammlung.projection(attrsNow, mb);
       result.add(new Relation(attrsNow, proj));
     }
     Set<Relation> toRemove = new HashSet<>();
@@ -80,10 +80,10 @@ public final class Relation {
       }
     }
     result.removeAll(toRemove);
-    Set<Set<Attribute>> keys = AlgorithmCollection.computeCandidateKeys(this.attrs, mb);
+    Set<Set<Attribut>> keys = AlgorithmenSammlung.berechneKandidatenSchlüssel(this.attrs, mb);
     boolean contains = false;
     for (Relation r : result) {
-      for (Set<Attribute> k : keys) {
+      for (Set<Attribut> k : keys) {
         if (r.attrs.containsAll(k)) {
           contains = true;
           break;
@@ -94,12 +94,12 @@ public final class Relation {
       }
     }
     if (!contains) {
-      Set<Attribute> key = null;
-      for (Set<Attribute> k : keys) {
+      Set<Attribut> key = null;
+      for (Set<Attribut> k : keys) {
         key = k;
         break;
       }
-      Set<FunctionalDependency> proj = AlgorithmCollection.projection(key, mb);
+      Set<Abhaengigkeit> proj = AlgorithmenSammlung.projection(key, mb);
       result.add(new Relation(key, proj));
     }
     return result;
@@ -115,25 +115,25 @@ public final class Relation {
     Set<Relation> result = new HashSet<>();
 
     // check if it's already in BCNF
-    Set<FunctionalDependency> violating = this.getFdsViolatingBCNF();
+    Set<Abhaengigkeit> violating = this.getFdsViolatingBCNF();
     if (violating.isEmpty()) {
       result.add(this);
       return result;
     }
 
     // if not, pick a violating FD to decompose
-    FunctionalDependency pick = null;
-    for (FunctionalDependency fd : violating) {
+    Abhaengigkeit pick = null;
+    for (Abhaengigkeit fd : violating) {
       pick = fd;
       break;
     }
-    Set<Attribute> lefts = pick.getLeft();
-    Set<Attribute> attrs1 = AlgorithmCollection.closure(lefts, this.fds);
-    Set<Attribute> attrs2 = new HashSet<>(this.attrs);
+    Set<Attribut> lefts = pick.getLeft();
+    Set<Attribut> attrs1 = AlgorithmenSammlung.berechneAttributHülle(lefts, this.fds);
+    Set<Attribut> attrs2 = new HashSet<>(this.attrs);
     attrs2.removeAll(attrs1);
     attrs2.addAll(lefts);
-    Set<FunctionalDependency> fds1 = AlgorithmCollection.projection(attrs1, this.fds);
-    Set<FunctionalDependency> fds2 = AlgorithmCollection.projection(attrs2, this.fds);
+    Set<Abhaengigkeit> fds1 = AlgorithmenSammlung.projection(attrs1, this.fds);
+    Set<Abhaengigkeit> fds2 = AlgorithmenSammlung.projection(attrs2, this.fds);
 
     // check if FDs are preserved
     /*
@@ -175,7 +175,7 @@ public final class Relation {
    *
    * @return a set of {@code Attribute} objects that appear in this relations
    */
-  public Set<Attribute> getAttributes() {
+  public Set<Attribut> getAttributes() {
     return new HashSet<>(this.attrs);
   }
 
@@ -183,23 +183,23 @@ public final class Relation {
    *
    * @return all FD's that violate the 3NF; an empty set if it's already in 3NF
    */
-  public Set<FunctionalDependency> getFdsViolating3NF() {
-    return AlgorithmCollection.check3NF(this.attrs, this.fds);
+  public Set<Abhaengigkeit> getFdsViolating3NF() {
+    return AlgorithmenSammlung.check3NF(this.attrs, this.fds);
   }
 
   /**
    *
    * @return all FD's that violate the BCNF; an empty set if it's already in BCNF
    */
-  public Set<FunctionalDependency> getFdsViolatingBCNF() {
-    return AlgorithmCollection.checkBCNF(this.attrs, this.fds);
+  public Set<Abhaengigkeit> getFdsViolatingBCNF() {
+    return AlgorithmenSammlung.checkBCNF(this.attrs, this.fds);
   }
 
   /**
    *
    * @return a set of {@code FuncDep} objects that involved in this relation
    */
-  public Set<FunctionalDependency> getFuncDeps() {
+  public Set<Abhaengigkeit> getFuncDeps() {
     return new HashSet<>(this.fds);
   }
 
@@ -208,8 +208,8 @@ public final class Relation {
    *
    * @return a set of candidate keys, and each itself is a set of attributes
    */
-  public Set<Set<Attribute>> getKeys() {
-    return AlgorithmCollection.computeCandidateKeys(this.attrs, this.fds);
+  public Set<Set<Attribut>> getKeys() {
+    return AlgorithmenSammlung.berechneKandidatenSchlüssel(this.attrs, this.fds);
   }
 
   /**
@@ -217,17 +217,17 @@ public final class Relation {
    *
    * @return a set of superkeys, and each itself is a set of attributes
    */
-  public Set<Set<Attribute>> getSuperkeys() {
-    return AlgorithmCollection.computeSuperKeys(this.attrs, this.fds);
+  public Set<Set<Attribut>> getSuperkeys() {
+    return AlgorithmenSammlung.berechneSuperSchlüssel(this.attrs, this.fds);
   }
 
   @Override
   public int hashCode() {
     int hash = 17;
-    for (Attribute a : this.attrs) {
+    for (Attribut a : this.attrs) {
       hash = 31 * hash + a.hashCode();
     }
-    for (FunctionalDependency fd : this.fds) {
+    for (Abhaengigkeit fd : this.fds) {
       hash = 31 * hash + fd.hashCode();
     }
     return hash;
@@ -239,7 +239,7 @@ public final class Relation {
    *         (3NF)
    */
   public boolean is3NF() {
-    return AlgorithmCollection.check3NF(this.attrs, this.fds).isEmpty();
+    return AlgorithmenSammlung.check3NF(this.attrs, this.fds).isEmpty();
   }
 
   /**
@@ -248,20 +248,20 @@ public final class Relation {
    *         (BCNF)
    */
   public boolean isBCNF() {
-    return AlgorithmCollection.checkBCNF(this.attrs, this.fds).isEmpty();
+    return AlgorithmenSammlung.checkBCNF(this.attrs, this.fds).isEmpty();
   }
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder(Attribute.AVERAGE_LENGTH * 50);
+    StringBuilder sb = new StringBuilder(Attribut.AVERAGE_LENGTH * 50);
     sb.append("Attributes:\n");
-    for (Attribute a : this.attrs) {
+    for (Attribut a : this.attrs) {
       sb.append(a);
       sb.append(", ");
     }
     sb.delete(sb.length() - 2, sb.length() - 1);
     sb.append("\nFunctional Dependencies: \n");
-    for (FunctionalDependency fd : this.fds) {
+    for (Abhaengigkeit fd : this.fds) {
       sb.append(fd);
       sb.append('\n');
     }

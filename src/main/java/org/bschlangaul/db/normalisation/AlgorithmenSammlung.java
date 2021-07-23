@@ -2,7 +2,7 @@
  * Copyright (c) 2015 SUN XIMENG (Nathaniel). All rights reserved.
  */
 
-package org.bschlangaul.db;
+package org.bschlangaul.db.normalisation;
 
 import java.util.ArrayList;
 import java.util.HashMap;

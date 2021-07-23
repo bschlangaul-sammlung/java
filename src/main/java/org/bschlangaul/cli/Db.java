@@ -3,9 +3,9 @@ package org.bschlangaul.cli;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 
-import io.bretty.solver.normalization.CliOutput;
-
 import java.util.concurrent.Callable;
+
+import org.bschlangaul.db.normalisation.CliOutput;
 
 @Command(name = "db", aliases = {
     "d" }, mixinStandardHelpOptions = true, description = "Führe Aufgaben zum Themenbereich Datenbanken aus.")

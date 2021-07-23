@@ -2,13 +2,13 @@
  * Copyright (c) 2015 SUN XIMENG (Nathaniel). All rights reserved.
  */
 
-package org.bschlangaul.db;
+package org.bschlangaul.db.normalisation;
 
 import java.util.HashSet;
 import java.util.Set;
 
 /**
- * The {@code Attribute} class represents an attribute in a relation
+ * The {@code Attribut} class represents an attribute in a relation
  *
  * @author SUN XIMENG (Nathaniel)
  */

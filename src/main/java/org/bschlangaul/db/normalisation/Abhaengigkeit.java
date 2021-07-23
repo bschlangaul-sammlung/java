@@ -2,7 +2,7 @@
  * Copyright (c) 2015 SUN XIMENG (Nathaniel). All rights reserved.
  */
 
-package io.bretty.solver.normalization;
+package org.bschlangaul.db.normalisation;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -14,7 +14,7 @@ import java.util.Set;
  *
  * @author SUN XIMENG (Nathaniel)
  */
-public final class FunctionalDependency {
+public final class Abhaengigkeit {
 
   /**
    * A builder class to help construct a {@code FuncDep} object
@@ -22,8 +22,8 @@ public final class FunctionalDependency {
    * @author SUN XIMENG (Nathaniel)
    */
   public static class Builder {
-    private Set<Attribute> left;
-    private Set<Attribute> right;
+    private Set<Attribut> left;
+    private Set<Attribut> right;
 
     /**
      * The default constructor
@@ -37,8 +37,8 @@ public final class FunctionalDependency {
      *
      * @return a new {@code FuncDep} object
      */
-    public FunctionalDependency build() {
-      return new FunctionalDependency(this.left, this.right);
+    public Abhaengigkeit build() {
+      return new Abhaengigkeit(this.left, this.right);
     }
 
     /**
@@ -47,7 +47,7 @@ public final class FunctionalDependency {
      * @param as one or more {@code Attribute} objects
      * @return this builder
      */
-    public Builder left(Attribute... as) {
+    public Builder left(Attribut... as) {
       this.left.addAll(Arrays.asList(as));
       return this;
     }
@@ -58,7 +58,7 @@ public final class FunctionalDependency {
      * @param as a set of {@code Attribute} objects
      * @return this builder
      */
-    public Builder left(Set<Attribute> as) {
+    public Builder left(Set<Attribut> as) {
       this.left.addAll(as);
       return this;
     }
@@ -69,7 +69,7 @@ public final class FunctionalDependency {
      * @param as one or more {@code Attribute} objects
      * @return this builder
      */
-    public Builder right(Attribute... as) {
+    public Builder right(Attribut... as) {
       this.right.addAll(Arrays.asList(as));
       return this;
     }
@@ -80,7 +80,7 @@ public final class FunctionalDependency {
      * @param as a set of {@code Attribute} objects
      * @return this builder
      */
-    public Builder right(Set<Attribute> as) {
+    public Builder right(Set<Attribut> as) {
       this.right.addAll(as);
       return this;
     }
@@ -93,7 +93,7 @@ public final class FunctionalDependency {
    *              --&gt; e,f" (white spaces are optional)
    * @return a set of {@code FuncDep} objects
    */
-  public static Set<FunctionalDependency> getSet(String exprs) {
+  public static Set<Abhaengigkeit> getSet(String exprs) {
     if (exprs.equals("")) {
       return new HashSet<>();
     }
@@ -108,10 +108,10 @@ public final class FunctionalDependency {
    *              example: "a, b --&gt; c, d"
    * @return a set of {@code FuncDep} objects
    */
-  public static Set<FunctionalDependency> getSet(String[] exprs) {
-    Set<FunctionalDependency> fds = new HashSet<>();
+  public static Set<Abhaengigkeit> getSet(String[] exprs) {
+    Set<Abhaengigkeit> fds = new HashSet<>();
     for (String s : exprs) {
-      fds.add(FunctionalDependency.of(s));
+      fds.add(Abhaengigkeit.of(s));
     }
     return fds;
   }
@@ -123,7 +123,7 @@ public final class FunctionalDependency {
    *             (white spaces are optional)
    * @return a {@code FuncDep} object
    */
-  public static FunctionalDependency of(String expr) {
+  public static Abhaengigkeit of(String expr) {
     String[] halves = expr.split("->");
     return of(halves[0], halves[1]);
   }
@@ -136,17 +136,17 @@ public final class FunctionalDependency {
    * @param right a formatted string as the following example: "c, d"
    * @return a {@code FuncDep} object
    */
-  public static FunctionalDependency of(String left, String right) {
+  public static Abhaengigkeit of(String left, String right) {
     left = left.replaceAll("\\s+", "");
     right = right.replaceAll("\\s+", "");
     String[] lefts = left.split(",");
     String[] rights = right.split(",");
     Builder bd = new Builder();
     for (String s : lefts) {
-      bd.left(Attribute.of(s));
+      bd.left(Attribut.of(s));
     }
     for (String s : rights) {
-      bd.right(Attribute.of(s));
+      bd.right(Attribut.of(s));
     }
     return bd.build();
   }
@@ -154,19 +154,19 @@ public final class FunctionalDependency {
   /**
    * @author Hermine Bschlangaul
    */
-  public static Set<Attribute> extractAttributes(Set<FunctionalDependency> funcDeps) {
-    Set<Attribute> attributes = new HashSet<>();
-    for (FunctionalDependency funcDep : funcDeps) {
-      for (Attribute attribute : funcDep.getAllAttributes()) {
+  public static Set<Attribut> extractAttributes(Set<Abhaengigkeit> funcDeps) {
+    Set<Attribut> attributes = new HashSet<>();
+    for (Abhaengigkeit funcDep : funcDeps) {
+      for (Attribut attribute : funcDep.getAllAttributes()) {
         attributes.add(attribute);
       }
     }
     return attributes;
   }
 
-  protected final Set<Attribute> left;
+  protected final Set<Attribut> left;
 
-  protected final Set<Attribute> right;
+  protected final Set<Attribut> right;
 
   /**
    * The default constructor
@@ -176,7 +176,7 @@ public final class FunctionalDependency {
    * @param right a set of {@code Attribute} objects to be placed on the right of
    *              the FD
    */
-  public FunctionalDependency(Set<Attribute> left, Set<Attribute> right) {
+  public Abhaengigkeit(Set<Attribut> left, Set<Attribut> right) {
     this.left = new HashSet<>(left);
     this.right = new HashSet<>(right);
   }
@@ -190,10 +190,10 @@ public final class FunctionalDependency {
     if (o == this) {
       return true;
     }
-    if (!(o instanceof FunctionalDependency)) {
+    if (!(o instanceof Abhaengigkeit)) {
       return false;
     }
-    FunctionalDependency fd = (FunctionalDependency) o;
+    Abhaengigkeit fd = (Abhaengigkeit) o;
     return this.left.equals(fd.left) && this.right.equals(fd.right);
   }
 
@@ -201,7 +201,7 @@ public final class FunctionalDependency {
    * @return the set of {@code Attribute} objects that appear in the left part of
    *         this FD
    */
-  public Set<Attribute> getLeft() {
+  public Set<Attribut> getLeft() {
     return new HashSet<>(this.left);
   }
 
@@ -209,15 +209,15 @@ public final class FunctionalDependency {
    * @return the set of {@code Attribute} objects that appear in the right part of
    *         this FD
    */
-  public Set<Attribute> getRight() {
+  public Set<Attribut> getRight() {
     return new HashSet<>(this.right);
   }
 
   /**
    * @author Hermine Bschlangaul
    */
-  public Set<Attribute> getAllAttributes() {
-    HashSet<Attribute> all = new HashSet<>();
+  public Set<Attribut> getAllAttributes() {
+    HashSet<Attribut> all = new HashSet<>();
     all.addAll(this.left);
     all.addAll(this.right);
     return all;
@@ -226,10 +226,10 @@ public final class FunctionalDependency {
   @Override
   public int hashCode() {
     int result = 17;
-    for (Attribute at : this.left) {
+    for (Attribut at : this.left) {
       result = 31 * result + at.hashCode();
     }
-    for (Attribute at : this.right) {
+    for (Attribut at : this.right) {
       result = 31 * result + at.hashCode();
     }
     return result;
@@ -237,14 +237,14 @@ public final class FunctionalDependency {
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder((this.left.size() + this.right.size()) * Attribute.AVERAGE_LENGTH);
-    for (Attribute at : this.left) {
+    StringBuilder sb = new StringBuilder((this.left.size() + this.right.size()) * Attribut.AVERAGE_LENGTH);
+    for (Attribut at : this.left) {
       sb.append(at.toString());
       sb.append(", ");
     }
     sb.delete(sb.length() - 2, sb.length());
     sb.append(" -> ");
-    for (Attribute at : this.right) {
+    for (Attribut at : this.right) {
       sb.append(at.toString());
       sb.append(", ");
     }

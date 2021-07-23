@@ -4,4 +4,4 @@
  *
  * Ins Deutsche übersetzt.
  */
-package org.bschlangaul.db;
+package org.bschlangaul.db.normalisation;

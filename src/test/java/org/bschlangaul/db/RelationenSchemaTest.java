@@ -3,6 +3,7 @@ package org.bschlangaul.db;
 import static org.junit.Assert.assertEquals;
 
 import org.bschlangaul.TestHelfer;
+
 import org.junit.Test;
 
 public class RelationenSchemaTest {
