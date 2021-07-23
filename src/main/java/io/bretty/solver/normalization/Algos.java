@@ -16,7 +16,6 @@ import java.util.Set;
  * dependencies (FD's)
  *
  * @author SUN XIMENG (Nathaniel)
- *
  */
 public class Algos {
 

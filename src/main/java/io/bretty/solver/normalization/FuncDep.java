@@ -13,16 +13,13 @@ import java.util.Set;
  * attributes on the left functionally determined all those on the right.
  *
  * @author SUN XIMENG (Nathaniel)
- *
  */
-
 public final class FuncDep {
 
   /**
    * A builder class to help construct a {@code FuncDep} object
    *
    * @author SUN XIMENG (Nathaniel)
-   *
    */
   public static class Builder {
     private Set<Attribute> left;
@@ -87,7 +84,6 @@ public final class FuncDep {
       this.right.addAll(as);
       return this;
     }
-
   }
 
   /**
@@ -155,6 +151,19 @@ public final class FuncDep {
     return bd.build();
   }
 
+  /**
+   * @author Hermine Bschlangaul
+   */
+  public static Set<Attribute> extractAttributes(Set<FuncDep> funcDeps) {
+    Set<Attribute> attributes = new HashSet<>();
+    for (FuncDep funcDep : funcDeps) {
+      for (Attribute attribute : funcDep.getAllAttributes()) {
+        attributes.add(attribute);
+      }
+    }
+    return attributes;
+  }
+
   protected final Set<Attribute> left;
 
   protected final Set<Attribute> right;
@@ -189,7 +198,6 @@ public final class FuncDep {
   }
 
   /**
-   *
    * @return the set of {@code Attribute} objects that appear in the left part of
    *         this FD
    */
@@ -203,6 +211,16 @@ public final class FuncDep {
    */
   public Set<Attribute> getRight() {
     return new HashSet<>(this.right);
+  }
+
+  /**
+   * @author Hermine Bschlangaul
+   */
+  public Set<Attribute> getAllAttributes() {
+    HashSet<Attribute> all = new HashSet<>();
+    all.addAll(this.left);
+    all.addAll(this.right);
+    return all;
   }
 
   @Override

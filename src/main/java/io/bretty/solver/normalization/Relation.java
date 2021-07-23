@@ -12,7 +12,6 @@ import java.util.Set;
  * attributes and a set of FD's
  *
  * @author SUN XIMENG (Nathaniel)
- *
  */
 public final class Relation {
 
