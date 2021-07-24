@@ -64,7 +64,7 @@ public final class Relation {
    */
   public Set<Relation> decomposeTo3NF() {
     Set<Relation> result = new HashSet<>();
-    Set<Abhaengigkeit> mb = AlgorithmenSammlung.minimalBasis(this.fds);
+    Set<Abhaengigkeit> mb = AlgorithmenSammlung.findeKanonischeÜberdeckung(this.fds);
     for (Abhaengigkeit fd : mb) {
       Set<Attribut> attrsNow = new HashSet<>(fd.getLeft());
       attrsNow.addAll(fd.getRight());
@@ -80,7 +80,7 @@ public final class Relation {
       }
     }
     result.removeAll(toRemove);
-    Set<Set<Attribut>> keys = AlgorithmenSammlung.berechneKandidatenSchlüssel(this.attrs, mb);
+    Set<Set<Attribut>> keys = AlgorithmenSammlung.findeKandidatenSchlüssel(this.attrs, mb);
     boolean contains = false;
     for (Relation r : result) {
       for (Set<Attribut> k : keys) {
@@ -209,7 +209,7 @@ public final class Relation {
    * @return a set of candidate keys, and each itself is a set of attributes
    */
   public Set<Set<Attribut>> getKeys() {
-    return AlgorithmenSammlung.berechneKandidatenSchlüssel(this.attrs, this.fds);
+    return AlgorithmenSammlung.findeKandidatenSchlüssel(this.attrs, this.fds);
   }
 
   /**
@@ -218,7 +218,7 @@ public final class Relation {
    * @return a set of superkeys, and each itself is a set of attributes
    */
   public Set<Set<Attribut>> getSuperkeys() {
-    return AlgorithmenSammlung.berechneSuperSchlüssel(this.attrs, this.fds);
+    return AlgorithmenSammlung.findeSuperSchlüssel(this.attrs, this.fds);
   }
 
   @Override

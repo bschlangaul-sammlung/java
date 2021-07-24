@@ -27,7 +27,7 @@ public class AlgorithmenSammlung {
    * @return {@code true} if this relation is in 3NF
    */
   public static Set<Abhaengigkeit> check3NF(Set<Attribut> attrs, Set<Abhaengigkeit> fds) {
-    Set<Set<Attribut>> keys = berechneKandidatenSchlüssel(attrs, fds);
+    Set<Set<Attribut>> keys = findeKandidatenSchlüssel(attrs, fds);
     Set<Attribut> primes = new HashSet<>();
     for (Set<Attribut> k : keys) {
       primes.addAll(k);
@@ -59,7 +59,7 @@ public class AlgorithmenSammlung {
    * @return {@code true} if this relation is in BCNF
    */
   public static Set<Abhaengigkeit> checkBCNF(Set<Attribut> attrs, Set<Abhaengigkeit> fds) {
-    Set<Set<Attribut>> keys = berechneKandidatenSchlüssel(attrs, fds);
+    Set<Set<Attribut>> keys = findeKandidatenSchlüssel(attrs, fds);
     Set<Abhaengigkeit> violating = new HashSet<>();
     for (Abhaengigkeit fd : fds) {
       boolean contains = false;
@@ -186,7 +186,7 @@ public class AlgorithmenSammlung {
    * @return Eine Menge aus Superschlüsseln. Jeder Superschlüssel ist wiederum
    *         eine Menge aus Attributen.
    */
-  public static Set<Set<Attribut>> berechneSuperSchlüssel(Set<Attribut> attribute, Set<Abhaengigkeit> abhaengigkeiten) {
+  public static Set<Set<Attribut>> findeSuperSchlüssel(Set<Attribut> attribute, Set<Abhaengigkeit> abhaengigkeiten) {
     Set<Set<Attribut>> schlüssel = new HashSet<>();
     if (attribute.isEmpty()) {
       for (Abhaengigkeit abhaengigkeit : abhaengigkeiten) {
@@ -212,9 +212,9 @@ public class AlgorithmenSammlung {
    * @return Eine Menge aus Schlüsselkandidaten. Jeder Schlüsselkandidate besteht
    *         wiederum aus einer Menge von Attributen.
    */
-  public static Set<Set<Attribut>> berechneKandidatenSchlüssel(Set<Attribut> attribute,
+  public static Set<Set<Attribut>> findeKandidatenSchlüssel(Set<Attribut> attribute,
       Set<Abhaengigkeit> abhaengigkeiten) {
-    Set<Set<Attribut>> superSchlüssel = berechneSuperSchlüssel(attribute, abhaengigkeiten);
+    Set<Set<Attribut>> superSchlüssel = findeSuperSchlüssel(attribute, abhaengigkeiten);
     Set<Set<Attribut>> zuEntfernen = new HashSet<>();
     for (Set<Attribut> schlüssel : superSchlüssel) {
       for (Attribut attribut : schlüssel) {
@@ -238,7 +238,7 @@ public class AlgorithmenSammlung {
    * @param fds a set of FD's
    * @return a set of FD's as the minimal basis
    */
-  public static Set<Abhaengigkeit> minimalBasis(Set<Abhaengigkeit> fds) {
+  public static Set<Abhaengigkeit> findeKanonischeÜberdeckung(Set<Abhaengigkeit> fds) {
     Set<Abhaengigkeit> result = new HashSet<>(fds);
 
     // Step 1: split right sides
@@ -310,7 +310,7 @@ public class AlgorithmenSammlung {
       result.add(new Abhaengigkeit.Builder().left(sa).right(closure).build());
     }
     // return result;
-    return minimalBasis(result);
+    return findeKanonischeÜberdeckung(result);
   }
 
   /**

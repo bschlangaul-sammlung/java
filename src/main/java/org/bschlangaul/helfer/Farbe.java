@@ -20,12 +20,24 @@ public class Farbe {
     return ROT + objekt.toString() + RESET;
   }
 
+  public static void druckeRot(Object objekt) {
+    System.out.println(rot(objekt));
+  }
+
   public static String grün(Object objekt) {
     return GRÜN + objekt.toString() + RESET;
   }
 
+  public static void druckeGrün(Object objekt) {
+    System.out.println(grün(objekt));
+  }
+
   public static String gelb(Object objekt) {
     return GELB + objekt.toString() + RESET;
+  }
+
+  public static void druckeGelb(Object objekt) {
+    System.out.println(gelb(objekt));
   }
 
   public static String blau(Object objekt) {

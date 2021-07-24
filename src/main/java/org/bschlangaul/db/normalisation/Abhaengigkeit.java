@@ -124,8 +124,12 @@ public final class Abhaengigkeit {
    * @return a {@code FuncDep} object
    */
   public static Abhaengigkeit of(String expr) {
-    String[] halves = expr.split("->");
-    return of(halves[0], halves[1]);
+    String[] hälften = expr.split("->");
+    if (hälften.length < 2) {
+      System.out.println("Eine Funktionale Abhängigkeit braucht diese Symbole als Trenner: „->“");
+      System.out.println("Diese Zeichenkette wurde übermittelt: " + expr);
+    }
+    return of(hälften[0], hälften[1]);
   }
 
   /**
