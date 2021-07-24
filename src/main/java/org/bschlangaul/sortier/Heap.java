@@ -12,10 +12,13 @@ public class Heap extends Sortieralgorithmus {
       // zahlen[j] ist linker Sohn von zahlen[i]
       j = 2 * i;
       // zahlen[i] hat auch rechten Sohn
-      if (j < letzterIndex)
-        if (zahlen[j - 1] < zahlen[j])
+      if (j < letzterIndex) {
+        if (zahlen[j - 1] < zahlen[j]) {
           // zahlen[j] ist jetzt kleiner
           j++;
+        }
+      }
+
       if (zahlen[i - 1] < zahlen[j - 1]) {
         vertausche(i - 1, j - 1);
         // versickere weiter
@@ -28,14 +31,16 @@ public class Heap extends Sortieralgorithmus {
   }
 
   /**
-   * Sortiere ein Zahlen-Feld mit Hilfe des Heapsort-Algorithmus. *
+   * Sortiere ein Zahlen-Feld mit Hilfe des Heapsort-Algorithmus.
    *
    * @return Das sortierte Zahlenfeld.
    */
   public int[] sortiere() {
     int i;
-    for (i = zahlen.length / 2; i >= 0; i--)
+    for (i = zahlen.length / 2; i >= 0; i--) {
       versickere(i, zahlen.length);
+    }
+
     for (i = zahlen.length - 1; i > 0; i--) {
       // tauscht jeweils letztes Element des Heaps mit dem ersten
       vertausche(0, i);

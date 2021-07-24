@@ -99,6 +99,6 @@ public class Merge extends Sortieralgorithmus {
   }
 
   public static void main(String[] args) {
-
+    new Merge().teste();
   }
 }
