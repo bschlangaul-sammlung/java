@@ -4,7 +4,7 @@ package org.bschlangaul.sortier;
  * Sortiere ein Zahlen-Feld mit Hilfe des Selectionsort-Algorithmus. (Nach Saake
  * Seite 128)
  *
- * Wähle zuerst das rechte Element aus.
+ * Der Algorithmus wählt zuerst das rechte Element aus.
  */
 public class SelectionRechtsIterativ extends Sortieralgorithmus {
 
