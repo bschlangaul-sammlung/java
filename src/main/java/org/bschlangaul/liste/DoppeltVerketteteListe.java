@@ -7,138 +7,137 @@ package org.bschlangaul.liste;
  * Original „DList“.
  */
 public class DoppeltVerketteteListe {
-  static class Node {
-    Object obj; // Element
-    Node prev, next; // Zeiger auf Vorgänger und Nachfolger
+  static class Knoten {
+    Object wert; // Element
+    Knoten vorgänger, nächster; // Zeiger auf Vorgänger und Nachfolger
 
-    public Node(Object o, Node p, Node n) {
-      obj = o;
-      prev = p;
-      next = n;
+    public Knoten(Object wert, Knoten vorgänger, Knoten nächster) {
+      this.wert = wert;
+      this.vorgänger = vorgänger;
+      this.nächster = nächster;
     }
 
-    public Node() {
-      obj = null;
-      prev = next = null;
-    }
-
-    // Vorgänger neu belegen
-    public void setPrevious(Node p) {
-      prev = p;
-    }
-
-    // Zugriff auf Vorgänger
-    public Node getPrevious() {
-      return prev;
+    public Knoten() {
+      wert = null;
+      vorgänger = nächster = null;
     }
 
     // Vorgänger neu belegen
-    public void setNext(Node p) {
-      prev = p;
+    public void setzteVorhergehenden(Knoten vorgänger) {
+      this.vorgänger = vorgänger;
     }
 
     // Zugriff auf Vorgänger
-    public Node getNext() {
-      return prev;
+    public Knoten gibVorgänger() {
+      return vorgänger;
+    }
+
+    // Vorgänger neu belegen
+    public void setzeNächsten(Knoten nächster) {
+      this.nächster = nächster;
     }
 
     // Zugriff auf Vorgänger
-    public Object getElement() {
-      return obj;
+    public Knoten gibNächsten() {
+      return nächster;
+    }
+
+    // Zugriff auf Vorgänger
+    public Object gibWert() {
+      return wert;
     }
   }
 
-  private Node head = null; // Listenanfang
-  private Node tail = null; // Listenende
+  private Knoten anfang = null; // Listenanfang
+  private Knoten ende = null; // Listenende
 
   public DoppeltVerketteteListe() {
-    head = new Node();
-    tail = new Node();
+    anfang = new Knoten();
+    ende = new Knoten();
     // Anfang und Ende "verknüpfen"
-    head.setNext(tail);
-    tail.setPrevious(head);
-    tail.setNext(tail);
+    anfang.setzeNächsten(ende);
+    ende.setzteVorhergehenden(anfang);
+    ende.setzeNächsten(ende);
   }
 
-  public void addFirst(Object o) {
+  public void fügeErstenHinzu(Object o) {
     // Knoten zwischen head und dessen Nachfolger einfügen
-    Node n = new Node(o, head, head.getNext());
-    head.getNext().setPrevious(n);
-    head.setNext(n);
+    Knoten n = new Knoten(o, anfang, anfang.gibNächsten());
+    anfang.gibNächsten().setzteVorhergehenden(n);
+    anfang.setzeNächsten(n);
   }
 
-  public void addLast(Object o) {
+  public void fügeLetztenHinzu(Object o) {
     // Knoten zwischen tail und dessen Vorgänger einfügen
-    Node l = tail.getPrevious();
-    Node n = new Node(o, l, tail);
-    l.setNext(n);
-    tail.setPrevious(n);
+    Knoten l = ende.gibVorgänger();
+    Knoten n = new Knoten(o, l, ende);
+    l.setzeNächsten(n);
+    ende.setzteVorhergehenden(n);
   }
 
-  public Object getFirst() throws LeereListeFehler {
-    if (isEmpty())
+  public Object gibErsten() throws LeereListeFehler {
+    if (istLeer())
       throw new LeereListeFehler();
 
     // Zugriff über Listenanfang
-    return head.getNext().getElement();
+    return anfang.gibNächsten().gibWert();
   }
 
-  public Object getLast() throws LeereListeFehler {
-    if (isEmpty())
+  public Object gibLetzten() throws LeereListeFehler {
+    if (istLeer())
       throw new LeereListeFehler();
     // Zugriff über Listenende
-    return tail.getPrevious().getElement();
+    return ende.gibVorgänger().gibWert();
   }
 
-  public Object removeFirst() throws LeereListeFehler {
-    if (isEmpty())
+  public Object entferneErsten() throws LeereListeFehler {
+    if (istLeer())
       throw new LeereListeFehler();
     // Zugriff über Listenanfang
-    Object o = head.getNext().getElement();
+    Object o = anfang.gibNächsten().gibWert();
     // Knoten zwischen head und Nachfolger entfernen
-    head.setNext(head.getNext().getNext());
-    head.getNext().setPrevious(head);
+    anfang.setzeNächsten(anfang.gibNächsten().gibNächsten());
+    anfang.gibNächsten().setzteVorhergehenden(anfang);
     return o;
   }
 
-  public Object removeLast() throws LeereListeFehler {
-    if (isEmpty())
+  public Object entferneLetzten() throws LeereListeFehler {
+    if (istLeer())
       throw new LeereListeFehler();
     // Zugriff über Listenende
-    Node n = tail.getPrevious();
+    Knoten n = ende.gibVorgänger();
     // Knoten zwischen tail und Vorgänger entfernen
-    n.getPrevious().setNext(tail);
-    tail.setPrevious(n.getPrevious());
-    return n.getElement();
+    n.gibVorgänger().setzeNächsten(ende);
+    ende.setzteVorhergehenden(n.gibVorgänger());
+    return n.gibWert();
   }
 
-  public int size() {
-    int s = 0;
-    Node n = head;
+  public int länge() {
+    int länge = 0;
+    Knoten knoten = anfang;
     // Knoten zählen
-    while (n.getNext() != tail) {
-      s++;
-      n = n.getNext();
+    while (knoten.gibNächsten() != ende) {
+      länge++;
+      knoten = knoten.gibNächsten();
     }
-    return s;
+    return länge;
   }
 
-  public boolean isEmpty() {
+  public boolean istLeer() {
     // keine Knoten zwischen head und tail
-
-    return head.getNext() == tail;
+    return anfang.gibNächsten() == ende;
   }
 
-  class ListIterator implements java.util.Iterator<Object> {
-    private Node node = null;
+  class ListenIterator implements java.util.Iterator<Object> {
+    private Knoten knoten = null;
 
-    public ListIterator() {
+    public ListenIterator() {
       // mit Listenanfang initialisieren
-      node = head.getNext();
+      knoten = anfang.gibNächsten();
     }
 
     public boolean hasNext() {
-      return node != tail;
+      return knoten != ende;
     }
 
     public void remove() {
@@ -148,13 +147,13 @@ public class DoppeltVerketteteListe {
     public Object next() {
       if (!hasNext())
         throw new java.util.NoSuchElementException();
-      Object o = node.getElement();
-      node = node.getNext();
-      return o;
+      Object wert = knoten.gibWert();
+      knoten = knoten.gibNächsten();
+      return wert;
     }
   }
 
   public java.util.Iterator<Object> iterator() {
-    return new ListIterator();
+    return new ListenIterator();
   }
 }
