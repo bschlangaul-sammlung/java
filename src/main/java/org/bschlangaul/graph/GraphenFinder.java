@@ -3,11 +3,9 @@ package org.bschlangaul.graph;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.bschlangaul.helfer.Farbe;
+import org.bschlangaul.helfer.TextAusschnitt;
 import org.bschlangaul.graph.einfaches_format.GraphenFormat;
 import org.bschlangaul.graph.tex.TexAdjazenzListe;
 import org.bschlangaul.graph.tex.TexAdjazenzMatrix;
@@ -63,14 +61,7 @@ public class GraphenFinder {
   public static String umgebungsName = "liGraphenFormat";
 
   private String[] sucheNachEinfachem(String inhalt) {
-    Pattern pattern = Pattern.compile(
-        "\\\\begin\\{" + umgebungsName + "\\}(?<format>.*?)\\\\end\\{" + umgebungsName + "\\}", Pattern.DOTALL);
-    Matcher ergebnis = pattern.matcher(inhalt);
-    ArrayList<String> ausgabe = new ArrayList<String>();
-    while (ergebnis.find()) {
-      ausgabe.add(ergebnis.group("format"));
-    }
-    return ausgabe.toArray(new String[0]);
+    return TextAusschnitt.sucheUmgebung(inhalt, umgebungsName).toArray(new String[0]);
   }
 
   public void gibTexAus() {

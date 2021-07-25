@@ -53,7 +53,7 @@ public class TerminalAusgabe {
 
   public static TerminalAusgabe sucheAbhängigkeiten(String pfad) {
     List<String> ausschnitte = TextAusschnitt.sucheInDatei(pfad, TextAusschnitt
-        .gibTexMakroRegex("(FA|liFunktionaleAbhaengigkeiten)", "[a-zA-Z_0-9$]*", "(?<markup>[^\\}]+)"));
+        .gibMakroRegex("(FA|liFunktionaleAbhaengigkeiten)", "[a-zA-Z_0-9$]*", "(?<markup>[^\\}]+)"));
     if (ausschnitte.size() > 0) {
       return new TerminalAusgabe(ausschnitte.get(0));
     }

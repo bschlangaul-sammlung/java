@@ -16,35 +16,36 @@ public class TextAusschnitt {
 
   /**
    *
-   * @param makroname Der Name des TeX-Makros {@code \makroname{}}.
-   * @param option    {@code \makroname[option]{}}
-   * @param inhalt    Der Inhalt des TeX-Makros umgeben von geschweiften Klammern
-   *                  ({@code \makroname{inhalt}}).
+   * @param name   Der Name des TeX-Makros {@code \makroname{}}.
+   * @param option {@code \makroname[option]{}}
+   * @param inhalt Der Inhalt des TeX-Makros umgeben von geschweiften Klammern
+   *               ({@code \makroname{inhalt}}).
    *
    * @return Ein String der als regulärer Ausdruck eingesetzt werden kann.
    */
-  public static String gibTexMakroRegex(String makroname, String option, String inhalt) {
-    return gibTexMakroRegex(makroname + "(\\[" + option + "\\])?", inhalt);
+  public static String gibMakroRegex(String name, String option, String inhalt) {
+    return gibMakroRegex(name + "(\\[" + option + "\\])?", inhalt);
   }
 
   /**
-   * @param makroname Der Name des TeX-Makros {@code \makroname{}}.
-   * @param inhalt    Der Inhalt des TeX-Makros umgeben von geschweiften Klammern.
+   * @param name   Der Name des TeX-Makros {@code \makroname{}}.
+   * @param inhalt Der Reguläre Ausdruck des Inhalt des TeX-Makros umgeben von
+   *               geschweiften Klammern.
    *
    * @return Ein String der als regulärer Ausdruck eingesetzt werden kann.
    */
-  public static String gibTexMakroRegex(String makroname, String inhalt) {
-    return "\\\\" + makroname + "\\{" + inhalt + "\\}";
+  public static String gibMakroRegex(String name, String inhalt) {
+    return "\\\\" + name + "\\{" + inhalt + "\\}";
   }
 
   /**
-   * @param umgebungsname Der Name der TeX-Umgebung
-   *                      {@code \begin{umgebungsname}...\end{umgebungsname}}.
+   * @param name Der Name der TeX-Umgebung
+   *             {@code \begin{umgebungsname}...\end{umgebungsname}}.
    *
    * @return Ein String der als regulärer Ausdruck eingesetzt werden kann.
    */
-  public static String gibTexUmgebungRegex(String umgebungsname) {
-    return gibTexMakroRegex("begin", umgebungsname) + "(?<markup>.*?)" + gibTexMakroRegex("end", umgebungsname);
+  public static String gibUmgebungRegex(String name) {
+    return gibMakroRegex("begin", name) + "(?<markup>.*?)" + gibMakroRegex("end", name);
   }
 
   /**
@@ -76,15 +77,15 @@ public class TextAusschnitt {
   }
 
   /**
-   * @param inhalt Der Textinhalt in dem mit Hilfe des regulären Ausdrucks nach
-   *               Ausschnitten gesucht werden soll.
-   * @param regex  Ein regulärer Ausdruck der {@code (?<markup>...)} enthält.
+   * @param text  Der Textinhalt, in dem mit Hilfe des regulären Ausdrucks nach
+   *              Ausschnitten gesucht werden soll.
+   * @param regex Ein regulärer Ausdruck der {@code (?<markup>...)} enthält.
    *
-   * @return Eine Liste an gefunden Markups
+   * @return Eine Liste an gefundenen Markups.
    */
-  public static List<String> sucheInText(String inhalt, String regex) {
+  public static List<String> suche(String text, String regex) {
     Pattern pattern = Pattern.compile(regex, Pattern.DOTALL);
-    Matcher ergebnis = pattern.matcher(inhalt);
+    Matcher ergebnis = pattern.matcher(text);
     List<String> markups = new ArrayList<>();
     if (ergebnis.find()) {
       markups.add(ergebnis.group("markup"));
@@ -95,30 +96,59 @@ public class TextAusschnitt {
   /**
    * @param pfad  Der Dateipfad zur Text-Datei.
    *
-   * @param regex  Ein regulärer Ausdruck der {@code (?<markup>...)} enthält.
+   * @param regex Ein regulärer Ausdruck der {@code (?<markup>...)} enthält.
    *
-   * @return Eine Liste an gefunden Markups
+   * @return Eine Liste an gefundenen Markups.
    */
   public static List<String> sucheInDatei(String pfad, String regex) {
     String inhalt = leseTextDatei(pfad);
     if (inhalt != null) {
-      return sucheInText(inhalt, regex);
+      return suche(inhalt, regex);
     }
     return null;
   }
 
   /**
-   * @param datei Eine Text-Datei.
+   * @param datei Eine Text-Datei (eine Instanz der Klasse {@link File}).
    *
-   * @param regex  Ein regulärer Ausdruck der {@code (?<markup>...)} enthält.
+   * @param regex Ein regulärer Ausdruck der {@code (?<markup>...)} enthält.
    *
-   * @return Eine Liste an gefunden Markups
+   * @return Eine Liste an gefundenen Markups.
    */
-  public static List<String> sucheAusschnitteInTextDatei(File datei, String regex) {
+  public static List<String> sucheInDatei(File datei, String regex) {
     String inhalt = leseTextDatei(datei);
     if (inhalt != null) {
-      return sucheInText(inhalt, regex);
+      return suche(inhalt, regex);
     }
     return null;
   }
+
+  /**
+   * Suche nach mehreren TeX-Umgebungen mit dem Namen {@code name}.
+   *
+   * @param text Der Textinhalt, in dem mit Hilfe des regulären Ausdrucks nach
+   *             Ausschnitten gesucht werden soll.
+   * @param name Der Name der TeX-Umgebung.
+   *
+   * @return Eine Liste an gefundenen Inhalten der TeX-Umgebungen. Nur der Inhalt
+   *         wird ausgegeben, nicht die umschließenden TeX-Makros.
+   */
+  public static List<String> sucheUmgebung(String text, String name) {
+    return suche(text, gibUmgebungRegex(name));
+  }
+
+  /**
+   * Suche nach mehreren TeX-Umgebungen mit dem Namen {@code name}.
+   *
+   * @param datei Eine Text-Datei (eine Instanz der Klasse {@link File}).
+
+   * @param name Der Name der TeX-Umgebung.
+   *
+   * @return Eine Liste an gefundenen Inhalten der TeX-Umgebungen. Nur der Inhalt
+   *         wird ausgegeben, nicht die umschließenden TeX-Makros.
+   */
+  public static List<String> sucheUmgebungInDatei(File datei, String name) {
+    return sucheInDatei(datei, gibUmgebungRegex(name));
+  }
+
 }

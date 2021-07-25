@@ -20,8 +20,7 @@ public class RelationenSchemaKonvertierer implements Callable<Integer> {
 
   @Override
   public Integer call() throws Exception {
-    List<String> ausschnitte = TextAusschnitt.sucheAusschnitteInTextDatei(datei,
-        TextAusschnitt.gibTexUmgebungRegex("liRelationenSchemaFormat"));
+    List<String> ausschnitte = TextAusschnitt.sucheUmgebungInDatei(datei, "liRelationenSchemaFormat");
     for (String ausschnitt : ausschnitte) {
       System.out.println(ausschnitt);
       RelationenSchema.gibAusFürProjektSprachen(ausschnitt);
