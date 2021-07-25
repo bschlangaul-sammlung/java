@@ -3,20 +3,38 @@ package org.bschlangaul;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class TestHelfer {
 
-  public static String leseDatei(String relativerPfad) {
-
+  /**
+   * Erzeuge zu einem relativen Pfad relativ zu src/test/resources eine Instanz
+   * der Klasse {@link Path}.
+   *
+   * @param relativerPfad Ein relativen Pfad relativ zu src/test/resources.
+   *
+   * @return Eine Instanz der Klasse {@link Path}.
+   */
+  public static Path erzeugePfad(String relativerPfad) {
     ClassLoader classLoader = TestHelfer.class.getClassLoader();
     String url = classLoader.getResource(relativerPfad).getPath();
-    String inhalt = "";
+    return Paths.get(url);
+  }
+
+  /**
+   * Lese den Inhalt einer Textdatei ein.
+   *
+   * @param relativerPfad Ein relativen Pfad relativ zu src/test/resources.
+   *
+   * @return Der Inhalt der Textdatei im UTF-8-Format.
+   */
+  public static String leseDatei(String relativerPfad) {
     try {
-      inhalt = new String(Files.readAllBytes(Paths.get(url)), StandardCharsets.UTF_8);
+      return new String(Files.readAllBytes(erzeugePfad(relativerPfad)), StandardCharsets.UTF_8);
     } catch (IOException e) {
       e.printStackTrace();
     }
-    return inhalt;
+    return null;
   }
 }

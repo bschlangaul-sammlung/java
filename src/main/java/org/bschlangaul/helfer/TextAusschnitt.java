@@ -12,14 +12,39 @@ import java.util.regex.Pattern;
  * Findet in einer Text-Datei mit Hilfe eines regulären Ausdrucks
  * Textausschnitte, die weiterverarbeitet werden können.
  */
-public class TextAusschnittFinder {
+public class TextAusschnitt {
 
-  public static String gibRegexFürTexMakro(String makroName, String inhalt) {
-    return "\\\\" + makroName + "\\{" + inhalt + "\\}";
+  /**
+   *
+   * @param makroname Der Name des TeX-Makros {@code \makroname{}}.
+   * @param option    {@code \makroname[option]{}}
+   * @param inhalt    Der Inhalt des TeX-Makros umgeben von geschweiften Klammern
+   *                  ({@code \makroname{inhalt}}).
+   *
+   * @return Ein String der als regulärer Ausdruck eingesetzt werden kann.
+   */
+  public static String gibTexMakroRegex(String makroname, String option, String inhalt) {
+    return gibTexMakroRegex(makroname + "(\\[" + option + "\\])?", inhalt);
   }
 
-  public static String gibRegexFürTexUmgebung(String umgebungsName) {
-    return gibRegexFürTexMakro("begin", umgebungsName) + "(?<markup>.*?)" + gibRegexFürTexMakro("end", umgebungsName);
+  /**
+   * @param makroname Der Name des TeX-Makros {@code \makroname{}}.
+   * @param inhalt    Der Inhalt des TeX-Makros umgeben von geschweiften Klammern.
+   *
+   * @return Ein String der als regulärer Ausdruck eingesetzt werden kann.
+   */
+  public static String gibTexMakroRegex(String makroname, String inhalt) {
+    return "\\\\" + makroname + "\\{" + inhalt + "\\}";
+  }
+
+  /**
+   * @param umgebungsname Der Name der TeX-Umgebung
+   *                      {@code \begin{umgebungsname}...\end{umgebungsname}}.
+   *
+   * @return Ein String der als regulärer Ausdruck eingesetzt werden kann.
+   */
+  public static String gibTexUmgebungRegex(String umgebungsname) {
+    return gibTexMakroRegex("begin", umgebungsname) + "(?<markup>.*?)" + gibTexMakroRegex("end", umgebungsname);
   }
 
   /**
@@ -53,11 +78,11 @@ public class TextAusschnittFinder {
   /**
    * @param inhalt Der Textinhalt in dem mit Hilfe des regulären Ausdrucks nach
    *               Ausschnitten gesucht werden soll.
-   * @param regex  Ein regulärer Ausdruck der (?<markup>...) enthält
+   * @param regex  Ein regulärer Ausdruck der {@code (?<markup>...)} enthält.
    *
    * @return Eine Liste an gefunden Markups
    */
-  private static List<String> sucheAusschnitteInText(String inhalt, String regex) {
+  public static List<String> sucheInText(String inhalt, String regex) {
     Pattern pattern = Pattern.compile(regex, Pattern.DOTALL);
     Matcher ergebnis = pattern.matcher(inhalt);
     List<String> markups = new ArrayList<>();
@@ -70,14 +95,14 @@ public class TextAusschnittFinder {
   /**
    * @param pfad  Der Dateipfad zur Text-Datei.
    *
-   * @param regex Ein regulärer Ausdruck der (?<markup>...) enthält
+   * @param regex  Ein regulärer Ausdruck der {@code (?<markup>...)} enthält.
    *
    * @return Eine Liste an gefunden Markups
    */
-  public static List<String> sucheAusschnitteInTextDatei(String pfad, String regex) {
+  public static List<String> sucheInDatei(String pfad, String regex) {
     String inhalt = leseTextDatei(pfad);
     if (inhalt != null) {
-      return sucheAusschnitteInText(inhalt, regex);
+      return sucheInText(inhalt, regex);
     }
     return null;
   }
@@ -85,14 +110,14 @@ public class TextAusschnittFinder {
   /**
    * @param datei Eine Text-Datei.
    *
-   * @param regex Ein regulärer Ausdruck der (?<markup>...) enthält
+   * @param regex  Ein regulärer Ausdruck der {@code (?<markup>...)} enthält.
    *
    * @return Eine Liste an gefunden Markups
    */
   public static List<String> sucheAusschnitteInTextDatei(File datei, String regex) {
     String inhalt = leseTextDatei(datei);
     if (inhalt != null) {
-      return sucheAusschnitteInText(inhalt, regex);
+      return sucheInText(inhalt, regex);
     }
     return null;
   }

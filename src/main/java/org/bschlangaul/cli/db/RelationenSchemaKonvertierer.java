@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.bschlangaul.db.RelationenSchema;
-import org.bschlangaul.helfer.TextAusschnittFinder;
+import org.bschlangaul.helfer.TextAusschnitt;
 
 @Command(name = "relationen-schema", aliases = {
     "r" }, description = "Suche in der TeX-Datei nach liRelationenSchemaFormat-Umgebungen und "
@@ -20,8 +20,8 @@ public class RelationenSchemaKonvertierer implements Callable<Integer> {
 
   @Override
   public Integer call() throws Exception {
-    List<String> ausschnitte = TextAusschnittFinder.sucheAusschnitteInTextDatei(datei,
-        TextAusschnittFinder.gibRegexFürTexUmgebung("liRelationenSchemaFormat"));
+    List<String> ausschnitte = TextAusschnitt.sucheAusschnitteInTextDatei(datei,
+        TextAusschnitt.gibTexUmgebungRegex("liRelationenSchemaFormat"));
     for (String ausschnitt : ausschnitte) {
       System.out.println(ausschnitt);
       RelationenSchema.gibAusFürProjektSprachen(ausschnitt);

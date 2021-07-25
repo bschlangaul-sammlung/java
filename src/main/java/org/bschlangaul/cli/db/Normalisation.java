@@ -4,11 +4,9 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.util.concurrent.Callable;
 
-import org.bschlangaul.db.normalisation.KommandozeilenAusgabe;
+import org.bschlangaul.db.normalisation.TerminalAusgabe;
 
 @Command(name = "normalisation", aliases = {
     "n" }, mixinStandardHelpOptions = true, description = "Führe Aufgaben zum Themenbereich Datenbanken aus.")
@@ -22,19 +20,15 @@ class Normalisation implements Callable<Integer> {
 
   @Override
   public Integer call() {
-    KommandozeilenAusgabe ausgabe = null;
+    TerminalAusgabe ausgabe = null;
 
     File texDatei = new File(abhängigkeiten);
     if (texDatei.exists()) {
-      try {
-        ausgabe = KommandozeilenAusgabe.sucheAbhängigkeitenInText(Files.readString(texDatei.toPath()));
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
+      ausgabe = TerminalAusgabe.sucheAbhängigkeiten(abhängigkeiten);
     } else if (attribute != null) {
-      ausgabe = new KommandozeilenAusgabe(attribute, abhängigkeiten);
+      ausgabe = new TerminalAusgabe(attribute, abhängigkeiten);
     } else {
-      ausgabe = new KommandozeilenAusgabe(abhängigkeiten);
+      ausgabe = new TerminalAusgabe(abhängigkeiten);
     }
 
     if (ausgabe != null) {
