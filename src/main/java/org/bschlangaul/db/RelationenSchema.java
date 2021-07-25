@@ -97,7 +97,7 @@ class Attribut {
       return "INTEGER";
     if (nameEnthält("datum", "date"))
       return "DATE";
-    return "varchar(50)";
+    return "VARCHAR(50)";
   }
 
   public String baueSqlCreate() {

@@ -14,6 +14,14 @@ import java.util.regex.Pattern;
  */
 public class TextAusschnittFinder {
 
+  public static String gibRegexFürTexMakro(String makroName, String inhalt) {
+    return "\\\\" + makroName + "\\{" + inhalt + "\\}";
+  }
+
+  public static String gibRegexFürTexUmgebung(String umgebungsName) {
+    return gibRegexFürTexMakro("begin", umgebungsName) + "(?<markup>.*?)" + gibRegexFürTexMakro("end", umgebungsName);
+  }
+
   /**
    * Lese den Inhalt einer Text-Datei ein.
    *
