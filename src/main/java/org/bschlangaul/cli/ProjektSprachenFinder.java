@@ -1,4 +1,4 @@
-package org.bschlangaul.cli.graph;
+package org.bschlangaul.cli;
 
 import java.io.File;
 import java.io.IOException;
@@ -107,12 +107,11 @@ public class ProjektSprachenFinder implements Callable<Integer> {
     for (ProjektSprache sprache : sucheNachSprachen(datei)) {
       switch (sprache.name) {
         case "RelationenSchema":
-          // RelationenSchema.gibAusFürProjektSprachen(sprache.inhalt);
+          RelationenSchema.gibAusFürProjektSprachen(sprache.inhalt);
           break;
 
         case "Baum":
-          // BaumFormat.gibAusFürProjektSprachen(sprache.inhalt);
-
+          BaumFormat.gibAusFürProjektSprachen(sprache.inhalt);
           break;
 
         default:

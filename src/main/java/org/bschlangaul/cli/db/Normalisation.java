@@ -1,4 +1,4 @@
-package org.bschlangaul.cli;
+package org.bschlangaul.cli.db;
 
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
@@ -10,9 +10,9 @@ import java.util.concurrent.Callable;
 
 import org.bschlangaul.db.normalisation.KommandozeilenAusgabe;
 
-@Command(name = "db", aliases = {
-    "d" }, mixinStandardHelpOptions = true, description = "Führe Aufgaben zum Themenbereich Datenbanken aus.")
-class Db implements Callable<Integer> {
+@Command(name = "normalisation", aliases = {
+    "n" }, mixinStandardHelpOptions = true, description = "Führe Aufgaben zum Themenbereich Datenbanken aus.")
+class Normalisation implements Callable<Integer> {
 
   @Parameters(index = "0", description = "Eine TeX-Datei-Pfad mit \\FA{a->b} als Inhalt oder als String in der Form (ohne Leerzeichen): a-->b;b-->c;", paramLabel = "<FAs>")
   private String abhängigkeiten;
