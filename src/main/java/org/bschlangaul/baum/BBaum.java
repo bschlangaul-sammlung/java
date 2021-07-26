@@ -5,7 +5,7 @@ import java.util.Vector;
 /**
  * Eine Implemenation eines B-Baum (nach Saake Seite 388-389).
  */
-@SuppressWarnings("rawtypes")
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public class BBaum {
 
   /**
@@ -121,7 +121,6 @@ public class BBaum {
      *         zurück. Wenn es ein innerer Knoten ist, geben wir den letzten Verweis
      *         zurück, im Fall eines Blattes SCHLÜSSEL_NICHT_GEFUNDEN (-2).
      */
-    @SuppressWarnings("unchecked")
     public int findeSchlüsselInSeite(Comparable schlüssel, Comparable[] ergebnis) {
       for (int i = 0; i < schlüsselListe.size(); i++) {
         int erg = schlüsselListe.get(i).compareTo(schlüssel);
@@ -143,7 +142,6 @@ public class BBaum {
      *
      * @return Wahr, wenn der Schlüsselwert in die Seite eingefügt werden konnte.
      */
-    @SuppressWarnings("unchecked")
     public boolean fügeInSeiteEin(Comparable schlüssel, BBaumSeite linkesGeschwister, BBaumSeite rechtesGeschwister) {
       boolean erledigt = false;
       // Position für Schlüssel suchen
