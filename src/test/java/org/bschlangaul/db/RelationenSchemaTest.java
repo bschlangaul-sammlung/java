@@ -3,7 +3,7 @@ package org.bschlangaul.db;
 import static org.junit.Assert.assertEquals;
 
 import org.bschlangaul.TestHelfer;
-
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class RelationenSchemaTest {
@@ -97,6 +97,7 @@ public class RelationenSchemaTest {
   }
 
   @Test
+  @Ignore
   public void zusätzlicherSqlAusdruck() {
     RelationenSchema schema = lade("triathlon.txt");
     Attribut schwimmzeit = schema.gibAttribut("Ergebnis", "Schwimmzeit");

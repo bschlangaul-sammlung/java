@@ -9,3 +9,5 @@ Relation3(
 Relation4 (einAttribut { zusätzlicher SQL Ausdruck })
 
 Relation5(id[Relation2])
+
+Relation6(id { int(5) } )
