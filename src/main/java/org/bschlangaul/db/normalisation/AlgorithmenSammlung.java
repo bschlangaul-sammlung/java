@@ -19,6 +19,32 @@ import java.util.Set;
  */
 public class AlgorithmenSammlung {
 
+// https://gitlab.db.in.tum.de/dbtools/DBnormalizer/-/blob/master/DBnormalizer.py
+
+// #checks if the given attribute is contained in a key
+// def isKeyAttribute(attribute, keys):
+// 	for attrSet in keys:
+// 		if attribute in attrSet:
+// 			return True
+// 	return False
+
+
+// #checks if the given set of attributes is a proper subset of a key
+// def isProperSubsetOfKey(attributes, keys):
+// 	for attrSet in keys:
+// 		if attributes < attrSet:
+// 			return True
+// 	return False
+
+
+// def isTwoNF(relation, fds):
+// 	keys = getKeys(relation, fds)
+// 	for fd in fds:
+// 		for attribute in fd[1]:
+// 			if (not(isKeyAttribute(attribute, keys))) & (isProperSubsetOfKey(fd[0], keys)):
+// 				return False
+// 	return True
+
   /**
    * Check if a relation is in the third normal form (3NF)
    *
