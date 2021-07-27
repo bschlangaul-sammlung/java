@@ -56,13 +56,7 @@ class AntlrListener extends RelationenSchemaBaseListener {
   }
 
   public void enterZusätzlicherSqlAusdruck(RelationenSchemaParser.ZusätzlicherSqlAusdruckContext ctx) {
-    String ausgabe = "";
-    for (int i = 0; i < ctx.name().size(); i++) {
-      ausgabe += ctx.name().get(i).getText();
-      if (i < ctx.name().size() - 1)
-        ausgabe += " ";
-    }
-    aktuellesAttribut.zusätzlicherSqlAusdruck = ausgabe;
+    aktuellesAttribut.zusätzlicherSqlAusdruck = ctx.getText().replace("{", "").replace("}", "");
   }
 
 }
@@ -97,7 +91,7 @@ class Attribut {
       return "INTEGER";
     if (nameEnthält("datum", "date"))
       return "DATE";
-    return "varchar(50)";
+    return "VARCHAR(50)";
   }
 
   public String baueSqlCreate() {
@@ -120,10 +114,10 @@ class Attribut {
 
   public String baueTeX() {
     if (fremdRelationenName != null)
-      return Tex.makro("liFremd", String.format("%s[%s]", name, fremdRelationenName));
+      return Tex.makro("f", String.format("%s[%s]", name, fremdRelationenName));
 
     if (istPrimaer)
-      return Tex.makro("liPrimaer", name);
+      return Tex.makro("p", name);
 
     return name;
   }
@@ -172,7 +166,7 @@ class Relation {
   }
 
   public String baueTeX() {
-    return String.format("\\liRelation{%s}{%s}", name,
+    return String.format("\\r{%s}{%s}", name,
         String.join(", ", RelationenSchema.sammleTextVonMethode(attribute, "baueTeX")));
   }
 
@@ -299,8 +293,7 @@ public class RelationenSchema {
 
   public static String gibAusFürEinbettung(String formatText) {
     RelationenSchema schema = new RelationenSchema(formatText);
-    return schema.baueÜbungsdatenbank() + "\n\n" +
-        schema.baueTeX();
+    return schema.baueÜbungsdatenbank() + "\n\n" + schema.baueTeX();
   }
 
   public static void gibAusFürProjektSprachen(String formatText) {

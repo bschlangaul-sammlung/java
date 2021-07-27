@@ -10,7 +10,7 @@ attribut: (fremdSchluessel | attributName) (
 fremdSchluessel: attributName '[' relationenName ']';
 attributName: NAME;
 istPrimaer: '*';
-zusätzlicherSqlAusdruck: '{' name+ '}';
+zusätzlicherSqlAusdruck: '{' ~( '{' | '}' )* '}';
 
 trenner: KOMMA;
 name: NAME;

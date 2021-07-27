@@ -6,7 +6,7 @@ import java.util.concurrent.Callable;
 
 @Command(name = "db", aliases = {
     "d" }, mixinStandardHelpOptions = true, description = "Führe Aufgaben zum Themenbereich Datenbanken aus.", subcommands = {
-        Normalisation.class, RelationenSchemaFinder.class })
+        Normalisation.class, RelationenSchemaKonvertierer.class })
 public class Db implements Callable<Integer> {
 
   @Override

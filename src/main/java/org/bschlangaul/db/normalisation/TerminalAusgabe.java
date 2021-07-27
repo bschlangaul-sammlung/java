@@ -2,48 +2,62 @@
 package org.bschlangaul.db.normalisation;
 
 import org.bschlangaul.helfer.Farbe;
+import org.bschlangaul.helfer.TextAusschnitt;
 
+import java.util.List;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
+ * Diese Klassen bündelt die Algorithmen zur Datenbanknormalisation und bereitet
+ * sie für die Kommandozeilen- bzw Terminalausgabe auf.
+ *
  * @author Hermine Bschlangaul
  */
-public class KommandozeilenAusgabe {
+public class TerminalAusgabe {
   Set<Abhaengigkeit> abhängigkeiten;
   Set<Attribut> attribute;
 
-  public KommandozeilenAusgabe(String attribute, String abhaengigkeiten) {
+  public TerminalAusgabe(String attribute, String abhaengigkeiten) {
     this.attribute = Attribut.getSet(attribute);
     this.abhängigkeiten = Abhaengigkeit.getSet(abhaengigkeiten);
   }
 
-  public KommandozeilenAusgabe(String abhaengigkeiten) {
+  public TerminalAusgabe(String abhaengigkeiten) {
     this.abhängigkeiten = Abhaengigkeit.getSet(abhaengigkeiten);
     this.attribute = Abhaengigkeit.extrahiereAttribute(this.abhängigkeiten);
   }
 
-  public void zeigeAbhängigkeiten() {
+  /**
+   * Zeige die Funktionalen Abhängigkeiten im Terminal.
+   *
+   * @return Die Menge an Funktionalen Abhängigkeiten.
+   */
+  public Set<Abhaengigkeit> zeigeAbhängigkeiten() {
     gibÜberschriftAus("Funktionale Abhängigkeiten");
     for (Abhaengigkeit abhängigkeit : abhängigkeiten) {
       System.out.println(abhängigkeit);
     }
+    return abhängigkeiten;
   }
 
-  public void zeigeAttribute() {
+  /**
+   * Zeige die Attribute im Terminal.
+   *
+   * @return Die Attributemenge.
+   */
+  public Set<Attribut> zeigeAttribute() {
     gibÜberschriftAus("Attribute");
     System.out.println(attribute);
+    return attribute;
   }
 
-  public static KommandozeilenAusgabe sucheAbhängigkeitenInText(String inhalt) {
-    KommandozeilenAusgabe ausgabe = null;
-    Pattern pattern = Pattern.compile("\\\\(FA|liFunktionaleAbhaengigkeiten)(\\[[a-zA-Z_0-9$]*\\])?\\{(?<abhaengigkeiten>[^\\}]+)\\}", Pattern.DOTALL);
-    Matcher ergebnis = pattern.matcher(inhalt);
-    if (ergebnis.find()) {
-      ausgabe = new KommandozeilenAusgabe(ergebnis.group("abhaengigkeiten"));
+  public static TerminalAusgabe sucheAbhängigkeiten(String pfad) {
+    List<String> ausschnitte = TextAusschnitt.sucheInDatei(pfad, TextAusschnitt
+        .gibMakroRegex("(FA|liFunktionaleAbhaengigkeiten)", "[a-zA-Z_0-9$]*", "(?<markup>[^\\}]+)"));
+    if (ausschnitte.size() > 0) {
+      return new TerminalAusgabe(ausschnitte.get(0));
     }
-    return ausgabe;
+    return null;
   }
 
   public void findeSchlüssel() {
@@ -74,27 +88,34 @@ public class KommandozeilenAusgabe {
     Farbe.druckeGelb("\n" + text + ":");
   }
 
-  private String gibFormatierenWahrheitsText(boolean istWahr){
+  private String gibFormatierenWahrheitsText(boolean istWahr) {
     return istWahr ? Farbe.grün("ja") : Farbe.rot("nein");
   }
 
-  public void istIn3NF() {
+  public boolean istIn3NF() {
     Set<Abhaengigkeit> verletzende = AlgorithmenSammlung.check3NF(attribute, abhängigkeiten);
-    System.out.println("\n" + Farbe.gelb("3NF = ") + gibFormatierenWahrheitsText(verletzende.isEmpty()));
-    if (!verletzende.isEmpty()) {
+    Boolean ist = verletzende.isEmpty();
+    System.out.println("\n" + Farbe.gelb("3NF = ") + gibFormatierenWahrheitsText(ist));
+    if (!ist) {
       printSet(verletzende);
     }
+    return ist;
   }
 
-  public void istInBCNF() {
+  public boolean istInBCNF() {
     Set<Abhaengigkeit> verletzende = AlgorithmenSammlung.checkBCNF(attribute, abhängigkeiten);
-    System.out.println("\n" + Farbe.gelb("BCNF = ") + gibFormatierenWahrheitsText(verletzende.isEmpty()));
-    if (!verletzende.isEmpty()) {
+    Boolean ist = verletzende.isEmpty();
+    System.out.println("\n" + Farbe.gelb("BCNF = ") + gibFormatierenWahrheitsText(ist));
+    if (!ist) {
       printSet(verletzende);
     }
+    return ist;
   }
 
-  public  void gibAllesAus() {
+  /**
+   * Bündle alle Ausgaben unter einer Methode.
+   */
+  public void gibAllesAus() {
     zeigeAttribute();
     zeigeAbhängigkeiten();
     findeSchlüssel();

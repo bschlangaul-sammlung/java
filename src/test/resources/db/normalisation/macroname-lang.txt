@@ -1,0 +1,10 @@
+Lorem
+
+\liFunktionaleAbhaengigkeiten[F]{
+  M -> M;
+  M -> N;
+  V -> T, P, PN;
+  P -> PN;
+}
+
+Ipsum
