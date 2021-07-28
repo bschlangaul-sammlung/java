@@ -31,7 +31,7 @@ import org.bschlangaul.baum.BBaum;
  * </pre>
  */
 
-public class BBaumReporter {
+public class TexBBaumReporter {
 
   static String[] englischeZahlen = { "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten" };
 

@@ -20,7 +20,7 @@ import org.bschlangaul.baum.visualisierung.TerminalBaumReporter;
 import org.bschlangaul.baum.visualisierung.TexBaumReporter;
 
 @Command(name = "baum", aliases = {
-    "b" }, mixinStandardHelpOptions = true, description = "Führe baumspezifische Aufgaben aus.")
+    "b" }, mixinStandardHelpOptions = true, description = "Führe Aufgaben zum Thema Binärebaum aus.")
 class Baum implements Callable<Integer> {
 
   @ArgGroup(exclusive = true, multiplicity = "1")
