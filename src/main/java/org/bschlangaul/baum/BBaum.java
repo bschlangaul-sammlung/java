@@ -105,8 +105,8 @@ public class BBaum {
       return eltern;
     }
 
-    public void setzeSeitenType(int nt) {
-      seitenTyp = nt;
+    public void setzeSeitenType(int seitenTyp) {
+      this.seitenTyp = seitenTyp;
       if (kinderListe == null && seitenTyp == INNERE_SEITE)
         kinderListe = new Vector<BBaumSeite>();
     }
@@ -146,12 +146,12 @@ public class BBaum {
       boolean erledigt = false;
       // Position für Schlüssel suchen
       for (int i = 0; i < schlüsselListe.size(); i++) {
-        int res = schlüsselListe.get(i).compareTo(schlüssel);
-        if (res == 0) {
+        int ergebnis = schlüsselListe.get(i).compareTo(schlüssel);
+        if (ergebnis == 0) {
           // Schlüssel existiert schon -> ignorieren
           erledigt = true;
           break;
-        } else if (res > 0) {
+        } else if (ergebnis > 0) {
           // Stelle gefunden -> einfügen
           schlüsselListe.insertElementAt(schlüssel, i);
           if (rechtesGeschwister != null) {
