@@ -143,6 +143,5 @@ public class BBaum {
     seite2.eltern = baum.wurzel;
     seite3.eltern = baum.wurzel;
     TexBBaumReporter.druckeBaum(baum);
-
   }
 }
