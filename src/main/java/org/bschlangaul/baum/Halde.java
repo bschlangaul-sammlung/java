@@ -78,12 +78,12 @@ public class Halde<T extends Comparable<T>> {
    * @return value of T that is minimum or maximum value in heap
    */
   public T entferne() {
-    T result = peek();
+    T ergebnis = gucke();
     vertausche(1, füllstand);
     halde[füllstand] = null;
     füllstand--;
     versickere();
-    return result;
+    return ergebnis;
   }
 
   /**
@@ -108,6 +108,7 @@ public class Halde<T extends Comparable<T>> {
   }
 
   /**
+   * Heißt im Engischen of „poll“.
    * Removes min or max item from heap same as <code>remove()</code> but does not
    * throw exception on empty
    * <p>
@@ -116,15 +117,16 @@ public class Halde<T extends Comparable<T>> {
    * @return value of T that is minimum or maximum value in heap; or
    *         <code>null</code> if empty
    */
-  public T poll() {
-    if (istLeer())
+  public T köpfe() {
+    if (istLeer()) {
       return null;
-    T result = peek();
+    }
+    T ergebnis = gucke();
     vertausche(1, füllstand);
     halde[füllstand] = null;
     füllstand--;
     versickere();
-    return result;
+    return ergebnis;
   }
 
   /**
@@ -137,23 +139,24 @@ public class Halde<T extends Comparable<T>> {
   }
 
   /**
-   * returns min/max value without removing it
+   * Heißt im Englischen oft „peek“ returns min/max value without removing it
    *
    * @return value type T
    * @throws IllegalStateException if empty
    */
-  public T peek() {
-    if (istLeer())
+  public T gucke() {
+    if (istLeer()) {
       throw new IllegalStateException();
+    }
     return halde[1];
   }
 
   /**
-   * Length/size of heap
+   * Gib die Größe der Halde, d. h. die Anzahl der Haldenelemente.
    *
-   * @return int size of heap
+   * @return Die Größe der Halde, d. h. die Anzahl der Haldenelemente.
    */
-  public int length() {
+  public int größe() {
     return füllstand;
   }
 
@@ -333,8 +336,8 @@ public class Halde<T extends Comparable<T>> {
   /**
    * Exportiere die Halde als Binärbaum. Hier kann kein „normaler“ binärer
    * Suchbaum verwendet werden, da in diesem Baum ganz andere Einfügeregeln
-   * gelten. Deshalb schummeln wir hier einen Baum, damit wir ihn darstellen
-   * können.
+   * gelten. Deshalb schummeln wir etwas und erzeugen einen Baum, indem wir die
+   * Knoten einzeln erzeugen und zu einem Baum zusammenfügen.
    *
    * @return Ein Repräsentation als Binärbaum
    */

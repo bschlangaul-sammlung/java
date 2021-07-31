@@ -87,7 +87,7 @@ public class TextAusschnitt {
     Pattern pattern = Pattern.compile(regex, Pattern.DOTALL);
     Matcher ergebnis = pattern.matcher(text);
     List<String> markups = new ArrayList<>();
-    if (ergebnis.find()) {
+    while (ergebnis.find()) {
       markups.add(ergebnis.group("markup"));
     }
     return markups;
@@ -150,5 +150,4 @@ public class TextAusschnitt {
   public static List<String> sucheUmgebungInDatei(File datei, String name) {
     return sucheInDatei(datei, gibUmgebungRegex(name));
   }
-
 }

@@ -30,12 +30,10 @@ public class GraphenFinder {
       graphen = new GraphenFormat[einfachesGraphenFormat.length];
 
       int i = 0;
-
       for (String format : einfachesGraphenFormat) {
         graphen[i] = new GraphenFormat(format);
         i++;
       }
-
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -55,7 +53,7 @@ public class GraphenFinder {
   }
 
   private void gibÜberschriftAus(String überschrift) {
-    System.out.println(String.format("\n%s\n", Farbe.rot(überschrift)));
+    System.out.println(String.format("\n%s\n", überschrift));
   }
 
   public static String umgebungsName = "liGraphenFormat";
@@ -71,18 +69,19 @@ public class GraphenFinder {
   }
 
   private void gibPerGraphTexAus(GraphenFormat graph) {
-    gibÜberschriftAus("Einfaches Graphen-Format zum Einbetten");
+    gibÜberschriftAus(Farbe.rot("Einfaches Graphen-Format zum Einbetten"));
     System.out.println(graph.gibAlsTexUmgebung());
 
-    gibÜberschriftAus("Als TikZ-Umgebung");
+    gibÜberschriftAus(Farbe.grün("Als TikZ-Umgebung"));
     System.out.println(new TexTikz(graph).gibTikzUmgebung());
 
-    gibÜberschriftAus("Adjazenz-Matrix");
+    gibÜberschriftAus(Farbe.grün("Adjazenz-Matrix"));
     GraphAdjazenzMatrix matrix = new GraphAdjazenzMatrix(graph.toString());
     System.out.println(new TexAdjazenzMatrix(matrix).gibTexAusgabe());
 
-    gibÜberschriftAus("Adjazenz-Liste");
+    gibÜberschriftAus(Farbe.grün("Adjazenz-Liste"));
     GraphAdjazenzListe liste = new GraphAdjazenzListe(graph.toString());
     System.out.println(new TexAdjazenzListe(liste).gibTexAusgabe());
+    System.out.println("\n\n");
   }
 }
