@@ -1,5 +1,4 @@
 package org.bschlangaul.baum;
-//https://www.studocu.com/de/document/fom-hochschule-fur-oekonomie-und-management/algorithmen-datenstrukturen/ubung-losung-algo-heapsort/3191573
 
 import static org.junit.Assert.assertArrayEquals;
 
@@ -16,7 +15,7 @@ public class MinHaldeTest {
     for (int i = 0; i < eingefügt.length; i++) {
       halde.fügeEin(eingefügt[i]);
     }
-    assertArrayEquals(erwartet, halde.gibHaldenFeld());
+    assertArrayEquals(erwartet, halde.gibFeld());
   }
 
   @Test
