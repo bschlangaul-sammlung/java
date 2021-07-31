@@ -1,9 +1,9 @@
 package org.bschlangaul.graph.tex;
 
 import java.util.List;
-import java.util.regex.Pattern;
 
 import org.bschlangaul.graph.GraphAdjazenzListe;
+import org.bschlangaul.graph.einfaches_format.GraphenFormat;
 
 public class TexAdjazenzListe {
   private GraphAdjazenzListe graph;
@@ -17,14 +17,21 @@ public class TexAdjazenzListe {
         "l".repeat(graph.gibMaximaleUnterListenTiefe() + 1), inhalt);
   }
 
-  private String formatiereZeile(int vonKnotenNr, List<GraphAdjazenzListe.Kante> unterListe) {
-    String trenner = " & $\\rightarrow$ ";
-    String ausgabe = graph.gibKnotenName(vonKnotenNr) + trenner;
-    for (int i = 0; i < unterListe.size(); i++) {
-      ausgabe += graph.gibKnotenName(unterListe.get(i).nachNr) + trenner;
+  private String formatiereTrenner(GraphAdjazenzListe.Kante kante) {
+    if (kante.gewicht != 1) {
+      return String.format(" & $\\xrightarrow{~%s~}$ ", GraphenFormat.formatiereZahl(kante.gewicht));
     }
+    return " & $\\rightarrow$ ";
+  }
 
-    return ausgabe.replaceFirst(Pattern.quote(trenner) + "$", " \\\\\\\\\n");
+  private String formatiereZeile(int vonKnotenNr, List<GraphAdjazenzListe.Kante> unterListe) {
+    String ausgabe = graph.gibKnotenName(vonKnotenNr) + ":";
+    for (int i = 0; i < unterListe.size(); i++) {
+      GraphAdjazenzListe.Kante kante = unterListe.get(i);
+      ausgabe += formatiereTrenner(kante);
+      ausgabe += graph.gibKnotenName(kante.nachNr);
+    }
+    return ausgabe + " \\\\\n";
   }
 
   public String gibTexAusgabe() {
