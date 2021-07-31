@@ -27,7 +27,7 @@ public class Halde<T extends Comparable<T>> {
 
   /**
    * Der aktuelle Füllstand der Halde. Er wird hochgezählt, wenn ein neuer
-   * Schlüsselwert eingefügt wird und er wird erniedrigt, wenn ein Schlüsselwert
+   * Schlüsselwert eingefügt, und erniedrigt, wenn ein Schlüsselwert
    * entnommen wird.
    */
   private HaldenTyp typ;
