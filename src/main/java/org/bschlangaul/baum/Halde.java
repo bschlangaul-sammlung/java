@@ -23,12 +23,16 @@ public class Halde<T extends Comparable<T>> {
   private static final int STANDARD_KAPAZITÄT = 10;
 
   private T[] halde;
-  private int füllstand;
 
   /**
    * Der aktuelle Füllstand der Halde. Er wird hochgezählt, wenn ein neuer
-   * Schlüsselwert eingefügt, und erniedrigt, wenn ein Schlüsselwert
-   * entnommen wird.
+   * Schlüsselwert eingefügt, und erniedrigt, wenn ein Schlüsselwert entnommen
+   * wird.
+   */
+  private int füllstand;
+
+  /**
+   * Ob es sich um eine Min-Halde oder eine Max-Halde handelt.
    */
   private HaldenTyp typ;
 
@@ -53,29 +57,25 @@ public class Halde<T extends Comparable<T>> {
   }
 
   /**
-   * adds a generic type T to heap
-   * <p>
-   * percolates down the tree
+   * Füge einen Wert in die Halde ein.
    *
-   * @param value type T value
+   * @param wert Der Wert, der eingefügt werden soll.
    */
-  public void fügeEin(T value) {
-    reporter.berichteÜberschrift("Nach dem Einfügen von „" + value + "“", 0);
+  public void fügeEin(T wert) {
+    reporter.berichteÜberschrift("Nach dem Einfügen von „" + wert + "“", 0);
     if (this.füllstand >= halde.length - 1) {
       halde = this.vergrößern();
     }
     füllstand++;
-    halde[füllstand] = value;
+    halde[füllstand] = wert;
     steigeAuf();
     berichteBaum(0);
   }
 
   /**
-   * Removes min or max item from heap
-   * <p>
-   * re-heapifies
+   * Entfernt den minimalen oder maximalen Wert aus der Halde.
    *
-   * @return value of T that is minimum or maximum value in heap
+   * @return Der minimale oder maximale Wert.
    */
   public T entferne() {
     T ergebnis = gucke();
@@ -87,15 +87,16 @@ public class Halde<T extends Comparable<T>> {
   }
 
   /**
-   * Remove specific object from heap
+   * Entferne einen bestimmten Wert aus der Halde.
    *
-   * @param value type T
-   * @return true if found and removed
+   * @param wert Der Wert, der entfernt werden soll.
+   *
+   * @return Wahr, wenn der Wert gefunden und entfernt wurde, sonst falsch.
    */
-  public boolean entferne(T value) {
+  public boolean entferne(T wert) {
     for (int i = 0; i < halde.length; i++) {
-      if (value.equals(halde[i])) {
-        reporter.berichteÜberschrift("Nach dem Entfernen von „" + value + "“", 0);
+      if (wert.equals(halde[i])) {
+        reporter.berichteÜberschrift("Nach dem Entfernen von „" + wert + "“", 0);
         vertausche(i, füllstand);
         halde[füllstand] = null;
         füllstand--;
@@ -108,14 +109,12 @@ public class Halde<T extends Comparable<T>> {
   }
 
   /**
-   * Heißt im Engischen of „poll“.
-   * Removes min or max item from heap same as <code>remove()</code> but does not
-   * throw exception on empty
-   * <p>
-   * re-heapifies
+   * Entferne den minimalen oder maximalen Wert aus der Halde, werfe aber im
+   * Gegensatz zu <code>entferne()</code> keine Ausnahme.
    *
-   * @return value of T that is minimum or maximum value in heap; or
-   *         <code>null</code> if empty
+   * Heißt im Engischen of „poll“.
+   *
+   * @return Der minimale oder maximale Wert oder null.
    */
   public T köpfe() {
     if (istLeer()) {
@@ -130,7 +129,7 @@ public class Halde<T extends Comparable<T>> {
   }
 
   /**
-   * Checks if heap is empty
+   * Überprüft, ob die Halde leer ist.
    *
    * @return <code>true</code> if empty
    */
@@ -139,10 +138,13 @@ public class Halde<T extends Comparable<T>> {
   }
 
   /**
-   * Heißt im Englischen oft „peek“ returns min/max value without removing it
+   * Gib den minimalen oder maximalen Wert, ohne ihn aus der Halde zu entfernen.
    *
-   * @return value type T
-   * @throws IllegalStateException if empty
+   * Heißt im Englischen oft „peek“
+   *
+   * @return Der minimale oder maximale Wert.
+   *
+   * @throws IllegalStateException falls die Halde leer ist.
    */
   public T gucke() {
     if (istLeer()) {
@@ -161,9 +163,10 @@ public class Halde<T extends Comparable<T>> {
   }
 
   /**
-   * Add DEFAULT_CAPACITY to length of <code>heap</code> array
+   * Vergrößere das Feld, in dem die Halde gespeichert ist, um die
+   * Standardkapazität.
    *
-   * @return new array of type T
+   * @return Ein neues, vergrößertes Feld.
    */
   private T[] vergrößern() {
     return Arrays.copyOf(halde, halde.length + STANDARD_KAPAZITÄT);
@@ -288,7 +291,6 @@ public class Halde<T extends Comparable<T>> {
   private boolean hatRechts(int index) {
     return gibIndexRechts(index) <= füllstand;
   }
-
 
   /**
    * get parent value
