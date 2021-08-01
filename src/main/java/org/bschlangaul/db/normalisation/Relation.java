@@ -57,12 +57,13 @@ public final class Relation {
   }
 
   /**
-   * Decompose the current relation into a set of relations that satisfy 3NF, by
-   * using the Lossless Join &amp; Dependency Preservation algorithm
+   * Zerlege die Relation in 3NF. Wir wenden den „Lossless Join &amp; Dependency
+   * Preservation“ Algorithmus an. Die Methode heißt im Englischen „decompose3NF
+   * “.
    *
-   * @return a set of decomposed relations
+   * @return Eine Menge an zerlegten Relationen.
    */
-  public Set<Relation> decomposeTo3NF() {
+  public Set<Relation> zerlegeZu3NF() {
     Set<Relation> result = new HashSet<>();
     Set<Abhaengigkeit> mb = AlgorithmenSammlung.findeKanonischeÜberdeckung(this.fds);
     for (Abhaengigkeit fd : mb) {
@@ -254,13 +255,13 @@ public final class Relation {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder(Attribut.AVERAGE_LENGTH * 50);
-    sb.append("Attributes:\n");
+    sb.append("Relation(");
     for (Attribut a : this.attrs) {
       sb.append(a);
       sb.append(", ");
     }
-    sb.delete(sb.length() - 2, sb.length() - 1);
-    sb.append("\nFunctional Dependencies: \n");
+    sb.delete(sb.length() - 2, sb.length());
+    sb.append(") Funk. Abhängigkeiten: ");
     for (Abhaengigkeit fd : this.fds) {
       sb.append(fd);
       sb.append('\n');

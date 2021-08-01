@@ -52,8 +52,8 @@ public class TerminalAusgabe {
   }
 
   public static TerminalAusgabe sucheAbhängigkeiten(String pfad) {
-    List<String> ausschnitte = TextAusschnitt.sucheInDatei(pfad, TextAusschnitt
-        .gibMakroRegex("(FA|liFunktionaleAbhaengigkeiten)", "[a-zA-Z_0-9$]*", "(?<markup>[^\\}]+)"));
+    List<String> ausschnitte = TextAusschnitt.sucheInDatei(pfad,
+        TextAusschnitt.gibMakroRegex("(FA|liFunktionaleAbhaengigkeiten)", "[a-zA-Z_0-9$]*", "(?<markup>[^\\}]+)"));
     if (ausschnitte.size() > 0) {
       return new TerminalAusgabe(ausschnitte.get(0));
     }
@@ -112,6 +112,15 @@ public class TerminalAusgabe {
     return ist;
   }
 
+  public void zerlegeZu3NF() {
+    gibÜberschriftAus("In 3NF zerlegt");
+    Relation original = new Relation(attribute, abhängigkeiten);
+    Set<Relation> zerlegt = original.zerlegeZu3NF();
+    for (Relation relation : zerlegt) {
+      System.out.println(relation);
+    }
+  }
+
   /**
    * Bündle alle Ausgaben unter einer Methode.
    */
@@ -122,6 +131,7 @@ public class TerminalAusgabe {
     findeKanonischeÜberdeckung();
     istIn3NF();
     istInBCNF();
+    zerlegeZu3NF();
   }
 
   private <T> void printSet(Set<T> s) {
