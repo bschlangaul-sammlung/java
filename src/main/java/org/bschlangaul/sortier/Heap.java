@@ -12,11 +12,9 @@ public class Heap extends Sortieralgorithmus {
       // zahlen[j] ist linker Sohn von zahlen[i]
       j = 2 * i;
       // zahlen[i] hat auch rechten Sohn
-      if (j < letzterIndex) {
-        if (zahlen[j - 1] < zahlen[j]) {
-          // zahlen[j] ist jetzt kleiner
-          j++;
-        }
+      if (j < letzterIndex && zahlen[j - 1] < zahlen[j]) {
+        // zahlen[j] ist jetzt kleiner
+        j++;
       }
 
       if (zahlen[i - 1] < zahlen[j - 1]) {
