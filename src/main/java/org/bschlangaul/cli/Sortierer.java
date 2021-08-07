@@ -10,6 +10,7 @@ import java.util.concurrent.Callable;
 
 import org.bschlangaul.sortier.BubbleIterativ;
 import org.bschlangaul.sortier.InsertionIterativ;
+import org.bschlangaul.sortier.Heap;
 
 import org.bschlangaul.sortier.Sortieralgorithmus;
 
@@ -24,6 +25,9 @@ class Sortierer implements Callable<Integer> {
     @Option(names = { "-b", "--bubble" }, description = "Bubblesort.")
     boolean bubble;
 
+    @Option(names = { "-H", "--heap" }, description = "Heapsort.")
+    boolean heap;
+
     @Option(names = { "-i", "--insertion" }, description = "Insertionsort.")
     boolean insertion;
   }
@@ -37,6 +41,8 @@ class Sortierer implements Callable<Integer> {
 
     if (algorithmus.bubble) {
       sortierer = new BubbleIterativ();
+    } else if (algorithmus.heap) {
+      sortierer = new Heap();
     } else if (algorithmus.insertion) {
       sortierer = new InsertionIterativ();
     } else {
@@ -46,6 +52,7 @@ class Sortierer implements Callable<Integer> {
     int[] zahlen = werte.stream().mapToInt(i->i).toArray();
 
     sortierer.setzeZahlen(zahlen);
+    sortierer.setzeTerminalReporter();
     sortierer.sortiere();
     return 0;
   }

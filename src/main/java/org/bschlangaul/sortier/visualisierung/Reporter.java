@@ -10,11 +10,15 @@ abstract public class Reporter {
    * @param links  Die linke Grenze, die gezeigt werden soll.
    * @param rechts Die rechte Grenze, die gezeigt werden soll.
    */
-  public abstract void druckeZahlen(int links, int rechts);
+  public abstract void berichte(int links, int rechts);
 
   /**
    * Zeige die Zahlen in der Textkonsole. Es handelt sich um eine Hilfsmethode, um
    * die Sortieralgorithmen besser verstehen zu können.
    */
-  public abstract void druckeZahlen();
+  public abstract void berichte();
+
+  public abstract void berichte(String erklaerung);
+
+  public abstract void berichteVertauschen(int index1, int index2);
 }

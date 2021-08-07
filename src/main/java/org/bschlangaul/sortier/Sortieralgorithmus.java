@@ -39,6 +39,7 @@ public abstract class Sortieralgorithmus {
    * @param index2 Die Index-Nummer der zweiten Zahl.
    */
   protected void vertausche(int index1, int index2) {
+    reporter.berichteVertauschen(index1, index2);
     int tmp = zahlen[index1];
     zahlen[index1] = zahlen[index2];
     zahlen[index2] = tmp;
@@ -60,10 +61,10 @@ public abstract class Sortieralgorithmus {
   public void teste(int[] zahlen) {
     setzeZahlen(zahlen);
     setzeTerminalReporter();
-    reporter.druckeZahlen();
+    reporter.berichte();
     System.out.println("sortiere:");
     sortiere();
-    reporter.druckeZahlen();
+    reporter.berichte();
     System.out.println();
   }
 

@@ -4,13 +4,19 @@ public class StummerReporter extends Reporter {
   /**
    * {@inheritDoc}
    */
-  public void druckeZahlen(int links, int rechts) {
+  public void berichte(int links, int rechts) {
   }
 
   /**
    * {@inheritDoc}
    */
-  public void druckeZahlen() {
+  public void berichte() {
+  }
+
+  public void berichte(String erklaerung) {
+  }
+
+  public void berichteVertauschen(int index1, int index2) {
   }
 
 }

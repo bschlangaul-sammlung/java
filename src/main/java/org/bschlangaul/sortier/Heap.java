@@ -6,6 +6,7 @@ package org.bschlangaul.sortier;
  */
 public class Heap extends Sortieralgorithmus {
   private void versickere(int index, int letzterIndex) {
+    reporter.berichte("versickere " + index + " " + letzterIndex);
     int i = index + 1, j;
     // zahlen[i] hat linken Sohn
     while (2 * i <= letzterIndex) {
@@ -35,10 +36,13 @@ public class Heap extends Sortieralgorithmus {
    */
   public int[] sortiere() {
     int i;
+
+    reporter.berichte("Heap herstellen");
     for (i = zahlen.length / 2; i >= 0; i--) {
       versickere(i, zahlen.length);
     }
 
+    reporter.berichte("sortiere");
     for (i = zahlen.length - 1; i > 0; i--) {
       // tauscht jeweils letztes Element des Heaps mit dem ersten
       vertausche(0, i);
