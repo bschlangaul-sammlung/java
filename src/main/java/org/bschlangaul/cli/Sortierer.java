@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.bschlangaul.sortier.BubbleIterativ;
+import org.bschlangaul.sortier.InsertionIterativ;
+
 import org.bschlangaul.sortier.Sortieralgorithmus;
 
 @Command(name = "sortiere", aliases = {
@@ -35,6 +37,8 @@ class Sortierer implements Callable<Integer> {
 
     if (algorithmus.bubble) {
       sortierer = new BubbleIterativ();
+    } else if (algorithmus.insertion) {
+      sortierer = new InsertionIterativ();
     } else {
       sortierer = new BubbleIterativ();
     }

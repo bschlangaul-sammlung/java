@@ -1,19 +1,34 @@
 package org.bschlangaul.sortier;
 
+import org.bschlangaul.sortier.visualisierung.Reporter;
+import org.bschlangaul.sortier.visualisierung.StummerReporter;
+import org.bschlangaul.sortier.visualisierung.TerminalReporter;
+
+
 public abstract class Sortieralgorithmus {
+
+  public Reporter reporter = new StummerReporter();
 
   int[] zahlen;
 
   public Sortieralgorithmus() {
     this.zahlen = new int[] {};
+    reporter.zahlen = this.zahlen;
   }
 
   public Sortieralgorithmus(int[] zahlen) {
     this.zahlen = zahlen;
+    reporter.zahlen = zahlen;
   }
 
   public void setzeZahlen(int[] zahlen) {
     this.zahlen = zahlen;
+    reporter.zahlen = zahlen;
+  }
+
+  public void setzeTerminalReporter() {
+    reporter = new TerminalReporter();
+    reporter.zahlen = zahlen;
   }
 
   /**
@@ -27,31 +42,6 @@ public abstract class Sortieralgorithmus {
     int tmp = zahlen[index1];
     zahlen[index1] = zahlen[index2];
     zahlen[index2] = tmp;
-  }
-
-  /**
-   * Zeige einen Ausschnitt der Zahlen in der Textkonsole. Es handelt sich um eine
-   * Hilfsmethode, um die Sortieralgorithmen besser verstehen zu können.
-   *
-   * @param links  Die linke Grenze, die gezeigt werden soll.
-   * @param rechts Die rechte Grenze, die gezeigt werden soll.
-   */
-  protected void druckeZahlen(int links, int rechts) {
-    for (int i = links; i <= rechts; i++) {
-      System.out.print(zahlen[i] + " ");
-    }
-    System.out.println();
-  }
-
-  /**
-   * Zeige die Zahlen in der Textkonsole. Es handelt sich um eine Hilfsmethode, um
-   * die Sortieralgorithmen besser verstehen zu können.
-   */
-  protected void druckeZahlen() {
-    for (int i = 0; i < zahlen.length; i++) {
-      System.out.print(zahlen[i] + " ");
-    }
-    System.out.println();
   }
 
   public abstract int[] sortiere();
@@ -69,10 +59,11 @@ public abstract class Sortieralgorithmus {
    */
   public void teste(int[] zahlen) {
     setzeZahlen(zahlen);
-    druckeZahlen();
+    setzeTerminalReporter();
+    reporter.druckeZahlen();
     System.out.println("sortiere:");
     sortiere();
-    druckeZahlen();
+    reporter.druckeZahlen();
     System.out.println();
   }
 
