@@ -1,8 +1,8 @@
-package org.bschlangaul.baum.visualisierung;
+package org.bschlangaul.baum.report;
 
 import org.bschlangaul.baum.BinaerBaum;
 
-public class StummerBaumReporter extends BaumReporter {
+public class StummeBaumAusgabe extends BaumReporter {
   @Override
   public String erzeugeBaum(BinaerBaum baum) {
     return null;

@@ -2,8 +2,8 @@ package org.bschlangaul.baum;
 
 import java.util.ArrayList;
 
-import org.bschlangaul.baum.visualisierung.BaumReporter;
-import org.bschlangaul.baum.visualisierung.StummerBaumReporter;
+import org.bschlangaul.baum.report.BaumReporter;
+import org.bschlangaul.baum.report.StummeBaumAusgabe;
 import org.bschlangaul.liste.FeldWarteschlange;
 import org.bschlangaul.liste.Warteschlange;
 import org.bschlangaul.liste.WarteschlangeFehler;
@@ -15,7 +15,7 @@ import org.bschlangaul.liste.WarteschlangeFehler;
 @SuppressWarnings("rawtypes")
 public abstract class BinaerBaum {
 
-  public BaumReporter reporter = new StummerBaumReporter();
+  public BaumReporter reporter = new StummeBaumAusgabe();
 
   public static final String[] traversierungsNamen = { "INORDER", "PREORDER", "POSTORDER", "LEVELORDER" };
 

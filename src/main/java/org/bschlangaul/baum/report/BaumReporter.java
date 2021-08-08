@@ -1,4 +1,4 @@
-package org.bschlangaul.baum.visualisierung;
+package org.bschlangaul.baum.report;
 
 import java.util.ArrayList;
 

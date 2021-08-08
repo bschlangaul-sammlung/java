@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.bschlangaul.baum.BBaum;
-import org.bschlangaul.baum.visualisierung.TexBBaumReporter;
+import org.bschlangaul.baum.report.TexBBaumAusgabe;
 
 @Command(name = "bbaum", aliases = {
     "bb" }, mixinStandardHelpOptions = true, description = "Führe Aufgaben zum Thema BBaum aus.")
@@ -25,7 +25,7 @@ class KommandoBBaum implements Callable<Integer> {
       bbaum.fügeEin(zahl);
     }
 
-    TexBBaumReporter.druckeBaum(bbaum);
+    TexBBaumAusgabe.druckeBaum(bbaum);
     return 0;
   }
 }

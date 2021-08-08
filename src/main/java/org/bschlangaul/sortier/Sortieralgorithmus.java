@@ -4,27 +4,27 @@ import org.bschlangaul.sortier.report.SortierReporter;
 
 public abstract class Sortieralgorithmus {
 
-  public SortierReporter reporter = new SortierReporter();
+  public SortierReporter berichte = new SortierReporter();
 
   int[] zahlen;
 
   public Sortieralgorithmus() {
     this.zahlen = new int[] {};
-    reporter.zahlen = this.zahlen;
+    berichte.zahlen = this.zahlen;
   }
 
   public Sortieralgorithmus(int[] zahlen) {
     this.zahlen = zahlen;
-    reporter.zahlen = zahlen;
+    berichte.zahlen = zahlen;
   }
 
   public void setzeZahlen(int[] zahlen) {
     this.zahlen = zahlen;
-    reporter.zahlen = zahlen;
+    berichte.zahlen = zahlen;
   }
 
   public void aktiviereKonsolenAusgabe() {
-    reporter.aktiviereKonsolenAusgabe();
+    berichte.aktiviereKonsolenAusgabe();
   }
 
   /**
@@ -35,7 +35,7 @@ public abstract class Sortieralgorithmus {
    * @param index2 Die Index-Nummer der zweiten Zahl.
    */
   protected void vertausche(int index1, int index2) {
-    reporter.vertauschen(index1, index2);
+    berichte.vertauschen(index1, index2);
     int tmp = zahlen[index1];
     zahlen[index1] = zahlen[index2];
     zahlen[index2] = tmp;
@@ -57,10 +57,10 @@ public abstract class Sortieralgorithmus {
   public void teste(int[] zahlen) {
     setzeZahlen(zahlen);
     aktiviereKonsolenAusgabe();
-    reporter.zahlenFeld();
+    berichte.zahlenFeld();
     System.out.println("sortiere:");
     sortiere();
-    reporter.zahlenFeld();
+    berichte.zahlenFeld();
     System.out.println();
   }
 

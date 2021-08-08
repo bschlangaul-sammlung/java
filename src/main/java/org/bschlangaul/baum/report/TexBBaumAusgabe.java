@@ -1,4 +1,4 @@
-package org.bschlangaul.baum.visualisierung;
+package org.bschlangaul.baum.report;
 
 import org.bschlangaul.baum.BBaum;
 
@@ -31,7 +31,7 @@ import org.bschlangaul.baum.BBaum;
  * </pre>
  */
 
-public class TexBBaumReporter {
+public class TexBBaumAusgabe {
 
   static String[] englischeZahlen = { "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten" };
 

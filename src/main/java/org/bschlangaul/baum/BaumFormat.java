@@ -9,8 +9,8 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.bschlangaul.antlr.BaumBaseListener;
 import org.bschlangaul.antlr.BaumLexer;
 import org.bschlangaul.antlr.BaumParser;
-import org.bschlangaul.baum.visualisierung.BaumReporter;
-import org.bschlangaul.baum.visualisierung.TexBaumReporter;
+import org.bschlangaul.baum.report.BaumReporter;
+import org.bschlangaul.baum.report.TexBaumAusgabe;
 
 class AntlrListener extends BaumBaseListener {
 
@@ -93,7 +93,7 @@ public class BaumFormat {
 
   public static String gibAusFürEinbettung(String formatText) {
     String ausgabe = "";
-    BaumReporter reporter = new TexBaumReporter();
+    BaumReporter reporter = new TexBaumAusgabe();
     BaumFormat baumFormat = new BaumFormat(formatText);
     for (BaumFormat.BaumArt baumArt : baumFormat.bäume) {
       System.out.println(baumArt.art);

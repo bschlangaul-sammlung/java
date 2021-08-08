@@ -1,4 +1,4 @@
-package org.bschlangaul.baum.visualisierung;
+package org.bschlangaul.baum.report;
 
 import org.bschlangaul.baum.BinaerBaum;
 
@@ -13,7 +13,7 @@ import tech.vanyo.tree_printer.TreePrinter;
 
 import org.bschlangaul.helfer.Farbe;
 
-public class TerminalBaumReporter extends BaumReporter {
+public class KonsolenBaumAusgabe extends BaumReporter {
 
   @Override
   public String erzeugeBaum(BinaerBaum baum) {

@@ -1,4 +1,4 @@
-package org.bschlangaul.baum.visualisierung;
+package org.bschlangaul.baum.report;
 
 import org.bschlangaul.baum.AVLBaum;
 import org.bschlangaul.baum.AVLBaumKnoten;
@@ -6,7 +6,7 @@ import org.bschlangaul.baum.BinaerBaum;
 import org.bschlangaul.baum.BaumKnoten;
 import org.bschlangaul.helfer.Tex;
 
-public class TexBaumReporter extends BaumReporter {
+public class TexBaumAusgabe extends BaumReporter {
 
   private String formatiereKnoten(BinaerBaum baum, BaumKnoten knoten) {
     if (knoten instanceof AVLBaumKnoten && baum instanceof AVLBaum) {

@@ -1,4 +1,4 @@
-package org.bschlangaul.baum.visualisierung;
+package org.bschlangaul.baum.report;
 
 import static org.junit.Assert.assertEquals;
 
@@ -10,7 +10,7 @@ import org.junit.Test;
 
 public class TexBaumReporterTest {
 
-  BaumReporter reporter = new TexBaumReporter();
+  BaumReporter reporter = new TexBaumAusgabe();
 
   private String lese(String dateiName) {
     return TestHelfer.leseDatei("baum/" + dateiName);

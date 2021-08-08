@@ -2,8 +2,8 @@ package org.bschlangaul.baum;
 
 import java.util.Arrays;
 
-import org.bschlangaul.baum.visualisierung.BaumReporter;
-import org.bschlangaul.baum.visualisierung.StummerBaumReporter;
+import org.bschlangaul.baum.report.BaumReporter;
+import org.bschlangaul.baum.report.StummeBaumAusgabe;
 
 enum HaldenTyp {
   MIN, MAX
@@ -17,7 +17,7 @@ enum HaldenTyp {
 @SuppressWarnings("unchecked")
 public class Halde<T extends Comparable<T>> {
 
-  public BaumReporter reporter = new StummerBaumReporter();
+  public BaumReporter berichte = new StummeBaumAusgabe();
 
   private static final int STANDARD_KAPAZITÄT = 10;
 
@@ -65,7 +65,7 @@ public class Halde<T extends Comparable<T>> {
    * @param wert Der Wert, der eingefügt werden soll.
    */
   public void fügeEin(T wert) {
-    reporter.berichteÜberschrift("Nach dem Einfügen von „" + wert + "“", 0);
+    berichte.berichteÜberschrift("Nach dem Einfügen von „" + wert + "“", 0);
     if (this.füllstand >= feld.length - 1) {
       feld = this.vergrößern();
     }
@@ -110,7 +110,7 @@ public class Halde<T extends Comparable<T>> {
   public boolean entferne(T wert) {
     for (int i = 0; i < feld.length; i++) {
       if (wert.equals(feld[i])) {
-        reporter.berichteÜberschrift("Nach dem Entfernen von „" + wert + "“", 0);
+        berichte.berichteÜberschrift("Nach dem Entfernen von „" + wert + "“", 0);
         vertausche(i, füllstand);
         feld[füllstand] = null;
         füllstand--;
@@ -382,17 +382,17 @@ public class Halde<T extends Comparable<T>> {
       zeilen[0][i] = String.valueOf(haldenFeld[i]);
     }
 
-    reporter.berichteTabelle(kopfZeile, zeilen);
+    berichte.berichteTabelle(kopfZeile, zeilen);
   }
 
   public void berichteBaum(int redselig) {
     BinaerBaum haldenBaum = gibBinaerBaum();
-    reporter.berichteBaum(haldenBaum, redselig);
+    berichte.berichteBaum(haldenBaum, redselig);
   }
 
   public void berichteBaum(String überschrift, int redselig) {
     BinaerBaum haldenBaum = gibBinaerBaum();
-    reporter.berichteBaum(haldenBaum, überschrift, redselig);
+    berichte.berichteBaum(haldenBaum, überschrift, redselig);
   }
 
 }

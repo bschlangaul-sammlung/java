@@ -15,9 +15,9 @@ import org.bschlangaul.baum.BinaererSuchBaum;
 import org.bschlangaul.baum.Halde;
 import org.bschlangaul.baum.MaxHalde;
 import org.bschlangaul.baum.MinHalde;
-import org.bschlangaul.baum.visualisierung.BaumReporter;
-import org.bschlangaul.baum.visualisierung.TerminalBaumReporter;
-import org.bschlangaul.baum.visualisierung.TexBaumReporter;
+import org.bschlangaul.baum.report.BaumReporter;
+import org.bschlangaul.baum.report.KonsolenBaumAusgabe;
+import org.bschlangaul.baum.report.TexBaumAusgabe;
 
 @Command(name = "baum", aliases = {
     "b" }, mixinStandardHelpOptions = true, description = "Führe Aufgaben zum Thema Binärebaum aus.")
@@ -83,9 +83,9 @@ class Baum implements Callable<Integer> {
     BaumReporter.redseligkeit = KommandoZeile.gibRedseligkeit();
 
     if (KommandoZeile.gibAusgabe() == Ausgabe.tex)
-      reporter = new TexBaumReporter();
+      reporter = new TexBaumAusgabe();
     else
-      reporter = new TerminalBaumReporter();
+      reporter = new KonsolenBaumAusgabe();
 
     if (baumArt.minHalde || baumArt.maxHalde) {
       Halde halde;
@@ -94,7 +94,7 @@ class Baum implements Callable<Integer> {
       else
         halde = new MaxHalde<>();
 
-      halde.reporter = reporter;
+      halde.berichte = reporter;
 
       fügeHinzuOderLösche(halde);
       return 0;
@@ -109,7 +109,7 @@ class Baum implements Callable<Integer> {
     }
 
     if (KommandoZeile.gibRedseligkeit() > 0)
-      baum.reporter = new TerminalBaumReporter();
+      baum.reporter = new KonsolenBaumAusgabe();
 
     baum.reporter = reporter;
 
