@@ -43,7 +43,7 @@ class Sortierer implements Callable<Integer> {
   public Integer call() {
     Sortieralgorithmus sortierer = null;
 
-    if (algorithmus.bubble) {
+    if (algorithmus == null) {
       sortierer = new BubbleIterativ();
     } else if (algorithmus.heap) {
       sortierer = new Heap();
@@ -58,7 +58,7 @@ class Sortierer implements Callable<Integer> {
     int[] zahlen = werte.stream().mapToInt(i -> i).toArray();
 
     sortierer.setzeZahlen(zahlen);
-    sortierer.setzeTerminalReporter();
+    sortierer.aktiviereKonsolenAusgabe();
     sortierer.sortiere();
     return 0;
   }

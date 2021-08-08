@@ -2,36 +2,27 @@ package org.bschlangaul.sortier.report;
 
 import org.bschlangaul.helfer.Farbe;
 
-public class TerminalReporter extends SortierReporter {
+public class KonsolenSortierAusgabe implements SortierAusgabe {
 
-  /**
-   * {@inheritDoc}
-   */
-  public void berichte(int links, int rechts) {
+  public void zahlenFeldAusschnitt(int[] zahlen, int links, int rechts) {
     for (int i = links; i <= rechts; i++) {
       System.out.print(zahlen[i] + " ");
     }
     System.out.println();
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  public void berichte() {
-    berichte("");
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public void berichte(String erklaerung) {
+  public void zahlenFeld(int[] zahlen, String erklaerung) {
     for (int i = 0; i < zahlen.length; i++) {
       System.out.print(zahlen[i] + " ");
     }
-    System.out.println(erklaerung);
+    if (erklaerung != null) {
+      System.out.println(erklaerung);
+    } else {
+      System.out.println();
+    }
   }
 
-  public void berichteVertauschen(int index1, int index2) {
+  public void vertauschen(int[] zahlen, int index1, int index2) {
     for (int i = 0; i < zahlen.length; i++) {
       if (i == index1) {
         System.out.print(Farbe.gelb(">" + zahlen[i]) + " ");

@@ -1,6 +1,28 @@
 package org.bschlangaul.helfer.report;
 
-public abstract class Reporter {
+/**
+ * Im Strategie-Entwurfsmuster entspricht diese Klasse der Kontext-Klasse.
+ */
+public class Reporter {
+
+  /**
+   * Standardmäßig soll der Reporter stumm sein.
+   */
+  Ausgabe ausgabe = new StummeAusgabe();
+
+  /**
+   * Aktiviere die Konsolen-Ausgabe.
+   */
+  public void aktiviereKonsolenAusgabe() {
+    ausgabe = new KonsolenAusgabe();
+  }
+
+  /**
+   * Aktivere die TeX-Ausgabe. Der Reporter produziert dann TeX-Markup.
+   */
+  public void aktiviereTexAusgabe() {
+    ausgabe = new TexAusgabe();
+  }
 
   /**
    * Höhere Zahlen sind redseliger (verbose).
@@ -13,22 +35,18 @@ public abstract class Reporter {
     }
   }
 
-  public abstract String erzeugeÜberschrift(String überschrift);
-
   public void überschrift(String überschrift) {
     überschrift(überschrift, 0);
   }
 
   public void überschrift(String überschrift, int redselig) {
     if (redselig <= redseligkeit) {
-      gibAus(erzeugeÜberschrift(überschrift));
+      gibAus(ausgabe.überschrift(überschrift));
     }
   }
 
-  public abstract String erzeugeTabelle(String[] kopfZeile, String[][] zeilen);
-
   public void tabelle(String[] kopfZeile, String[][] zeilen) {
-    gibAus(erzeugeTabelle(kopfZeile, zeilen));
+    gibAus(ausgabe.tabelle(kopfZeile, zeilen));
   }
 
 }

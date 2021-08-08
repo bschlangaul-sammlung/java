@@ -22,7 +22,7 @@ public class BubbleIterativ extends Sortieralgorithmus {
           getauscht = true;
         }
       }
-      reporter.berichte();
+      reporter.zahlenFeld();
       // solange Vertauschung auftritt
     } while (getauscht);
     return zahlen;

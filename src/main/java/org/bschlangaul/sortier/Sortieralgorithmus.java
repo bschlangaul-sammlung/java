@@ -1,13 +1,10 @@
 package org.bschlangaul.sortier;
 
 import org.bschlangaul.sortier.report.SortierReporter;
-import org.bschlangaul.sortier.report.StummerReporter;
-import org.bschlangaul.sortier.report.TerminalReporter;
-
 
 public abstract class Sortieralgorithmus {
 
-  public SortierReporter reporter = new StummerReporter();
+  public SortierReporter reporter = new SortierReporter();
 
   int[] zahlen;
 
@@ -26,9 +23,8 @@ public abstract class Sortieralgorithmus {
     reporter.zahlen = zahlen;
   }
 
-  public void setzeTerminalReporter() {
-    reporter = new TerminalReporter();
-    reporter.zahlen = zahlen;
+  public void aktiviereKonsolenAusgabe() {
+    reporter.aktiviereKonsolenAusgabe();
   }
 
   /**
@@ -39,7 +35,7 @@ public abstract class Sortieralgorithmus {
    * @param index2 Die Index-Nummer der zweiten Zahl.
    */
   protected void vertausche(int index1, int index2) {
-    reporter.berichteVertauschen(index1, index2);
+    reporter.vertauschen(index1, index2);
     int tmp = zahlen[index1];
     zahlen[index1] = zahlen[index2];
     zahlen[index2] = tmp;
@@ -60,11 +56,11 @@ public abstract class Sortieralgorithmus {
    */
   public void teste(int[] zahlen) {
     setzeZahlen(zahlen);
-    setzeTerminalReporter();
-    reporter.berichte();
+    aktiviereKonsolenAusgabe();
+    reporter.zahlenFeld();
     System.out.println("sortiere:");
     sortiere();
-    reporter.berichte();
+    reporter.zahlenFeld();
     System.out.println();
   }
 
