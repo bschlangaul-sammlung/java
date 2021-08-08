@@ -1,13 +1,13 @@
 package org.bschlangaul.sortier;
 
-import org.bschlangaul.sortier.visualisierung.Reporter;
-import org.bschlangaul.sortier.visualisierung.StummerReporter;
-import org.bschlangaul.sortier.visualisierung.TerminalReporter;
+import org.bschlangaul.sortier.report.SortierReporter;
+import org.bschlangaul.sortier.report.StummerReporter;
+import org.bschlangaul.sortier.report.TerminalReporter;
 
 
 public abstract class Sortieralgorithmus {
 
-  public Reporter reporter = new StummerReporter();
+  public SortierReporter reporter = new StummerReporter();
 
   int[] zahlen;
 

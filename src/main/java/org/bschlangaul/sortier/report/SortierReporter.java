@@ -1,6 +1,6 @@
-package org.bschlangaul.sortier.visualisierung;
+package org.bschlangaul.sortier.report;
 
-abstract public class Reporter {
+abstract public class SortierReporter {
   public int[] zahlen;
 
   /**

@@ -1,8 +1,8 @@
-package org.bschlangaul.sortier.visualisierung;
+package org.bschlangaul.sortier.report;
 
 import org.bschlangaul.helfer.Farbe;
 
-public class TerminalReporter extends Reporter {
+public class TerminalReporter extends SortierReporter {
 
   /**
    * {@inheritDoc}

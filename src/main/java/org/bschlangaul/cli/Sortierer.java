@@ -11,6 +11,7 @@ import java.util.concurrent.Callable;
 import org.bschlangaul.sortier.BubbleIterativ;
 import org.bschlangaul.sortier.InsertionIterativ;
 import org.bschlangaul.sortier.Heap;
+import org.bschlangaul.sortier.Merge;
 
 import org.bschlangaul.sortier.Sortieralgorithmus;
 
@@ -18,7 +19,7 @@ import org.bschlangaul.sortier.Sortieralgorithmus;
     "so" }, mixinStandardHelpOptions = true, description = "Sortiere mit verschiedenen Algorithmen.")
 class Sortierer implements Callable<Integer> {
 
-  @ArgGroup(exclusive = true, multiplicity = "1")
+  @ArgGroup(exclusive = true, multiplicity = "0..1")
   Algorithmus algorithmus;
 
   static class Algorithmus {
@@ -30,6 +31,9 @@ class Sortierer implements Callable<Integer> {
 
     @Option(names = { "-i", "--insertion" }, description = "Insertionsort.")
     boolean insertion;
+
+    @Option(names = { "-m", "--merge" }, description = "Mergsort.")
+    boolean merge;
   }
 
   @Parameters(arity = "1..*", description = "Eine Zahlenfolge, die sortiert werden soll.")
@@ -45,11 +49,13 @@ class Sortierer implements Callable<Integer> {
       sortierer = new Heap();
     } else if (algorithmus.insertion) {
       sortierer = new InsertionIterativ();
+    } else if (algorithmus.merge) {
+      sortierer = new Merge();
     } else {
       sortierer = new BubbleIterativ();
     }
 
-    int[] zahlen = werte.stream().mapToInt(i->i).toArray();
+    int[] zahlen = werte.stream().mapToInt(i -> i).toArray();
 
     sortierer.setzeZahlen(zahlen);
     sortierer.setzeTerminalReporter();

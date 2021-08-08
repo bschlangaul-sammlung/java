@@ -1,6 +1,6 @@
-package org.bschlangaul.sortier.visualisierung;
+package org.bschlangaul.sortier.report;
 
-public class StummerReporter extends Reporter {
+public class StummerReporter extends SortierReporter {
   /**
    * {@inheritDoc}
    */
