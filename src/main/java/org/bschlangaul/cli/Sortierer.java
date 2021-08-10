@@ -12,6 +12,7 @@ import org.bschlangaul.sortier.BubbleIterativ;
 import org.bschlangaul.sortier.Heap;
 import org.bschlangaul.sortier.InsertionIterativ;
 import org.bschlangaul.sortier.Merge;
+import org.bschlangaul.sortier.QuickSaake;
 import org.bschlangaul.sortier.SelectionRechtsIterativ;
 
 import org.bschlangaul.sortier.Sortieralgorithmus;
@@ -36,6 +37,9 @@ class Sortierer implements Callable<Integer> {
     @Option(names = { "-m", "--merge" }, description = "Mergsort.")
     boolean merge;
 
+    @Option(names = { "-q", "--quick" }, description = "Quicksort.")
+    boolean quick;
+
     @Option(names = { "-s", "--selection" }, description = "Selectionsort.")
     boolean selection;
   }
@@ -55,6 +59,8 @@ class Sortierer implements Callable<Integer> {
       sortierer = new InsertionIterativ();
     } else if (algorithmus.merge) {
       sortierer = new Merge();
+    } else if (algorithmus.quick) {
+      sortierer = new QuickSaake();
     } else if (algorithmus.selection) {
       sortierer = new SelectionRechtsIterativ();
     } else {
@@ -65,7 +71,10 @@ class Sortierer implements Callable<Integer> {
 
     sortierer.setzeZahlen(zahlen);
     sortierer.aktiviereKonsolenAusgabe();
+    System.out.println("Sortieralgorithmus: " + sortierer.getClass().getName());
+    sortierer.berichte.feld("Eingabe");
     sortierer.sortiere();
+    sortierer.berichte.feld("Ausgabe");
     return 0;
   }
 }

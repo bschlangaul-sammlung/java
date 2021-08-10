@@ -6,7 +6,7 @@ package org.bschlangaul.sortier;
  */
 public class Heap extends Sortieralgorithmus {
   private void versickere(int index, int letzterIndex) {
-    berichte.feld("versickere " + index + " " + letzterIndex);
+    berichte.feld("versickere (i " + index + " bis " + letzterIndex + ")");
     int i = index + 1, j;
     // zahlen[i] hat linken Sohn
     while (2 * i <= letzterIndex) {

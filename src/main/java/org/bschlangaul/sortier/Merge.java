@@ -19,8 +19,11 @@ public class Merge extends Sortieralgorithmus {
   private void sortiereRekursiv(int links, int rechts, int[] hilfsFeld) {
     // Wenn die rechte Grenze gleich (oder sogar kleiner) als die linke Grenze ist,
     // tue nichts.
-    if (rechts <= links)
+    if (rechts <= links) {
       return;
+    }
+
+    berichte.feldAusschnitt(links, rechts, "Vor dem Teilen");
 
     // Zähler für diverse for-Schleifen deklarieren.
     int indexLinks, indexRechts, index;
@@ -60,6 +63,8 @@ public class Merge extends Sortieralgorithmus {
         zahlen[index] = hilfsFeld[indexRechts--];
       }
     }
+
+    berichte.feldAusschnitt(links, rechts, "Nach dem Mischen");
   }
 
   /**

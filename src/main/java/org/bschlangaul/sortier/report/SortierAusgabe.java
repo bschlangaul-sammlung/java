@@ -26,34 +26,39 @@ abstract class SortierAusgabe {
     return Math.max(minLänge, maxLänge);
   }
 
-  protected String formatiereZahl(String zahl, String präfix) {
+  protected String formatiereZahl(String zahl, String präfix, String suffix) {
     // Damit ein zusätzliches Zeichen wie <, >, * berücksichtigt werden kann.
     String präfixZeichen = " ";
     if (präfix != null) {
       präfixZeichen = präfix;
     }
+    if (suffix != null) {
+      zahl = zahl + suffix;
+    }
+    // Eins breiten wegen der Suffixe.
+    int max = maxZahlenBreite + 1;
     // „-“ für angehängte Leerzeichen.
-    return präfixZeichen + String.format("%-" + maxZahlenBreite + "s", zahl) + " ";
+    return präfixZeichen + String.format("%-" + max + "s", zahl);
   }
 
-  protected String formatiereZahl(int zahl, String präfix) {
-    return formatiereZahl(String.valueOf(zahl), präfix);
+  protected String formatiereZahl(int zahl, String präfix, String suffix) {
+    return formatiereZahl(String.valueOf(zahl), präfix, suffix);
   }
 
   protected String formatiereZahl(int zahl) {
-    return formatiereZahl(String.valueOf(zahl), null);
+    return formatiereZahl(String.valueOf(zahl), null, null);
   }
 
   protected String formatiereZahl(String zahl) {
-    return formatiereZahl(zahl, null);
+    return formatiereZahl(zahl, null, null);
   }
 
-  protected void druckeZahl(String zahl, String präfix) {
-    System.out.print(formatiereZahl(zahl, präfix));
+  protected void druckeZahl(String zahl, String präfix, String suffix) {
+    System.out.print(formatiereZahl(zahl, präfix, suffix));
   }
 
-  protected void druckeZahl(int zahl, String präfix) {
-    System.out.print(formatiereZahl(zahl, präfix));
+  protected void druckeZahl(int zahl, String präfix, String suffix) {
+    System.out.print(formatiereZahl(zahl, präfix, suffix));
   }
 
   protected void druckeZahl(String zahl) {
@@ -66,7 +71,7 @@ abstract class SortierAusgabe {
 
   protected void druckeZeilenumbruch(String suffix) {
     if (suffix != null) {
-      System.out.println("(" + suffix + ")");
+      System.out.println(" " + suffix);
     } else {
       System.out.println();
     }

@@ -16,7 +16,7 @@ public class InsertionIterativ extends Sortieralgorithmus {
       // Links von der Markierung sind die Zahlen sortiert,
       // rechts davon unsortiert.
       int markierung = zahlen[i];
-      berichte.feldMarkierung(markierung);
+      berichte.feldMarkierung(i);
       int j = i;
       // Für alle Zahlen links von der Markierung.
       while (j >= 1 && zahlen[j - 1] > markierung) {

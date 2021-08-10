@@ -31,6 +31,18 @@ public class SortierReporter extends Reporter {
   /**
    * Zeige einen Ausschnitt des zu zeigenden Felds in der Textkonsole.
    *
+   * @param links     Die linke Grenze, ab der gezeigt werden soll.
+   * @param rechts    Die rechte Grenze, bis zu der gezeigt werden soll.
+   * @param erklärung Ein Erklärungstext, der zusätzlich zum Feld gezeigt werden
+   *                  soll.
+   */
+  public void feldAusschnitt(int links, int rechts, String erklärung) {
+    sortierAusgabe.feldAusschnitt(links, rechts, erklärung);
+  }
+
+  /**
+   * Zeige einen Ausschnitt des zu zeigenden Felds in der Textkonsole.
+   *
    * @param links  Die linke Grenze, ab der gezeigt werden soll.
    * @param rechts Die rechte Grenze, bis zu der gezeigt werden soll.
    */
@@ -66,6 +78,14 @@ public class SortierReporter extends Reporter {
   }
 
   public void vertauschen(int index1, int index2) {
-    sortierAusgabe.vertauschen(index1, index2, "vertausche");
+    int min, max;
+    if (index2 < index1) {
+      min = index2;
+      max = index1;
+    } else {
+      min = index1;
+      max = index2;
+    }
+    sortierAusgabe.vertauschen(index1, index2, "vertausche (i " + min + "<>" + max + ")");
   }
 }

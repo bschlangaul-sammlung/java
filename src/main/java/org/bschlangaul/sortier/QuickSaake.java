@@ -21,6 +21,7 @@ public class QuickSaake extends Sortieralgorithmus {
    * @return Die endgültige Index-Nummer des Pivot-Elements.
    */
   private int zerlege(int links, int rechts) {
+    berichte.feldAusschnitt(links, rechts, "zerlege");
     // Pivot-Element bestimmen
     int pivotIndex = (links + rechts) / 2;
     int pivotWert = zahlen[pivotIndex];
@@ -46,8 +47,8 @@ public class QuickSaake extends Sortieralgorithmus {
    * @param rechts Die Index-Nummer der oberen Grenze.
    */
   private void sortiereRekursiv(int links, int rechts) {
-
     if (rechts > links) {
+      berichte.feldAusschnitt(links, rechts, "sortiere");
       // Feld zerlegen
       int pivotIndexEndgültig = zerlege(links, rechts);
       // und zerlegeen sortieren

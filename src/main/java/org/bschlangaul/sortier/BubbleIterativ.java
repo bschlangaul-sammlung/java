@@ -12,8 +12,11 @@ public class BubbleIterativ extends Sortieralgorithmus {
    * @return Das sortierte Zahlenfeld.
    */
   public int[] sortiere() {
+    int durchlaufNr = 0;
     boolean getauscht;
     do {
+      durchlaufNr++;
+      berichte.feld("Durchlauf Nr. " + durchlaufNr);
       getauscht = false;
       for (int i = 0; i < zahlen.length - 1; i++) {
         if (zahlen[i] > zahlen[i + 1]) {
@@ -22,7 +25,6 @@ public class BubbleIterativ extends Sortieralgorithmus {
           getauscht = true;
         }
       }
-      berichte.feld();
       // solange Vertauschung auftritt
     } while (getauscht);
     return zahlen;
