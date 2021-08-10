@@ -9,9 +9,10 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.bschlangaul.sortier.BubbleIterativ;
-import org.bschlangaul.sortier.InsertionIterativ;
 import org.bschlangaul.sortier.Heap;
+import org.bschlangaul.sortier.InsertionIterativ;
 import org.bschlangaul.sortier.Merge;
+import org.bschlangaul.sortier.SelectionRechtsIterativ;
 
 import org.bschlangaul.sortier.Sortieralgorithmus;
 
@@ -34,6 +35,9 @@ class Sortierer implements Callable<Integer> {
 
     @Option(names = { "-m", "--merge" }, description = "Mergsort.")
     boolean merge;
+
+    @Option(names = { "-s", "--selection" }, description = "Selectionsort.")
+    boolean selection;
   }
 
   @Parameters(arity = "1..*", description = "Eine Zahlenfolge, die sortiert werden soll.")
@@ -51,6 +55,8 @@ class Sortierer implements Callable<Integer> {
       sortierer = new InsertionIterativ();
     } else if (algorithmus.merge) {
       sortierer = new Merge();
+    } else if (algorithmus.selection) {
+      sortierer = new SelectionRechtsIterativ();
     } else {
       sortierer = new BubbleIterativ();
     }

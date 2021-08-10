@@ -12,6 +12,7 @@ public class SelectionRechtsIterativ extends Sortieralgorithmus {
     // Am Anfang ist die Markierung das letzte Element im Zahlen-Array.
     int markierung = zahlen.length - 1;
     while (markierung >= 0) {
+      berichte.feldMarkierung(markierung);
       // Bestimme das größtes Element.
       // max ist der Index des größten Elements.
       int max = 0;

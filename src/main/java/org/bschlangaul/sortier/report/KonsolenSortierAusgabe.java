@@ -1,38 +1,56 @@
 package org.bschlangaul.sortier.report;
 
-import org.bschlangaul.helfer.Farbe;
+public class KonsolenSortierAusgabe extends SortierAusgabe {
 
-public class KonsolenSortierAusgabe implements SortierAusgabe {
+  public KonsolenSortierAusgabe (int zahlen[]) {
+    super(zahlen);
+  }
 
-  public void zahlenFeldAusschnitt(int[] zahlen, int links, int rechts) {
+  public void feldAusschnitt(int links, int rechts, String suffix) {
     for (int i = links; i <= rechts; i++) {
-      System.out.print(zahlen[i] + " ");
+      druckeZahl(zahlen[i]);
     }
-    System.out.println();
+    druckeZeilenumbruch(suffix);
   }
 
-  public void zahlenFeld(int[] zahlen, String erklaerung) {
+  public void feld(String suffix) {
     for (int i = 0; i < zahlen.length; i++) {
-      System.out.print(zahlen[i] + " ");
+      druckeZahl(zahlen[i]);
     }
-    if (erklaerung != null) {
-      System.out.println(erklaerung);
-    } else {
-      System.out.println();
-    }
+    druckeZeilenumbruch(suffix);
   }
 
-  public void vertauschen(int[] zahlen, int index1, int index2) {
+  public void feldMarkierung(int markierung, String suffix) {
     for (int i = 0; i < zahlen.length; i++) {
-      if (i == index1) {
-        System.out.print(Farbe.gelb(">" + zahlen[i]) + " ");
-      } else if (i == index2) {
-        System.out.print(Farbe.gelb(zahlen[i] + "<") + " ");
+      if (i == markierung) {
+        druckeZahl(zahlen[i], "*");
       } else {
-        System.out.print(zahlen[i] + " ");
+        druckeZahl(zahlen[i]);
       }
     }
-    System.out.println();
+    druckeZeilenumbruch(suffix);
   }
 
+  public void vertauschen(int index1, int index2, String suffix) {
+    for (int i = 0; i < zahlen.length; i++) {
+      int von, nach;
+
+      if (index2 < index1) {
+        von = index2;
+        nach = index1;
+      } else {
+        von = index1;
+        nach = index2;
+      }
+
+      if (i == von) {
+        druckeZahl(zahlen[i], ">");
+      } else if (i == nach) {
+        druckeZahl(zahlen[i], "<");
+      } else {
+        druckeZahl(zahlen[i]);
+      }
+    }
+    druckeZeilenumbruch(suffix);
+  }
 }

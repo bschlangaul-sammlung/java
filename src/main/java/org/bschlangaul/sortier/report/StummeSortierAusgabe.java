@@ -1,12 +1,21 @@
 package org.bschlangaul.sortier.report;
 
-public class StummeSortierAusgabe implements SortierAusgabe {
-  public void zahlenFeldAusschnitt(int[] zahlen, int links, int rechts) {
+public class StummeSortierAusgabe extends SortierAusgabe {
+
+  public StummeSortierAusgabe (int zahlen[]) {
+    super(zahlen);
   }
 
-  public void zahlenFeld(int[] zahlen, String erklaerung) {
+  public void feldAusschnitt(int links, int rechts, String suffix) {
   }
 
-  public void vertauschen(int[] zahlen, int index1, int index2) {
+  public void feld(String suffix) {
+  }
+
+  public void feldMarkierung(int markierung, String suffix) {
+
+  }
+
+  public void vertauschen(int index1, int index2, String suffix) {
   }
 }

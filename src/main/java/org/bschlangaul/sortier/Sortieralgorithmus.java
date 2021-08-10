@@ -10,17 +10,17 @@ public abstract class Sortieralgorithmus {
 
   public Sortieralgorithmus() {
     this.zahlen = new int[] {};
-    berichte.zahlen = this.zahlen;
+    berichte.setzeZahlen(zahlen);
   }
 
   public Sortieralgorithmus(int[] zahlen) {
     this.zahlen = zahlen;
-    berichte.zahlen = zahlen;
+    berichte.setzeZahlen(zahlen);
   }
 
   public void setzeZahlen(int[] zahlen) {
     this.zahlen = zahlen;
-    berichte.zahlen = zahlen;
+    berichte.setzeZahlen(zahlen);
   }
 
   public void aktiviereKonsolenAusgabe() {
@@ -57,10 +57,10 @@ public abstract class Sortieralgorithmus {
   public void teste(int[] zahlen) {
     setzeZahlen(zahlen);
     aktiviereKonsolenAusgabe();
-    berichte.zahlenFeld();
+    berichte.feld();
     System.out.println("sortiere:");
     sortiere();
-    berichte.zahlenFeld();
+    berichte.feld();
     System.out.println();
   }
 
