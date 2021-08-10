@@ -1,6 +1,13 @@
 package org.bschlangaul.sortier;
 
 /**
+ * Die Lage des Pivot-Elements
+ */
+enum PivotLage {
+  LINKS, MITTE, RECHTS,
+}
+
+/**
  * Sortiere ein Zahlen-Feld mit Hilfe des Quicksort-Algorithmus. (Nach Saake
  * Seite 138)
  *
@@ -10,6 +17,20 @@ package org.bschlangaul.sortier;
  * Position des Pivot-Elements zu bestimmen.
  */
 public class QuickSaake extends Sortieralgorithmus {
+
+  private PivotLage pivotLage = PivotLage.MITTE;
+
+  public void setztePivotLinks() {
+    pivotLage = PivotLage.LINKS;
+  }
+
+  public void setztePivotMitte() {
+    pivotLage = PivotLage.MITTE;
+  }
+
+  public void setztePivotRechts() {
+    pivotLage = PivotLage.RECHTS;
+  }
 
   /**
    * Hilfsmethode zum Zerlegen der Folge. Diese Methode heißt im Englischen auch
@@ -23,7 +44,16 @@ public class QuickSaake extends Sortieralgorithmus {
   private int zerlege(int links, int rechts) {
     berichte.feldAusschnitt(links, rechts, "zerlege");
     // Pivot-Element bestimmen
-    int pivotIndex = (links + rechts) / 2;
+    int pivotIndex;
+    if (pivotLage == PivotLage.LINKS) {
+      pivotIndex = links;
+    } else if (pivotLage == PivotLage.RECHTS) {
+      pivotIndex = rechts;
+    } else {
+      pivotIndex = (links + rechts) / 2;
+    }
+    berichte.feldMarkierung(pivotIndex);
+
     int pivotWert = zahlen[pivotIndex];
     int pivotIndexEndgültig = links;
     // Pivot-Element an das Ende verschieben

@@ -21,9 +21,6 @@ import org.bschlangaul.sortier.Sortieralgorithmus;
     "so" }, mixinStandardHelpOptions = true, description = "Sortiere mit verschiedenen Algorithmen.")
 class Sortierer implements Callable<Integer> {
 
-  @ArgGroup(exclusive = true, multiplicity = "0..1")
-  Algorithmus algorithmus;
-
   static class Algorithmus {
     @Option(names = { "-b", "--bubble" }, description = "Bubblesort.")
     boolean bubble;
@@ -44,6 +41,23 @@ class Sortierer implements Callable<Integer> {
     boolean selection;
   }
 
+  @ArgGroup(exclusive = true, multiplicity = "0..1")
+  Algorithmus algorithmus;
+
+  static class PivotLage {
+    @Option(names = { "--links" }, description = "Pivot-Element links (Nur bei Quicksort relevant).")
+    boolean links;
+
+    @Option(names = { "--mitte" }, description = "Pivot-Element in der Mitte (Nur bei Quicksort relevant).")
+    boolean mitte;
+
+    @Option(names = { "--rechts" }, description = "Pivot-Element rechts (Nur bei Quicksort relevant).")
+    boolean rechts;
+  }
+
+  @ArgGroup(exclusive = true, multiplicity = "0..1")
+  PivotLage pivotLage;
+
   @Parameters(arity = "1..*", description = "Eine Zahlenfolge, die sortiert werden soll.")
   List<Integer> werte;
 
@@ -60,7 +74,15 @@ class Sortierer implements Callable<Integer> {
     } else if (algorithmus.merge) {
       sortierer = new Merge();
     } else if (algorithmus.quick) {
-      sortierer = new QuickSaake();
+      QuickSaake quick = (QuickSaake) new QuickSaake();
+      if (pivotLage == null || pivotLage.mitte) {
+        quick.setztePivotMitte();
+      } else if (pivotLage.rechts) {
+        quick.setztePivotRechts();
+      } else if (pivotLage.links) {
+        quick.setztePivotLinks();
+      }
+      sortierer = quick;
     } else if (algorithmus.selection) {
       sortierer = new SelectionRechtsIterativ();
     } else {
