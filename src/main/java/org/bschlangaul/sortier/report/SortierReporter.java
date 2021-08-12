@@ -74,7 +74,7 @@ public class SortierReporter extends Reporter {
    *                   soll.
    */
   public void feldMarkierung(int markierung) {
-    sortierAusgabe.feldMarkierung(markierung, "markiere");
+    sortierAusgabe.feldMarkierung(markierung, "markiere (i " + markierung + ")");
   }
 
   public void vertauschen(int index1, int index2) {
