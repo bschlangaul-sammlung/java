@@ -56,4 +56,15 @@ public class Farbe {
     return WEISS + objekt.toString() + RESET;
   }
 
+  /**
+   * Entferne die ANSI-Farben wieder.
+   *
+   * @param mitFarbe Eine Zeichenketten mit ANSI-Escapesequenzen.
+   *
+   * @return Eine Zeichenkette ohne Farbe.
+   */
+  public static String entferne(String mitFarbe) {
+    return mitFarbe.replaceAll("\u001B\\[\\d+m", "");
+  }
+
 }

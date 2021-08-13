@@ -2,6 +2,8 @@ package org.bschlangaul.sortier.report;
 
 import java.util.Arrays;
 
+import org.bschlangaul.helfer.Farbe;
+
 abstract class SortierAusgabe {
 
   protected int[] zahlen;
@@ -26,39 +28,32 @@ abstract class SortierAusgabe {
     return Math.max(minLänge, maxLänge);
   }
 
-  protected String formatiereZahl(String zahl, String präfix, String suffix) {
-    // Damit ein zusätzliches Zeichen wie <, >, * berücksichtigt werden kann.
-    String präfixZeichen = " ";
-    if (präfix != null) {
-      präfixZeichen = präfix;
+  protected String formatiereZahl(String zahl) {
+    char erstesZeichen = zahl.charAt(0);
+    char letztesZeichen = zahl.charAt(zahl.length() - 1);
+    if (erstesZeichen != '>') {
+      zahl = " " + zahl;
     }
-    if (suffix != null) {
-      zahl = zahl + suffix;
-    }
-    // Eins breiten wegen der Suffixe.
-    int max = maxZahlenBreite + 1;
-    // „-“ für angehängte Leerzeichen.
-    return präfixZeichen + String.format("%-" + max + "s", zahl);
-  }
 
-  protected String formatiereZahl(int zahl, String präfix, String suffix) {
-    return formatiereZahl(String.valueOf(zahl), präfix, suffix);
+    // Eins breiter wegen der Suffixe.
+    int max = maxZahlenBreite + 1;
+    int zahlBreite = zahl.length();
+    int anzahlLeerzeichen = max - zahlBreite;
+    String leerzeichen = "";
+    if (erstesZeichen == '>' || letztesZeichen == '<') {
+      zahl = Farbe.gelb(zahl);
+    }
+    if (zahl.charAt(zahl.length() - 1) == '*') {
+      zahl = Farbe.grün(zahl);
+    }
+    if (anzahlLeerzeichen > -1) {
+      leerzeichen = " ".repeat(max - zahlBreite);
+    }
+    return zahl + leerzeichen;
   }
 
   protected String formatiereZahl(int zahl) {
-    return formatiereZahl(String.valueOf(zahl), null, null);
-  }
-
-  protected String formatiereZahl(String zahl) {
-    return formatiereZahl(zahl, null, null);
-  }
-
-  protected void druckeZahl(String zahl, String präfix, String suffix) {
-    System.out.print(formatiereZahl(zahl, präfix, suffix));
-  }
-
-  protected void druckeZahl(int zahl, String präfix, String suffix) {
-    System.out.print(formatiereZahl(zahl, präfix, suffix));
+    return formatiereZahl(String.valueOf(zahl));
   }
 
   protected void druckeZahl(String zahl) {
@@ -81,11 +76,21 @@ abstract class SortierAusgabe {
     druckeZeilenumbruch(null);
   }
 
-  public abstract void feldAusschnitt(int links, int rechts, String suffix);
+  public abstract void feld(int links, int rechts, String erklärung);
 
-  public abstract void feld(String suffix);
+  public void feld(String erklärung) {
+    feld(0, zahlen.length - 1, erklärung);
+  }
 
-  public abstract void feldMarkierung(int markierung, String suffix);
+  public abstract void feldMarkierung(int links, int rechts, int markierung, String erklärung);
 
-  public abstract void vertauschen(int index1, int index2, String suffix);
+  public void feldMarkierung(int markierung, String erklärung) {
+    feldMarkierung(0, zahlen.length - 1, markierung, erklärung);
+  }
+
+  public abstract void vertauschen(int links, int rechts, int index1, int index2, String erklärung);
+
+  public void vertauschen(int index1, int index2, String erklärung) {
+    vertauschen(0, zahlen.length - 1, index1, index2, erklärung);
+  }
 }

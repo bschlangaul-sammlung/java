@@ -37,7 +37,7 @@ public class SortierReporter extends Reporter {
    *                  soll.
    */
   public void feldAusschnitt(int links, int rechts, String erklärung) {
-    sortierAusgabe.feldAusschnitt(links, rechts, erklärung);
+    sortierAusgabe.feld(links, rechts, erklärung);
   }
 
   /**
@@ -47,7 +47,7 @@ public class SortierReporter extends Reporter {
    * @param rechts Die rechte Grenze, bis zu der gezeigt werden soll.
    */
   public void feldAusschnitt(int links, int rechts) {
-    sortierAusgabe.feldAusschnitt(links, rechts, null);
+    sortierAusgabe.feld(links, rechts, null);
   }
 
   /**
@@ -86,6 +86,6 @@ public class SortierReporter extends Reporter {
       min = index1;
       max = index2;
     }
-    sortierAusgabe.vertauschen(index1, index2, "vertausche (i " + min + "<>" + max + ")");
+    sortierAusgabe.vertauschen(min, max, "vertausche (i " + min + "<>" + max + ")");
   }
 }
