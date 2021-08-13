@@ -25,7 +25,7 @@ class DoubleLinkedList {
     if (head != null) {
       item = head;
       do {
-        if (item.val == val) {
+        if (item.val.equals(val)) {
           return item;
         }
         item = item.next;
@@ -82,7 +82,6 @@ class DoubleLinkedList {
     if (head != null) {
       System.out.print(head.val + " ");
       Item item = head;
-
       while (!item.next.equals(head)) {
         System.out.print(item.next.val + " ");
         item = item.next;
