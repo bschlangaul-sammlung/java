@@ -52,20 +52,20 @@ public class QuickSaake extends Sortieralgorithmus {
     } else {
       pivotIndex = (links + rechts) / 2;
     }
-    berichte.feldMarkierung(pivotIndex);
+    berichte.feldMarkierung(links, rechts, pivotIndex);
 
     int pivotWert = zahlen[pivotIndex];
     int pivotIndexEndgültig = links;
     // Pivot-Element an das Ende verschieben
-    vertausche(pivotIndex, rechts);
+    vertausche(links, rechts, pivotIndex, rechts);
     for (int i = links; i < rechts; i++) {
       if (zahlen[i] <= pivotWert) {
-        vertausche(pivotIndexEndgültig, i);
+        vertausche(links, rechts, pivotIndexEndgültig, i);
         pivotIndexEndgültig++;
       }
     }
     // Pivot-Element an die richtige Position kopieren
-    vertausche(rechts, pivotIndexEndgültig);
+    vertausche(links, rechts, rechts, pivotIndexEndgültig);
     // neue Pivot-Position zurückgeben
     return pivotIndexEndgültig;
   }

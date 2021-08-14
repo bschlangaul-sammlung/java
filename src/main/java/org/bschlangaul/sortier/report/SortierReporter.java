@@ -70,14 +70,26 @@ public class SortierReporter extends Reporter {
   /**
    * Zeige das Feld mit einem markierten Element.
    *
+   * @param links      Die linke Grenze, ab der gezeigt werden soll.
+   * @param rechts     Die rechte Grenze, bis zu der gezeigt werden soll.
+   * @param markierung Die Indexnummer, des Feldeintrags, der markiert werden
+   *                   soll.
+   */
+  public void feldMarkierung(int links, int rechts, int markierung) {
+    sortierAusgabe.feldMarkierung(links, rechts, markierung, "markiere (i " + markierung + ")");
+  }
+
+  /**
+   * Zeige das Feld mit einem markierten Element.
+   *
    * @param markierung Die Indexnummer, des Feldeintrags, der markiert werden
    *                   soll.
    */
   public void feldMarkierung(int markierung) {
-    sortierAusgabe.feldMarkierung(markierung, "markiere (i " + markierung + ")");
+    feldMarkierung(0, zahlen.length - 1, markierung);
   }
 
-  public void vertauschen(int index1, int index2) {
+  public void vertauschen(int links, int rechts, int index1, int index2) {
     int min, max;
     if (index2 < index1) {
       min = index2;
@@ -86,6 +98,10 @@ public class SortierReporter extends Reporter {
       min = index1;
       max = index2;
     }
-    sortierAusgabe.vertauschen(min, max, "vertausche (i " + min + "<>" + max + ")");
+    sortierAusgabe.vertauschen(links, rechts, min, max, "vertausche (i " + min + "<>" + max + ")");
+  }
+
+  public void vertauschen(int index1, int index2) {
+    vertauschen(0, zahlen.length - 1, index1, index2);
   }
 }

@@ -1,7 +1,5 @@
 package org.bschlangaul.sortier.report;
 
-import org.bschlangaul.helfer.Farbe;
-
 class Markierung {
   int index;
   String präfix = "";
@@ -59,7 +57,7 @@ public class KonsolenSortierAusgabe extends SortierAusgabe {
    */
   private void rohesFeld(int links, int rechts, Markierung... roheMarkierungen) {
     Markierung[] markierungen = Markierung.ordne(zahlen, roheMarkierungen);
-    int breite = maxZahlenBreite + 1;
+    int breite = maxZahlenBreite;
     if (links > 0) {
       System.out.print(" ".repeat(breite * links));
     }
@@ -97,7 +95,7 @@ public class KonsolenSortierAusgabe extends SortierAusgabe {
   }
 
   public void feldMarkierung(int links, int rechts, int markierung, String erklärung) {
-    rohesFeld(0, zahlen.length - 1, suffix(markierung, "*"));
+    rohesFeld(links, rechts, suffix(markierung, "*"));
     druckeZeilenumbruch(erklärung);
   }
 

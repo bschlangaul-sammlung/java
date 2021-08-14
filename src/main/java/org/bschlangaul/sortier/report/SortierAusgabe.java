@@ -12,7 +12,8 @@ abstract class SortierAusgabe {
 
   public SortierAusgabe(int[] zahlen) {
     this.zahlen = zahlen;
-    maxZahlenBreite = gibMaxZahlenBreite(zahlen);
+    // 2 breiter wegen der Suffixe und dem Leerzeichen
+    maxZahlenBreite = gibMaxZahlenBreite(zahlen) + 2;
   }
 
   private int gibMaxZahlenBreite(int[] zahlen) {
@@ -35,8 +36,7 @@ abstract class SortierAusgabe {
       zahl = " " + zahl;
     }
 
-    // Eins breiter wegen der Suffixe.
-    int max = maxZahlenBreite + 1;
+    int max = maxZahlenBreite;
     int zahlBreite = zahl.length();
     int anzahlLeerzeichen = max - zahlBreite;
     String leerzeichen = "";

@@ -31,14 +31,27 @@ public abstract class Sortieralgorithmus {
    * Vertausche zwei Zahlen im einem Zahlen-Feld. Im Englischen heißt die Methode
    * auch oft „swap“.
    *
+   * @param links  Die linke Grenze, ab der gezeigt werden soll.
+   * @param rechts Die rechte Grenze, bis zu der gezeigt werden soll.
+   * @param index1 Die Index-Nummer der ersten Zahl.
+   * @param index2 Die Index-Nummer der zweiten Zahl.
+   */
+  protected void vertausche(int links, int rechts, int index1, int index2) {
+    berichte.vertauschen(links, rechts, index1, index2);
+    int tmp = zahlen[index1];
+    zahlen[index1] = zahlen[index2];
+    zahlen[index2] = tmp;
+  }
+
+  /**
+   * Vertausche zwei Zahlen im einem Zahlen-Feld. Im Englischen heißt die Methode
+   * auch oft „swap“.
+   *
    * @param index1 Die Index-Nummer der ersten Zahl.
    * @param index2 Die Index-Nummer der zweiten Zahl.
    */
   protected void vertausche(int index1, int index2) {
-    berichte.vertauschen(index1, index2);
-    int tmp = zahlen[index1];
-    zahlen[index1] = zahlen[index2];
-    zahlen[index2] = tmp;
+    vertausche(0, zahlen.length - 1, index1, index2);
   }
 
   public abstract int[] sortiere();
@@ -85,6 +98,6 @@ public abstract class Sortieralgorithmus {
     teste(new int[] { 1 });
 
     System.out.println("Teste leeres Feld");
-    teste(new int[] { });
+    teste(new int[] {});
   }
 }
