@@ -28,7 +28,9 @@ public class QuickSaake extends Quick {
     int pivotWert = zahlen[pivotIndex];
     int pivotIndexEndgültig = links;
     // Pivot-Element an das Ende verschieben
-    vertausche(links, rechts, pivotIndex, rechts);
+    if (pivotIndex != rechts) {
+      vertausche(links, rechts, pivotIndex, rechts);
+    }
     for (int i = links; i < rechts; i++) {
       if (zahlen[i] <= pivotWert) {
         vertausche(links, rechts, pivotIndexEndgültig, i);
@@ -49,7 +51,6 @@ public class QuickSaake extends Quick {
    */
   private void sortiereRekursiv(int links, int rechts) {
     if (rechts > links) {
-      berichte.feldAusschnitt(links, rechts, "sortiere");
       // Feld zerlegen
       int pivotIndexEndgültig = zerlege(links, rechts);
       // und zerlegeen sortieren

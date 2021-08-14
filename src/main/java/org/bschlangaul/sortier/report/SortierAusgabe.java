@@ -40,10 +40,11 @@ abstract class SortierAusgabe {
     int zahlBreite = zahl.length();
     int anzahlLeerzeichen = max - zahlBreite;
     String leerzeichen = "";
-    if (erstesZeichen == '>' || letztesZeichen == '<') {
+    if (erstesZeichen == '>' &&  letztesZeichen == '<')  {
+      zahl = Farbe.blau(zahl);
+    } else if (erstesZeichen == '>' || letztesZeichen == '<') {
       zahl = Farbe.gelb(zahl);
-    }
-    if (zahl.charAt(zahl.length() - 1) == '*') {
+    } else if (letztesZeichen == '*') {
       zahl = Farbe.grün(zahl);
     }
     if (anzahlLeerzeichen > -1) {
