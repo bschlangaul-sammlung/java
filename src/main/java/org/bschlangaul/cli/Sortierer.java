@@ -13,6 +13,9 @@ import org.bschlangaul.sortier.Heap;
 import org.bschlangaul.sortier.InsertionIterativ;
 import org.bschlangaul.sortier.Merge;
 import org.bschlangaul.sortier.QuickSaake;
+import org.bschlangaul.sortier.QuickHorare;
+import org.bschlangaul.sortier.Quick;
+
 import org.bschlangaul.sortier.SelectionRechtsIterativ;
 
 import org.bschlangaul.sortier.Sortieralgorithmus;
@@ -34,8 +37,11 @@ class Sortierer implements Callable<Integer> {
     @Option(names = { "-m", "--merge" }, description = "Mergsort.")
     boolean merge;
 
-    @Option(names = { "-q", "--quick" }, description = "Quicksort.")
-    boolean quick;
+    @Option(names = { "-q", "--quick-saake" }, description = "Quicksort nach Saake.")
+    boolean quickSaake;
+
+    @Option(names = { "-Q", "--quick-horare" }, description = "Quicksort original nach Horare.")
+    boolean quickHorare;
 
     @Option(names = { "-s", "--selection" }, description = "Selectionsort.")
     boolean selection;
@@ -61,6 +67,25 @@ class Sortierer implements Callable<Integer> {
   @Parameters(arity = "1..*", description = "Eine Zahlenfolge, die sortiert werden soll.")
   List<Integer> werte;
 
+  private Sortieralgorithmus intialisiereQuick() {
+    Quick quick;
+
+    if (algorithmus.quickSaake) {
+      quick = new QuickSaake();
+    } else {
+      quick = new QuickHorare();
+    }
+
+    if (pivotLage == null || pivotLage.mitte) {
+      quick.setztePivotMitte();
+    } else if (pivotLage.rechts) {
+      quick.setztePivotRechts();
+    } else if (pivotLage.links) {
+      quick.setztePivotLinks();
+    }
+    return (Sortieralgorithmus) quick;
+  }
+
   @Override
   public Integer call() {
     Sortieralgorithmus sortierer = null;
@@ -73,16 +98,8 @@ class Sortierer implements Callable<Integer> {
       sortierer = new InsertionIterativ();
     } else if (algorithmus.merge) {
       sortierer = new Merge();
-    } else if (algorithmus.quick) {
-      QuickSaake quick = (QuickSaake) new QuickSaake();
-      if (pivotLage == null || pivotLage.mitte) {
-        quick.setztePivotMitte();
-      } else if (pivotLage.rechts) {
-        quick.setztePivotRechts();
-      } else if (pivotLage.links) {
-        quick.setztePivotLinks();
-      }
-      sortierer = quick;
+    } else if (algorithmus.quickSaake || algorithmus.quickHorare) {
+      sortierer = intialisiereQuick();
     } else if (algorithmus.selection) {
       sortierer = new SelectionRechtsIterativ();
     } else {

@@ -13,7 +13,7 @@ package org.bschlangaul.sortier;
  * gefunden, indem die linke und rechte Grenze immer weiter in die Mitte
  * verschoben wird.
  */
-public class QuickHorare extends Sortieralgorithmus {
+public class QuickHorare extends Quick {
 
   /**
    * Zerlege das Zahlen-Feld.
@@ -25,8 +25,10 @@ public class QuickHorare extends Sortieralgorithmus {
    * @return Die Index-Nummer, an dem das Feld zerlegt werden soll.
    */
   private int zerlege(int links, int rechts) {
+    berichte.feldAusschnitt(links, rechts, "zerlege");
     int i, j;
-    int pivotWert = zahlen[(links + rechts) / 2];
+    int pivotIndex = bestimmePivot(links, rechts);
+    int pivotWert = zahlen[pivotIndex];
     i = links - 1;
     j = rechts + 1;
     while (true) {
@@ -39,7 +41,7 @@ public class QuickHorare extends Sortieralgorithmus {
       } while (zahlen[j] > pivotWert);
 
       if (i < j) {
-        vertausche(i, j);
+        vertausche(links, rechts, i, j);
       } else {
         return j;
       }
