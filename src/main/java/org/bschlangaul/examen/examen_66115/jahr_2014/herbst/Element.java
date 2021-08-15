@@ -30,7 +30,6 @@ public class Element {
     return next;
   }
 
-
   public void setNext(Element element) {
     next = element;
   }

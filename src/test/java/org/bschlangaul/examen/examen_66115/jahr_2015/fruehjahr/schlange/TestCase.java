@@ -1,6 +1,7 @@
-package org.bschlangaul.examen.examen_66115.jahr_2015.fruehjahr;
+package org.bschlangaul.examen.examen_66115.jahr_2015.fruehjahr.schlange;
 
 import static org.junit.Assert.*;
+
 import org.junit.Test;
 
 public class TestCase {
@@ -44,6 +45,5 @@ public class TestCase {
     assertEquals(3, s.dequeue());
     assertEquals(true, s.isEmpty());
   }
-
 
 }

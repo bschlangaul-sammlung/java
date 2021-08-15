@@ -1,4 +1,4 @@
-package org.bschlangaul.examen.examen_66115.jahr_2015.fruehjahr;
+package org.bschlangaul.examen.examen_66115.jahr_2015.fruehjahr.schlange;
 
 public class Stapel {
   public Element top;
