@@ -1,4 +1,4 @@
-package org.bschlangaul.aufgaben.aud.ab_4.musikliste;
+package org.bschlangaul.aufgaben.aud.listen.musikliste;
 
 public class TestKlasse {
 
