@@ -37,8 +37,8 @@ public class Dijkstra implements Callable<Integer> {
       graphenFormat.gibAlsTexUmgebung();
     }
 
-    dijkstra.reporter.gibZwischenschrittTabelle(alsTex);
-    dijkstra.reporter.gibErgebnisTabelle(alsTex);
+    dijkstra.berichte.zwischenschrittTabelle(alsTex);
+    dijkstra.berichte.ergebnisTabelle(alsTex);
     return 0;
   }
 }

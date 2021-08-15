@@ -69,7 +69,7 @@ public class KuerzesterPfadDijkstra {
       }
     }
 
-    public void gibZwischenschrittTabelle(boolean alsTex) {
+    public void zwischenschrittTabelle(boolean alsTex) {
       int knotenVerschiebung = 2;
       int spaltenAnzahl = knotenAnzahl + knotenVerschiebung;
       String[] kopfzeile = new String[spaltenAnzahl];
@@ -115,7 +115,7 @@ public class KuerzesterPfadDijkstra {
       System.out.println(Tabelle.gibAus(kopfzeile, zeilen, alsTex));
     }
 
-    public void gibErgebnisTabelle(boolean alsTex) {
+    public void ergebnisTabelle(boolean alsTex) {
       String[] kopfZeile = { "nach", "Entfernung", "Reihenfolge", "Pfad" };
       String[][] zeilen = new String[pfade.size()][4];
       for (int i = 0; i < pfade.size(); i++) {
@@ -191,7 +191,7 @@ public class KuerzesterPfadDijkstra {
 
   public int knotenAnzahl;
 
-  public Reporter reporter;
+  public Reporter berichte;
 
   public boolean[] besucht;
 
@@ -210,7 +210,7 @@ public class KuerzesterPfadDijkstra {
   public KuerzesterPfadDijkstra(String graphenFormat) {
     this.graphenFormat = graphenFormat;
     graph = new GraphAdjazenzMatrix(graphenFormat);
-    reporter = new Reporter();
+    berichte = new Reporter();
   }
 
   public static final int KEINE_VORGÄNGER = -1;
@@ -246,8 +246,8 @@ public class KuerzesterPfadDijkstra {
     // Die Entfernung vom Anfangsknoten zu sich selbst ist immer 0.
     kürzesteEntfernungen[startKnotenNr] = 0;
 
-    reporter.starte();
-    reporter.speichereSchritt();
+    berichte.starte();
+    berichte.speichereSchritt();
 
     // Feld mit dem die Vorgänger-Knoten des kürzesten Pfads gespeichert werden.
     // Ein Vorgänger-Knoten des Pfads gibt ab, über welchen Knoten man auf
@@ -286,10 +286,10 @@ public class KuerzesterPfadDijkstra {
           kürzesteEntfernungen[j] = entfernung + kantenEntfernung;
         }
       }
-      reporter.speichereSchritt();
+      berichte.speichereSchritt();
     }
 
-    reporter.beende();
+    berichte.beende();
     return kürzesteEntfernungen;
   }
 
@@ -324,7 +324,7 @@ public class KuerzesterPfadDijkstra {
         "s: -1 0; a: 6 0; b: 0 -1; c: 4 0; d: 1 2; e: 2 0; f: 6 2; g: 2 -2; h: -2 -2; a -- c: 4; a -- f: 9; b -- e: 6; b -- g: 4; b -- s: 3; c -- d: 7; c -- e: 5; c -- f: 1; d -- e: 3; d -- f: 4; d -- s: 8; e -- g: 4; e -- s: 13; g -- h: 3; h -- s: 5;");
 
     d.sucheKürzestenPfadMatrix("s");
-    d.reporter.gibErgebnisTabelle(false);
-    d.reporter.gibZwischenschrittTabelle(false);
+    d.berichte.ergebnisTabelle(false);
+    d.berichte.zwischenschrittTabelle(false);
   }
 }

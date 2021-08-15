@@ -1,6 +1,11 @@
 package org.bschlangaul.helfer.report;
 
 /**
+ * Die Klasse Reporter ist die Basisklasse für alle spezialisierten
+ * Reporter-Klassen (z. B. GraphenReporter, BaumReporter, SortierReporter).
+ * Instanzen der Klassen werden mittels Delegation als Attribut
+ * <em>berichte</em> in die Algorithmen-Klassen eingebunden.
+ *
  * Im Strategie-Entwurfsmuster entspricht diese Klasse der Kontext-Klasse.
  */
 public class Reporter {
@@ -8,20 +13,24 @@ public class Reporter {
   /**
    * Standardmäßig soll der Reporter stumm sein.
    */
-  Ausgabe ausgabe = new StummeAusgabe();
+  protected Ausgabe ausgabe = new StummeAusgabe();
+
+  protected KonsolenAusgabe konsolenAusgabe = new KonsolenAusgabe();
+
+  protected TexAusgabe texAusgabe = new TexAusgabe();
 
   /**
    * Aktiviere die Konsolen-Ausgabe.
    */
   public void aktiviereKonsolenAusgabe() {
-    ausgabe = new KonsolenAusgabe();
+    ausgabe = konsolenAusgabe;
   }
 
   /**
    * Aktivere die TeX-Ausgabe. Der Reporter produziert dann TeX-Markup.
    */
   public void aktiviereTexAusgabe() {
-    ausgabe = new TexAusgabe();
+    ausgabe = texAusgabe;
   }
 
   /**

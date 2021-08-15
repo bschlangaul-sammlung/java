@@ -1,6 +1,40 @@
 package org.bschlangaul.graph.algorithmen;
 
 import org.bschlangaul.graph.GraphAdjazenzMatrix;
+import org.bschlangaul.graph.report.GraphReporter;
+
+class PrimReporter extends GraphReporter {
+
+  GraphAdjazenzMatrix matrix;
+
+  public PrimReporter(GraphAdjazenzMatrix matrix) {
+    this.matrix = matrix;
+  }
+
+  public String knoten(int knotenNr) {
+    return konsolenAusgabe.grün(matrix.gibKnotenName(knotenNr));
+  }
+
+  public String zahl(Double zahl) {
+    return matrix.formatiereZahl(zahl);
+  }
+
+  public String kante(int eltern, int kind, double gewicht) {
+    return "v(" + knoten(eltern) + ", " + knoten(kind) + ", " + konsolenAusgabe.gelb(zahl(gewicht)) + ")";
+  }
+
+  void knotenBesuch(int knotenNr) {
+    System.out.println("Besuche Knoten „" + knoten(knotenNr) + "“");
+  }
+
+  void kantenHinzufügen(int eltern, int kind, double gewicht) {
+    System.out.println("Füge Kante " + kante(eltern, kind, gewicht) + " hinzu");
+  }
+
+  void kantenAktualisierung(int eltern, int kind, double gewicht) {
+    System.out.println("Aktualisiere Kante " + kante(eltern, kind, gewicht));
+  }
+}
 
 /**
  * Implementation des Algorithmus von Prim / Jarník. Momentan beginnt der
@@ -11,6 +45,9 @@ import org.bschlangaul.graph.GraphAdjazenzMatrix;
  * "https://algorithms.tutorialhorizon.com/prims-minimum-spanning-tree-mst-using-adjacency-matrix/">tutorialhorizon.com</a>.
  */
 public class MinimalerSpannbaumPrim extends GraphAdjazenzMatrix {
+
+  PrimReporter berichte;
+
   /**
    * Ein Feld, in dem gespeichert wird, ob der Elternknoten bereits besucht wurde.
    * Wurde der Elternknoten mit der Nummer 3 besucht wird besucht[3] auf true
@@ -35,6 +72,7 @@ public class MinimalerSpannbaumPrim extends GraphAdjazenzMatrix {
     besucht = new boolean[gibKnotenAnzahl()];
     ergebnisse = new Ergebnis[gibKnotenAnzahl()];
     gewichte = new double[gibKnotenAnzahl()];
+    berichte = new PrimReporter(this);
   }
 
   /**
@@ -88,14 +126,13 @@ public class MinimalerSpannbaumPrim extends GraphAdjazenzMatrix {
       ergebnisse[i] = new Ergebnis();
     }
 
-    // start from the vertex 0
     gewichte[0] = 0;
     ergebnisse[0] = new Ergebnis();
     ergebnisse[0].eltern = -1;
 
     for (int i = 0; i < gibKnotenAnzahl(); i++) {
       int eltern = gibMinimumKnoten();
-      System.out.println("Besuche Knoten „" + gibKnotenName(eltern) + "“");
+      berichte.knotenBesuch(eltern);
       besucht[eltern] = true;
       for (int kind = 0; kind < gibKnotenAnzahl(); kind++) {
         if (matrix[eltern][kind] > 0) {
@@ -103,11 +140,9 @@ public class MinimalerSpannbaumPrim extends GraphAdjazenzMatrix {
             gewichte[kind] = matrix[eltern][kind];
 
             if (ergebnisse[kind].eltern != -1) {
-              System.out.println(
-                  "Aktualisiere Kante " + gibKnotenName(eltern) + "--" + gibKnotenName(kind) + ": " + gewichte[kind]);
+              berichte.kantenAktualisierung(eltern, kind, gewichte[kind]);
             } else {
-              System.out.println(
-                  "Füge hinzu Kante " + gibKnotenName(eltern) + "--" + gibKnotenName(kind) + ": " + gewichte[kind]);
+              berichte.kantenHinzufügen(eltern, kind, gewichte[kind]);
             }
             ergebnisse[kind].eltern = eltern;
             ergebnisse[kind].gewicht = gewichte[kind];

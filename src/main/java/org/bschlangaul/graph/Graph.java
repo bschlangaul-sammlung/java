@@ -188,4 +188,8 @@ public abstract class Graph {
     int maxKnoten = gibMaximaleKnotennameTextbreite();
     return Math.max(Math.max(minGewicht, maxGewicht), maxKnoten);
   }
+
+  public String formatiereZahl(Double zahl) {
+    return GraphenFormat.formatiereZahl(zahl);
+  }
 }

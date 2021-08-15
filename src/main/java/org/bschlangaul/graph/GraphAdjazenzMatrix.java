@@ -167,7 +167,7 @@ public class GraphAdjazenzMatrix extends Graph {
    *
    * @return Gewichtung der Kante
    */
-  double gibKanteGewicht(String von, String nach) {
+  public double gibKanteGewicht(String von, String nach) {
     int vonNummer, nachNummer;
     vonNummer = gibKnotenNummer(von);
     nachNummer = gibKnotenNummer(nach);
