@@ -9,8 +9,8 @@ public class MusikListe {
     anzahl = 0;
   }
 
-  public void setzeErsten(Knoten e) {
-    erster = e;
+  public void setzeErsten(Knoten knoten) {
+    erster = knoten;
     aktualisiereAnzahl();
   }
 
@@ -18,13 +18,13 @@ public class MusikListe {
     if (erster == null) {
       anzahl = 0;
     } else {
-      int n = 1;
-      Knoten k = erster;
-      while (!(k.gibNächsten() == null)) {
-        k = k.gibNächsten();
-        n = n + 1;
+      int zähler = 1;
+      Knoten knoten = erster;
+      while (!(knoten.gibNächsten() == null)) {
+        knoten = knoten.gibNächsten();
+        zähler = zähler + 1;
       }
-      anzahl = n;
+      anzahl = zähler;
     }
     return anzahl;
   }
@@ -32,11 +32,11 @@ public class MusikListe {
   public String gibMusikstückListe() {
     String ausgabe = " ";
     if (anzahl >= 1) {
-      Knoten k = erster;
-      ausgabe = k.gibMusikstück().gibTitel();
+      Knoten knoten = erster;
+      ausgabe = knoten.gibMusikstück().gibTitel();
       for (int i = 1; i <= anzahl - 1; i++) {
-        k = k.gibNächsten();
-        ausgabe = ausgabe + " | " + k.gibMusikstück().gibTitel();
+        knoten = knoten.gibNächsten();
+        ausgabe = ausgabe + " | " + knoten.gibMusikstück().gibTitel();
       }
     }
     return ausgabe;
@@ -56,20 +56,18 @@ public class MusikListe {
     if ((position < 1) || (position > anzahl)) {
       System.out.println(" FEHLER ! ");
       return null;
-    } else {
-      Knoten k = erster;
-      for (int i = 1; i <= position - 1; i++) {
-        k = k.gibNächsten();
-      }
-      return k;
     }
+    Knoten knoten = erster;
+    for (int i = 1; i <= position - 1; i++) {
+      knoten = knoten.gibNächsten();
+    }
+    return knoten;
   }
 
   public int zähleEinträge() {
     if (erster == null) {
       return 0;
-    } else {
-      return erster.zähleEinträge();
     }
+    return erster.zähleEinträge();
   }
 }

@@ -1,22 +1,22 @@
 package org.bschlangaul.aufgaben.aud.listen.musikliste;
 
 public class Knoten {
-  private Knoten naechster;
+  private Knoten nächster;
   private Knoten vorheriger;
   private MusikStueck lied;
 
   public Knoten(MusikStueck lied) {
-    naechster = null;
+    nächster = null;
     this.lied = lied;
     vorheriger = null;
   }
 
   public Knoten gibNächsten() {
-    return naechster;
+    return nächster;
   }
 
-  public void setzeNächsten(Knoten naechsterKnoten) {
-    naechster = naechsterKnoten;
+  public void setzeNächsten(Knoten nächsterKnoten) {
+    nächster = nächsterKnoten;
   }
 
   public MusikStueck gibMusikstück() {
