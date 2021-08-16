@@ -1,4 +1,4 @@
-package org.bschlangaul.aufgaben.aud.ab_5;
+package org.bschlangaul.aufgaben.aud.listen.woerterbuch;
 
 public abstract class WoerterbuchEintrag {
   protected WortPaar nächstes;
