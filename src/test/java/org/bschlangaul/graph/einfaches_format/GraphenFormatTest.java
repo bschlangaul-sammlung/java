@@ -122,7 +122,7 @@ public class GraphenFormatTest {
   @Test
   public void methodeGibKnoten() {
     GraphenFormat graph = new GraphenFormat("z--a;b--c;x--y;");
-    assertArrayEquals(new String[] { "a", "b", "c", "x", "y", "z" }, graph.gibKnotenNamen());
+    assertArrayEquals(new String[] { "z", "a", "b", "c", "x", "y" }, graph.gibKnotenNamen());
   }
 
   @Test
@@ -184,7 +184,7 @@ public class GraphenFormatTest {
   @Test
   public void knotenNamen() {
     GraphenFormat graph = new GraphenFormat("z: 1 2; a: 2 3; b: 4 5;");
-    assertArrayEquals(new String[] { "a", "b", "z" }, graph.gibKnotenNamen());
+    assertArrayEquals(new String[] { "z", "a", "b" }, graph.gibKnotenNamen());
   }
 
   @Test
@@ -204,8 +204,8 @@ public class GraphenFormatTest {
   public void text() {
     GraphenFormat graph = new GraphenFormat(TestHelfer.leseDatei("graph/text.txt"));
     String[] knotenNamen = graph.gibKnotenNamen();
-    assertEquals("Hallo \"Hermine\"!", knotenNamen[0]);
-    assertEquals("Hallo 'Otto'!", knotenNamen[1]);
+    assertEquals("Hallo \"Hermine\"!", knotenNamen[1]);
+    assertEquals("Hallo 'Otto'!", knotenNamen[0]);
     assertEquals("Hansa R->stock", knotenNamen[2]);
     assertEquals("a", knotenNamen[3]);
     assertEquals("abc", knotenNamen[4]);

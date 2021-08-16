@@ -1,9 +1,10 @@
 package org.bschlangaul.graph.einfaches_format;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.antlr.v4.runtime.BaseErrorListener;
 import org.antlr.v4.runtime.CharStreams;
@@ -100,11 +101,11 @@ class AntlrListener extends GraphBaseListener {
  */
 public class GraphenFormat {
 
-  HashMap<String, GraphenFormatKnoten> knoten;
-  HashSet<GraphenFormatKante> kanten;
+  Map<String, GraphenFormatKnoten> knoten;
+  Set<GraphenFormatKante> kanten;
 
   public GraphenFormat() {
-    knoten = new HashMap<String, GraphenFormatKnoten>();
+    knoten = new LinkedHashMap<String, GraphenFormatKnoten>();
     kanten = new HashSet<GraphenFormatKante>();
   }
 
@@ -199,7 +200,8 @@ public class GraphenFormat {
 
   public GraphenFormatKnoten[] gibKnoten() {
     GraphenFormatKnoten[] ausgabe = knoten.values().toArray(new GraphenFormatKnoten[0]);
-    Arrays.sort(ausgabe);
+    // nicht sortieren: In manchen Aufgaben sind die Knotennamen nicht alphabetisch angegeben.
+    // Arrays.sort(ausgabe);
     return ausgabe;
   }
 
@@ -215,13 +217,15 @@ public class GraphenFormat {
       ausgabe[zähler] = k.name;
       zähler++;
     }
-    Arrays.sort(ausgabe);
+    // nicht sortieren: In manchen Aufgaben sind die Knotennamen nicht alphabetisch angegeben.
+    // Arrays.sort(ausgabe);
     return ausgabe;
   }
 
   public GraphenFormatKante[] gibKanten() {
     GraphenFormatKante[] ausgabe = {};
     ausgabe = kanten.toArray(ausgabe);
+    // Kann sortiert werden
     Arrays.sort(ausgabe);
     return ausgabe;
   }
