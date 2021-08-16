@@ -1,4 +1,4 @@
-package org.bschlangaul.baum.einfach;
+package org.bschlangaul.aufgaben.aud.baum.einfach;
 
 public class Baum {
 
@@ -14,7 +14,7 @@ public class Baum {
       wurzel = new Knoten();
       // wurzel.wert = anzahl;
       Baum linkBaum = new Baum(anzahl / 2);
-       // Zeiger auf linken Teilbaum
+      // Zeiger auf linken Teilbaum
       wurzel.links = linkBaum.wurzel;
       Baum rechtBaum = new Baum(anzahl - 1 - anzahl / 2);
       // Zeiger auf rechten Teilbaum

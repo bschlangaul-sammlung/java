@@ -1,4 +1,4 @@
-package org.bschlangaul.baum.einfach;
+package org.bschlangaul.aufgaben.aud.baum.einfach;
 
 public class Knoten {
 
