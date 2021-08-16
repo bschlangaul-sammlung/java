@@ -3,4 +3,4 @@
  *   Staatsexamen 66115 Theoretische Informatik / Algorithmen (vertieft) 2007 Frühjahr
  * </a>
  */
-package org.bschlangaul.examen.examen_66115.jahr_2007.fruehjahr;
+package org.bschlangaul.examen.examen_66115.jahr_2007.fruehjahr.queue;

@@ -1,4 +1,4 @@
-package org.bschlangaul.examen.examen_66115.jahr_2007.fruehjahr;
+package org.bschlangaul.examen.examen_66115.jahr_2007.fruehjahr.queue;
 
 class Queue {
   QueueElement first;
@@ -10,23 +10,23 @@ class Queue {
       first = newElement;
       last = newElement;
     } else {
-      // neues Element hinten anhaengen
+      // neues Element hinten anhängen
       last.setNext(newElement);
-      // angehaengtes Element ist Letztes
+      // angehängtes Element ist Letztes
       last = last.getNext();
     }
   }
 
   public Object remove() {
-    Object temp = null;
+    Object tmp = null;
     if (first != null) {
-      // Inhalt des Ersten temporaer speichern
-      temp = first.getContents();
-      // Erstes aus der Schlange nehmen
+      // Dein Inhalt des ersten Elements temporär speichern
+      tmp = first.getContents();
+      // Das erste Element aus der Schlange nehmen
       first = first.getNext();
     }
-    return temp;
-    // Inhalt des geloeschten ausgeben bzw . null
+    // Den Inhalt des gelöschten Elements ausgeben bzw . null
+    return tmp;
   }
 
   public boolean isEmpty() {
