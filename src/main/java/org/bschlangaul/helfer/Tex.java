@@ -72,7 +72,7 @@ public class Tex {
     maxTextBreiteKopfzeile = maxTextBreiteKopfzeile + 5;
     maxTextBreite = Math.max(maxTextBreiteKopfzeile, maxTextBreite);
     return String.format("\\begin{tabular}{%s}\n%s\\end{tabular}\n", "l".repeat(kopfzeile.length),
-    tabellenKopfzeile(kopfzeile, maxTextBreite) + tabellenKörper(zeilen, maxTextBreite));
+        tabellenKopfzeile(kopfzeile, 1) + tabellenKörper(zeilen, 1));
   }
 
 }

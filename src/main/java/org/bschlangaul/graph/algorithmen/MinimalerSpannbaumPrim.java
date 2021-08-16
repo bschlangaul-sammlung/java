@@ -30,33 +30,50 @@ public class MinimalerSpannbaumPrim extends GraphAdjazenzMatrix {
     }
 
     public String kante(int knoten, int eltern, double gewicht) {
-      return "(" + knoten(knoten) + ", " + knoten(eltern) + ", " + konsolenAusgabe.gelb(zahl(gewicht)) + ")";
+      String elternName = eltern != - 1 ? knoten(eltern) : "null";
+      String gewichtAusgabe = gewicht != NICHT_ERREICHBAR ? zahl(gewicht) : "-";
+      return "(" + knoten(knoten) + ", " + elternName + ", " + gewichtAusgabe + ")";
     }
 
     public String zahl(Double zahl) {
       return matrix.formatiereZahl(zahl);
     }
 
-    void kantenHinzufügen(int knoten, int eltern, double gewicht) {
-      System.out.println("Füge Kante " + kante(eltern, knoten, gewicht) + " hinzu");
+    void kantenAktualisierung(int kind, int eltern, double gewicht) {
+      if (kanten[kind].eltern != -1) {
+        System.out.println("Aktualisiere Kante " + kante(eltern, kind, gewicht));
+      } else {
+        System.out.println("Füge Kante " + kante(eltern, kind, gewicht) + " hinzu");
+      }
     }
 
-    void kantenAktualisierung(int knoten, int eltern, double gewicht) {
-      System.out.println("Aktualisiere Kante " + kante(eltern, knoten, gewicht));
+    void schrittEnde(int eltern) {
+      schnappschüsse[zähler] = new Schnappschuss(eltern, kanten, besucht);
+      zähler++;
     }
 
     /**
-     * Vom aktuellen Spannbaum direkt erreichbaren Knoten (sog. „graue
-     * Randknoten“)
+     * Vom aktuellen Spannbaum direkt erreichbaren Knoten (sog. „graue Randknoten“)
      */
-    void erreichbareKanten() {
-      System.out.print("Graue Knoten: ");
+    String graueKanten(MinimaleKante[] kanten, boolean[] besucht) {
+      String ausgabe = "";
       for (int i = 1; i < gibKnotenAnzahl(); i++) {
         if (kanten[i].gewicht != NICHT_ERREICHBAR && !besucht[i]) {
-          System.out.print(kante(i, kanten[i].eltern, kanten[i].gewicht) + " ");
+          ausgabe += kante(i, kanten[i].eltern, kanten[i].gewicht) + "; ";
         }
       }
-      System.out.println();
+      return ausgabe.replace("; $", "");
+    }
+
+    void schnappschussTabelle() {
+      String[][] zeilen = new String[schnappschüsse.length][2];
+      for (int i = 0; i < schnappschüsse.length; i++) {
+
+        zeilen[i][0] = kante(schnappschüsse[i].eltern, schnappschüsse[i].kantenKopie[schnappschüsse[i].eltern].eltern, schnappschüsse[i].kantenKopie[schnappschüsse[i].eltern].gewicht);
+        zeilen[i][1] = graueKanten(schnappschüsse[i].kantenKopie, schnappschüsse[i].besuchtKopie);
+      }
+
+      System.out.println(texAusgabe.tabelle(new String[] { "schwarze", "graue" }, zeilen));
     }
 
     void minimalerSpannbaum() {
@@ -95,14 +112,47 @@ public class MinimalerSpannbaumPrim extends GraphAdjazenzMatrix {
      * benötigt um den minimale Knoten zu finden.
      */
     double gewicht = NICHT_ERREICHBAR;
+
+    public MinimaleKante() {
+    }
+
+    public MinimaleKante(int eltern, double gewicht) {
+      this.eltern = eltern;
+      this.gewicht = gewicht;
+    }
+  }
+
+  /**
+   * Speichert einen Schnappschuss. Eine Instanz sollte nach jedem Besuch eines
+   * Knoten erzeugt werden.
+   */
+  class Schnappschuss {
+    int eltern;
+    MinimaleKante[] kantenKopie;
+
+    boolean[] besuchtKopie;
+
+    public Schnappschuss(int eltern, MinimaleKante[] kanten, boolean[] besucht) {
+      this.eltern = eltern;
+      kantenKopie = new MinimaleKante[kanten.length];
+      besuchtKopie = new boolean[kanten.length];
+      for (int i = 0; i < kanten.length; i++) {
+        kantenKopie[i] = new MinimaleKante(kanten[i].eltern, kanten[i].gewicht);
+        besuchtKopie[i] = besucht[i];
+      }
+    }
   }
 
   PrimReporter berichte;
 
+  Schnappschuss[] schnappschüsse;
+
+  int zähler;
+
   /**
-   * Ein Feld, in dem gespeichert wird, ob der Elternknoten bereits besucht
-   * wurde. Wurde der Elternknoten mit der Nummer 3 besucht wird besucht[3] auf
-   * true gesetzt.
+   * Ein Feld, in dem gespeichert wird, ob der Elternknoten bereits besucht wurde.
+   * Wurde der Elternknoten mit der Nummer 3 besucht wird besucht[3] auf true
+   * gesetzt.
    */
   boolean[] besucht;
 
@@ -124,6 +174,8 @@ public class MinimalerSpannbaumPrim extends GraphAdjazenzMatrix {
     kanten = new MinimaleKante[gibKnotenAnzahl()];
     gewichte = new double[gibKnotenAnzahl()];
     berichte = new PrimReporter(this);
+    schnappschüsse = new Schnappschuss[gibKnotenAnzahl()];
+    zähler = 0;
   }
 
   /**
@@ -169,18 +221,13 @@ public class MinimalerSpannbaumPrim extends GraphAdjazenzMatrix {
         if (matrix[eltern][kind] > NICHT_ERREICHBAR) {
           if (besucht[kind] == false && matrix[eltern][kind] < gewichte[kind]) {
             gewichte[kind] = matrix[eltern][kind];
-
-            if (kanten[kind].eltern != -1) {
-              berichte.kantenAktualisierung(kind, eltern, gewichte[kind]);
-            } else {
-              berichte.kantenHinzufügen(kind, eltern, gewichte[kind]);
-            }
+            berichte.kantenAktualisierung(kind, eltern, gewichte[kind]);
             kanten[kind].eltern = eltern;
             kanten[kind].gewicht = gewichte[kind];
           }
         }
       }
-      berichte.erreichbareKanten();
+      berichte.schrittEnde(eltern);
     }
 
     return gibErgebnisAus();
@@ -193,6 +240,7 @@ public class MinimalerSpannbaumPrim extends GraphAdjazenzMatrix {
    */
   private Double gibErgebnisAus() {
     berichte.minimalerSpannbaum();
+    berichte.schnappschussTabelle();
     return berichte.summeKantengewichte();
   }
 
@@ -201,7 +249,6 @@ public class MinimalerSpannbaumPrim extends GraphAdjazenzMatrix {
         "v0--v1:2;v1--v2:3;v0--v3:6;v1--v3:8;v1--v4:5;v2--v4:7;v3--v4:9;");
     prim.gibMatrixAus();
     prim.führeAus();
-    prim.berichte.minimalerSpannbaum();
   }
 
 }

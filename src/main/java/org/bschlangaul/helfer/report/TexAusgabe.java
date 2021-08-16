@@ -2,7 +2,7 @@ package org.bschlangaul.helfer.report;
 
 import org.bschlangaul.helfer.Tex;
 
-class TexAusgabe implements Ausgabe {
+public class TexAusgabe implements Ausgabe {
 
   public String überschrift(String überschrift) {
     // return KonsoleHelfer.erzeugeÜberschrift(überschrift);
