@@ -57,10 +57,10 @@ public class MinimalerSpannbaumPrim extends GraphAdjazenzMatrix {
     /**
      * Vom aktuellen Spannbaum direkt erreichbaren Knoten (sog. „graue Randknoten“)
      */
-    String graueKanten(MinimaleKante[] kanten, boolean[] besucht) {
+    String graueKanten(MinimaleKante[] kanten) {
       String ausgabe = "";
       for (int i = 1; i < gibKnotenAnzahl(); i++) {
-        if (kanten[i].gewicht != KEIN_GEWICHT && !besucht[i]) {
+        if (kanten[i].gewicht != KEIN_GEWICHT && !kanten[i].besucht) {
           ausgabe += kante(i, kanten[i].eltern, kanten[i].gewicht) + "; ";
         }
       }
@@ -73,7 +73,7 @@ public class MinimalerSpannbaumPrim extends GraphAdjazenzMatrix {
 
         zeilen[i][0] = kante(schnappschüsse[i].eltern, schnappschüsse[i].kantenKopie[schnappschüsse[i].eltern].eltern,
             schnappschüsse[i].kantenKopie[schnappschüsse[i].eltern].gewicht);
-        zeilen[i][1] = graueKanten(schnappschüsse[i].kantenKopie, schnappschüsse[i].besuchtKopie);
+        zeilen[i][1] = graueKanten(schnappschüsse[i].kantenKopie);
       }
 
       System.out.println(texAusgabe.tabelle(new String[] { "schwarze", "graue" }, zeilen));
@@ -105,11 +105,6 @@ public class MinimalerSpannbaumPrim extends GraphAdjazenzMatrix {
    * Kind-Knoten-Nummer in das Feld bespeichert.
    */
   class MinimaleKante {
-    /**
-     * Ist dieses Attribut auf wahr gesetzt, dann heißt das, dass die Kante zum
-     * minimalen Stammbaum gehört.
-     */
-    boolean besucht;
 
     /**
      * Die Index-Nummer des Knotens unter dem dem diese Kante in das kanten-Feld
@@ -129,7 +124,17 @@ public class MinimalerSpannbaumPrim extends GraphAdjazenzMatrix {
      */
     double gewicht = KEIN_GEWICHT;
 
+    /**
+     * Ist dieses Attribut auf wahr gesetzt, dann heißt das, dass die Kante zum
+     * minimalen Stammbaum gehört.
+     */
+    boolean besucht;
+
     public MinimaleKante() {
+    }
+
+    public MinimaleKante(int kind) {
+      this.kind = kind;
     }
 
     public MinimaleKante(int eltern, double gewicht) {
@@ -137,25 +142,32 @@ public class MinimalerSpannbaumPrim extends GraphAdjazenzMatrix {
       this.gewicht = gewicht;
     }
 
+    public MinimaleKante(int kind, int eltern, double gewicht, boolean besucht) {
+      this.kind = kind;
+      this.eltern = eltern;
+      this.gewicht = gewicht;
+      this.besucht = besucht;
+    }
+
+    public MinimaleKante klone() {
+      return new MinimaleKante(kind, eltern, gewicht, besucht);
+    }
+
   }
 
   /**
-   * Speichert einen Schnappschuss. Eine Instanz sollte nach jedem Besuch eines
-   * Knoten erzeugt werden.
+   * Speichert einen Schnappschuss, d. h. eine Schritt im Prim-Algorithmus..
+   * Eine Instanz sollte nach jedem Besuch eines Knoten erzeugt werden.
    */
   class Schnappschuss {
     int eltern;
     MinimaleKante[] kantenKopie;
 
-    boolean[] besuchtKopie;
-
     public Schnappschuss(int eltern, MinimaleKante[] kanten) {
       this.eltern = eltern;
       kantenKopie = new MinimaleKante[kanten.length];
-      besuchtKopie = new boolean[kanten.length];
       for (int i = 0; i < kanten.length; i++) {
-        kantenKopie[i] = new MinimaleKante(kanten[i].eltern, kanten[i].gewicht);
-        besuchtKopie[i] = kanten[i].besucht;
+        kantenKopie[i] = kanten[i].klone();
       }
     }
   }
@@ -207,8 +219,7 @@ public class MinimalerSpannbaumPrim extends GraphAdjazenzMatrix {
    */
   public double führeAus() {
     for (int i = 0; i < gibKnotenAnzahl(); i++) {
-      // Erzeuge leere Ergebnis-Instanzen.
-      kanten[i] = new MinimaleKante();
+      kanten[i] = new MinimaleKante(i);
     }
 
     kanten[0].gewicht = 0;
