@@ -13,6 +13,8 @@ import org.bschlangaul.graph.report.GraphReporter;
  */
 public class MinimalerSpannbaumPrim extends GraphAdjazenzMatrix {
 
+  final double KEIN_GEWICHT = Double.MAX_VALUE;
+
   class PrimReporter extends GraphReporter {
 
     GraphAdjazenzMatrix matrix;
@@ -58,7 +60,7 @@ public class MinimalerSpannbaumPrim extends GraphAdjazenzMatrix {
     String graueKanten(MinimaleKante[] kanten, boolean[] besucht) {
       String ausgabe = "";
       for (int i = 1; i < gibKnotenAnzahl(); i++) {
-        if (kanten[i].gewicht != NICHT_ERREICHBAR && !besucht[i]) {
+        if (kanten[i].gewicht != KEIN_GEWICHT && !besucht[i]) {
           ausgabe += kante(i, kanten[i].eltern, kanten[i].gewicht) + "; ";
         }
       }
@@ -80,7 +82,7 @@ public class MinimalerSpannbaumPrim extends GraphAdjazenzMatrix {
     void minimalerSpannbaum() {
       System.out.println("Minimaler Spannbaum: ");
       for (int i = 1; i < gibKnotenAnzahl(); i++) {
-        if (kanten[i].gewicht != NICHT_ERREICHBAR) {
+        if (kanten[i].gewicht != KEIN_GEWICHT) {
           System.out.println("  " + kante(i, kanten[i].eltern, kanten[i].gewicht));
         }
       }
@@ -99,7 +101,8 @@ public class MinimalerSpannbaumPrim extends GraphAdjazenzMatrix {
   /**
    * Die Instanzen der Klasse MinimaleKante wird in das Feld {@code kanten}
    * gespeichert. Die Klasse speichert das Kantengewicht von einem bestimmten
-   * Knoten zu seinem Elternknoten.
+   * Knoten zu seinem Elternknoten. Die Instanzen werden unter der
+   * Kind-Knoten-Nummer in das Feld bespeichert.
    */
   class MinimaleKante {
     /**
@@ -124,7 +127,7 @@ public class MinimalerSpannbaumPrim extends GraphAdjazenzMatrix {
      * Das Gewicht der Kante vom Elternknoten zum aktuellen Knoten. Das Feld wird
      * benötigt um den minimale Knoten zu finden.
      */
-    double gewicht = NICHT_ERREICHBAR;
+    double gewicht = KEIN_GEWICHT;
 
     public MinimaleKante() {
     }
@@ -133,6 +136,7 @@ public class MinimalerSpannbaumPrim extends GraphAdjazenzMatrix {
       this.eltern = eltern;
       this.gewicht = gewicht;
     }
+
   }
 
   /**
@@ -169,15 +173,9 @@ public class MinimalerSpannbaumPrim extends GraphAdjazenzMatrix {
    */
   MinimaleKante[] kanten = new MinimaleKante[gibKnotenAnzahl()];
 
-  /**
-   * Das Gewicht wird unter der Kindknoten-Nummer gespeichert.
-   */
-  double[] gewichte;
-
   public MinimalerSpannbaumPrim(String graphenFormat) {
     super(graphenFormat);
     kanten = new MinimaleKante[gibKnotenAnzahl()];
-    gewichte = new double[gibKnotenAnzahl()];
     berichte = new PrimReporter(this);
     schnappschüsse = new Schnappschuss[gibKnotenAnzahl()];
     zähler = 0;
@@ -191,11 +189,11 @@ public class MinimalerSpannbaumPrim extends GraphAdjazenzMatrix {
    *         beginnend mit 0 vorkommen.
    */
   private int gibMinimumKnoten() {
-    double minGewicht = Double.MAX_VALUE;
+    double minGewicht = KEIN_GEWICHT;
     int knoten = -1;
     for (int i = 0; i < gibKnotenAnzahl(); i++) {
-      if (kanten[i].besucht == false && minGewicht > gewichte[i]) {
-        minGewicht = gewichte[i];
+      if (kanten[i].besucht == false && minGewicht > kanten[i].gewicht) {
+        minGewicht = kanten[i].gewicht;
         knoten = i;
       }
     }
@@ -209,13 +207,11 @@ public class MinimalerSpannbaumPrim extends GraphAdjazenzMatrix {
    */
   public double führeAus() {
     for (int i = 0; i < gibKnotenAnzahl(); i++) {
-      // Initialisiere alle Gewichte mit Unendlich
-      gewichte[i] = Double.MAX_VALUE;
       // Erzeuge leere Ergebnis-Instanzen.
       kanten[i] = new MinimaleKante();
     }
 
-    gewichte[0] = 0;
+    kanten[0].gewicht = 0;
 
     for (int i = 0; i < gibKnotenAnzahl(); i++) {
       int eltern = gibMinimumKnoten();
@@ -223,11 +219,10 @@ public class MinimalerSpannbaumPrim extends GraphAdjazenzMatrix {
       kanten[eltern].besucht = true;
       for (int kind = 0; kind < gibKnotenAnzahl(); kind++) {
         if (matrix[eltern][kind] > NICHT_ERREICHBAR) {
-          if (kanten[kind].besucht == false && matrix[eltern][kind] < gewichte[kind]) {
-            gewichte[kind] = matrix[eltern][kind];
-            berichte.kantenAktualisierung(kind, eltern, gewichte[kind]);
+          if (kanten[kind].besucht == false && matrix[eltern][kind] < kanten[kind].gewicht) {
+            berichte.kantenAktualisierung(kind, eltern, matrix[eltern][kind]);
             kanten[kind].eltern = eltern;
-            kanten[kind].gewicht = gewichte[kind];
+            kanten[kind].gewicht = matrix[eltern][kind];
           }
         }
       }
