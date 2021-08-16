@@ -27,4 +27,9 @@ public class MinimalerSpannbaumPrimTest {
     vergleiche(37, "slideshare-adil-aslam.txt");
   }
 
+  @Test
+  public void tum() {
+    vergleiche(43, "TUM.txt");
+  }
+
 }
