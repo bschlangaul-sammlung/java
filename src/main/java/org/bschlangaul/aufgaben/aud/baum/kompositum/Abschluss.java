@@ -2,21 +2,21 @@ package org.bschlangaul.aufgaben.aud.baum.kompositum;
 
 class Abschluss extends Baumelement {
 
-  public void setzteLinks(Baumelement nl) {
-    System.out.println("Ein Abschluss hat keine Mutter!");
+  public void setzteLinks(Baumelement links) {
+    System.out.println("Ein Abschluss hat kein linkes Element!");
   }
 
-  public void setzeRechts(Baumelement nr) {
-    System.out.println("Ein Abschluss hat keinen Vater!");
+  public void setzeRechts(Baumelement rechts) {
+    System.out.println("Ein Abschluss hat kein rechts Element!");
   }
 
   public Baumelement gibLinks() {
-    System.out.println("Mutter nicht bekannt!");
+    System.out.println("Linkes Element nicht bekannt!");
     return this;
   }
 
   public Baumelement gibRechts() {
-    System.out.println("Vater nicht bekannt!");
+    System.out.println("Linkes Element nicht bekannt!");
     return this;
   }
 

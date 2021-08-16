@@ -10,16 +10,16 @@ class Datenknoten extends Baumelement {
     this.inhalt = inhalt;
   }
 
-  public void setzteLinks(Baumelement nl) {
-    links = nl;
+  public void setzteLinks(Baumelement links) {
+    this.links = links;
   }
 
-  public void setzeRechts(Baumelement nr) {
-    rechts = nr;
+  public void setzeRechts(Baumelement rechts) {
+    this.rechts = rechts;
   }
 
-  public void inhaltSetzen(Datenelement i) {
-    inhalt = i;
+  public void inhaltSetzen(Datenelement inhalt) {
+    this.inhalt = inhalt;
   }
 
   public Baumelement gibLinks() {
