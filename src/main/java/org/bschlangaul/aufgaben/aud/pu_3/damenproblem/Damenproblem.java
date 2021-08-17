@@ -76,5 +76,4 @@ public class Damenproblem {
     zeigeSpielBrett();
     new Ausgabe(n, spielBrett);
   }
-
 }

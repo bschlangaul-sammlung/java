@@ -1,4 +1,4 @@
-package org.bschlangaul.aufgaben.aud.pu_3;
+package org.bschlangaul.aufgaben.aud.muster.backtracking;
 
 public class RekursivesBacktracking {
 
@@ -7,7 +7,8 @@ public class RekursivesBacktracking {
       return true;
     }
     for (int i = 0; i < a.length - n - 1; i++) {
-      int j = i + n + 1; // Zwischen i und j muessen genau n andere Zahlen sein
+      // Zwischen i und j müssen genau n andere Zahlen sein
+      int j = i + n + 1;
       if (a[i] == 0 && a[j] == 0) {
         a[i] = a[j] = n;
         if (fill(n - 1, a)) {
