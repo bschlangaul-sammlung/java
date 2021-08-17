@@ -6,8 +6,8 @@ class Markierung {
   String suffix = "";
 
   /**
-   * Ordne die Markierungen ihrer Index-Position in ein Feld, das genau so lange
-   * ist wie das Zahlenfeld.
+   * Ordne die Markierungen ihrer Index-Position nach in ein Feld, das genau so
+   * lange ist wie das Zahlenfeld.
    *
    * @param zahlen           Das Zahlen-Feld des Sortieralgorithmus.
    * @param roheMarkierungen Ein Feld mit ungeordneten Markierungen. Dieses Feld
@@ -99,8 +99,21 @@ public class KonsolenSortierAusgabe extends SortierAusgabe {
     druckeZeilenumbruch(erklärung);
   }
 
+  public void feldTeilung(int links, int rechts, int grenze, String erklärung) {
+    rohesFeld(links, rechts, suffix(grenze, "|"), präfix(grenze + 1, "|"));
+    druckeZeilenumbruch(erklärung);
+  }
+
   public void vertauschen(int links, int rechts, int index1, int index2, String erklärung) {
     rohesFeld(links, rechts, präfix(index1, ">"), suffix(index2, "<"));
     druckeZeilenumbruch(erklärung);
+  }
+
+  public String index(int index) {
+    return " [" + index + "]";
+  }
+
+  public String indexAusschnitt(int links, int rechts, String trennzeichen) {
+    return " [" + links + trennzeichen + rechts + "]";
   }
 }

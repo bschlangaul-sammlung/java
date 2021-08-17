@@ -37,7 +37,11 @@ public class SortierReporter extends Reporter {
    *                  soll.
    */
   public void feldAusschnitt(int links, int rechts, String erklärung) {
-    sortierAusgabe.feld(links, rechts, erklärung);
+    String indexAusschnitt = "";
+    if (links != 0 || rechts != zahlen.length - 1) {
+      indexAusschnitt = sortierAusgabe.indexAusschnitt(links, rechts);
+    }
+    sortierAusgabe.feld(links, rechts, erklärung + indexAusschnitt);
   }
 
   /**
@@ -76,7 +80,18 @@ public class SortierReporter extends Reporter {
    *                   soll.
    */
   public void feldMarkierung(int links, int rechts, int markierung) {
-    sortierAusgabe.feldMarkierung(links, rechts, markierung, "markiere (i " + markierung + ")");
+    sortierAusgabe.feldMarkierung(links, rechts, markierung, "markiere" + sortierAusgabe.index(markierung));
+  }
+
+  /**
+   * Zeige das Feld mit einem markierten Element.
+   *
+   * @param links  Die linke Grenze, ab der gezeigt werden soll.
+   * @param rechts Die rechte Grenze, bis zu der gezeigt werden soll.
+   * @param grenze Die rechte Grenze der Teilung
+   */
+  public void feldTeilung(int links, int rechts, int grenze) {
+    sortierAusgabe.feldTeilung(links, rechts, grenze, "teile" + sortierAusgabe.index(grenze));
   }
 
   /**
@@ -98,7 +113,7 @@ public class SortierReporter extends Reporter {
       min = index1;
       max = index2;
     }
-    sortierAusgabe.vertauschen(links, rechts, min, max, "vertausche (i " + min + "<>" + max + ")");
+    sortierAusgabe.vertauschen(links, rechts, min, max, "vertausche" + sortierAusgabe.indexAusschnitt(min, max, "<>"));
   }
 
   public void vertauschen(int index1, int index2) {

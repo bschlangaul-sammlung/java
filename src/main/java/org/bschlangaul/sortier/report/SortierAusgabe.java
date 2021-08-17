@@ -32,7 +32,7 @@ abstract class SortierAusgabe {
   protected String formatiereZahl(String zahl) {
     char erstesZeichen = zahl.charAt(0);
     char letztesZeichen = zahl.charAt(zahl.length() - 1);
-    if (erstesZeichen != '>') {
+    if (erstesZeichen != '>' && erstesZeichen != '|') {
       zahl = " " + zahl;
     }
 
@@ -40,7 +40,7 @@ abstract class SortierAusgabe {
     int zahlBreite = zahl.length();
     int anzahlLeerzeichen = max - zahlBreite;
     String leerzeichen = "";
-    if (erstesZeichen == '>' &&  letztesZeichen == '<')  {
+    if (erstesZeichen == '>' && letztesZeichen == '<') {
       zahl = Farbe.blau(zahl);
     } else if (erstesZeichen == '>' || letztesZeichen == '<') {
       zahl = Farbe.gelb(zahl);
@@ -50,6 +50,7 @@ abstract class SortierAusgabe {
     if (anzahlLeerzeichen > -1) {
       leerzeichen = " ".repeat(max - zahlBreite);
     }
+    zahl = zahl.replaceAll("\\|", Farbe.rot("|"));
     return zahl + leerzeichen;
   }
 
@@ -89,9 +90,20 @@ abstract class SortierAusgabe {
     feldMarkierung(0, zahlen.length - 1, markierung, erklärung);
   }
 
+  public abstract void feldTeilung(int links, int rechts, int grenze, String erklärung);
+
   public abstract void vertauschen(int links, int rechts, int index1, int index2, String erklärung);
 
   public void vertauschen(int index1, int index2, String erklärung) {
     vertauschen(0, zahlen.length - 1, index1, index2, erklärung);
   }
+
+  public abstract String index(int index);
+
+  public String indexAusschnitt(int links, int rechts) {
+    return indexAusschnitt(links, rechts, "-");
+  }
+
+  public abstract String indexAusschnitt(int links, int rechts, String trennzeichen);
+
 }

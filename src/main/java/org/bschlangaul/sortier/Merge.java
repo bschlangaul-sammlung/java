@@ -23,12 +23,13 @@ public class Merge extends Sortieralgorithmus {
       return;
     }
 
-    berichte.feldAusschnitt(links, rechts, "Vor dem Teilen");
 
     // Zähler für diverse for-Schleifen deklarieren.
     int indexLinks, indexRechts, index;
     // zu sortierendes Feld teilen
     int mitte = (rechts + links) / 2;
+    berichte.feldTeilung(links, rechts, mitte);
+
     // Teilfelder sortieren
     sortiereRekursiv(links, mitte, hilfsFeld);
     sortiereRekursiv(mitte + 1, rechts, hilfsFeld);
