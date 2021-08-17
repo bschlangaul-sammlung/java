@@ -84,23 +84,31 @@ public class Fibonacci {
     return (n + "     ").substring(0, 5);
   }
 
-  public static void invokeStaticMethod(String methodeName)
-      throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-    Method method = Fibonacci.class.getMethod(methodeName, int.class);
-    System.out.println("\n" + methodeName);
+  public static long invokeMethod(String methodName, int n) {
+    try {
+      Method method = Fibonacci.class.getMethod(methodName, int.class);
+      return (long) method.invoke(null, n);
+    } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
+        | InvocationTargetException e) {
+      e.printStackTrace();
+    }
+    return 0;
+  }
+
+  public static void showResult(String methodName) {
+    System.out.println("\n" + methodName);
     for (int i = 1; i <= 10; i++) {
-      System.out.print(fixColumn((long) method.invoke(null, i)));
+      System.out.print(fixColumn(invokeMethod(methodName, i)));
     }
   }
 
-  public static void main(String args[])
-      throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-    invokeStaticMethod("fibNaive");
-    invokeStaticMethod("sosNaive");
-    invokeStaticMethod("fibDP");
-    invokeStaticMethod("sosDP");
-    invokeStaticMethod("fibIter");
-    invokeStaticMethod("sosIter");
+  public static void main(String args[]) {
+    showResult("fibNaive");
+    showResult("sosNaive");
+    showResult("fibDP");
+    showResult("sosDP");
+    showResult("fibIter");
+    showResult("sosIter");
     System.out.println();
   }
 }
