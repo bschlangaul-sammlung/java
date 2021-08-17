@@ -8,21 +8,11 @@ import picocli.CommandLine.Parameters;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import org.bschlangaul.sortier.BubbleIterativ;
-import org.bschlangaul.sortier.Heap;
-import org.bschlangaul.sortier.InsertionIterativ;
-import org.bschlangaul.sortier.Merge;
-import org.bschlangaul.sortier.QuickSaake;
-import org.bschlangaul.sortier.QuickHorare;
-import org.bschlangaul.sortier.Quick;
-
-import org.bschlangaul.sortier.SelectionRechtsIterativ;
-
-import org.bschlangaul.sortier.Sortieralgorithmus;
+import org.bschlangaul.sortier.Sortierer;
 
 @Command(name = "sortiere", aliases = {
     "so" }, mixinStandardHelpOptions = true, description = "Sortiere mit verschiedenen Algorithmen.")
-class Sortierer implements Callable<Integer> {
+class KommandoSortierer implements Callable<Integer> {
 
   static class Algorithmus {
     @Option(names = { "-b", "--bubble" }, description = "Bubblesort.")
@@ -65,55 +55,42 @@ class Sortierer implements Callable<Integer> {
   PivotLage pivotLage;
 
   @Parameters(arity = "1..*", description = "Eine Zahlenfolge, die sortiert werden soll.")
-  List<Integer> werte;
-
-  private Sortieralgorithmus intialisiereQuick() {
-    Quick quick;
-
-    if (algorithmus.quickSaake) {
-      quick = new QuickSaake();
-    } else {
-      quick = new QuickHorare();
-    }
-
-    if (pivotLage == null || pivotLage.mitte) {
-      quick.setztePivotMitte();
-    } else if (pivotLage.rechts) {
-      quick.setztePivotRechts();
-    } else if (pivotLage.links) {
-      quick.setztePivotLinks();
-    }
-    return (Sortieralgorithmus) quick;
-  }
+  List<String> werte;
 
   @Override
   public Integer call() {
-    Sortieralgorithmus sortierer = null;
+
+    Sortierer sortierer = new Sortierer();
 
     if (algorithmus == null) {
-      sortierer = new BubbleIterativ();
+      sortierer.algorithmus("BubbleIterativ");
     } else if (algorithmus.heap) {
-      sortierer = new Heap();
+      sortierer.algorithmus("Heap");
     } else if (algorithmus.insertion) {
-      sortierer = new InsertionIterativ();
+      sortierer.algorithmus("InsertionIterativ");
     } else if (algorithmus.merge) {
-      sortierer = new Merge();
-    } else if (algorithmus.quickSaake || algorithmus.quickHorare) {
-      sortierer = intialisiereQuick();
+      sortierer.algorithmus("Merge");
+    } else if (algorithmus.quickSaake) {
+      sortierer.algorithmus("QuickSaake");
+    } else if (algorithmus.quickHorare) {
+      sortierer.algorithmus("QuickHorare");
     } else if (algorithmus.selection) {
-      sortierer = new SelectionRechtsIterativ();
+      sortierer.algorithmus("SelectionRechtsIterativ");
     } else {
-      sortierer = new BubbleIterativ();
+      sortierer.algorithmus("BubbleIterativ");
     }
 
-    int[] zahlen = werte.stream().mapToInt(i -> i).toArray();
+    if (pivotLage != null) {
+      if (pivotLage.mitte) {
+        sortierer.pivot("mitte");
+      } else if (pivotLage.rechts) {
+        sortierer.pivot("rechts");
+      } else if (pivotLage.links) {
+        sortierer.pivot("links");
+      }
+    }
 
-    sortierer.setzeZahlen(zahlen);
-    sortierer.aktiviereKonsolenAusgabe();
-    System.out.println("Sortieralgorithmus: " + sortierer.getClass().getName());
-    sortierer.berichte.feld("Eingabe");
-    sortierer.sortiere();
-    sortierer.berichte.feld("Ausgabe");
+    sortierer.zahlen(werte).konsole().sortiere();
     return 0;
   }
 }

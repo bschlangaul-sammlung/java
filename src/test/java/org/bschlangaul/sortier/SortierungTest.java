@@ -7,30 +7,16 @@ public class SortierungTest {
 
   void testeMehrere(int[] test, int[] richtig) {
     String[] algorithmen = {
-      // "BinaryTree",
-      "BubbleIterativ",
-      "BubbleMinimal",
-      "BubbleRekursiv",
-      "Heap",
-      "InsertionIterativ",
-      "InsertionMinimal",
-      "InsertionRekursiv",
-      "Merge",
-      "MergeMinimal",
-      "QuickHorare",
-      "QuickIterativ",
-      "QuickMinimal",
-      "QuickSaake",
-      "SelectionHalbRekursiv",
-      "SelectionLinksIterativ",
-      "SelectionMinimal",
-      "SelectionRechtsIterativ",
-      "SelectionRekursiv"
-      // "Stacksort",
+        // "BinaryTree",
+        "BubbleIterativ", "BubbleMinimal", "BubbleRekursiv", "Heap", "InsertionIterativ", "InsertionMinimal",
+        "InsertionRekursiv", "Merge", "MergeMinimal", "QuickHorare", "QuickIterativ", "QuickMinimal", "QuickSaake",
+        "SelectionHalbRekursiv", "SelectionLinksIterativ", "SelectionMinimal", "SelectionRechtsIterativ",
+        "SelectionRekursiv"
+        // "Stacksort",
     };
 
     for (String algorithmus : algorithmen) {
-      int[] ergebnis = Sortierer.sortiere(algorithmus, test.clone());
+      int[] ergebnis = new Sortierer(algorithmus).zahlen(test.clone()).sortiere();
       assertArrayEquals(richtig, ergebnis);
     }
   }
