@@ -12,7 +12,6 @@ public class MaurolicusTest {
 
   @Test
   public void teste() {
-    teste(0, 0);
     teste(1, 1);
     teste(2, 4);
     teste(3, 9);
