@@ -1,4 +1,4 @@
-package org.bschlangaul.aufgaben.aud.pu_7.hunde;
+package org.bschlangaul.aufgaben.oomup.klassendiagramm.hunde;
 
 public class Zwinger {
   // Attribute

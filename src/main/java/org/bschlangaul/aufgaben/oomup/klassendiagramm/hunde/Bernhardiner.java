@@ -1,16 +1,13 @@
-package org.bschlangaul.aufgaben.aud.pu_7.hunde;
+package org.bschlangaul.aufgaben.oomup.klassendiagramm.hunde;
 
 public class Bernhardiner extends Hund {
-  // (spezifische) Attribute
   private boolean glocke;
 
-  // Konstruktor
   public Bernhardiner(String n, int a, double g, boolean gl) {
     super(n, a, g);
     glocke = gl;
   }
 
-  // Methoden
   public void bellen() {
     System.out.println("WAUWAU");
   }
@@ -28,7 +25,6 @@ public class Bernhardiner extends Hund {
     super.gewicht = super.gewicht - 0.2;
   }
 
-  // Getter und Setter aus Teilaufgabe d)
   public boolean getGlocke() {
     return glocke;
   }

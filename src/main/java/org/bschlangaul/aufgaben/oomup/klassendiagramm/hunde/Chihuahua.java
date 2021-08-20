@@ -1,13 +1,10 @@
-package org.bschlangaul.aufgaben.aud.pu_7.hunde;
+package org.bschlangaul.aufgaben.oomup.klassendiagramm.hunde;
 
 public class Chihuahua extends Hund {
-  // Konstruktor
   public Chihuahua(String n, int a, double g) {
     super(n, a, g);
-
   }
 
-  // Methoden
   public void bellen() {
     System.out.println("wuffwuff");
   }

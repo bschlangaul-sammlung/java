@@ -5,4 +5,4 @@
  *
  * Quelle: <a href="https://www.studon.fau.de/file3081305_download.html">LSG_Hunde.zip</a>
  */
-package org.bschlangaul.aufgaben.aud.pu_7.hunde;
+package org.bschlangaul.aufgaben.oomup.klassendiagramm.hunde;
