@@ -138,14 +138,29 @@ public class TiefenSucheStapel extends GraphAdjazenzMatrix {
     return "";
   }
 
+  private void druckeZeile(String entferne, String fügeHinzu) {
+    int spaltenBreite = gibMaximaleKnotennameTextbreite() + 5;
+    if (entferne == null) {
+      System.out.print(" ".repeat(spaltenBreite));
+    } else {
+      System.out.print(Farbe.rot("del ") + Farbe.rot(entferne) + gibLeerzeichen(entferne) + " ");
+    }
+
+    if (fügeHinzu == null) {
+      System.out.print(" ".repeat(spaltenBreite));
+    } else {
+      System.out.print(Farbe.grün("add ") + Farbe.grün(fügeHinzu) + gibLeerzeichen(fügeHinzu) + " ");
+    }
+    System.out.println(Farbe.gelb(gibStapelAlsText()));
+  }
+
   public void besuche(int knotenNummer) {
     String name = gibKnotenName(knotenNummer);
     besucht[knotenNummer] = true;
     route.add(name);
     stapel.push(name);
     protokoll.merkeBesuch(name);
-    System.out.print("        " + Farbe.grün("add " + name + gibLeerzeichen(name)));
-    System.out.println(" " + gibStapelAlsText());
+    druckeZeile(null, name);
   }
 
   /**
@@ -160,7 +175,7 @@ public class TiefenSucheStapel extends GraphAdjazenzMatrix {
       // oberstes Element des Stapels nehmen und in die Route einfügen
       String knotenName = stapel.pop();
       protokoll.merkeEntnahme(knotenName);
-      System.out.println(Farbe.rot("del " + knotenName));
+      druckeZeile(knotenName, null);
 
       // alle nicht besuchten Nachbarn von w in den Stapel einfügen
       for (int abzweigung = 0; abzweigung <= gibKnotenAnzahl() - 1; abzweigung++) {

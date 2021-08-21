@@ -106,6 +106,22 @@ public class BreitenSucheWarteschlange extends GraphAdjazenzMatrix {
     return "";
   }
 
+  private void druckeZeile(String entferne, String fügeHinzu) {
+    int spaltenBreite = gibMaximaleKnotennameTextbreite() + 5;
+    if (entferne == null) {
+      System.out.print(" ".repeat(spaltenBreite));
+    } else {
+      System.out.print(Farbe.rot("del ") + Farbe.rot(entferne) + gibLeerzeichen(entferne) + " ");
+    }
+
+    if (fügeHinzu == null) {
+      System.out.print(" ".repeat(spaltenBreite));
+    } else {
+      System.out.print(Farbe.grün("add ") + Farbe.grün(fügeHinzu) + gibLeerzeichen(fügeHinzu) + " ");
+    }
+    System.out.println(Farbe.gelb(warteschlange.toString()));
+  }
+
   public void besuche(int knotenNummer) {
     String name = gibKnotenName(knotenNummer);
     besucht[knotenNummer] = true;
@@ -113,8 +129,7 @@ public class BreitenSucheWarteschlange extends GraphAdjazenzMatrix {
     warteschlange.add(name);
     protokoll.merkeBesuch(name);
 
-    System.out.print("        " + Farbe.grün("add ") +  Farbe.grün(name) + gibLeerzeichen(name) + " ");
-    System.out.println(Farbe.gelb(warteschlange.toString()));
+    druckeZeile(null, name);
   }
 
   /**
@@ -128,7 +143,8 @@ public class BreitenSucheWarteschlange extends GraphAdjazenzMatrix {
     while (!warteschlange.isEmpty()) {
       // oberstes Element der Liste nehmen
       String knotenName = warteschlange.remove(0);
-      System.out.println(Farbe.rot("del " + knotenName));
+      druckeZeile(knotenName, null);
+
       protokoll.merkeEntnahme(knotenName);
 
       // alle nicht besuchten Nachbarn von knotenName in die Liste einfügen
