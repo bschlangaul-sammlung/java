@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bschlangaul.graph.GraphAdjazenzMatrix;
+import org.bschlangaul.helfer.Farbe;
 
 /**
  * nach Schulbuch: Informatik 1 Oberstufe Oldenbourg Verlag
@@ -73,7 +74,7 @@ public class TiefenSucheRekursion extends GraphAdjazenzMatrix {
     besucht[knotenNummer] = true;
     protokoll.merkeBesuch(gibKnotenName(knotenNummer));
 
-    System.out.println(gibKnotenName(knotenNummer) + ";");
+    System.out.println(Farbe.grün("add " + gibKnotenName(knotenNummer)));
 
     for (int abzweigung = 0; abzweigung <= gibKnotenAnzahl() - 1; abzweigung++) {
       if (matrix[knotenNummer][abzweigung] > 0 && !besucht[abzweigung]) {
@@ -81,7 +82,7 @@ public class TiefenSucheRekursion extends GraphAdjazenzMatrix {
       }
     }
     protokoll.merkeRekursionsAbbruch(gibKnotenName(knotenNummer));
-    System.out.println(gibKnotenName(knotenNummer) + "  fertig");
+    System.out.println("        " + Farbe.rot("exit " + gibKnotenName(knotenNummer)));
   }
 
   public void führeAus(String startKnoten) {

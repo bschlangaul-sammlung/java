@@ -48,6 +48,15 @@ public class GraphenFinder {
     return graphen[0];
   }
 
+  /**
+   * Gib alle gefundene Graphdefinition aus.
+   *
+   * @return Alle gefundenen Graphendefintion im einfachen Graphenformat.
+   */
+  public GraphenFormat[] gibAlleGraphenFormate() {
+    return graphen;
+  }
+
   public String gibGraphenFormatText() {
     return gibGraphenFormat().toString();
   }

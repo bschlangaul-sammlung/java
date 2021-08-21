@@ -106,14 +106,46 @@ public class TiefenSucheStapel extends GraphAdjazenzMatrix {
     route = new Stack<String>();
   }
 
+  /**
+   * Umgedreht ausgeben
+   */
+  private String gibStapelAlsText() {
+    String[] ausgabe = stapel.toArray(new String[] {});
+    for (int i = 0; i < ausgabe.length / 2; i++) {
+      String tmp = ausgabe[i];
+      ausgabe[i] = ausgabe[ausgabe.length - i - 1];
+      ausgabe[ausgabe.length - i - 1] = tmp;
+    }
+    for (int i = 0; i < ausgabe.length; i++) {
+
+    }
+    return "[" + String.join(", ", ausgabe) + "]";
+  }
+
+  /**
+   * Gib Ausgleichsleerzeichen, die vorne oder hinten an den Knotennamen angehängt
+   * werden können, sodass die Textausgabe in der Konsole schöne ausgerichtet ist.
+   *
+   * @param name Der Name des Knoten.
+   *
+   * @return 0 oder mehr Leerzeichen.
+   */
+  private String gibLeerzeichen(String name) {
+    int anzahl = gibMaximaleKnotennameTextbreite() - name.length();
+    if (anzahl > 0) {
+      return " ".repeat(anzahl);
+    }
+    return "";
+  }
+
   public void besuche(int knotenNummer) {
     String name = gibKnotenName(knotenNummer);
     besucht[knotenNummer] = true;
     route.add(name);
     stapel.push(name);
     protokoll.merkeBesuch(name);
-    System.out.println(Farbe.rot("besucht: ") + name);
-    System.out.println(Farbe.grün("Stapel: ") + stapel.toString());
+    System.out.print("        " + Farbe.grün("add " + name + gibLeerzeichen(name)));
+    System.out.println(" " + gibStapelAlsText());
   }
 
   /**
@@ -128,7 +160,7 @@ public class TiefenSucheStapel extends GraphAdjazenzMatrix {
       // oberstes Element des Stapels nehmen und in die Route einfügen
       String knotenName = stapel.pop();
       protokoll.merkeEntnahme(knotenName);
-      System.out.println(Farbe.gelb("Aus dem Stapel entfernen: ") + knotenName);
+      System.out.println(Farbe.rot("del " + knotenName));
 
       // alle nicht besuchten Nachbarn von w in den Stapel einfügen
       for (int abzweigung = 0; abzweigung <= gibKnotenAnzahl() - 1; abzweigung++) {

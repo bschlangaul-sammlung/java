@@ -21,15 +21,15 @@ public class BreitenSucheWarteschlange extends GraphAdjazenzMatrix {
     String entnommenerKnoten;
 
     public SchnappSchuss(Vector<String> warteschlange) {
-      this.kopiereStapel(warteschlange);
+      this.kopiereWarteschlange(warteschlange);
     }
 
     /**
-     * Eine Kopie des referenzierten Stapels als einfaches Feld.
+     * Eine Kopie der referenzierten Warteschlange als einfaches Feld.
      */
     Object[] warteschlange;
 
-    void kopiereStapel(Vector<String> warteschlange) {
+    void kopiereWarteschlange(Vector<String> warteschlange) {
       this.warteschlange = warteschlange.toArray();
     }
 
@@ -90,14 +90,31 @@ public class BreitenSucheWarteschlange extends GraphAdjazenzMatrix {
     besucht = new boolean[gibKnotenAnzahl()];
   }
 
+  /**
+   * Gib Ausgleichsleerzeichen, die vorne oder hinten an den Knotennamen angehängt
+   * werden können, sodass die Textausgabe in der Konsole schöne ausgerichtet ist.
+   *
+   * @param name Der Name des Knoten.
+   *
+   * @return 0 oder mehr Leerzeichen.
+   */
+  private String gibLeerzeichen(String name) {
+    int anzahl = gibMaximaleKnotennameTextbreite() - name.length();
+    if (anzahl > 0) {
+      return " ".repeat(anzahl);
+    }
+    return "";
+  }
+
   public void besuche(int knotenNummer) {
     String name = gibKnotenName(knotenNummer);
     besucht[knotenNummer] = true;
     route.add(name);
     warteschlange.add(name);
     protokoll.merkeBesuch(name);
-    System.out.println(Farbe.rot("besucht: ") + name);
-    System.out.println(Farbe.grün("Warteschlange: ") + warteschlange.toString());
+
+    System.out.print("        " + Farbe.grün("add ") +  Farbe.grün(name) + gibLeerzeichen(name) + " ");
+    System.out.println(Farbe.gelb(warteschlange.toString()));
   }
 
   /**
@@ -111,7 +128,7 @@ public class BreitenSucheWarteschlange extends GraphAdjazenzMatrix {
     while (!warteschlange.isEmpty()) {
       // oberstes Element der Liste nehmen
       String knotenName = warteschlange.remove(0);
-      System.out.println(Farbe.gelb("Aus der Warteschlange entfernen: ") + knotenName);
+      System.out.println(Farbe.rot("del " + knotenName));
       protokoll.merkeEntnahme(knotenName);
 
       // alle nicht besuchten Nachbarn von knotenName in die Liste einfügen
