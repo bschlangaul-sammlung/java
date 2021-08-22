@@ -1,27 +1,26 @@
 package org.bschlangaul.examen.examen_66112.jahr_2002.herbst;
 
 public abstract class Konto {
-  protected int kontonr;
-  protected float kontostand;
-  protected Besitzer hatBesitzer;
+  protected int kontoNummer;
+  protected float kontoStand;
+  protected Besitzer besitzer;
 
-  public Konto(int knr, float kst, Besitzer b) {
-    kontonr = knr;
-    kontostand = kst;
-    hatBesitzer = b;
-
+  public Konto(int kontoNummer, float kontoStand, Besitzer besitzer) {
+    this.kontoNummer = kontoNummer;
+    this.kontoStand = kontoStand;
+    this.besitzer = besitzer;
   }
 
-  public void einzahlen(float betrag) {
-    kontostand += betrag;
+  public void zahleEin(float betrag) {
+    kontoStand += betrag;
   }
 
-  public Besitzer getHatBesitzer() {
-    return hatBesitzer;
+  public Besitzer gibBesitzer() {
+    return besitzer;
   }
 
-  public abstract boolean abheben(float betrag);
+  public abstract boolean hebeAb(float betrag);
 
-  public abstract void abrechnung();
+  public abstract void rechneAb();
 
 }

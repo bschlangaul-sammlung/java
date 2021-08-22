@@ -3,21 +3,21 @@ package org.bschlangaul.examen.examen_66112.jahr_2002.herbst;
 public class Sparkonto extends Konto {
   private float zinssatz;
 
-  public Sparkonto(int knr, float kst, Besitzer b, float zs) {
-    super(knr, kst, b);
-    zinssatz = zs;
+  public Sparkonto(int kontoNummer, float kontoStand, Besitzer besitzer, float zinssatz) {
+    super(kontoNummer, kontoStand, besitzer);
+    this.zinssatz = zinssatz;
   }
 
-  public boolean abheben(float betrag) {
-    if (kontostand - betrag >= 0) {
-      kontostand -= betrag;
+  public boolean hebeAb(float betrag) {
+    if (kontoStand - betrag >= 0) {
+      kontoStand -= betrag;
       return true;
     } else {
       return false;
     }
   }
 
-  public void abrechnung() {
-    kontostand += kontostand * (1 + zinssatz);
+  public void rechneAb() {
+    kontoStand += kontoStand * (1 + zinssatz);
   }
 }
