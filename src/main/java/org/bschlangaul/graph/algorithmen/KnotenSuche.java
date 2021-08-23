@@ -121,7 +121,7 @@ public abstract class KnotenSuche extends GraphAdjazenzMatrix {
 
   /**
    * Gib Ausgleichsleerzeichen, die vorne oder hinten an den Knotennamen angehängt
-   * werden können, sodass die Textausgabe in der Konsole schöne ausgerichtet ist.
+   * werden können, sodass die Textausgabe in der Konsole schöner ausgerichtet ist.
    *
    * @param name Der Name des Knoten.
    *

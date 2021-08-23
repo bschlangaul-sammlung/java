@@ -9,6 +9,8 @@ import java.util.Stack;
  */
 public class TiefenSucheStapel extends KnotenSuche {
 
+  Stack<String> speicher;
+
   /**
    * Die maximale Anzahl der Knoten wird dabei festgelegt.
    *
@@ -32,6 +34,8 @@ public class TiefenSucheStapel extends KnotenSuche {
 
   private void initialisiereTiefensuche(int maximaleKnoten) {
     speicher = new Stack<String>();
+    protokoll.speicher = speicher;
+    super.speicher = speicher;
   }
 
   protected void druckeZeile(String entferne, String fügeHinzu) {

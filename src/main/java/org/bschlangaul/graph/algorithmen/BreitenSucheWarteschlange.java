@@ -12,7 +12,7 @@ public class BreitenSucheWarteschlange extends KnotenSuche {
   /**
    * Eine Warteschlange für die Breitensuche
    */
-  private Vector<String> speicher = new Vector<String>();
+  Vector<String> speicher;
 
   /**
    * Die Adjazenzmatrix kann mit diesem Konstruktur im einfachen Graphenformat
@@ -22,7 +22,23 @@ public class BreitenSucheWarteschlange extends KnotenSuche {
    */
   public BreitenSucheWarteschlange(String einfachesGraphenFormat) {
     super(einfachesGraphenFormat);
-    besucht = new boolean[gibKnotenAnzahl()];
+    initialisiereBreitensuche(gibKnotenAnzahl());
+  }
+
+  /**
+   * Die maximale Anzahl der Knoten wird dabei festgelegt.
+   *
+   * @param maximaleKnoten Anzahl der maximal möglichen Knoten
+   */
+  public BreitenSucheWarteschlange(int maximaleKnoten) {
+    super(maximaleKnoten);
+    initialisiereBreitensuche(maximaleKnoten);
+  }
+
+  private void initialisiereBreitensuche(int maximaleKnoten) {
+    speicher = new Vector<String>();
+    protokoll.speicher = speicher;
+    super.speicher = speicher;
   }
 
   protected void druckeZeile(String entferne, String fügeHinzu) {
