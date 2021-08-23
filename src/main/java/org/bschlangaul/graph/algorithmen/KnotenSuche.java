@@ -12,12 +12,29 @@ import java.util.Vector;
  * Diese Klasse wir von der Tiefen- oder der Breitensuche mit Stapel oder
  * Warteschlange geerbt.
  */
-public class KnotenSuche extends GraphAdjazenzMatrix {
+public abstract class KnotenSuche extends GraphAdjazenzMatrix {
+
+  private void initialisiereKnotenSuche(int maximaleKnoten) {
+    besucht = new boolean[maximaleKnoten];
+    route = new Vector<String>();
+  }
 
   public KnotenSuche(int maximaleKnoten) {
     super(maximaleKnoten);
-    besucht = new boolean[maximaleKnoten];
+    initialisiereKnotenSuche(maximaleKnoten);
   }
+
+  /**
+   * Die Adjazenzmatrix kann mit diesem Konstruktur im einfachen Graphenformat
+   * spezifiziert werden.
+   *
+   * @param einfachesGraphenFormat Ein String im einfachen Graphenformat.
+   */
+  public KnotenSuche(String einfachesGraphenFormat) {
+    super(einfachesGraphenFormat);
+    initialisiereKnotenSuche(gibKnotenAnzahl());
+  }
+
   /**
    * Der Schnappschuss wird entweder erstellt, nachdem ein Knoten besucht wurde,
    * oder ein Knoten entfernt wurde.
@@ -26,17 +43,17 @@ public class KnotenSuche extends GraphAdjazenzMatrix {
     String besuchterKnoten;
     String entnommenerKnoten;
 
-    public SchnappSchuss(Collection<String> liste) {
-      this.kloneListe(liste);
+    public SchnappSchuss(Collection<String> speicher) {
+      this.kloneListe(speicher);
     }
 
     /**
      * Eine Kopie des referenzierten Stapels/Warteschlange als einfaches Feld.
      */
-    Object[] liste;
+    Object[] speicher;
 
-    void kloneListe(Collection<String> liste) {
-      this.liste = liste.toArray();
+    void kloneListe(Collection<String> speicher) {
+      this.speicher = speicher.toArray();
     }
 
     SchnappSchuss merkeBesuch(String knotenName) {
@@ -56,41 +73,41 @@ public class KnotenSuche extends GraphAdjazenzMatrix {
     /**
      * Eine Referenze auf den vom Algorithmus verwendeten Stapel.
      */
-    Collection<String> stapel;
+    Collection<String> speicher;
 
-    public Protokoll(Collection<String> stapel) {
+    public Protokoll(Collection<String> speicher) {
       this.schnappSchuesse = new ArrayList<SchnappSchuss>();
-      this.stapel = stapel;
+      this.speicher = speicher;
     }
 
     void merkeBesuch(String knotenName) {
-      schnappSchuesse.add(new SchnappSchuss(stapel).merkeBesuch(knotenName));
+      schnappSchuesse.add(new SchnappSchuss(speicher).merkeBesuch(knotenName));
     }
 
     void merkeEntnahme(String knotenName) {
-      schnappSchuesse.add(new SchnappSchuss(stapel).merkeEntnahme(knotenName));
+      schnappSchuesse.add(new SchnappSchuss(speicher).merkeEntnahme(knotenName));
     }
   }
 
   /**
    * Liste der besuchten Knoten
    */
-  private boolean[] besucht;
+  protected boolean[] besucht;
 
   /**
-   * Stapel für die Tiefensuche
+   * Zwischenspeicher: Stapel für die Tiefensuche, Warteschlange für die
+   * Breitensuche
    */
-  private Collection<String> liste;
-  private Vector<String> route;
+  protected Collection<String> speicher;
+  protected Vector<String> route;
 
-  Protokoll protokoll = new Protokoll(liste);
-
+  Protokoll protokoll = new Protokoll(speicher);
 
   /**
    * Umgedreht ausgeben
    */
-  private String gibStapelAlsText() {
-    String[] ausgabe = liste.toArray(new String[] {});
+  protected String gibStapelAlsText() {
+    String[] ausgabe = speicher.toArray(new String[] {});
     for (int i = 0; i < ausgabe.length / 2; i++) {
       String tmp = ausgabe[i];
       ausgabe[i] = ausgabe[ausgabe.length - i - 1];
@@ -110,7 +127,7 @@ public class KnotenSuche extends GraphAdjazenzMatrix {
    *
    * @return 0 oder mehr Leerzeichen.
    */
-  private String gibLeerzeichen(String name) {
+  protected String gibLeerzeichen(String name) {
     int anzahl = gibMaximaleKnotennameTextbreite() - name.length();
     if (anzahl > 0) {
       return " ".repeat(anzahl);
@@ -118,7 +135,7 @@ public class KnotenSuche extends GraphAdjazenzMatrix {
     return "";
   }
 
-  private void druckeZeile(String entferne, String fügeHinzu) {
+  protected void druckeZeile(String entferne, String fügeHinzu) {
     int spaltenBreite = gibMaximaleKnotennameTextbreite() + 5;
     if (entferne == null) {
       System.out.print(" ".repeat(spaltenBreite));
@@ -138,11 +155,27 @@ public class KnotenSuche extends GraphAdjazenzMatrix {
     String name = gibKnotenName(knotenNummer);
     besucht[knotenNummer] = true;
     route.add(name);
-    liste.add(name);
+    speicher.add(name);
     protokoll.merkeBesuch(name);
     druckeZeile(null, name);
   }
 
+  protected abstract void besucheKnoten(int startnummer);
+
+  /**
+   * Start der Tiefen/Breitensuche
+   *
+   * @param startKnoten Bezeichnung des Startknotens
+   */
   public void führeAus(String startKnoten) {
+    int startnummer;
+    startnummer = gibKnotenNummer(startKnoten);
+
+    if (startnummer != -1) {
+      for (int i = 0; i <= gibKnotenAnzahl() - 1; i++) {
+        besucht[i] = false;
+      }
+      besucheKnoten(startnummer);
+    }
   }
 }
