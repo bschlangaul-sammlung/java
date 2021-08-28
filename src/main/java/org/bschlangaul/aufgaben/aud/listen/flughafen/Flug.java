@@ -1,4 +1,4 @@
-package org.bschlangaul.aufgaben.aud.e_klausur.flughafen;
+package org.bschlangaul.aufgaben.aud.listen.flughafen;
 
 public class Flug {
   private int flugnummer;
@@ -11,15 +11,15 @@ public class Flug {
     this.zielFlughafen = zielFlughafen;
   }
 
-  public int getFlugnummer() {
+  public int gibFlugnummer() {
     return flugnummer;
   }
 
-  public String getStartFlughafen() {
+  public String gibStartFlughafen() {
     return startFlughafen;
   }
 
-  public String getZielFlughafen() {
+  public String gibZielFlughafen() {
     return zielFlughafen;
   }
 }
