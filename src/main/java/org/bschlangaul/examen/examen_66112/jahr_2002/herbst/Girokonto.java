@@ -1,25 +1,25 @@
 package org.bschlangaul.examen.examen_66112.jahr_2002.herbst;
 
 public class Girokonto extends Konto {
-  private float kreditrahmen;
-  private float jahresgebuehr;
+  private float kreditRahmen;
+  private float jahresGebühr;
 
-  public Girokonto(int knr, float kst, Besitzer b, float kr, float jg) {
-    super(knr, kst, b);
-    kreditrahmen = kr;
-    jahresgebuehr = jg;
+  public Girokonto(int kontoNummer, float kontoStand, Besitzer besitzer, float kreditRahmen, float jahresGebühr) {
+    super(kontoNummer, kontoStand, besitzer);
+    this.kreditRahmen = kreditRahmen;
+    this.jahresGebühr = jahresGebühr;
   }
 
-  public boolean abheben(float betrag) {
-    if (kontostand - betrag >= kreditrahmen) {
-      kontostand -= betrag;
+  public boolean hebeAb(float betrag) {
+    if (kontoStand - betrag >= kreditRahmen) {
+      kontoStand -= betrag;
       return true;
     } else {
       return false;
     }
   }
 
-  public void abrechnung() {
-    kontostand -= jahresgebuehr;
+  public void rechneAb() {
+    kontoStand -= jahresGebühr;
   }
 }

@@ -1,18 +1,17 @@
 package org.bschlangaul.examen.examen_66112.jahr_2002.herbst;
 
+@SuppressWarnings("unused")
 public class Besitzer {
-  @SuppressWarnings("unused")
   private String name;
-  private int kundennr;
-  @SuppressWarnings("unused")
+  private int kundenNummer;
   private Konto hatKonto;
 
-  public Besitzer(String name, int kundennr) {
+  public Besitzer(String name, int kundenNummer) {
     this.name = name;
-    this.kundennr = kundennr;
+    this.kundenNummer = kundenNummer;
   }
 
-  public int getKundennr() {
-    return kundennr;
+  public int gibKundenNummer() {
+    return kundenNummer;
   }
 }

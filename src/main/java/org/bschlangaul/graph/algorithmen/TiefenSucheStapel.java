@@ -1,84 +1,15 @@
 package org.bschlangaul.graph.algorithmen;
 
-import org.bschlangaul.graph.GraphAdjazenzMatrix;
 import org.bschlangaul.helfer.Farbe;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Stack;
-import java.util.Vector;
 
 /**
  * nach Schulbuch: Informatik 1 Oberstufe Oldenbourg Verlag
  */
-public class TiefenSucheStapel extends GraphAdjazenzMatrix {
+public class TiefenSucheStapel extends KnotenSuche {
 
-  /**
-   * Der Schnappschuss wird entweder erstellt, nachdem ein Knoten besucht wurde,
-   * oder ein Knoten aus dem Stapel entfernt wurde.
-   */
-  class SchnappSchuss {
-    String besuchterKnoten;
-    String entnommenerKnoten;
-
-    public SchnappSchuss(Stack<String> stapel) {
-      this.kopiereStapel(stapel);
-    }
-
-    /**
-     * Eine Kopie des referenzierten Stapels als einfaches Feld.
-     */
-    Object[] stapel;
-
-    void kopiereStapel(Stack<String> stapel) {
-      this.stapel = stapel.toArray();
-    }
-
-    SchnappSchuss merkeBesuch(String knotenName) {
-      this.besuchterKnoten = knotenName;
-      return this;
-    }
-
-    SchnappSchuss merkeEntnahme(String knotenName) {
-      this.entnommenerKnoten = knotenName;
-      return this;
-    }
-  }
-
-  class Protokoll {
-    List<SchnappSchuss> schnappSchuesse;
-
-    /**
-     * Eine Referenze auf den vom Algorithmus verwendeten Stapel.
-     */
-    Stack<String> stapel;
-
-    public Protokoll(Stack<String> stapel) {
-      this.schnappSchuesse = new ArrayList<SchnappSchuss>();
-      this.stapel = stapel;
-    }
-
-    void merkeBesuch(String knotenName) {
-      schnappSchuesse.add(new SchnappSchuss(stapel).merkeBesuch(knotenName));
-    }
-
-    void merkeEntnahme(String knotenName) {
-      schnappSchuesse.add(new SchnappSchuss(stapel).merkeEntnahme(knotenName));
-    }
-  }
-
-  /**
-   * Liste der besuchten Knoten
-   */
-  private boolean[] besucht;
-
-  /**
-   * Stapel für die Tiefensuche
-   */
-  private Stack<String> stapel = new Stack<String>();
-  private Vector<String> route = new Vector<String>();
-
-  Protokoll protokoll = new Protokoll(stapel);
+  Stack<String> speicher;
 
   /**
    * Die maximale Anzahl der Knoten wird dabei festgelegt.
@@ -102,50 +33,34 @@ public class TiefenSucheStapel extends GraphAdjazenzMatrix {
   }
 
   private void initialisiereTiefensuche(int maximaleKnoten) {
-    besucht = new boolean[maximaleKnoten];
-    route = new Stack<String>();
+    speicher = new Stack<String>();
+    protokoll.speicher = speicher;
+    super.speicher = speicher;
   }
 
-  /**
-   * Umgedreht ausgeben
-   */
-  private String gibStapelAlsText() {
-    String[] ausgabe = stapel.toArray(new String[] {});
-    for (int i = 0; i < ausgabe.length / 2; i++) {
-      String tmp = ausgabe[i];
-      ausgabe[i] = ausgabe[ausgabe.length - i - 1];
-      ausgabe[ausgabe.length - i - 1] = tmp;
+  protected void druckeZeile(String entferne, String fügeHinzu) {
+    int spaltenBreite = gibMaximaleKnotennameTextbreite() + 5;
+    if (entferne == null) {
+      System.out.print(" ".repeat(spaltenBreite));
+    } else {
+      System.out.print(Farbe.rot("del ") + Farbe.rot(entferne) + gibLeerzeichen(entferne) + " ");
     }
-    for (int i = 0; i < ausgabe.length; i++) {
 
+    if (fügeHinzu == null) {
+      System.out.print(" ".repeat(spaltenBreite));
+    } else {
+      System.out.print(Farbe.grün("add ") + Farbe.grün(fügeHinzu) + gibLeerzeichen(fügeHinzu) + " ");
     }
-    return "[" + String.join(", ", ausgabe) + "]";
-  }
-
-  /**
-   * Gib Ausgleichsleerzeichen, die vorne oder hinten an den Knotennamen angehängt
-   * werden können, sodass die Textausgabe in der Konsole schöne ausgerichtet ist.
-   *
-   * @param name Der Name des Knoten.
-   *
-   * @return 0 oder mehr Leerzeichen.
-   */
-  private String gibLeerzeichen(String name) {
-    int anzahl = gibMaximaleKnotennameTextbreite() - name.length();
-    if (anzahl > 0) {
-      return " ".repeat(anzahl);
-    }
-    return "";
+    System.out.println(Farbe.gelb(gibStapelAlsText()));
   }
 
   public void besuche(int knotenNummer) {
     String name = gibKnotenName(knotenNummer);
     besucht[knotenNummer] = true;
     route.add(name);
-    stapel.push(name);
+    speicher.push(name);
     protokoll.merkeBesuch(name);
-    System.out.print("        " + Farbe.grün("add " + name + gibLeerzeichen(name)));
-    System.out.println(" " + gibStapelAlsText());
+    druckeZeile(null, name);
   }
 
   /**
@@ -156,11 +71,11 @@ public class TiefenSucheStapel extends GraphAdjazenzMatrix {
   public void besucheKnoten(int knotenNummer) {
     besuche(knotenNummer);
     // Stapel ausgeben
-    while (!stapel.isEmpty()) {
+    while (!speicher.isEmpty()) {
       // oberstes Element des Stapels nehmen und in die Route einfügen
-      String knotenName = stapel.pop();
+      String knotenName = speicher.pop();
       protokoll.merkeEntnahme(knotenName);
-      System.out.println(Farbe.rot("del " + knotenName));
+      druckeZeile(knotenName, null);
 
       // alle nicht besuchten Nachbarn von w in den Stapel einfügen
       for (int abzweigung = 0; abzweigung <= gibKnotenAnzahl() - 1; abzweigung++) {
@@ -171,23 +86,6 @@ public class TiefenSucheStapel extends GraphAdjazenzMatrix {
     }
     // Route ausgeben
     System.out.println("\n" + Farbe.gelb("Route: ") + route.toString());
-  }
-
-  /**
-   * Start der Tiefensuche
-   *
-   * @param startKnoten Bezeichnung des Startknotens
-   */
-  public void führeAus(String startKnoten) {
-    int startnummer;
-    startnummer = gibKnotenNummer(startKnoten);
-
-    if (startnummer != -1) {
-      for (int i = 0; i <= gibKnotenAnzahl() - 1; i++) {
-        besucht[i] = false;
-      }
-      besucheKnoten(startnummer);
-    }
   }
 
   public static void main(String[] args) {
