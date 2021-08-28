@@ -1,4 +1,4 @@
-package org.bschlangaul.aufgaben.aud.e_klausur;
+package org.bschlangaul.aufgaben.aud.komplexitaet;
 
 public class Komplexitaet {
 
