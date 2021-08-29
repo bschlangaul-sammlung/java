@@ -41,8 +41,6 @@ public class Muffin {
    */
   public static int berechneRest4Sorten3ProTeller() {
     int[] muffins = new int[] { 10, 18, 12, 9 };
-
-    // Anzahl an Muffinsorten.
     int n = muffins.length;
     sortiere(muffins);
 
@@ -67,12 +65,8 @@ public class Muffin {
    * @return Die Anzahl der übrig gebliebenen Muffins.
    */
   public static int berechneRestAllgemein(int[] muffins, int k) {
-    // Anzahl an Muffinsorten.
     int n = muffins.length;
     sortiere(muffins);
-
-    // Wir nehmen uns 3 verschiedene Muffins solange, wie die dritthäufigste
-    // Muffinsorte noch Muffins hat.
     while (muffins[n - k] > 0) {
       for (int i = 1; i <= k; i++) {
         muffins[n - i]--;
