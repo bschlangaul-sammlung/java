@@ -1,4 +1,4 @@
-package org.bschlangaul.aufgaben.aud.ab_7.mergesort;
+package org.bschlangaul.aufgaben.aud.sortier;
 
 import org.bschlangaul.helfer.Konsole;
 

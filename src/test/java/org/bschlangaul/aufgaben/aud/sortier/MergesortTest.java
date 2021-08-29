@@ -1,6 +1,7 @@
-package org.bschlangaul.aufgaben.aud.ab_7.mergesort;
+package org.bschlangaul.aufgaben.aud.sortier;
 
 import static org.junit.Assert.*;
+
 import org.junit.Test;
 
 /**
