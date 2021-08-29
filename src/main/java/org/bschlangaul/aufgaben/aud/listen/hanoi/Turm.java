@@ -1,4 +1,4 @@
-package org.bschlangaul.aufgaben.aud.ab_7.hanoi;
+package org.bschlangaul.aufgaben.aud.listen.hanoi;
 
 /**
  * https://www.studon.fau.de/file2617984_download.html

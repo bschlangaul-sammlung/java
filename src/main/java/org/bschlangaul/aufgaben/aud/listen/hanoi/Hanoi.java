@@ -1,4 +1,4 @@
-package org.bschlangaul.aufgaben.aud.ab_7.hanoi;
+package org.bschlangaul.aufgaben.aud.listen.hanoi;
 
 /**
  * https://www.studon.fau.de/file2617984_download.html
@@ -23,10 +23,10 @@ public class Hanoi {
   }
 
   /**
-   * @param n Höhe des Turms (Anzahl der Scheiben).
+   * @param n      Höhe des Turms (Anzahl der Scheiben).
    * @param quelle Der Ausgangs-Turm.
-   * @param ziel Der Ziel-Turm.
-   * @param hilfe Der Hilfs-Turm in der Mitte.
+   * @param ziel   Der Ziel-Turm.
+   * @param hilfe  Der Hilfs-Turm in der Mitte.
    */
   public void hanoi(int n, Turm quelle, Turm ziel, Turm hilfe) {
     if (n == 1) {
