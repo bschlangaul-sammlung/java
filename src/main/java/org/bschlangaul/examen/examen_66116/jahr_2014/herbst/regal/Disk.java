@@ -8,8 +8,8 @@ public class Disk {
   private String titel;
 
   /**
-   * * erzeugt eine neue Disk Bewertung wird automatisch mit Hilfe des Genres
-   * berechnet
+   * Erzeuge eine neue Disk. Die Bewertung wird automatisch mit Hilfe des Genres
+   * berechnet.
    *
    * @param typ   Typ der Disk
    * @param genre Genre der Disk
@@ -27,12 +27,12 @@ public class Disk {
    *
    * @return Bewertung
    */
-  public int getBewertung() {
+  public int gibBewertung() {
     return this.bewertung;
   }
 
   /**
-   * Berechne rekursiv die Bewertung einer Disk
+   * Berechne rekursiv die Bewertung einer Disk.
    *
    * @param genre Genre der Disk
    *

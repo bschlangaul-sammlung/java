@@ -3,7 +3,9 @@ package org.bschlangaul.examen.examen_66116.jahr_2014.herbst.regal;
 public class Regal {
   private Disk[][] regal = new Disk[5][30];
 
-  /** * erzeugt eine neues (leeres) Regal */
+  /**
+   * Erzeuge eine neues (leeres) Regal.
+   */
   public Regal() {
     for (int i = 0; i < regal.length; i++) {
       for (int j = 0; j < regal[i].length; j++) {
@@ -13,7 +15,7 @@ public class Regal {
   }
 
   /**
-   * berechnet die mittlere Bewertung für ein Regal
+   * Berechne die mittlere Bewertung für ein Regal.
    *
    * @return mittlere Bewertung
    */
@@ -24,12 +26,12 @@ public class Regal {
       for (int j = 0; j < regal[i].length; j++) {
         if (regal[i][j] != null) {
           anzahl++;
-          bewertungspunkteGesamt += regal[i][j].getBewertung();
+          bewertungspunkteGesamt += regal[i][j].gibBewertung();
         }
       }
     }
     if (anzahl == 0) {
-      // falls Regal komplett leer ist
+      // Falls das Regal komplett leer ist.
       return 0;
     }
     return bewertungspunkteGesamt / anzahl;
