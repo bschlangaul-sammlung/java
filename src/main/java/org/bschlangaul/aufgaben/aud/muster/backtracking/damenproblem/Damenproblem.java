@@ -1,4 +1,4 @@
-package org.bschlangaul.aufgaben.aud.pu_3.damenproblem;
+package org.bschlangaul.aufgaben.aud.muster.backtracking.damenproblem;
 
 public class Damenproblem {
   static int n = 8;
