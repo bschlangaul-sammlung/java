@@ -1,4 +1,4 @@
-package org.bschlangaul.aufgaben.aud.pu_7.aufgabe_8;
+package org.bschlangaul.aufgaben.aud.baum;
 
 public class Hashing {
   public static int hashen(int x) {
