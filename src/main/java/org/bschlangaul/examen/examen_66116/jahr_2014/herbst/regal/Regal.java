@@ -1,4 +1,4 @@
-package org.bschlangaul.aufgaben.aud.pu_7.cd_regal;
+package org.bschlangaul.examen.examen_66116.jahr_2014.herbst.regal;
 
 public class Regal {
   private Disk[][] regal = new Disk[5][30];
@@ -13,7 +13,7 @@ public class Regal {
   }
 
   /**
-   * * berechnet die mittlere Bewertung für ein Regal
+   * berechnet die mittlere Bewertung für ein Regal
    *
    * @return mittlere Bewertung
    */

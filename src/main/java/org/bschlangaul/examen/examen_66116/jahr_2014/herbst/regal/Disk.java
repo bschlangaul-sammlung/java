@@ -1,4 +1,4 @@
-package org.bschlangaul.aufgaben.aud.pu_7.cd_regal;
+package org.bschlangaul.examen.examen_66116.jahr_2014.herbst.regal;
 
 @SuppressWarnings("unused")
 public class Disk {
