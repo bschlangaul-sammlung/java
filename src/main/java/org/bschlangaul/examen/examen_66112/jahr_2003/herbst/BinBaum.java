@@ -27,7 +27,7 @@ public class BinBaum {
       // suche rechts
       if (zahl > aktueller.gibZahl() && aktueller.gibRechts() != null) {
         aktueller = aktueller.gibRechts();
-      // fuege ein
+        // fuege ein
       } else if (zahl > aktueller.gibZahl() && aktueller.gibRechts() == null) {
         aktueller.setzeRechts(neuerKnoten);
         break;
