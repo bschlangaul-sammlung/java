@@ -1,11 +1,21 @@
-package org.bschlangaul.aufgaben.aud.ab_3;
+package org.bschlangaul.aufgaben.aud.muster.dp;
 
 import org.bschlangaul.helfer.Farbe;
 import org.bschlangaul.helfer.Konsole;
 
 /**
- * <a href="https://www.studon.fau.de/file2521908_download.html">Angabe: AB_3 Greedy_DP_Backtracking.pdf</a>
- * <a href="https://www.studon.fau.de/file2521907_download.html">Lösung: AB_3 Greedy_DP_Backtracking_Lsg.pdf</a>
+ * <a href="https://www.studon.fau.de/file2521908_download.html">Angabe: AB_3
+ * Greedy_DP_Backtracking.pdf</a>
+ * <a href="https://www.studon.fau.de/file2521907_download.html">Lösung: AB_3
+ * Greedy_DP_Backtracking_Lsg.pdf</a>
+ *
+ * Qualifizierungsmaßnahme Informatik: Algorithmen und Datenstrukturen:
+ * Aufgabenblatt 3: Algorithmenmuster.
+ *
+ * <a href="https://www.studon.fau.de/file2521908_download.html">Angabe: AB_3
+ * Greedy_DP_Backtracking.pdf</a>
+ * <a href="https://www.studon.fau.de/file2521907_download.html">Lösung: AB_3
+ * Greedy_DP_Backtracking_Lsg.pdf</a>
  */
 public class Gitter {
 
@@ -50,7 +60,8 @@ public class Gitter {
    * Zeige die Lösung in der Konsole.
    */
   public void zeigeLoesung() {
-    System.out.println(String.format("Anzahl der Wege von %sx%s: %s", Farbe.gelb(m), Farbe.gelb(n), Farbe.grün(berechneAnzahlWege())));
+    System.out.println(
+        String.format("Anzahl der Wege von %sx%s: %s", Farbe.gelb(m), Farbe.gelb(n), Farbe.grün(berechneAnzahlWege())));
     System.out.println(Farbe.rot("Gitter:"));
     Konsole.zeige2DIntFeld(anzahlWege);
     System.out.println();

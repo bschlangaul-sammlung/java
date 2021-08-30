@@ -3,9 +3,6 @@ package org.bschlangaul.aufgaben.aud.pu_1;
 import java.util.Scanner;
 
 public class Rater {
-  public static void main(String[] args) {
-    System.out.println("Ihre Zahl ist " + rateIterativ(1, 500));
-  }
 
   public static int rateRekursiv(int anfang, int ende) {
     int mitte;
@@ -44,6 +41,10 @@ public class Rater {
       }
     }
     return anfang;
+  }
+
+  public static void main(String[] args) {
+    System.out.println("Ihre Zahl ist " + rateIterativ(1, 500));
   }
 
 }

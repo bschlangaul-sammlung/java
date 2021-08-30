@@ -1,6 +1,7 @@
-package org.bschlangaul.aufgaben.aud.ab_3;
+package org.bschlangaul.aufgaben.aud.muster.dp;
 
 import static org.junit.Assert.*;
+
 import org.junit.Test;
 
 public class GitterTest {

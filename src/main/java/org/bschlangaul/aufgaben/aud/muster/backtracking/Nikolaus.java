@@ -1,5 +1,14 @@
-package org.bschlangaul.aufgaben.aud.ab_3;
+package org.bschlangaul.aufgaben.aud.muster.backtracking;
 
+/**
+ * Qualifizierungsmaßnahme Informatik: Algorithmen und Datenstrukturen:
+ * Aufgabenblatt 3: Algorithmenmuster.
+ *
+ * <a href="https://www.studon.fau.de/file2521908_download.html">Angabe: AB_3
+ * Greedy_DP_Backtracking.pdf</a>
+ * <a href="https://www.studon.fau.de/file2521907_download.html">Lösung: AB_3
+ * Greedy_DP_Backtracking_Lsg.pdf</a>
+ */
 public class Nikolaus {
   static final int maxPunktAnzahl = 5;
   static final int maxKantenAnzahl = 8;
