@@ -149,7 +149,7 @@ public class AVLBaum extends BinaerBaum {
     } else if (knoten.vergleiche(schlüssel) < 0) {
       knoten.rechts = fügeEin(knoten.rechts, schlüssel);
     } else {
-      throw new RuntimeException("duplicate Key!");
+      throw new RuntimeException("Doppelter Schlüssel!");
     }
     return rebalanciere(knoten);
   }
@@ -231,7 +231,7 @@ public class AVLBaum extends BinaerBaum {
   public boolean entferne(Comparable schlüssel) {
     reporter.berichteÜberschrift("Nach Löschen von „" + schlüssel + "“", 0);
     kopf = entferne(kopf, schlüssel, "rechts");
-    // Wieder auf falsch setzten, damit beim nächsten Löschvorgang der
+    // Wieder auf falsch setzen, damit beim nächsten Löschvorgang der
     // Wert wieder von neuem gesetzt werden muss.
     boolean ausgabe = gelöscht;
     gelöscht = false;
