@@ -1,4 +1,4 @@
-package org.bschlangaul.aufgaben.aud.ab_6;
+package org.bschlangaul.aufgaben.aud.baum;
 
 public class Heap {
 
