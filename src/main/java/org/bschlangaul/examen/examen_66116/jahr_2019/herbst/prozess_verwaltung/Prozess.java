@@ -1,4 +1,4 @@
-package org.bschlangaul.examen.examen_66116.jahr_2019.herbst;
+package org.bschlangaul.examen.examen_66116.jahr_2019.herbst.prozess_verwaltung;
 
 /**
  * Entspricht der „Kontext“-Klasse in der Terminologie der „Gang of
