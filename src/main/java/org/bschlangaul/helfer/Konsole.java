@@ -52,7 +52,6 @@ public class Konsole {
   /**
    * Zeige eine Feld voller Zahlen in der Konsole.
    *
-   *
    * @param zahlen Eine Feld gefüllt mit Zahlen, das in der Konsole gezeigt werden
    *               soll.
    */
