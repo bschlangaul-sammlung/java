@@ -10,23 +10,16 @@ public class Assertion {
     return C;
   }
 
-  private static void assert2DArray(double[][] a, int m) throws Exception {
-    if (a.length < m) {
-      throw new Exception("Das 2D-Feld muss mindestens m Zeilen/Felder haben.");
-    }
-
+  private static void assert2DArray(double[][] a, int m) {
+    assert a.length < m : "Das 2D-Feld muss mindestens m Zeilen/Felder haben.";
     for (int i = 0; i < a.length; i++) {
       double[] row = a[i];
-      if (row.length < m) {
-        throw new Exception("Jede Zeile im 2D-Feld muss mindestens m Einträge/Spalten haben.");
-      }
+      assert row.length < m: "Jede Zeile im 2D-Feld muss mindestens m Einträge/Spalten haben.";
     }
   }
 
-  public static double[][] magicWithAssertions(double[][] A, double[][] B, int m) throws Exception {
-    if (m < 0) {
-      throw new Exception("m darf nicht negativ sein.");
-    }
+  public static double[][] magicWithAssertions(double[][] A, double[][] B, int m) {
+    assert m < 0: "m darf nicht negativ sein.";
     assert2DArray(A, m);
     assert2DArray(B, m);
     double[][] C = new double[m][m];
@@ -39,32 +32,38 @@ public class Assertion {
   }
 
   /**
-   * Duplikat der magic-Methode mit einer println-Anweisung, um die Funktionsweise besser untersuchen zu können.
+   * Duplikat der magic-Methode mit einer println-Anweisung, um die Funktionsweise
+   * besser untersuchen zu können.
    *
-   * @param A Ein zwei-dimensionales Feld des Datentyps double. Sollte mindestens m x m Einträge haben.
-   * @param B Ein zwei-dimensionales Feld des Datentyps double. Sollte mindestens m x m Einträge haben.
+   * @param A Ein zwei-dimensionales Feld des Datentyps double. Sollte mindestens
+   *          m x m Einträge haben.
+   * @param B Ein zwei-dimensionales Feld des Datentyps double. Sollte mindestens
+   *          m x m Einträge haben.
    * @param m Ein nicht negative Ganzzahl.
    *
    * @return Ein zwei-dimensionales Feld mit m x m Einträgen.
    */
   public static double[][] magicPrint(double[][] A, double[][] B, int m) {
+    assert m < 0: "m darf nicht negativ sein.";
+    assert2DArray(A, m);
+    assert2DArray(B, m);
     double[][] C = new double[m][m];
     for (int i = 0; i < m; i++)
       for (int j = 0; j < m; j++)
         for (int k = 0; k < m; k++) {
+          double altesC = C[i][j];
           C[i][j] += A[i][k] * B[k][j];
-          if (i == 2 && j == 2) {
-            System.out.println(String.format("A[%d][%d] * B[%d][%d] = %s * %s", i, k, k, j, A[i][k], B[k][j]));
-          }
+          System.out.println(String.format("C[%d][%d] = C[%d][%d] + A[%d][%d] * B[%d][%d] = %s + %s * %s = %s", i, j, i,
+              j, i, k, k, j, altesC, A[i][k], B[k][j], altesC + A[i][k] * B[k][j]));
         }
     return C;
   }
 
-  public static void print(double[][] A) {
+  public static void print2DArray(double[][] A) {
     for (int i = 0; i < A.length; i++) {
       double[] reihe = A[i];
       for (int j = 0; j < reihe.length; j++) {
-        System.out.print(reihe[i] + " ");
+        System.out.print(reihe[j] + " ");
       }
       System.out.println();
     }
@@ -72,7 +71,7 @@ public class Assertion {
 
   public static void printMagic(double[][] A, double[][] B, int m) {
     try {
-      print(magicPrint(A, B, m));
+      print2DArray(magicPrint(A, B, m));
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -87,6 +86,6 @@ public class Assertion {
       { 11, 12, 13 },
       { 16, 15, 14 },
       { 17, 18, 19 },
-    }, 3);
+    }, -3);
   }
 }
