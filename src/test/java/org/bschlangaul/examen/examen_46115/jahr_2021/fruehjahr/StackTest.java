@@ -19,8 +19,11 @@ public class StackTest {
   public void methodPop() {
     Stack stack = makeStack();
     assertEquals(3, stack.pop());
+    assertEquals(stack.size(), 2);
     assertEquals(2, stack.pop());
+    assertEquals(stack.size(), 1);
     assertEquals(1, stack.pop());
+    assertEquals(stack.size(), 0);
     assertThrows(IndexOutOfBoundsException.class, () -> {
       stack.pop();
     });

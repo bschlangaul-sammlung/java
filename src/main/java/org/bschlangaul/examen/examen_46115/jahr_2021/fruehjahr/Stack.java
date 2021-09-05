@@ -25,7 +25,7 @@ class Stack {
   public int pop() {
     if (head != null) {
       int val = head.val;
-      size++;
+      size--;
       head = head.next;
       return val;
     } else {
