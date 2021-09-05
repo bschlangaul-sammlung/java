@@ -9,7 +9,7 @@ package org.bschlangaul.sortier;
 public class SelectionMinimal extends SortieralgorithmusMinimal {
 
   /**
-   * Sortiere mit Hilfe des Insertionsort-Algorithmus.
+   * Sortiere mit Hilfe des Selectionsort-Algorithmus.
    *
    * <p>
    * <strong>Abkürzungen:</strong>
