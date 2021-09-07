@@ -4,4 +4,4 @@
  * <a href="https://www.studon.fau.de/file2511985_download.html">Angabe</a>
  * <a href="https://www.studon.fau.de/file2511986_download.html">Lösung</a>
  */
-package org.bschlangaul.aufgaben.oomup.ab_5;
+package org.bschlangaul.aufgaben.oomup.klassendiagramm.kleintierpraxis;

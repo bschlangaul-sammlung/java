@@ -1,4 +1,4 @@
-package org.bschlangaul.aufgaben.oomup.ab_5;
+package org.bschlangaul.aufgaben.oomup.klassendiagramm.kleintierpraxis;
 
 public class Hund extends Kleintier {
   private boolean reinrassig;
