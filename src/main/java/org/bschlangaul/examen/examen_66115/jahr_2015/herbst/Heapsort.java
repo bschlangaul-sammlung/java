@@ -28,7 +28,6 @@ public class Heapsort {
     // Phase 2: jeweils Maximum entnehmen und sortierte Liste am Ende aufbauen
     // (siehe Teilaufgabe b)
     // ToDo: Code hier ergaenzen
-
   }
 }
 
