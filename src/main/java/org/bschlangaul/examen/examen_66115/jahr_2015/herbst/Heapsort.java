@@ -4,17 +4,18 @@ import java.util.Comparator;
 
 public class Heapsort {
 
-  // ascending order for field W.t
+
   void swap(W[] w, int a, int b) { // ...
 
   }
 
-  // restores the max-heap property in w[i ta k] using ¢
+  // restores the max-heap property in w[i to k] using c
   void reheap(W[] w, Comparator<W> c, int i, int k) {
     int leftId = 2 * i + 1;
     int rightId = leftId + 1;
     int kidId;
-  } // ToDo: Code hier ergaenzen
+    // ToDo: Code hier ergaenzen
+  }
 
   // sorts w in-situ according to the order imposed by c
   void heapSort(W[] w, Comparator<W> c) {
@@ -31,6 +32,7 @@ public class Heapsort {
   }
 }
 
+// ascending order for field W.t
 class ComparatorAscByFieldT implements Comparator<W> {
   // Returns a negative integer, zero, or a positive integer as the
   // first argument is less than, equal to, or greater than the second.
