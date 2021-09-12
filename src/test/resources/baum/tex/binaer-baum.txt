@@ -14,4 +14,4 @@
   ]
 ]
 \end{tikzpicture}
-\end{liDiagramm}
+\end{bBaum}

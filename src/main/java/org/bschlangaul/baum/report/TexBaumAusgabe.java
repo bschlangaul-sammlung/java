@@ -47,13 +47,13 @@ public class TexBaumAusgabe extends BaumReporter {
     // return Tex.umgebungOption("tikzpicture", String.format("\\Tree\n%s",
     // tikzMarkup), "li binaer baum");
     return Tex.umgebungOption("tikzpicture", String.format("\\Tree\n%s", tikzMarkup), "li binaer baum") + "\n"
-        + Tex.makro("end", "liDiagramm");
+        + Tex.makro("end", "bBaum");
   }
 
   @Override
   public String erzeugeÜberschrift(String überschrift) {
     // return KonsoleHelfer.erzeugeÜberschrift(überschrift);
-    return String.format("\n%s{%s}", Tex.makro("begin", "liDiagramm"), überschrift);
+    return String.format("\n%s{%s}", Tex.makro("begin", "bBaum"), überschrift);
   }
 
   @Override

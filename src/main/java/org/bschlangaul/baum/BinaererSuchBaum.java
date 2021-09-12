@@ -44,7 +44,7 @@ public class BinaererSuchBaum extends BinaerBaum {
       eltern.setzeRechts(knoten);
     knoten.setzeLinks(null);
     knoten.setzeRechts(null);
-    reporter.berichteBaum("Nach Einfügen von „" + schlüssel + "“", this, 0);
+    reporter.berichteBaum(" Nach dem Einfügen von „" + schlüssel + "“", this, 0);
     return true;
   }
 
@@ -127,7 +127,7 @@ public class BinaererSuchBaum extends BinaerBaum {
       eltern.setzeLinks(kind);
     else
       eltern.setzeRechts(kind);
-    reporter.berichteBaum("Nach Löschen von „" + schlüssel + "“", this);
+    reporter.berichteBaum(" Nach dem Löschen von „" + schlüssel + "“", this);
 
     return true;
   }

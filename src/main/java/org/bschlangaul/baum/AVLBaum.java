@@ -158,7 +158,7 @@ public class AVLBaum extends BinaerBaum {
    * {@inheritDoc}
    */
   public boolean fügeEin(Comparable schlüssel) {
-    reporter.berichteÜberschrift("Nach Einfügen von „" + schlüssel + "“", 0);
+    reporter.berichteÜberschrift(" Nach dem Einfügen von „" + schlüssel + "“", 0);
 
     kopf = fügeEin(kopf, schlüssel);
     reporter.berichteBaum(this, 0);
@@ -229,7 +229,7 @@ public class AVLBaum extends BinaerBaum {
    * {@inheritDoc}
    */
   public boolean entferne(Comparable schlüssel) {
-    reporter.berichteÜberschrift("Nach Löschen von „" + schlüssel + "“", 0);
+    reporter.berichteÜberschrift(" Nach dem Löschen von „" + schlüssel + "“", 0);
     kopf = entferne(kopf, schlüssel, "rechts");
     // Wieder auf falsch setzen, damit beim nächsten Löschvorgang der
     // Wert wieder von neuem gesetzt werden muss.

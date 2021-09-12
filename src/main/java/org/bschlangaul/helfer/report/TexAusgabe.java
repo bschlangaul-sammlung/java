@@ -6,7 +6,7 @@ public class TexAusgabe implements Ausgabe {
 
   public String überschrift(String überschrift) {
     // return KonsoleHelfer.erzeugeÜberschrift(überschrift);
-    return String.format("\n%s{%s}", Tex.makro("begin", "liDiagramm"), überschrift);
+    return String.format("\n%s{%s}", Tex.makro("begin", "bBaum"), überschrift);
   }
 
   public String tabelle(String[] kopfZeile, String[][] zeilen) {
