@@ -59,7 +59,7 @@ baum avl (
 )
 \end{liProjektSprache}
 \begin{liEinbettung}
-\begin{tikzpicture}[li binaer baum]
+\begin{tikzpicture}[b binaer baum]
 \Tree
 [.\node[label=1]{5};
   [.\node[label=1]{2};
@@ -102,7 +102,7 @@ baum avl (
 )
 \end{liProjektSprache}
 \begin{liEinbettung}
-\begin{tikzpicture}[li binaer baum]
+\begin{tikzpicture}[b binaer baum]
 \Tree
 [.\node[label=-1]{6};
   [.\node[label=1]{2};
@@ -133,7 +133,7 @@ baum avl (
 )
 \end{liProjektSprache}
 \begin{liEinbettung}
-\begin{tikzpicture}[li binaer baum]
+\begin{tikzpicture}[b binaer baum]
 \Tree
 [.\node[label=-1]{10};
   [.\node[label=0]{5};

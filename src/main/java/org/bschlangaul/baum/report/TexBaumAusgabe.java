@@ -45,8 +45,8 @@ public class TexBaumAusgabe extends BaumReporter {
   public String erzeugeBaum(BinaerBaum baum) {
     String tikzMarkup = generiereBaumRekursiv(baum, baum.gibKopf(), 0);
     // return Tex.umgebungOption("tikzpicture", String.format("\\Tree\n%s",
-    // tikzMarkup), "li binaer baum");
-    return Tex.umgebungOption("tikzpicture", String.format("\\Tree\n%s", tikzMarkup), "li binaer baum") + "\n"
+    // tikzMarkup), "b binaer baum");
+    return Tex.umgebungOption("tikzpicture", String.format("\\Tree\n%s", tikzMarkup), "b binaer baum") + "\n"
         + Tex.makro("end", "bBaum");
   }
 

@@ -142,7 +142,7 @@ public class BinaererSuchbaum {
     Knoten elternKnoten = testBaum.suchen(3);
     System.out.println("Rechts Kind von 3 vor dem Löschen: " + elternKnoten.rechts.wert);
     testBaum.loescheKnoten(6);
-    System.out.println("Rechts Kind von 3 nach dem Löschen: " + elternKnoten.rechts.wert);
+    System.out.println("Rechts Kind von 3Nach dem Löschen: " + elternKnoten.rechts.wert);
 
     // Der Knoten hat zwei Teilbäume.
     // fristen Testbaum erzeugen.
@@ -150,6 +150,6 @@ public class BinaererSuchbaum {
     Knoten wurzel = testBaum.wurzel;
     System.out.println("Linkes Kind der Wurzel vor dem Löschen: " + wurzel.links.wert); // 5
     testBaum.loescheKnoten(3);
-    System.out.println("Linkes Kind der Wurzel nach dem Löschen: " + wurzel.links.wert); // 3
+    System.out.println("Linkes Kind der WurzelNach dem Löschen: " + wurzel.links.wert); // 3
   }
 }

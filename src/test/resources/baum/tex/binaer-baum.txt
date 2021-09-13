@@ -1,4 +1,4 @@
-\begin{tikzpicture}[li binaer baum]
+\begin{tikzpicture}[b binaer baum]
 \Tree
 [.1
   \edge[blank]; \node[blank]{};
