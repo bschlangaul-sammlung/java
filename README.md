@@ -1,10 +1,4 @@
-# Java-Didaktik-Beispiele
-
-Beispiel Java-Code für didaktische Zwecke
-
-In diesem Repository sind fast alle Java-Code-Beispiele für die
-[Aufgaben- und Materialsammlung „lehramt-informatik“](https://github.com/hbschlang/lehramt-informatik)
-zusammengefasst.
+# java
 
 Die Group-ID des Java-Pakets ist `org.bschlangaul`. Der Java-Code
 befindet sich sich - in viele Unterpakete aufgeteilt - im Verzeichnis
