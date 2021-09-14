@@ -1,4 +1,4 @@
-package org.bschlangaul.aufgaben.oomup.pu_4.verein;
+package org.bschlangaul.examen.examen_46116.jahr_2018.fruehjahr.verein;
 
 public class Spieler {
   private String name;
