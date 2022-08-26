@@ -13,7 +13,7 @@ import org.bschlangaul.cli.graph.Graph;
 
 import static picocli.CommandLine.Model.UsageMessageSpec.SECTION_KEY_COMMAND_LIST;
 
-@Command(name = "didaktik", mixinStandardHelpOptions = true, version = "didaktik 0.1.0", description = "Kommandozeilen-Interface für die Java-Didaktik-Beispiele.", subcommands = {
+@Command(name = "bschlangaul-werkzeug.java", mixinStandardHelpOptions = true, version = "didaktik 0.1.0", description = "Kommandozeilen-Interface für die Java-Didaktik-Beispiele.", subcommands = {
     Baum.class, KommandoBBaum.class, Db.class, Graph.class, KommandoSortierer.class, ProjektSprachenFinder.class })
 public class KommandoZeile implements Callable<Integer> {
   @Spec

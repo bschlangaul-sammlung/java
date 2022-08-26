@@ -1,3 +1,3 @@
 #! /bin/sh
 
-java -cp /usr/local/share/java/jars/didaktik.jar org.bschlangaul.cli.KommandoZeile $@
+java -cp /usr/local/share/java/jars/bschlangaul-werkzeug.jar org.bschlangaul.cli.KommandoZeile $@

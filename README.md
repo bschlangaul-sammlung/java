@@ -16,7 +16,6 @@ Deutsch bei der Programmierung einzusetzen, um die Einstiegshürde so
 gering wie möglich zu halten. Wir wollen hier mit gutem Beispiel voran
 gehen.
 
-
 Bei Examensaufgaben, bei denen die Angabe ersichtlich englische
 Bezeichner verwendet, wird eine Ausnahme von dieser Regel gemacht. Mit
 Ausnahme von Klassen- und Interfacebezeichner werden auch Umlaute
@@ -50,8 +49,6 @@ erstellt werden.
 ------------------------------------------------------------------------
 
 ## Source-Code-Formatierungsregeln
-
-
 
 Wie intelij reformat code.
 
@@ -88,7 +85,7 @@ mvn test
 
 ```
 mvn install:install-file \
-   -Dfile=/usr/local/share/java/jars/aplu5-3.34.jar \
+   -Dfile=dependencies/aplu5-3.34.jar \
    -DgroupId=ch.aplu \
    -DartifactId=aplu \
    -Dversion=3.34 \
@@ -98,7 +95,7 @@ mvn install:install-file \
 
 ```
 mvn install:install-file \
-   -Dfile=/usr/local/share/java/jars/greenfoot-3.6.1.jar \
+   -Dfile=dependencies/greenfoot-3.6.1.jar \
    -DgroupId=greenfoot \
    -DartifactId=greenfoot \
    -Dversion=3.6.1 \
@@ -107,10 +104,8 @@ mvn install:install-file \
 ```
 
 ```
-sudo wget -O /usr/local/share/java/jars/engine-alpha-3.2.0.jar https://git.engine-alpha.org/downloads/v3.2.0/engine-alpha.jar
-
 mvn install:install-file \
-   -Dfile=/usr/local/share/java/jars/engine-alpha-3.2.0.jar \
+   -Dfile=dependencies/engine-alpha-3.2.0.jar \
    -DgroupId=ea.edu \
    -DartifactId=AlphaEngine \
    -Dversion=3.2.0 \
@@ -118,6 +113,43 @@ mvn install:install-file \
    -DgeneratePom=true
 ```
 
+## Kommandozeilen-Interface
+
+```sh
+Usage: bschlangaul-werkzeug.java [-hktVv] [-a=<ausgabe>] [COMMAND]
+Kommandozeilen-Interface für die Java-Didaktik-Beispiele.
+  -a, --ausgabe=<ausgabe>   Mögliche Werte: konsole, tex.
+  -h, --help                Show this help message and exit.
+  -k, --konsole             Passendes Textformat für die Konsole ausgaben.
+  -t, --tex                 Als TeX ausgeben.
+  -v, --redselig            Mache die Ausgabe redseliger (verbose).
+  -V, --version             Print version information and exit.
+Commands:
+  baum, b        Führe Aufgaben zum Thema Binärebaum aus.
+  bbaum, bb      Führe Aufgaben zum Thema BBaum aus.
+  db, d          Führe Aufgaben zum Themenbereich Datenbanken aus.
+    normalisation, n
+                 Führe Aufgaben zum Themenbereich Datenbanken aus.
+    relationen-schema, r
+                 Suche in der TeX-Datei nach
+                   liRelationenSchemaFormat-Umgebungen und formatiere daraus
+                   TeX- und SQL-Markup.
+  graph, g       Führe graphspezifische Aufgaben aus.
+    tex, t       Lese Text-Datei ein und versuche einen Graph zu erkennen,
+                   formatiere den Graphen dann für TeX.
+    dijkstra, d  Den Dijkstra-Algorithmus ausführen.
+    prim, p      Den Algorithmus von Prim ausführen.
+    kruskal, k   Den Algorithmus von Kruskal ausführen.
+    bfs, b       Die Breitensuche (breadth-first search = BFS) mit Hilfe einer
+                   Warteschlange ausführen.
+    dfs, f       Die Tiefensuche (depth-first search = DFS) mit Hilfe eines
+                   Stapels ausführen.
+    dfr, r       Die Tiefensuche (depth-first search = DFS) rekursiv ausführen.
+  sortiere, so   Sortiere mit verschiedenen Algorithmen.
+  projekt-sprachen, s
+                 Nach Projektsprachen in einer TeX-Datei suchen und diese dann
+                   ausführen.
+```
 
 ## Eigene DSLs (Domain-specific languages)
 
