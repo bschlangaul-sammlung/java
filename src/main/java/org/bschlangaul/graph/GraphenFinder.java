@@ -65,7 +65,7 @@ public class GraphenFinder {
     System.out.println(String.format("\n%s\n", überschrift));
   }
 
-  public static String umgebungsName = "liGraphenFormat";
+  public static String umgebungsName = "bGraphenFormat";
 
   private String[] sucheNachEinfachem(String inhalt) {
     return TextAusschnitt.sucheUmgebung(inhalt, umgebungsName).toArray(new String[0]);
