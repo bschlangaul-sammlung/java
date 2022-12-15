@@ -14,7 +14,7 @@ public class Stapler implements Runnable {
   public void run() {
     // aktives Warten
     for (int i = 0; i < 10; i++) {
-      hinfahren();
+      fahreHin();
       // seite=='l' == links == Erzeuger seite=='r' == rechts == Verbraucher
       // Zudem überprüft die Schleife, ob das Abladen bzw. Aufladen erfolgreich war
       // und ob man die Schleife verlassen und dann wegfahren darf
@@ -38,16 +38,16 @@ public class Stapler implements Runnable {
 
           if (seite == 'l') {// l == links == Erzeuger
             if (palette.kiste == null) {
-              abladen(); // Falls schon eine Kiste da ist, muss der Verbraucher sie erst wegnehmen
+              ladeAb(); // Falls schon eine Kiste da ist, muss der Verbraucher sie erst wegnehmen
             }
           } else {
             if (palette.kiste != null) {
-              aufladen(); // Falls keine Kiste vorhanden ist, muss der Erzeuger erst eine Kiste liefern
+              ladeAuf(); // Falls keine Kiste vorhanden ist, muss der Erzeuger erst eine Kiste liefern
             }
           }
         }
       }
-      wegfahren();
+      fahreWeg();
     }
   }
 
@@ -55,10 +55,9 @@ public class Stapler implements Runnable {
   public void runPassivesWarten() {
     // passives Warten
     for (int i = 0; i < 10; i++) {
-      hinfahren();
+      fahreHin();
 
       synchronized (palette) {
-
         if (seite == 'l') {
           if (palette.kiste != null) {
             try {
@@ -68,7 +67,7 @@ public class Stapler implements Runnable {
               e.printStackTrace();
             }
           }
-          abladen();
+          ladeAb();
         } else {
           if (palette.kiste == null) {
             try {
@@ -77,11 +76,11 @@ public class Stapler implements Runnable {
               e.printStackTrace();
             }
           }
-          aufladen();
+          ladeAuf();
         }
         palette.notify(); // anderer Thread wird "aufgeweckt"
       }
-      wegfahren();
+      fahreWeg();
     }
   }
 
@@ -113,7 +112,15 @@ public class Stapler implements Runnable {
     this.kiste = new Kiste(this.stapler.nenneMx() + 106, this.stapler.nenneMy() - 21);
   }
 
-  public void hinfahren() {
+  private void warte(long milliSekunden) {
+    try {
+      Thread.sleep(milliSekunden);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public void fahreHin() {
     if (this.seite == 'l') {
       while (this.stapler.nenneMx() < 250) {
         this.stapler.verschiebenUm(speed, 0);
@@ -122,11 +129,7 @@ public class Stapler implements Runnable {
           this.kiste.verschiebenUm(speed, 0);
         }
 
-        try {
-          Thread.sleep(10);
-        } catch (InterruptedException e) {
-          e.printStackTrace();
-        }
+        warte(10);
       }
     } else {
       while (this.stapler.nenneMx() > 750) {
@@ -135,17 +138,12 @@ public class Stapler implements Runnable {
         if (this.kiste != null) {
           this.kiste.verschiebenUm(-speed, 0);
         }
-
-        try {
-          Thread.sleep(10);
-        } catch (InterruptedException e) {
-          e.printStackTrace();
-        }
+        warte(10);
       }
     }
   }
 
-  public void wegfahren() {
+  public void fahreWeg() {
     int n = this.zufall.nextInt(1000);
 
     if (this.seite == 'l') {
@@ -155,12 +153,7 @@ public class Stapler implements Runnable {
         if (this.kiste != null) {
           this.kiste.verschiebenUm(-speed, 0);
         }
-
-        try {
-          Thread.sleep(10);
-        } catch (InterruptedException e) {
-          e.printStackTrace();
-        }
+        warte(10);
       }
     } else {
       while (this.stapler.nenneMx() < 1200 + n) {
@@ -169,12 +162,7 @@ public class Stapler implements Runnable {
         if (this.kiste != null) {
           this.kiste.verschiebenUm(speed, 0);
         }
-
-        try {
-          Thread.sleep(10);
-        } catch (InterruptedException e) {
-          e.printStackTrace();
-        }
+        warte(10);
       }
     }
     if (seite == 'l') { // Code fuer Mehrfachverwendung eingefuegt
@@ -185,7 +173,7 @@ public class Stapler implements Runnable {
     }
   }
 
-  public void abladen() {
+  public void ladeAb() {
     if (this.seite == 'l') {
       while (this.stapler.nenneMx() < 394) {
         this.stapler.verschiebenUm(speed, 0);
@@ -193,21 +181,12 @@ public class Stapler implements Runnable {
         if (this.kiste != null) {
           this.kiste.verschiebenUm(speed, 0);
         }
-
-        try {
-          Thread.sleep(10);
-        } catch (InterruptedException e) {
-          e.printStackTrace();
-        }
+        warte(10);
       }
 
       this.gibKisteAn(this.palette);
 
-      try {
-        Thread.sleep(300);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
+      warte(300);
 
       while (this.stapler.nenneMx() > 250) {
         this.stapler.verschiebenUm(-speed, 0);
@@ -215,12 +194,7 @@ public class Stapler implements Runnable {
         if (this.kiste != null) {
           this.kiste.verschiebenUm(-speed, 0);
         }
-
-        try {
-          Thread.sleep(10);
-        } catch (InterruptedException e) {
-          e.printStackTrace();
-        }
+        warte(10);
       }
     } else {
       while (this.stapler.nenneMx() > 606) {
@@ -230,20 +204,12 @@ public class Stapler implements Runnable {
           this.kiste.verschiebenUm(-speed, 0);
         }
 
-        try {
-          Thread.sleep(10);
-        } catch (InterruptedException e) {
-          e.printStackTrace();
-        }
+        warte(10);
       }
 
       this.gibKisteAn(this.palette);
 
-      try {
-        Thread.sleep(300);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
+      warte(300);
 
       while (this.stapler.nenneMx() < 750) {
         this.stapler.verschiebenUm(speed, 0);
@@ -252,16 +218,12 @@ public class Stapler implements Runnable {
           this.kiste.verschiebenUm(speed, 0);
         }
 
-        try {
-          Thread.sleep(10);
-        } catch (InterruptedException e) {
-          e.printStackTrace();
-        }
+        warte(10);
       }
     }
   }
 
-  public void aufladen() {
+  public void ladeAuf() {
     if (this.seite == 'l') {
       while (this.stapler.nenneMx() < 394) {
         this.stapler.verschiebenUm(speed, 0);
@@ -269,21 +231,12 @@ public class Stapler implements Runnable {
         if (this.kiste != null) {
           this.kiste.verschiebenUm(speed, 0);
         }
-
-        try {
-          Thread.sleep(10);
-        } catch (InterruptedException e) {
-          e.printStackTrace();
-        }
+        warte(10);
       }
 
       this.palette.gibKisteAn(this);
 
-      try {
-        Thread.sleep(300);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
+      warte(300);
 
       while (this.stapler.nenneMx() > 250) {
         this.stapler.verschiebenUm(-speed, 0);
@@ -292,11 +245,7 @@ public class Stapler implements Runnable {
           this.kiste.verschiebenUm(-speed, 0);
         }
 
-        try {
-          Thread.sleep(10);
-        } catch (InterruptedException e) {
-          e.printStackTrace();
-        }
+        warte(10);
       }
     } else {
       while (this.stapler.nenneMx() > 606) {
@@ -306,20 +255,12 @@ public class Stapler implements Runnable {
           this.kiste.verschiebenUm(-speed, 0);
         }
 
-        try {
-          Thread.sleep(10);
-        } catch (InterruptedException e) {
-          e.printStackTrace();
-        }
+        warte(10);
       }
 
       this.palette.gibKisteAn(this);
 
-      try {
-        Thread.sleep(300);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
+      warte(300);
 
       while (this.stapler.nenneMx() < 750) {
         this.stapler.verschiebenUm(speed, 0);
@@ -328,13 +269,8 @@ public class Stapler implements Runnable {
           this.kiste.verschiebenUm(speed, 0);
         }
 
-        try {
-          Thread.sleep(10);
-        } catch (InterruptedException e) {
-          e.printStackTrace();
-        }
+        warte(10);
       }
     }
   }
-
 }
